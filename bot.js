@@ -107,7 +107,7 @@ function transcribeAudio(audioBuffer) {
     const form = new FormData();
     form.append('file', audioBuffer, { filename: 'voice.ogg', contentType: 'audio/ogg' });
     form.append('model', 'whisper-large-v3');
-    form.append('language', 'uz');
+    
     const req = https.request({
       hostname: 'api.groq.com',
       path: '/openai/v1/audio/transcriptions',
@@ -127,34 +127,35 @@ function transcribeAudio(audioBuffer) {
 function parseWithGroq(text, todayStr) {
   return new Promise((resolve) => {
     const system = `Sen MBI Mebel zavodining AI assistentisan. Bugun: ${todayStr}.
-Xodimlar: Diyor, Sherzod.
 
-Xo'jayin audio xabar yuboradi. Bir xabarda BIR NECHTA hodisa yoki sana bo'lishi mumkin.
-FAQAT JSON massiv qaytarasan (boshqa hech narsa yo'q, markdown yo'q):
+XODIMLAR ISMLARI (har qanday talaffuzda tanib ol):
+- Sherzod = Sherzod, Şevzat, Shevzat, Шерзод, Şerzad, Şirzad, Shirzod
+- Diyor = Diyor, Diyar, Диёр, Dyor, Diyer
 
-[
-  {
-    "action": "attendance" | "avans" | "oylik" | "xarajat" | "boshqa",
-    "worker": "Diyor" | "Sherzod" | "noma'lum",
-    "present": true | false | null,
-    "amount": number | null,
-    "currency": "USD" | "UZS" | null,
-    "date": "DD.MM.YYYY",
-    "note": "qisqa izoh"
-  }
-]
+XODIM YO'Q → "noma'lum" emas, eng yaqin ismni ol.
 
-Sana qoidalari:
-- "bugun" → ${todayStr}
-- "kecha" → kechagi sana
-- "6-iyun", "6 iyun", "6-ci iyun" → 06.06.${todayStr.slice(6)}
-- "8-iyun" → 08.06.${todayStr.slice(6)}
-- Oy nomi yo'q → joriy oy
+Bir xabarda BIR NECHTA hodisa/sana bo'lishi mumkin.
+FAQAT JSON massiv qaytarasan (boshqa hech narsa, markdown yo'q):
+[{"action":"attendance"|"avans"|"oylik"|"xarajat"|"boshqa","worker":"Diyor"|"Sherzod"|"noma'lum","present":true|false|null,"amount":number|null,"currency":"USD"|"UZS"|null,"date":"DD.MM.YYYY","note":"qisqa izoh"}]
 
-Misollar:
-- "bugun Sherzod kelmadi" → [{"action":"attendance","worker":"Sherzod","present":false,"date":"${todayStr}","note":"Sherzod kelmadi","amount":null,"currency":null}]
-- "Sherzod 6 va 8 iyun kelmadi" → [{"action":"attendance","worker":"Sherzod","present":false,"date":"06.06.${todayStr.slice(6)}","note":"Sherzod 6-iyun kelmadi","amount":null,"currency":null},{"action":"attendance","worker":"Sherzod","present":false,"date":"08.06.${todayStr.slice(6)}","note":"Sherzod 8-iyun kelmadi","amount":null,"currency":null}]
-- "Diyor 50 dollar avans oldi" → [{"action":"avans","worker":"Diyor","present":null,"amount":50,"currency":"USD","date":"${todayStr}","note":"Diyor $50 avans oldi"}]`;
+SANA QOIDALARI (o'zbek/ozarbayjon/rus aralash):
+- "bugun","bu gun","bugün","сегодня" → ${todayStr}
+- "kecha","kece","dün","вчера" → kechagi sana
+- "6-iyun","6 iyun","6-ci iyun","iyunun 6","6 июня" → 06.06.${todayStr.slice(6)}
+- "7-iyun","8-iyun" → 07/08.06.${todayStr.slice(6)}
+- Bir nechta sana → har biri uchun alohida entry
+- Oy yo'q → joriy oy (${todayStr.slice(3)})
+
+HARAKAT SO'ZLARI:
+- keldi/gəldi/пришёл → present:true
+- kelmadi/gəlmədi/kelmədi/işke gəlmədi/не пришёл → present:false
+- avans/avans aldı/oldu avans → action:avans
+- oylik/maosh → action:oylik
+
+MISOLLAR:
+- "bugun Sherzod kelmadi" → [{"action":"attendance","worker":"Sherzod","present":false,"date":"${todayStr}","note":"Sherzod bugun kelmadi","amount":null,"currency":null}]
+- "Şevzat 6-ci və 8-ci iyun işke gəlmədi" → [{"action":"attendance","worker":"Sherzod","present":false,"date":"06.06.${todayStr.slice(6)}","note":"Sherzod 6-iyun kelmadi","amount":null,"currency":null},{"action":"attendance","worker":"Sherzod","present":false,"date":"08.06.${todayStr.slice(6)}","note":"Sherzod 8-iyun kelmadi","amount":null,"currency":null}]
+- "Diyar kece 100 dollar avans aldı" → [{"action":"avans","worker":"Diyor","present":null,"amount":100,"currency":"USD","date":"KECHAGI_SANA","note":"Diyor $100 avans oldi"}]`;
 
     const body = JSON.stringify({
       model: 'llama-3.3-70b-versatile',
