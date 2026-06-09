@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MBI Mebel — Boshqaruv paneli</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f2f5; color: #1a1a2e; }
+  header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; padding: 20px 24px; display: flex; align-items: center; gap: 12px; }
+  header h1 { font-size: 20px; font-weight: 700; }
+  header span { font-size: 13px; opacity: 0.6; }
+  .tabs { background: white; border-bottom: 1px solid #e8e8e8; display: flex; padding: 0 24px; }
+  .tab { padding: 14px 20px; font-size: 14px; cursor: pointer; border-bottom: 3px solid transparent; color: #666; font-weight: 500; transition: all 0.2s; }
+  .tab.active { color: #1a1a2e; border-bottom-color: #e63946; }
+  .content { padding: 24px; max-width: 900px; margin: 0 auto; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .card .label { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .card .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .card .sub { font-size: 12px; color: #aaa; margin-top: 4px; }
+  .card.green .value { color: #2d6a4f; }
+  .card.red .value { color: #c1121f; }
+  .card.blue .value { color: #0077b6; }
+  .section { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 20px; }
+  .section h2 { font-size: 15px; font-weight: 600; margin-bottom: 16px; color: #1a1a2e; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: left; padding: 10px 12px; background: #f8f9fa; color: #666; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.4px; }
+  td { padding: 12px; border-bottom: 1px solid #f0f0f0; }
+  tr:last-child td { border-bottom: none; }
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+  .badge.green { background: #d8f3dc; color: #2d6a4f; }
+  .badge.red { background: #ffe0e0; color: #c1121f; }
+  .badge.blue { background: #caf0f8; color: #0077b6; }
+  .badge.orange { background: #fff3cd; color: #856404; }
+  .empty { text-align: center; padding: 40px; color: #aaa; font-size: 14px; }
+  .loading { text-align: center; padding: 40px; color: #aaa; }
+  .refresh-btn { background: #1a1a2e; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; cursor: pointer; float: right; margin-top: -36px; }
+  .date-filter { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .date-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid #ddd; font-size: 13px; cursor: pointer; background: white; transition: all 0.2s; }
+  .date-btn.active { background: #1a1a2e; color: white; border-color: #1a1a2e; }
+  #page-hr, #page-expenses, #page-orders { display: none; }
+  #page-hr.visible, #page-expenses.visible, #page-orders.visible { display: block; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>🪑 MBI Mebel</h1>
+    <span id="last-updated">Yuklanmoqda...</span>
+  </div>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('hr')">👥 Xodimlar</div>
+  <div class="tab" onclick="showTab('expenses')">🧾 Xarajatlar</div>
+  <div class="tab" onclick="showTab('orders')">📦 Buyurtmalar</div>
+</div>
+
+<div class="content">
+
+  <!-- HR TAB -->
+  <div id="page-hr" class="visible">
+    <div class="cards">
+      <div class="card green"><div class="label">Bugun keldi</div><div class="value" id="stat-keldi">—</div><div class="sub">xodim</div></div>
+      <div class="card red"><div class="label">Kelmadi</div><div class="value" id="stat-kelmadi">—</div><div class="sub">xodim</div></div>
+      <div class="card blue"><div class="label">Avans (oy)</div><div class="value" id="stat-avans">—</div><div class="sub">dollar</div></div>
+    </div>
+
+    <div class="section">
+      <h2>HR Jurnal</h2>
+      <button class="refresh-btn" onclick="loadData()">↻ Yangilash</button>
+      <div class="date-filter">
+        <button class="date-btn active" onclick="filterHR('today', this)">Bugun</button>
+        <button class="date-btn" onclick="filterHR('week', this)">Bu hafta</button>
+        <button class="date-btn" onclick="filterHR('month', this)">Bu oy</button>
+        <button class="date-btn" onclick="filterHR('all', this)">Hammasi</button>
+      </div>
+      <table>
+        <thead><tr><th>Sana</th><th>Xodim</th><th>Hodisa</th><th>Izoh</th></tr></thead>
+        <tbody id="hr-table"><tr><td colspan="4" class="loading">Yuklanmoqda...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- EXPENSES TAB -->
+  <div id="page-expenses">
+    <div class="cards">
+      <div class="card red"><div class="label">Bu oy xarajat</div><div class="value" id="stat-exp-month">—</div><div class="sub">dollar</div></div>
+      <div class="card blue"><div class="label">Jami (barcha)</div><div class="value" id="stat-exp-total">—</div><div class="sub">dollar</div></div>
+    </div>
+    <div class="section">
+      <h2>🧾 Xarajatlar jurnali</h2>
+      <button class="refresh-btn" onclick="loadData()">↻ Yangilash</button>
+      <table>
+        <thead><tr><th>Sana</th><th>Nomi</th><th>Miqdor</th><th>Summa</th></tr></thead>
+        <tbody id="exp-table"><tr><td colspan="4" class="loading">Yuklanmoqda...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ORDERS TAB -->
+  <div id="page-orders">
+    <div class="cards">
+      <div class="card blue"><div class="label">Faol buyurtmalar</div><div class="value" id="stat-orders">—</div><div class="sub">ta</div></div>
+    </div>
+    <div class="section">
+      <h2>📦 Buyurtmalar</h2>
+      <button class="refresh-btn" onclick="loadData()">↻ Yangilash</button>
+      <table>
+        <thead><tr><th>Sana</th><th>Mijoz</th><th>Holat</th><th>Summa</th></tr></thead>
+        <tbody id="orders-table"><tr><td colspan="4" class="loading">Yuklanmoqda...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const REPO = 'yakubovibrohim/mbi-bot';
+const BASE = 'https://raw.githubusercontent.com/' + REPO + '/main/';
+let hrData = [], expData = [], ordersData = [];
+let hrFilter = 'today';
+
+function showTab(tab) {
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', ['hr','expenses','orders'][i]===tab));
+  document.querySelectorAll('[id^="page-"]').forEach(p => p.classList.remove('visible'));
+  document.getElementById('page-'+tab).classList.add('visible');
+}
+
+async function fetchJSON(file) {
+  try {
+    const r = await fetch(BASE + file + '?t=' + Date.now());
+    if (!r.ok) return [];
+    return await r.json();
+  } catch(e) { return []; }
+}
+
+function getToday() {
+  return new Date().toLocaleDateString('uz-UZ',{timeZone:'Asia/Tashkent',day:'2-digit',month:'2-digit',year:'numeric'});
+}
+
+function getThisMonth() {
+  const d = new Date();
+  return ('0'+(d.getMonth()+1)).slice(-2) + '.' + d.getFullYear();
+}
+
+function filterHR(type, btn) {
+  hrFilter = type;
+  document.querySelectorAll('.date-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderHR();
+}
+
+function renderHR() {
+  const today = getToday();
+  const thisMonth = getThisMonth();
+  let filtered = hrData;
+
+  if (hrFilter === 'today') filtered = hrData.filter(l => l.date === today);
+  else if (hrFilter === 'week') {
+    const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate()-7);
+    filtered = hrData.filter(l => {
+      const parts = l.date.split('.');
+      const d = new Date(parts[2], parts[1]-1, parts[0]);
+      return d >= weekAgo;
+    });
+  } else if (hrFilter === 'month') {
+    filtered = hrData.filter(l => l.date && l.date.slice(3) === thisMonth);
+  }
+
+  const todayLogs = hrData.filter(l => l.date === today);
+  const keldi = todayLogs.filter(l => l.parsed && l.parsed.action==='attendance' && l.parsed.present===true).length;
+  const kelmadi = todayLogs.filter(l => l.parsed && l.parsed.action==='attendance' && l.parsed.present===false).length;
+  const avans = hrData.filter(l => l.parsed && l.parsed.action==='avans' && l.date && l.date.slice(3)===thisMonth)
+    .reduce((s,l) => s + (l.parsed.amount||0), 0);
+
+  document.getElementById('stat-keldi').textContent = keldi;
+  document.getElementById('stat-kelmadi').textContent = kelmadi;
+  document.getElementById('stat-avans').textContent = '$' + avans.toFixed(0);
+
+  const tbody = document.getElementById('hr-table');
+  if (!filtered.length) { tbody.innerHTML='<tr><td colspan="4" class="empty">📭 Ma\'lumot yo\'q</td></tr>'; return; }
+
+  tbody.innerHTML = filtered.slice().reverse().map(l => {
+    const p = l.parsed || {};
+    let badge = '';
+    if (p.action==='attendance') badge = p.present ? '<span class="badge green">✅ Keldi</span>' : '<span class="badge red">❌ Kelmadi</span>';
+    else if (p.action==='avans') badge = `<span class="badge blue">💵 Avans</span>`;
+    else if (p.action==='oylik') badge = `<span class="badge orange">💰 Oylik</span>`;
+    else badge = '<span class="badge">📝</span>';
+    const amount = (p.action==='avans'||p.action==='oylik') && p.amount ? `$${p.amount}` : '';
+    return `<tr><td>${l.date||''}</td><td><b>${p.worker||'—'}</b></td><td>${badge}</td><td>${p.note||amount||'—'}</td></tr>`;
+  }).join('');
+}
+
+function renderExpenses() {
+  const thisMonth = getThisMonth();
+  const monthExp = expData.filter(e => e.date && e.date.slice(3)===thisMonth).reduce((s,e)=>s+(e.total||0),0);
+  const totalExp = expData.reduce((s,e)=>s+(e.total||0),0);
+  document.getElementById('stat-exp-month').textContent='$'+monthExp.toFixed(2);
+  document.getElementById('stat-exp-total').textContent='$'+totalExp.toFixed(2);
+
+  const tbody = document.getElementById('exp-table');
+  if (!expData.length) { tbody.innerHTML='<tr><td colspan="4" class="empty">📭 Xarajat yo\'q</td></tr>'; return; }
+  tbody.innerHTML = expData.slice().reverse().map(e =>
+    `<tr><td>${e.date||''}</td><td>${e.name||e.supplier||'—'}</td><td>${e.qty||''} ${e.unit||''}</td><td><b>$${(e.total||0).toFixed(2)}</b></td></tr>`
+  ).join('');
+}
+
+function renderOrders() {
+  document.getElementById('stat-orders').textContent = ordersData.filter(o=>o.status!=='done').length;
+  const tbody = document.getElementById('orders-table');
+  if (!ordersData.length) { tbody.innerHTML='<tr><td colspan="4" class="empty">📭 Buyurtma yo\'q</td></tr>'; return; }
+  tbody.innerHTML = ordersData.slice().reverse().map(o => {
+    const badges = {'new':'<span class="badge blue">Yangi</span>','production':'<span class="badge orange">Ishlab chiqarish</span>','done':'<span class="badge green">Tayyor</span>'};
+    return `<tr><td>${o.date||''}</td><td><b>${o.client||'—'}</b></td><td>${badges[o.status]||o.status||'—'}</td><td>$${(o.amount||0).toFixed(0)}</td></tr>`;
+  }).join('');
+}
+
+async function loadData() {
+  [hrData, expData, ordersData] = await Promise.all([
+    fetchJSON('hr-log.json'),
+    fetchJSON('expenses-log.json'),
+    fetchJSON('orders-log.json')
+  ]);
+  renderHR();
+  renderExpenses();
+  renderOrders();
+  document.getElementById('last-updated').textContent = 'Yangilandi: ' + new Date().toLocaleTimeString('uz-UZ');
+}
+
+loadData();
+setInterval(loadData, 60000);
+</script>
+</body>
+</html>

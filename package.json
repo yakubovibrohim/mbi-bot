@@ -1,0 +1,15 @@
+{
+  "name": "mbi-mebel-bot",
+  "version": "1.0.0",
+  "description": "MBI Mebel Telegram Bot",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "form-data": "^4.0.0"
+  }
+}
