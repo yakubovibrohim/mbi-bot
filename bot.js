@@ -7,10 +7,11 @@ const ADMIN    = '1487569442';
 const GROQ_KEY = process.env.GROQ_API_KEY;
 const GH_TOKEN = process.env.GITHUB_TOKEN;
 const GH_REPO  = 'yakubovibrohim/mbi-bot';
-const LOG_FILE = 'hr-log.json';
 
 const state = {};
 const phoneToChat = {};
+// Invoice conversation state for admin
+const invoiceState = {}; // { step, photoId, items, total, supplier, invoice_no }
 
 // ─── Telegram helpers ─────────────────────────────────────────
 function api(method, data) {
@@ -25,7 +26,7 @@ function api(method, data) {
     req.on('error', rej); req.write(body); req.end();
   });
 }
-function msg(c, t) { return api('sendMessage', { chat_id: c, text: t }); }
+function msg(c, t, extra) { return api('sendMessage', { chat_id: c, text: t, parse_mode: 'Markdown', ...extra }); }
 function btn(c, t, b) { return api('sendMessage', { chat_id: c, text: t, reply_markup: { inline_keyboard: b } }); }
 function fwd(c, f, m) { return api('forwardMessage', { chat_id: c, from_chat_id: f, message_id: m }); }
 function acb(i) { return api('answerCallbackQuery', { callback_query_id: i }); }
@@ -35,7 +36,7 @@ function anketa(c, l) {
   return msg(c, l === 'uz' ? uz : ru);
 }
 
-// ─── GitHub log ───────────────────────────────────────────────
+// ─── GitHub helpers ───────────────────────────────────────────
 function ghGet(path) {
   return new Promise((res, rej) => {
     const req = https.request({
@@ -61,36 +62,31 @@ function ghPut(path, content, sha, commitMsg) {
   });
 }
 
-async function appendLogs(entries) {
+async function appendToFile(filename, newEntries) {
   try {
     let logs = [], sha = null;
     try {
-      const existing = await ghGet(LOG_FILE);
+      const existing = await ghGet(filename);
       sha = existing.sha;
       logs = JSON.parse(Buffer.from(existing.content, 'base64').toString('utf8'));
     } catch (e) { logs = []; }
-
-    for (const entry of entries) logs.push(entry);
+    for (const e of newEntries) logs.push(e);
     if (logs.length > 1000) logs = logs.slice(-1000);
-
-    const label = entries.map(e => e.title).join(' | ');
-    await ghPut(LOG_FILE, JSON.stringify(logs, null, 2), sha, 'HR: ' + label);
+    const label = newEntries.map(e => e.title || e.name || '').join(' | ');
+    await ghPut(filename, JSON.stringify(logs, null, 2), sha, label);
     return true;
-  } catch (e) {
-    console.error('GitHub log error:', e.message);
-    return false;
-  }
+  } catch (e) { console.error('GitHub error:', e.message); return false; }
 }
 
-async function getMonthLogs(monthStr) {
+async function getMonthLogs(filename, monthStr) {
   try {
-    const existing = await ghGet(LOG_FILE);
+    const existing = await ghGet(filename);
     const logs = JSON.parse(Buffer.from(existing.content, 'base64').toString('utf8'));
-    return logs.filter(l => l.date && l.date.slice(3) === monthStr);
+    return logs.filter(l => (l.date || '').slice(3) === monthStr);
   } catch (e) { return []; }
 }
 
-// ─── Audio download & transcribe ─────────────────────────────
+// ─── Groq Whisper ─────────────────────────────────────────────
 function downloadBuffer(url) {
   return new Promise((resolve, reject) => {
     https.get(url, res => {
@@ -107,11 +103,8 @@ function transcribeAudio(audioBuffer) {
     const form = new FormData();
     form.append('file', audioBuffer, { filename: 'voice.ogg', contentType: 'audio/ogg' });
     form.append('model', 'whisper-large-v3');
-    
     const req = https.request({
-      hostname: 'api.groq.com',
-      path: '/openai/v1/audio/transcriptions',
-      method: 'POST',
+      hostname: 'api.groq.com', path: '/openai/v1/audio/transcriptions', method: 'POST',
       headers: { 'Authorization': 'Bearer ' + GROQ_KEY, ...form.getHeaders() }
     }, res => {
       let data = '';
@@ -123,46 +116,35 @@ function transcribeAudio(audioBuffer) {
   });
 }
 
-// ─── Groq LLama parser — returns ARRAY of entries ────────────
-function parseWithGroq(text, todayStr) {
+// ─── Groq LLama: parse voice command ─────────────────────────
+function parseVoice(text, todayStr) {
   return new Promise((resolve) => {
     const system = `Sen MBI Mebel zavodining AI assistentisan. Bugun: ${todayStr}.
 
 XODIMLAR ISMLARI (har qanday talaffuzda tanib ol):
-- Sherzod = Sherzod, Şevzat, Shevzat, Шерзод, Şerzad, Şirzad, Shirzod
-- Diyor = Diyor, Diyar, Диёр, Dyor, Diyer
-
-XODIM YO'Q → "noma'lum" emas, eng yaqin ismni ol.
+- Sherzod = Sherzod, Şevzat, Shevzat, Şerzad, Shirzod
+- Diyor = Diyor, Diyar, Dyor, Diyer
 
 Bir xabarda BIR NECHTA hodisa/sana bo'lishi mumkin.
 FAQAT JSON massiv qaytarasan (boshqa hech narsa, markdown yo'q):
 [{"action":"attendance"|"avans"|"oylik"|"xarajat"|"boshqa","worker":"Diyor"|"Sherzod"|"noma'lum","present":true|false|null,"amount":number|null,"currency":"USD"|"UZS"|null,"date":"DD.MM.YYYY","note":"qisqa izoh"}]
 
-SANA QOIDALARI (o'zbek/ozarbayjon/rus aralash):
-- "bugun","bu gun","bugün","сегодня" → ${todayStr}
+SANA QOIDALARI:
+- "bugun","bugün","сегодня" → ${todayStr}
 - "kecha","kece","dün","вчера" → kechagi sana
-- "6-iyun","6 iyun","6-ci iyun","iyunun 6","6 июня" → 06.06.${todayStr.slice(6)}
-- "7-iyun","8-iyun" → 07/08.06.${todayStr.slice(6)}
-- Bir nechta sana → har biri uchun alohida entry
-- Oy yo'q → joriy oy (${todayStr.slice(3)})
+- "6-iyun","6 iyun","6-ci iyun" → 06.06.${todayStr.slice(6)}
+- "7-iyun" → 07.06.${todayStr.slice(6)}, "8-iyun" → 08.06.${todayStr.slice(6)}
+- Oy yo'q → joriy oy
 
 HARAKAT SO'ZLARI:
-- keldi/gəldi/пришёл → present:true
-- kelmadi/gəlmədi/kelmədi/işke gəlmədi/не пришёл → present:false
-- avans/avans aldı/oldu avans → action:avans
-- oylik/maosh → action:oylik
-
-MISOLLAR:
-- "bugun Sherzod kelmadi" → [{"action":"attendance","worker":"Sherzod","present":false,"date":"${todayStr}","note":"Sherzod bugun kelmadi","amount":null,"currency":null}]
-- "Şevzat 6-ci və 8-ci iyun işke gəlmədi" → [{"action":"attendance","worker":"Sherzod","present":false,"date":"06.06.${todayStr.slice(6)}","note":"Sherzod 6-iyun kelmadi","amount":null,"currency":null},{"action":"attendance","worker":"Sherzod","present":false,"date":"08.06.${todayStr.slice(6)}","note":"Sherzod 8-iyun kelmadi","amount":null,"currency":null}]
-- "Diyar kece 100 dollar avans aldı" → [{"action":"avans","worker":"Diyor","present":null,"amount":100,"currency":"USD","date":"KECHAGI_SANA","note":"Diyor $100 avans oldi"}]`;
+- keldi/gəldi → present:true
+- kelmadi/gəlmədi/kelmədi/işke gəlmədi → present:false
+- avans/avans aldı/oldu avans → action:avans`;
 
     const body = JSON.stringify({
-      model: 'llama-3.3-70b-versatile',
-      max_tokens: 800,
+      model: 'llama-3.3-70b-versatile', max_tokens: 600,
       messages: [{ role: 'system', content: system }, { role: 'user', content: text }]
     });
-
     const req = https.request({
       hostname: 'api.groq.com', path: '/openai/v1/chat/completions', method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + GROQ_KEY, 'Content-Length': Buffer.byteLength(body) }
@@ -171,8 +153,7 @@ MISOLLAR:
       res.on('data', c => data += c);
       res.on('end', () => {
         try {
-          let raw = JSON.parse(data).choices[0].message.content.trim();
-          raw = raw.replace(/```json|```/g, '').trim();
+          let raw = JSON.parse(data).choices[0].message.content.trim().replace(/```json|```/g, '').trim();
           const parsed = JSON.parse(raw);
           resolve(Array.isArray(parsed) ? parsed : [parsed]);
         } catch (e) {
@@ -185,18 +166,48 @@ MISOLLAR:
   });
 }
 
+// ─── Groq LLama: read invoice image via URL ──────────────────
+function readInvoiceText(text) {
+  return new Promise((resolve) => {
+    const system = `Sen nakładnoy/chek matnini tahlil qiluvchi assistentsan.
+Foydalanuvchi nakładnoy matnini beradi. Sen FAQAT JSON qaytarasan (markdown yo'q):
+{
+  "supplier": "yetkazuvchi nomi",
+  "invoice_no": "nakładnoy raqami yoki null",
+  "date": "DD.MM.YYYY yoki null",
+  "total": rassm yig'indisi (number),
+  "currency": "USD" yoki "UZS",
+  "items": [{"name": "mahsulot nomi", "qty": miqdor, "price": narx, "total": summa}]
+}`;
+
+    const body = JSON.stringify({
+      model: 'llama-3.3-70b-versatile', max_tokens: 1000,
+      messages: [{ role: 'system', content: system }, { role: 'user', content: text }]
+    });
+    const req = https.request({
+      hostname: 'api.groq.com', path: '/openai/v1/chat/completions', method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + GROQ_KEY, 'Content-Length': Buffer.byteLength(body) }
+    }, res => {
+      let data = '';
+      res.on('data', c => data += c);
+      res.on('end', () => {
+        try {
+          let raw = JSON.parse(data).choices[0].message.content.trim().replace(/```json|```/g, '').trim();
+          resolve(JSON.parse(raw));
+        } catch (e) { resolve(null); }
+      });
+    });
+    req.on('error', () => resolve(null));
+    req.write(body); req.end();
+  });
+}
+
 // ─── Build title from parsed entry ───────────────────────────
 function buildTitle(p) {
   const d = p.date || '';
-  if (p.action === 'attendance') {
-    return (p.present ? '✅' : '❌') + ' ' + d + ' | ' + p.worker + ' | ' + (p.present ? 'Ishga KELDI' : 'Ishga KELMADI');
-  } else if (p.action === 'avans') {
-    return '💵 ' + d + ' | ' + p.worker + ' | Avans: ' + (p.amount ? p.amount + ' ' + (p.currency || '') : '');
-  } else if (p.action === 'oylik') {
-    return '💰 ' + d + ' | ' + p.worker + ' | Oylik: ' + (p.amount ? p.amount + ' ' + (p.currency || '') : '');
-  } else if (p.action === 'xarajat') {
-    return '🧾 ' + d + ' | Xarajat: ' + (p.amount ? p.amount + ' ' + (p.currency || '') : '') + ' | ' + (p.note || '');
-  }
+  if (p.action === 'attendance') return (p.present ? '✅' : '❌') + ' ' + d + ' | ' + p.worker + ' | ' + (p.present ? 'Ishga KELDI' : 'Ishga KELMADI');
+  if (p.action === 'avans') return '💵 ' + d + ' | ' + p.worker + ' | Avans: ' + (p.amount ? p.amount + ' ' + (p.currency || '') : '');
+  if (p.action === 'oylik') return '💰 ' + d + ' | ' + p.worker + ' | Oylik: ' + (p.amount ? p.amount + ' ' + (p.currency || '') : '');
   return '📝 ' + d + ' | ' + (p.note || '');
 }
 
@@ -204,14 +215,12 @@ function buildTitle(p) {
 async function handleVoice(chatId, voice) {
   try {
     await msg(chatId, '⏳ Tahlil qilinmoqda...');
-
     const fileInfo = await api('getFile', { file_id: voice.file_id });
     const fileUrl = 'https://api.telegram.org/file/bot' + BOT + '/' + fileInfo.result.file_path;
     const audio = await downloadBuffer(fileUrl);
     const transcript = await transcribeAudio(audio);
-
     const todayStr = new Date().toLocaleDateString('uz-UZ', { timeZone: 'Asia/Tashkent', day: '2-digit', month: '2-digit', year: 'numeric' });
-    const parsedList = await parseWithGroq(transcript, todayStr);
+    const parsedList = await parseVoice(transcript, todayStr);
 
     const entries = parsedList.map(p => ({
       date: p.date || todayStr,
@@ -221,21 +230,130 @@ async function handleVoice(chatId, voice) {
       ts: new Date().toISOString()
     }));
 
-    const saved = await appendLogs(entries);
-
+    const saved = await appendToFile('hr-log.json', entries);
     const lines = entries.map(e => '📋 ' + e.title).join('\n');
-    const statusIcon = saved ? '✅ Saqlandi!' : '⚠️ Xato, qayta urinib ko\'ring';
-
-    await api('sendMessage', {
-      chat_id: chatId,
-      text: statusIcon + '\n\n' + lines + '\n\n🎤 "' + transcript + '"',
-      parse_mode: 'Markdown'
-    });
-
+    await msg(chatId, (saved ? '✅ Saqlandi!\n\n' : '⚠️ Xato!\n\n') + lines + '\n\n🎤 _"' + transcript + '"_');
   } catch (e) {
     console.error('Voice error:', e);
     await msg(chatId, '❌ Xatolik: ' + e.message);
   }
+}
+
+// ─── Invoice photo handler ────────────────────────────────────
+async function handleInvoicePhoto(chatId, photo) {
+  try {
+    await msg(chatId, '⏳ Nakładnoy o\'qilmoqda...');
+
+    // Get largest photo
+    const fileInfo = await api('getFile', { file_id: photo[photo.length - 1].file_id });
+    const fileUrl = 'https://api.telegram.org/file/bot' + BOT + '/' + fileInfo.result.file_path;
+
+    // Download image
+    const imgBuffer = await downloadBuffer(fileUrl);
+    const base64img = imgBuffer.toString('base64');
+
+    // Use Groq vision via llama to read invoice
+    const parsed = await readInvoiceFromImage(base64img);
+
+    if (!parsed) {
+      await msg(chatId, '❌ Nakładnoyni o\'qib bo\'lmadi. Matnni o\'zingiz yuboring.');
+      return;
+    }
+
+    // Save state and ask for client
+    invoiceState[chatId] = {
+      step: 'ask_client',
+      invoice: parsed,
+      photoId: photo[photo.length - 1].file_id
+    };
+
+    const today = new Date().toLocaleDateString('uz-UZ', { timeZone: 'Asia/Tashkent', day: '2-digit', month: '2-digit', year: 'numeric' });
+    const itemList = (parsed.items || []).map(i => `  • ${i.name}: ${i.qty} × ${i.price} = ${i.total}`).join('\n') || '  —';
+
+    await msg(chatId,
+      `📄 *Nakładnoy №${parsed.invoice_no || '—'}*\n` +
+      `🏭 ${parsed.supplier || '—'}\n` +
+      `📅 ${parsed.date || today}\n\n` +
+      `*Mahsulotlar:*\n${itemList}\n\n` +
+      `*Jami: ${parsed.total} ${parsed.currency || 'USD'}*\n\n` +
+      `❓ *Qaysi mijoz uchun? Ismini yozing:*`
+    );
+  } catch (e) {
+    console.error('Invoice error:', e);
+    await msg(chatId, '❌ Xatolik: ' + e.message);
+  }
+}
+
+// Read invoice using Groq vision (llama-3.2-90b-vision)
+function readInvoiceFromImage(base64img) {
+  return new Promise((resolve) => {
+    const body = JSON.stringify({
+      model: 'llama-3.2-90b-vision-preview',
+      max_tokens: 1000,
+      messages: [{
+        role: 'user',
+        content: [
+          {
+            type: 'image_url',
+            image_url: { url: 'data:image/jpeg;base64,' + base64img }
+          },
+          {
+            type: 'text',
+            text: 'Bu nakładnoy/chek rasmidan ma\'lumotlarni chiqar. FAQAT JSON qaytarasan (markdown yo\'q):\n{"supplier":"yetkazuvchi","invoice_no":"raqam yoki null","date":"DD.MM.YYYY yoki null","total":son,"currency":"USD","items":[{"name":"nom","qty":son,"price":son,"total":son}]}'
+          }
+        ]
+      }]
+    });
+
+    const req = https.request({
+      hostname: 'api.groq.com', path: '/openai/v1/chat/completions', method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + GROQ_KEY, 'Content-Length': Buffer.byteLength(body) }
+    }, res => {
+      let data = '';
+      res.on('data', c => data += c);
+      res.on('end', () => {
+        try {
+          let raw = JSON.parse(data).choices[0].message.content.trim().replace(/```json|```/g, '').trim();
+          resolve(JSON.parse(raw));
+        } catch (e) { resolve(null); }
+      });
+    });
+    req.on('error', () => resolve(null));
+    req.write(body); req.end();
+  });
+}
+
+// ─── Invoice client reply handler ────────────────────────────
+async function handleInvoiceClientReply(chatId, clientName) {
+  const s = invoiceState[chatId];
+  if (!s) return false;
+
+  const inv = s.invoice;
+  const today = new Date().toLocaleDateString('uz-UZ', { timeZone: 'Asia/Tashkent', day: '2-digit', month: '2-digit', year: 'numeric' });
+
+  const expEntry = {
+    date: inv.date || today,
+    title: `🧾 ${inv.date || today} | ${clientName} | ${inv.supplier || ''} | $${inv.total}`,
+    supplier: inv.supplier || '',
+    invoice_no: inv.invoice_no || '',
+    client: clientName,
+    items: inv.items || [],
+    total: inv.total || 0,
+    currency: inv.currency || 'USD',
+    ts: new Date().toISOString()
+  };
+
+  const saved = await appendToFile('expenses-log.json', [expEntry]);
+  delete invoiceState[chatId];
+
+  await msg(chatId,
+    (saved ? '✅ Saqlandi!\n\n' : '⚠️ Xato!\n\n') +
+    `🧾 *${inv.supplier || 'Nakładnoy'}*\n` +
+    `👤 Mijoz: *${clientName}*\n` +
+    `💰 Summa: *$${inv.total}*\n` +
+    `📁 expenses-log.json ga qo\'shildi`
+  );
+  return true;
 }
 
 // ─── /hisobot command ─────────────────────────────────────────
@@ -243,105 +361,101 @@ async function sendReport(chatId) {
   try {
     const now = new Date();
     const monthStr = ('0' + (now.getMonth() + 1)).slice(-2) + '.' + now.getFullYear();
-    const logs = await getMonthLogs(monthStr);
+    const [hrLogs, expLogs] = await Promise.all([
+      getMonthLogs('hr-log.json', monthStr),
+      getMonthLogs('expenses-log.json', monthStr)
+    ]);
 
-    if (!logs.length) { await msg(chatId, '📋 Bu oy hali qayd yo\'q.'); return; }
+    let text = `📊 *${monthStr} — Oylik hisobot*\n\n`;
 
-    const attendance = logs.filter(l => l.parsed && l.parsed.action === 'attendance');
-    const avans = logs.filter(l => l.parsed && l.parsed.action === 'avans');
-    const kelmadi = attendance.filter(l => l.parsed.present === false);
-
-    let text = '📊 *' + monthStr + ' — Oylik hisobot*\n\n';
-
+    // Absences
+    const kelmadi = hrLogs.filter(l => l.parsed && l.parsed.action === 'attendance' && l.parsed.present === false);
     if (kelmadi.length) {
-      text += '❌ *Ishga kelmagan kunlar:*\n';
-      const byWorker = {};
-      kelmadi.forEach(l => {
-        const w = l.parsed.worker;
-        if (!byWorker[w]) byWorker[w] = [];
-        byWorker[w].push(l.date);
-      });
-      for (const [worker, dates] of Object.entries(byWorker)) {
-        text += `  • ${worker}: ${dates.join(', ')}\n`;
-      }
+      text += '❌ *Kelmagan kunlar:*\n';
+      const byW = {};
+      kelmadi.forEach(l => { const w = l.parsed.worker; if (!byW[w]) byW[w] = []; byW[w].push(l.date); });
+      for (const [w, dates] of Object.entries(byW)) text += `  • ${w}: ${dates.sort().join(', ')} (${dates.length} kun)\n`;
       text += '\n';
     }
 
+    // Advances
+    const avans = hrLogs.filter(l => l.parsed && l.parsed.action === 'avans');
     if (avans.length) {
       text += '💵 *Avanslar:*\n';
-      avans.forEach(l => {
-        const amt = l.parsed.amount ? l.parsed.amount + ' ' + (l.parsed.currency || '') : '';
-        text += `  • ${l.date} — ${l.parsed.worker}: ${amt}\n`;
-      });
-      const totalUSD = avans.filter(l => l.parsed.currency === 'USD').reduce((s, l) => s + (l.parsed.amount || 0), 0);
-      if (totalUSD) text += `  Jami: $${totalUSD}\n`;
+      const total = avans.reduce((s, l) => s + (l.parsed.amount || 0), 0);
+      avans.forEach(l => text += `  • ${l.date} — ${l.parsed.worker}: $${l.parsed.amount || 0}\n`);
+      text += `  *Jami: $${total}*\n\n`;
     }
 
-    await api('sendMessage', { chat_id: chatId, text, parse_mode: 'Markdown' });
-  } catch (e) { await msg(chatId, '❌ Hisobot xato: ' + e.message); }
+    // Expenses
+    if (expLogs.length) {
+      text += '🧾 *Xarajatlar:*\n';
+      const totalExp = expLogs.reduce((s, l) => s + (l.total || 0), 0);
+      expLogs.forEach(l => text += `  • ${l.date} — ${l.client || ''}: $${l.total || 0} (${l.supplier || ''})\n`);
+      text += `  *Jami: $${totalExp}*\n`;
+    }
+
+    if (!kelmadi.length && !avans.length && !expLogs.length) text += '_Bu oy hali ma\'lumot yo\'q_';
+
+    await msg(chatId, text);
+  } catch (e) { await msg(chatId, '❌ Xato: ' + e.message); }
 }
 
-// ─── Main update handler ──────────────────────────────────────
+// ─── Main handler ─────────────────────────────────────────────
 async function handle(upd) {
   try {
     if (upd.callback_query) {
       const cq = upd.callback_query;
       const c = cq.message.chat.id;
       await acb(cq.id);
-      if (cq.data === 'til_uz') {
-        state[c] = { lang: 'uz', step: 'ask_file' };
-        await btn(c, 'Sizda tayyor loyiha yoki xona rasmi bormi?', [
-          [{ text: 'Ha, bor', callback_data: 'file_ha' }],
-          [{ text: "Yo'q", callback_data: 'file_yoq' }]
-        ]);
-      } else if (cq.data === 'til_ru') {
-        state[c] = { lang: 'ru', step: 'ask_file' };
-        await btn(c, 'U vas est gotoviy proekt ili foto komnaty?', [
-          [{ text: 'Da, est', callback_data: 'file_ha' }],
-          [{ text: 'Net', callback_data: 'file_yoq' }]
-        ]);
-      } else if (cq.data === 'file_ha') {
-        const l = (state[c] || {}).lang || 'uz';
-        state[c] = { lang: l, step: 'waiting_file' };
-        await msg(c, l === 'uz' ? 'Iltimos, fayl yoki rasmni yuboring:' : 'Pozhaluysta, otpravte fayl ili foto:');
-      } else if (cq.data === 'file_yoq') {
-        const l = (state[c] || {}).lang || 'uz';
-        state[c] = { lang: l, step: 'done' };
-        await anketa(c, l);
-      }
+      if (cq.data === 'til_uz') { state[c] = { lang: 'uz', step: 'ask_file' }; await btn(c, 'Sizda tayyor loyiha yoki xona rasmi bormi?', [[{ text: 'Ha, bor', callback_data: 'file_ha' }], [{ text: "Yo'q", callback_data: 'file_yoq' }]]); }
+      else if (cq.data === 'til_ru') { state[c] = { lang: 'ru', step: 'ask_file' }; await btn(c, 'U vas est gotoviy proekt ili foto komnaty?', [[{ text: 'Da, est', callback_data: 'file_ha' }], [{ text: 'Net', callback_data: 'file_yoq' }]]); }
+      else if (cq.data === 'file_ha') { const l = (state[c] || {}).lang || 'uz'; state[c] = { lang: l, step: 'waiting_file' }; await msg(c, l === 'uz' ? 'Iltimos, fayl yoki rasmni yuboring:' : 'Pozhaluysta, otpravte fayl ili foto:'); }
+      else if (cq.data === 'file_yoq') { const l = (state[c] || {}).lang || 'uz'; state[c] = { lang: l, step: 'done' }; await anketa(c, l); }
       return;
     }
 
     if (!upd.message) return;
     const c = upd.message.chat.id;
+    const isAdmin = String(c) === String(ADMIN);
     const ism = upd.message.from.first_name || 'Mijoz';
     const un = upd.message.from.username ? '@' + upd.message.from.username : '-';
     const t = upd.message.text || '';
 
-    // Admin voice → AI
-    if (upd.message.voice && String(c) === String(ADMIN)) {
-      await handleVoice(c, upd.message.voice);
+    // Admin voice → HR log
+    if (upd.message.voice && isAdmin) { await handleVoice(c, upd.message.voice); return; }
+
+    // Admin photo → Invoice
+    if (upd.message.photo && isAdmin) {
+      // Check if waiting for invoice client name
+      if (invoiceState[c] && invoiceState[c].step === 'ask_client') {
+        // This shouldn't happen (photo instead of text), just re-ask
+        await msg(c, '❓ Mijoz ismini *matn* yuboring:');
+        return;
+      }
+      await handleInvoicePhoto(c, upd.message.photo);
       return;
     }
 
+    // Admin text reply to invoice client question
+    if (isAdmin && invoiceState[c] && invoiceState[c].step === 'ask_client') {
+      const handled = await handleInvoiceClientReply(c, t.trim());
+      if (handled) return;
+    }
+
+    // Phone tracking
     const phoneMatch = t.match(/(\+998|998)\d{9}/);
     if (phoneMatch) phoneToChat[phoneMatch[0].replace(/\D/g, '')] = c;
 
     if (t === '/start') {
       state[c] = {};
-      await btn(c, 'MEBEL BY IBROHIM\n\nIltimos tilni tanlang / Pozhaluysta viberite yazyk:', [
-        [{ text: "O'zbek tili", callback_data: 'til_uz' }],
-        [{ text: 'Russkiy yazyk', callback_data: 'til_ru' }]
-      ]);
+      await btn(c, 'MEBEL BY IBROHIM\n\nIltimos tilni tanlang / Pozhaluysta viberite yazyk:', [[{ text: "O'zbek tili", callback_data: 'til_uz' }], [{ text: 'Russkiy yazyk', callback_data: 'til_ru' }]]);
       return;
     }
 
-    if (t === '/hisobot' && String(c) === String(ADMIN)) {
-      await sendReport(c);
-      return;
-    }
+    if (t === '/hisobot' && isAdmin) { await sendReport(c); return; }
 
-    if (upd.message.photo || upd.message.document) {
+    if ((upd.message.photo || upd.message.document) && !isAdmin) {
       await msg(ADMIN, 'Yangi fayl! ' + ism + ' (' + un + ') ' + c);
       await fwd(ADMIN, c, upd.message.message_id);
       const s = state[c] || {};
@@ -353,11 +467,8 @@ async function handle(upd) {
       return;
     }
 
-    if (!(state[c] || {}).lang) {
-      await btn(c, 'MEBEL BY IBROHIM\n\nTilni tanlang:', [
-        [{ text: "O'zbek tili", callback_data: 'til_uz' }],
-        [{ text: 'Russkiy yazyk', callback_data: 'til_ru' }]
-      ]);
+    if (!(state[c] || {}).lang && !isAdmin) {
+      await btn(c, 'MEBEL BY IBROHIM\n\nTilni tanlang:', [[{ text: "O'zbek tili", callback_data: 'til_uz' }], [{ text: 'Russkiy yazyk', callback_data: 'til_ru' }]]);
     }
   } catch (e) { console.error(e); }
 }
@@ -383,8 +494,8 @@ http.createServer((req, res) => {
         const name = data.name || 'Mijoz';
         const chatId = phoneToChat[phone] || null;
         if (chatId) {
-          const uzMsg = 'Tabriklaymiz, ' + name + '!\n\nArizangiz muvaffaqiyatli yuborildi.\n\nKo\'nib chiqib, tez orada siz bilan aloqaga chiqamiz!\n\n+998 91 135 44 66';
-          const ruMsg = 'Pozdavlyaem, ' + name + '!\n\nVasha zayavka uspeshno otpravlena.\n\nMy rassmotrim ee i svyazhemsya s vami!\n\n+998 91 135 44 66';
+          const uzMsg = 'Tabriklaymiz, ' + name + '!\n\nArizangiz muvaffaqiyatli yuborildi.\n\nTez orada siz bilan aloqaga chiqamiz!\n\n+998 91 135 44 66';
+          const ruMsg = 'Pozdavlyaem, ' + name + '!\n\nVasha zayavka otpravlena.\n\nSvyazhemsya s vami!\n\n+998 91 135 44 66';
           await msg(chatId, lang === 'uz' ? uzMsg : ruMsg);
         }
       } catch (e) { console.error('notify error:', e); }
