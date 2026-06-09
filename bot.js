@@ -337,7 +337,7 @@ async function sendReport(chatId) {
     if (exp2.length) {
       const total = exp2.reduce((s,l)=>s+(l.total||0),0);
       text += `🧾 *Ishlab. xarajatlar ($${total}):*\n`;
-      exp2.forEach(l => text += `  • ${l.date} — ${l.client}: $${l.total}\n`);
+      exp2.forEach(l => text += `  • ${l.date} — ${l.client||l.deal||l.supplier||'—'}: $${l.total}\n`);
       text += '\n';
     }
 
