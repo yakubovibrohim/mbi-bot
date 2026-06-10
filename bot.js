@@ -594,14 +594,38 @@ async function handleIG(body) {
         const from = m.sender?.id;
         const text = m.message?.text;
         if (!from || !text || m.message?.is_echo) continue;
-        console.log('IG DM:', from, text);
+        console.log('IG DM from:', from, 'text:', text);
         await msg(ADMIN, `📱 *Instagram DM:*\n💬 "${text}"\n_Javob yuborilmoqda..._`);
-        const reply = await aiReply(text);
-        await igSend(from, reply);
-        await msg(ADMIN, `✅ *Yuborildi:*\n"${reply}"`);
+        
+        let reply;
+        try {
+          reply = await aiReply(text);
+          console.log('aiReply result:', reply ? reply.slice(0,50) : 'NULL');
+        } catch(aiErr) {
+          console.error('aiReply xato:', aiErr.message);
+          await msg(ADMIN, `❌ AI xato: ${aiErr.message}`);
+          reply = 'Salom! Mebel haqida savol uchun: +998 91 135 44 66';
+        }
+        
+        let sendResult;
+        try {
+          sendResult = await igSend(from, reply);
+          console.log('igSend natija:', JSON.stringify(sendResult));
+          if (sendResult.error) {
+            await msg(ADMIN, `❌ *igSend xato:*\n\`${JSON.stringify(sendResult.error)}\``);
+          } else {
+            await msg(ADMIN, `✅ *Yuborildi:*\n"${reply}"`);
+          }
+        } catch(sendErr) {
+          console.error('igSend xato:', sendErr.message);
+          await msg(ADMIN, `❌ igSend exception: ${sendErr.message}`);
+        }
       }
     }
-  } catch(e) { console.error('IG error:', e); }
+  } catch(e) { 
+    console.error('IG error:', e);
+    await msg(ADMIN, `❌ handleIG xato: ${e.message}`);
+  }
 }
 
 // ─── HTTP Server ──────────────────────────────────────────────
