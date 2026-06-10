@@ -569,9 +569,9 @@ async function igSend(to, text) {
     console.log('igSend IG_TOKEN:', IG_TOKEN ? IG_TOKEN.length + ' chars' : 'EMPTY!');
     const req = https.request({ 
       hostname: 'graph.facebook.com', 
-      path: '/v21.0/me/messages?access_token=' + IG_TOKEN, 
+      path: '/v21.0/me/messages', 
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) }
+      headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body), 'Authorization': 'Bearer ' + IG_TOKEN }
     }, r => { 
       let d = ''; 
       r.on('data', c => d += c); 
