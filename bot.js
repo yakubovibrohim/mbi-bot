@@ -565,7 +565,7 @@ Telefon: +998 91 135 44 66`,
 async function igSend(to, text) {
   return new Promise((res) => {
     const body = JSON.stringify({ recipient: { id: to }, message: { text } });
-    const req = https.request({ hostname: 'graph.instagram.com', path: '/v21.0/me/messages?access_token=' + IG_TOKEN, method: 'POST',
+    const req = https.request({ hostname: 'graph.facebook.com', path: '/v21.0/me/messages?access_token=' + IG_TOKEN, method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) }
     }, r => { let d = ''; r.on('data', c => d += c); r.on('end', () => res(JSON.parse(d))); });
     req.on('error', () => res({})); req.write(body); req.end();
