@@ -520,7 +520,7 @@ async function handle(upd) {
 }
 
 // ─── Instagram ────────────────────────────────────────────────
-const IG_TOKEN = process.env.IG_TOKEN || '';
+const IG_TOKEN = (process.env.IG_TOKEN || '').trim().replace(/[\r\n]/g, '');
 const IG_VERIFY = 'mbi_secret_2024';
 const OR_KEY = process.env.OPENROUTER_KEY || process.env.OPENROUTER_API_KEY || '';
 
