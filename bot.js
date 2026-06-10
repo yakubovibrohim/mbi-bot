@@ -522,7 +522,7 @@ async function handle(upd) {
 // ─── Instagram ────────────────────────────────────────────────
 const IG_TOKEN = process.env.IG_TOKEN || '';
 const IG_VERIFY = 'mbi_secret_2024';
-const OR_KEY = process.env.OPENROUTER_KEY || '';
+const OR_KEY = process.env.OPENROUTER_KEY || process.env.OPENROUTER_API_KEY || '';
 
 async function aiReply(text) {
   return new Promise((res) => {
