@@ -551,8 +551,9 @@ Materiallar: LMDF korpus, akril fasad, GTV/Blum armatura.
 Telefon: +998 91 135 44 66`,
       messages: [{ role: 'user', content: text }]
     });
+    console.log('aiReply OR_KEY:', OR_KEY ? 'SET('+OR_KEY.length+'chars)' : 'EMPTY');
     const req = https.request({ hostname: 'openrouter.ai', path: '/api/v1/chat/completions', method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + OR_KEY, 'HTTP-Referer': 'https://mbi-bot-yw9q.onrender.com' }
+      headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body), 'Authorization': 'Bearer ' + OR_KEY, 'HTTP-Referer': 'https://mbi-bot-yw9q.onrender.com' }
     }, r => { let d = ''; r.on('data', c => d += c); r.on('end', () => {
       try { res(JSON.parse(d).choices?.[0]?.message?.content || 'Kechirasiz, +998 91 135 44 66 ga qongiroq qiling!'); }
       catch(e) { res('Kechirasiz, +998 91 135 44 66 ga qongiroq qiling!'); }
@@ -568,7 +569,7 @@ async function igSend(to, text) {
     const req = https.request({ hostname: 'graph.facebook.com', path: '/v21.0/me/messages?access_token=' + IG_TOKEN, method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) }
     }, r => { let d = ''; r.on('data', c => d += c); r.on('end', () => res(JSON.parse(d))); });
-    req.on('error', () => res({})); req.write(body); req.end();
+    req.on('error', (e) => { console.log('igSend error:', e.message); res({}); }); req.write(body); req.end();
   });
 }
 
