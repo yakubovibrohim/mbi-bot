@@ -519,9 +519,73 @@ async function handle(upd) {
   } catch (e) { console.error(e); }
 }
 
+// ─── Instagram ────────────────────────────────────────────────
+const IG_TOKEN = process.env.IG_TOKEN || '';
+const IG_VERIFY = 'mbi_secret_2024';
+const OR_KEY = process.env.OPENROUTER_KEY || '';
+
+async function aiReply(text) {
+  return new Promise((res) => {
+    const body = JSON.stringify({
+      model: 'anthropic/claude-sonnet-4-5', max_tokens: 400,
+      system: "Sen MBI Mebel kompaniyasining Instagram savdo assistentisan. Toshkentda joylashgan, buyurtmaga mebel yasaydi. Narx: $400 dan metr uchun. Materiallar: LMDF, akril fasad, GTV/Blum. Tel: +998 91 135 44 66. Har doim ozbekcha, qisqa va dostona javob ber (3-5 jumla). Narx soraganda olchamga qarab belgilanishini ayt va bepul olcov taklif qil.",
+      messages: [{ role: 'user', content: text }]
+    });
+    const req = https.request({ hostname: 'openrouter.ai', path: '/api/v1/chat/completions', method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + OR_KEY, 'HTTP-Referer': 'https://mbi-bot-yw9q.onrender.com' }
+    }, r => { let d = ''; r.on('data', c => d += c); r.on('end', () => {
+      try { res(JSON.parse(d).choices?.[0]?.message?.content || 'Kechirasiz, +998 91 135 44 66 ga qongiroq qiling!'); }
+      catch(e) { res('Kechirasiz, +998 91 135 44 66 ga qongiroq qiling!'); }
+    }); });
+    req.on('error', () => res('Kechirasiz, +998 91 135 44 66 ga qongiroq qiling!'));
+    req.write(body); req.end();
+  });
+}
+
+async function igSend(to, text) {
+  return new Promise((res) => {
+    const body = JSON.stringify({ recipient: { id: to }, message: { text } });
+    const req = https.request({ hostname: 'graph.instagram.com', path: '/v21.0/me/messages?access_token=' + IG_TOKEN, method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) }
+    }, r => { let d = ''; r.on('data', c => d += c); r.on('end', () => res(JSON.parse(d))); });
+    req.on('error', () => res({})); req.write(body); req.end();
+  });
+}
+
+async function handleIG(body) {
+  try {
+    if (body.object !== 'instagram') return;
+    for (const entry of (body.entry || [])) {
+      for (const m of (entry.messaging || [])) {
+        const from = m.sender?.id;
+        const text = m.message?.text;
+        if (!from || !text || m.message?.is_echo) continue;
+        console.log('IG DM:', from, text);
+        await msg(ADMIN, `📱 *Instagram DM:*\n💬 "${text}"\n_Javob yuborilmoqda..._`);
+        const reply = await aiReply(text);
+        await igSend(from, reply);
+        await msg(ADMIN, `✅ *Yuborildi:*\n"${reply}"`);
+      }
+    }
+  } catch(e) { console.error('IG error:', e); }
+}
+
 // ─── HTTP Server ──────────────────────────────────────────────
 const PORT = process.env.PORT || 3000;
 http.createServer((req, res) => {
+  // Instagram verify
+  if (req.method === 'GET' && req.url?.startsWith('/instagram')) {
+    const u = new URL(req.url, 'http://localhost');
+    if (u.searchParams.get('hub.verify_token') === IG_VERIFY) {
+      res.writeHead(200); res.end(u.searchParams.get('hub.challenge')); return;
+    }
+    res.writeHead(403); res.end(); return;
+  }
+  // Instagram events
+  if (req.method === 'POST' && req.url === '/instagram') {
+    let b = ''; req.on('data', c => b += c);
+    req.on('end', async () => { try { await handleIG(JSON.parse(b)); } catch(e) {} res.writeHead(200); res.end('OK'); }); return;
+  }
   if (req.method==='POST' && req.url==='/webhook') {
     let b=''; req.on('data',c=>b+=c);
     req.on('end', async ()=>{ try{await handle(JSON.parse(b));}catch(e){} res.writeHead(200);res.end('OK'); });
