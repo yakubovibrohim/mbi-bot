@@ -565,10 +565,24 @@ Telefon: +998 91 135 44 66`,
 async function igSend(to, text) {
   return new Promise((res) => {
     const body = JSON.stringify({ recipient: { id: to }, message: { text } });
-    const req = https.request({ hostname: 'graph.facebook.com', path: '/v21.0/me/messages?access_token=' + encodeURIComponent(IG_TOKEN), method: 'POST',
+    console.log('igSend to:', to, '| text:', text.slice(0,50));
+    console.log('igSend IG_TOKEN:', IG_TOKEN ? IG_TOKEN.length + ' chars' : 'EMPTY!');
+    const req = https.request({ 
+      hostname: 'graph.facebook.com', 
+      path: '/v21.0/me/messages?access_token=' + IG_TOKEN, 
+      method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) }
-    }, r => { let d = ''; r.on('data', c => d += c); r.on('end', () => res(JSON.parse(d))); });
-    req.on('error', () => res({})); req.write(body); req.end();
+    }, r => { 
+      let d = ''; 
+      r.on('data', c => d += c); 
+      r.on('end', () => {
+        console.log('igSend API response:', d.slice(0, 300));
+        try { res(JSON.parse(d)); } catch(e) { res({}); }
+      }); 
+    });
+    req.on('error', (e) => { console.log('igSend network error:', e.message); res({}); }); 
+    req.write(body); 
+    req.end();
   });
 }
 
