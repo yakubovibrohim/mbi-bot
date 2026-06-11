@@ -684,19 +684,20 @@ async function handleIG(body) {
         let reply;
         try {
           reply = await aiReply(text, from);
-          console.log('aiReply result:', reply ? reply.slice(0,50) : 'NULL');
         } catch(aiErr) {
           console.error('aiReply xato:', aiErr.message);
+          await msg(ADMIN, `⚠️ *IG bot xatolik*\nMijoz: ${from}\nXabar: "${text.slice(0,50)}"\nXato: ${aiErr.message}`);
           reply = `Salom! Mebel haqida savol uchun: +998 91 135 44 66`;
         }
 
         try {
           const sendResult = await igSend(from, reply);
           if (sendResult.error) {
-            console.log('igSend xato:', JSON.stringify(sendResult.error));
+            await msg(ADMIN, `⚠️ *IG javob yuborilmadi*\nMijoz: ${from}\nXato: ${sendResult.error.message || JSON.stringify(sendResult.error).slice(0,100)}`);
           }
         } catch(sendErr) {
           console.error('igSend xato:', sendErr.message);
+          await msg(ADMIN, `⚠️ *IG bot ishlamadi*\nMijoz: ${from}\nXato: ${sendErr.message}`);
         }
       }
     }
