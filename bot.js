@@ -669,8 +669,9 @@ http.createServer((req, res) => {
     const token = IG_TOKEN;
     const vReq = https.request({
       hostname: 'graph.facebook.com',
-      path: '/v21.0/me?fields=id,name,username&access_token=' + encodeURIComponent(token),
-      method: 'GET'
+      path: '/v21.0/me?fields=id,name,username',
+      method: 'GET',
+      headers: { 'Authorization': 'Bearer ' + token }
     }, vRes => {
       let data = '';
       vRes.on('data', c => data += c);
