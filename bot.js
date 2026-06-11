@@ -714,6 +714,58 @@ http.createServer((req, res) => {
     res.writeHead(200, {'Content-Type': 'text/plain'});
     res.end(`len=${token.length}\nfirst40=${token.slice(0,40)}\nlast20=${token.slice(-20)}\nhas_non_ascii=${nonAscii.length > 0}\nnon_ascii_codes=${JSON.stringify(nonAscii)}\nhex_first40=${hex.slice(0,80)}`);
     return;
+
+  } else if (req.method === 'GET' && req.url?.startsWith('/convos')) {
+    // Fetch IG conversations for analysis
+    const u = new URL('https://x.com' + req.url);
+    const limit = u.searchParams.get('limit') || '20';
+    const convoId = u.searchParams.get('id');
+
+    if (convoId) {
+      // Fetch messages in a specific conversation
+      const msgReq = https.request({
+        hostname: 'graph.instagram.com',
+        path: `/v21.0/${convoId}/messages?fields=id,from,message,created_time&limit=50&access_token=${IG_TOKEN}`,
+        method: 'GET'
+      }, msgRes => {
+        let d = ''; msgRes.on('data', c => d += c);
+        msgRes.on('end', () => {
+          try {
+            const data = JSON.parse(d);
+            const msgs = (data.data || []).reverse().map(m =>
+              `[${m.created_time?.slice(0,10)}] ${m.from?.username || m.from?.id || '?'}: ${m.message || '(media)'}`
+            ).join('\n');
+            res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
+            res.end(msgs || 'No messages');
+          } catch(e) { res.end('Error: ' + d.slice(0,200)); }
+        });
+      });
+      msgReq.on('error', e => res.end('Error: ' + e.message));
+      msgReq.end();
+    } else {
+      // Fetch conversation list
+      const listReq = https.request({
+        hostname: 'graph.instagram.com',
+        path: `/v21.0/${IG_USER_ID}/conversations?fields=id,participants,updated_time&limit=${limit}&access_token=${IG_TOKEN}`,
+        method: 'GET'
+      }, listRes => {
+        let d = ''; listRes.on('data', c => d += c);
+        listRes.on('end', () => {
+          try {
+            const data = JSON.parse(d);
+            const convos = (data.data || []).map(c => {
+              const participants = (c.participants?.data || []).map(p => p.username || p.id).join(', ');
+              return `ID: ${c.id} | ${c.updated_time?.slice(0,10)} | ${participants}`;
+            }).join('\n');
+            res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
+            res.end(convos || 'No conversations: ' + d.slice(0,200));
+          } catch(e) { res.end('Error: ' + d.slice(0,200)); }
+        });
+      });
+      listReq.on('error', e => res.end('Error: ' + e.message));
+      listReq.end();
+    }
+    return;
   } else if (req.method === 'GET' && req.url?.startsWith('/verify')) {
     const token = IG_TOKEN;
     const encoded = encodeURIComponent(token);
