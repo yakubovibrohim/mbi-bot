@@ -569,7 +569,7 @@ async function igSend(to, text) {
     console.log('igSend to:', to, '| text:', text.slice(0,50));
     console.log('igSend IG_TOKEN:', IG_TOKEN ? IG_TOKEN.length + ' chars' : 'EMPTY!');
     const req = https.request({ 
-      hostname: 'graph.facebook.com', 
+      hostname: 'graph.instagram.com', 
       path: '/v21.0/' + IG_USER_ID + '/messages', 
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body), 'Authorization': 'Bearer ' + IG_TOKEN }
@@ -759,4 +759,5 @@ http.createServer((req, res) => {
     return;
   } else { res.writeHead(200);res.end('MBI Bot running!'); }
 }).listen(PORT, ()=>console.log('Bot running on port '+PORT));
+
 
