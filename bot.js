@@ -675,7 +675,6 @@ http.createServer((req, res) => {
   } else if (req.method === 'GET' && req.url?.startsWith('/verify')) {
     const token = IG_TOKEN;
     const encoded = encodeURIComponent(token);
-    // Test 1: /me with Bearer header
     const makeReq = (opts, cb) => {
       const r = https.request(opts, rs => {
         let d = ''; rs.on('data', c => d += c); rs.on('end', () => cb(d));
@@ -684,12 +683,15 @@ http.createServer((req, res) => {
       r.end();
     };
     let results = `Token: len=${token.length} first20=${token.slice(0,20)}\n`;
-    makeReq({ hostname:'graph.facebook.com', path:'/v21.0/me?fields=id,name', method:'GET', headers:{'Authorization':'Bearer '+token} }, d1 => {
-      results += 'Test1 /me Bearer: ' + d1 + '\n';
-      makeReq({ hostname:'graph.facebook.com', path:'/v21.0/'+IG_USER_ID+'?fields=id,name&access_token='+encoded, method:'GET' }, d2 => {
-        results += 'Test2 /userID qp: ' + d2 + '\n';
-        makeReq({ hostname:'graph.facebook.com', path:'/v21.0/me?fields=id,name&access_token='+encoded, method:'GET' }, d3 => {
-          results += 'Test3 /me qp: ' + d3;
+    // Test 1: graph.instagram.com /me Bearer header (new Instagram Business API)
+    makeReq({ hostname:'graph.instagram.com', path:'/v21.0/me?fields=id,name,username', method:'GET', headers:{'Authorization':'Bearer '+token} }, d1 => {
+      results += 'Test1 instagram.com /me Bearer: ' + d1 + '\n';
+      // Test 2: graph.instagram.com with access_token query param
+      makeReq({ hostname:'graph.instagram.com', path:'/v21.0/me?fields=id,name&access_token='+encoded, method:'GET' }, d2 => {
+        results += 'Test2 instagram.com /me qp: ' + d2 + '\n';
+        // Test 3: graph.facebook.com with IG user ID Bearer
+        makeReq({ hostname:'graph.facebook.com', path:'/v21.0/'+IG_USER_ID+'?fields=id,name', method:'GET', headers:{'Authorization':'Bearer '+token} }, d3 => {
+          results += 'Test3 facebook.com /userID Bearer: ' + d3;
           res.writeHead(200, {'Content-Type': 'text/plain'});
           res.end(results);
         });
