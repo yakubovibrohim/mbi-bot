@@ -669,7 +669,7 @@ http.createServer((req, res) => {
     const token = IG_TOKEN;
     const vReq = https.request({
       hostname: 'graph.facebook.com',
-      path: '/v21.0/' + IG_USER_ID + '?fields=id,name&access_token=' + token,
+      path: '/v21.0/me?fields=id,name,username&access_token=' + encodeURIComponent(token),
       method: 'GET'
     }, vRes => {
       let data = '';
@@ -743,3 +743,4 @@ http.createServer((req, res) => {
     return;
   } else { res.writeHead(200);res.end('MBI Bot running!'); }
 }).listen(PORT, ()=>console.log('Bot running on port '+PORT));
+
