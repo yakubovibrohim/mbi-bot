@@ -560,6 +560,7 @@ Mijoz: "qimmat" => "Necha metrga kerak? Arzonroq ham bor."
 
 NARX: Oshxona 390-600$/metr. Shkaf 300-500$/metr. Aniq narx o'lchamga qarab.
 JARAYON: Bepul o'lcham -> dizayn -> 2-4 hafta -> yetkazish
+MANZIL: Toshkent, Yakkasaroy tumani, Qushbegi ko'chasi 6 (Tekstilniy promzona 6-blok)
 TEL: +998 91 135 44 66`;
 
   return new Promise((res) => {
