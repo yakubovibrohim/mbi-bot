@@ -564,24 +564,39 @@ MANZIL: Toshkent, Yakkasaroy tumani, Qushbegi ko'chasi 6 (Tekstilniy promzona 6-
 TEL: +998 91 135 44 66`;
 
   return new Promise((res) => {
+    // Use GROQ API - fast, good Uzbek support
+    const messages = [{ role: 'system', content: SYSTEM }, ...history];
     const body = JSON.stringify({
-      model: 'anthropic/claude-sonnet-4-5', max_tokens: 200,
-      system: SYSTEM,
-      messages: history
+      model: 'meta-llama/llama-4-scout-17b-16e-instruct',
+      max_tokens: 200,
+      messages: messages
     });
-    const req = https.request({ hostname: 'openrouter.ai', path: '/api/v1/chat/completions', method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + OR_KEY, 'HTTP-Referer': 'https://mbi-bot-yw9q.onrender.com' }
-    }, r => { let d = ''; r.on('data', c => d += c); r.on('end', () => {
-      try {
-        const reply = JSON.parse(d).choices?.[0]?.message?.content || `Kechirasiz, +998 91 135 44 66 ga qo'ng'iroq qiling!`;
-        // Add assistant reply to history
-        igConvHistory[userId].push({ role: 'assistant', content: reply });
-        while (igConvHistory[userId].length > 6) igConvHistory[userId].shift();
-        res(reply);
+    const req = https.request({
+      hostname: 'api.groq.com',
+      path: '/openai/v1/chat/completions',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + GROQ_KEY
       }
-      catch(e) { res(`Kechirasiz, +998 91 135 44 66 ga qo'ng'iroq qiling!`); }
-    }); });
-    req.on('error', () => res(`Kechirasiz, +998 91 135 44 66 ga qo'ng'iroq qiling!`));
+    }, r => {
+      let d = ''; r.on('data', c => d += c); r.on('end', () => {
+        try {
+          const reply = JSON.parse(d).choices?.[0]?.message?.content || `Kechirasiz, +998 91 135 44 66 ga qo'ng'iroq qiling!`;
+          igConvHistory[userId].push({ role: 'assistant', content: reply });
+          while (igConvHistory[userId].length > 6) igConvHistory[userId].shift();
+          res(reply);
+        }
+        catch(e) {
+          console.log('aiReply parse error:', d.slice(0,200));
+          res(`Kechirasiz, +998 91 135 44 66 ga qo'ng'iroq qiling!`);
+        }
+      });
+    });
+    req.on('error', (e) => {
+      console.log('aiReply network error:', e.message);
+      res(`Kechirasiz, +998 91 135 44 66 ga qo'ng'iroq qiling!`);
+    });
     req.write(body); req.end();
   });
 }
