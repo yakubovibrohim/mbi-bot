@@ -590,17 +590,17 @@ QOIDA: Narxni darhol aytma — avval qaysi xona va hajmini bil. Jiddiy mijoz uch
     });
     const req = https.request({ hostname: 'openrouter.ai', path: '/api/v1/chat/completions', method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + OR_KEY, 'HTTP-Referer': 'https://mbi-bot-yw9q.onrender.com' }
-    }, r => { let d = ''; r.on('data', c => d += c); r.on('end', () => {
+    }, r => { let d = ''; r.on('data', c => d += c); r.on('end`, () => {
       try {
-        const reply = JSON.parse(d).choices?.[0]?.message?.content || 'Kechirasiz, +998 91 135 44 66 ga qo'ng'iroq qiling!';
+        const reply = JSON.parse(d).choices?.[0]?.message?.content || `Kechirasiz, +998 91 135 44 66 ga qo'ng'iroq qiling!`;
         // Add assistant reply to history
-        igConvHistory[userId].push({ role: 'assistant', content: reply });
+        igConvHistory[userId].push({ role: `assistant', content: reply });
         while (igConvHistory[userId].length > 6) igConvHistory[userId].shift();
         res(reply);
       }
-      catch(e) { res('Kechirasiz, +998 91 135 44 66 ga qo'ng'iroq qiling!'); }
+      catch(e) { res(`Kechirasiz, +998 91 135 44 66 ga qo'ng'iroq qiling!`); }
     }); });
-    req.on('error', () => res('Kechirasiz, +998 91 135 44 66 ga qo'ng'iroq qiling!'));
+    req.on('error', () => res(`Kechirasiz, +998 91 135 44 66 ga qo'ng'iroq qiling!`));
     req.write(body); req.end();
   });
 }
