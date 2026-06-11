@@ -521,6 +521,7 @@ async function handle(upd) {
 
 // ─── Instagram ────────────────────────────────────────────────
 const IG_TOKEN = (process.env.IG_TOKEN || '').trim().replace(/[\r\n]/g, '');
+const IG_USER_ID = '17841464753251739';
 const IG_VERIFY = 'mbi_secret_2024';
 const OR_KEY = process.env.OPENROUTER_KEY || process.env.OPENROUTER_API_KEY || '';
 
@@ -569,7 +570,7 @@ async function igSend(to, text) {
     console.log('igSend IG_TOKEN:', IG_TOKEN ? IG_TOKEN.length + ' chars' : 'EMPTY!');
     const req = https.request({ 
       hostname: 'graph.facebook.com', 
-      path: '/v21.0/me/messages', 
+      path: '/v21.0/' + IG_USER_ID + '/messages', 
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body), 'Authorization': 'Bearer ' + IG_TOKEN }
     }, r => { 
