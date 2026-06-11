@@ -105,6 +105,28 @@ function groqChat(system, userText, maxTokens) {
   });
 }
 
+function groqText(system, userText, maxTokens) {
+  return new Promise((resolve) => {
+    const body = JSON.stringify({
+      model: 'llama-3.3-70b-versatile', max_tokens: maxTokens || 600,
+      messages: [{ role: 'system', content: system }, { role: 'user', content: userText }]
+    });
+    const req = https.request({
+      hostname: 'api.groq.com', path: '/openai/v1/chat/completions', method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + GROQ_KEY, 'Content-Length': Buffer.byteLength(body) }
+    }, res => {
+      let data = '';
+      res.on('data', c => data += c);
+      res.on('end', () => {
+        try { resolve(JSON.parse(data).choices[0].message.content.trim()); }
+        catch (e) { resolve(null); }
+      });
+    });
+    req.on('error', () => resolve(null));
+    req.write(body); req.end();
+  });
+}
+
 // ─── Groq Whisper ─────────────────────────────────────────────
 function downloadBuffer(url) {
   return new Promise((resolve, reject) => {
@@ -275,6 +297,138 @@ async function handleVideo(chatId, video) {
     await msg(chatId, '❌ Video saqlashda xato: ' + e.message);
   }
 }
+
+// ─── AI OFFICE ────────────────────────────────────────────────
+const BIZ_INFO = `MBI Mebel (Mebel by Ibrohim) — Toshkentda buyurtma asosida mebel ishlab chiqaradi. Korpus: LMDF, fasadlar: akril, furnitura: GTV/Blum, stoleshnitsa: DSP. Narx: 1 pogonaj metr $400 dan. Tel: +998 91 135 44 66. Telegram: @MBI_mebel, Instagram: @mbi_mebel. Ishlab chiqarishda Diyor va Sherzod ishlaydi. Xo'jayin: Ibrohim. Kurs: 12000 so'm = 1 USD.`;
+
+const AGENTS = {
+  botir: { name: 'Botir', role: 'Bosh yordamchi', emoji: '🤖',
+    sys: `Sen Botir — MBI Mebel xo'jayini Ibrohimning bosh AI yordamchisisan. ${BIZ_INFO}
+Vazifang: umumiy savollarga javob berish va ishlarni muvofiqlashtirish. Qisqa, aniq, samimiy o'zbek tilida (lotin alifbosi) gapir. Agar savol pul/hisob/xarajat haqida bo'lsa, javobing oxiriga [[sardor]] deb qo'sh; mijoz/sotuv/Instagram haqida bo'lsa [[aziza]] deb qo'sh — o'sha hamkasbing davom etadi.` },
+  aziza: { name: 'Aziza', role: 'Sotuv menejeri', emoji: '👩‍💼',
+    sys: `Sen Aziza — MBI Mebel sotuv menejerisan. ${BIZ_INFO}
+Vazifang: mijozlarga yozish uchun tayyor matnlar, narx takliflari, e'tirozlarga javoblar, Instagram javoblari. Tabiiy, iliq, robotga o'xshamaydigan jonli o'zbek tilida yoz — rasmiy shablon ishlatma. Narxni har doim qiymat bilan asosla: material sifati, aniq muddat, kafolat. Javoblaring qisqa va ishlatishga tayyor bo'lsin.` },
+  sardor: { name: 'Sardor', role: 'Hisobchi', emoji: '📊',
+    sys: `Sen Sardor — MBI Mebel hisobchisisan. ${BIZ_INFO}
+Vazifang: kirim-chiqim, avanslar, qarzlar, xarajatlar tahlili va hisobotlar. Senga real log ma'lumotlari beriladi — FAQAT shularga asoslan, o'zingdan raqam to'qima. Ma'lumot yetmasa, ochiq ayt. Aniq raqamlar bilan qisqa, tartibli javob ber, o'zbek tilida (lotin).` }
+};
+
+let officeChat = null;
+let officeHistory = [];
+let lastMorningReport = '';
+
+async function loadOfficeConfig() {
+  try {
+    const d = await ghGet('office-config.json');
+    const cfg = JSON.parse(Buffer.from(d.content, 'base64').toString('utf8'));
+    officeChat = cfg.chatId || null;
+    console.log('Office chat:', officeChat);
+  } catch (e) {}
+}
+async function saveOfficeConfig() {
+  try {
+    let sha; try { const d = await ghGet('office-config.json'); sha = d.sha; } catch (e) {}
+    await ghPut('office-config.json', JSON.stringify({ chatId: officeChat }), sha, 'office config');
+  } catch (e) { console.error('office cfg:', e.message); }
+}
+
+function agentMsg(chatId, key, text) {
+  const a = AGENTS[key];
+  officeHistory.push({ from: a.name, text: String(text).slice(0, 400) });
+  if (officeHistory.length > 24) officeHistory.shift();
+  return msg(chatId, `${a.emoji} *${a.name} | ${a.role}*\n\n${text}`);
+}
+
+async function financeContext() {
+  try {
+    const [deals, exp] = await Promise.all([ghReadAll('deals-log.json'), ghReadAll('expenses-log.json')]);
+    const d = deals.slice(-10).map(x => x.title || JSON.stringify(x)).join('\n');
+    const e = exp.slice(-15).map(x => x.title || JSON.stringify(x)).join('\n');
+    return `KELISHUVLAR (oxirgilari):\n${d || '—'}\n\nXARAJATLAR (oxirgilari):\n${e || '—'}`;
+  } catch (e) { return ''; }
+}
+
+async function routeAgent(text) {
+  const t = text.toLowerCase().trim();
+  for (const k of Object.keys(AGENTS)) {
+    if (t.startsWith(k) || t.startsWith(AGENTS[k].name.toLowerCase())) return k;
+  }
+  const r = await groqText(`Sen router'san. Ibrohimning xabariga MBI Mebel jamoasidan qaysi xodim javob berishi kerakligini aniqla. FAQAT bitta so'z qaytar:\naziza — mijozlar, sotuv, narx taklifi, e'tiroz, Instagram, mijozga matn yozish\nsardor — pul, hisob, xarajat, qarz, avans, hisobot, moliya\nbotir — qolgan hammasi`, text, 10);
+  const key = String(r || '').toLowerCase().replace(/[^a-z]/g, '');
+  return AGENTS[key] ? key : 'botir';
+}
+
+async function handleOffice(upd) {
+  const m = upd.message; const c = m.chat.id;
+  const fromAdmin = String(m.from.id) === String(ADMIN);
+  let t = m.text || '';
+
+  if (m.voice && fromAdmin) {
+    try {
+      const fi = await api('getFile', { file_id: m.voice.file_id });
+      const buf = await downloadBuffer('https://api.telegram.org/file/bot' + BOT + '/' + fi.result.file_path);
+      t = await transcribeAudio(buf);
+      if (t) await msg(c, '🎤 _' + t + '_');
+    } catch (e) { return; }
+  }
+  if (!t) return;
+
+  if (t === '/office' || t === '/office@mbi_mebel_bot') {
+    if (!fromAdmin) return;
+    officeChat = c; await saveOfficeConfig();
+    await msg(c, '🏢 *MBI AI Office ishga tushdi!*');
+    await agentMsg(c, 'botir', "Assalomu alaykum, Ibrohim aka! Men bosh yordamchiman — istalgan savolni yozavering, keraklisini jamoaga o'zim taqsimlayman.");
+    await agentMsg(c, 'aziza', "Salom! Mijozlar bilan yozishmalar, narx takliflari va Instagram javoblari menda. To'g'ridan-to'g'ri \"Aziza, ...\" deb murojaat qilsangiz ham bo'ladi.");
+    await agentMsg(c, 'sardor', "Assalomu alaykum. Kirim-chiqim, qarzlar va xarajatlar nazoratimda. Har kuni ertalab soat 8:00 da hisobot beraman.");
+    return;
+  }
+  if (!fromAdmin) return;
+
+  const key = await routeAgent(t);
+  const hist = officeHistory.slice(-12).map(h => `${h.from}: ${h.text}`).join('\n');
+  officeHistory.push({ from: 'Ibrohim', text: t.slice(0, 400) });
+  if (officeHistory.length > 24) officeHistory.shift();
+
+  let extra = '';
+  if (key === 'sardor') extra = '\n\nREAL MA\'LUMOTLAR:\n' + await financeContext();
+  if (hist) extra += `\n\nSO'NGGI SUHBAT:\n${hist}`;
+
+  const reply = await groqText(AGENTS[key].sys + extra, t, 700);
+  if (!reply) { await msg(c, '⚠️ Javob olinmadi, birozdan keyin qayta urinib ko\'ring.'); return; }
+
+  let main = reply, hand = null;
+  const hm = reply.match(/\[\[(\w+)\]\]/);
+  if (hm && AGENTS[hm[1].toLowerCase()]) { hand = hm[1].toLowerCase(); }
+  main = reply.replace(/\[\[\w+\]\]/g, '').trim();
+  await agentMsg(c, key, main);
+
+  if (hand && hand !== key) {
+    let extra2 = hand === 'sardor' ? '\n\nREAL MA\'LUMOTLAR:\n' + await financeContext() : '';
+    const r2 = await groqText(AGENTS[hand].sys + extra2,
+      `Hamkasbing ${AGENTS[key].name} bu so'rovni senga uzatdi. Ibrohimning so'rovi: ${t}`, 700);
+    if (r2) await agentMsg(c, hand, r2.replace(/\[\[\w+\]\]/g, '').trim());
+  }
+}
+
+// Ertalabki hisobot — har kuni 08:00 (Toshkent)
+setInterval(async () => {
+  try {
+    const d = nowTZ();
+    if (d.getHours() === 8 && d.getMinutes() < 2) {
+      const today = todayStr();
+      if (lastMorningReport === today) return;
+      lastMorningReport = today;
+      const target = officeChat || ADMIN;
+      const fin = await financeContext();
+      const tasks = await ghReadAll('tasks-log.json');
+      const tt = tasks.filter(l => l.date === today).map(l => (l.done ? '✅' : '⬜') + ' ' + l.text).join('\n');
+      const rep = await groqText(AGENTS.sardor.sys,
+        `Bugun ${today}. Quyidagi real ma'lumotlardan qisqa ertalabki hisobot tuz: kelishuvlar holati, qarzlar, oxirgi xarajatlar, bugungi vazifalar. Faqat mavjud ma'lumotga asoslan.\n\n${fin}\n\nBUGUNGI VAZIFALAR:\n${tt || '—'}`, 800);
+      if (rep) await agentMsg(target, 'sardor', '🌅 *Ertalabki hisobot*\n\n' + rep);
+    }
+  } catch (e) { console.error('morning report:', e.message); }
+}, 55 * 1000);
+loadOfficeConfig();
 
 // ─── Invoice photo handler ────────────────────────────────────
 async function handleInvoicePhoto(chatId, photo) {
@@ -471,6 +625,12 @@ async function handle(upd) {
 
     if (!upd.message) return;
     const c = upd.message.chat.id;
+
+    // AI Office — guruh xabarlari
+    if (upd.message.chat.type === 'group' || upd.message.chat.type === 'supergroup') {
+      await handleOffice(upd); return;
+    }
+
     const isAdmin = String(c) === String(ADMIN);
     const ism = upd.message.from.first_name || 'Mijoz';
     const un = upd.message.from.username ? '@'+upd.message.from.username : '-';
