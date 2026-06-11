@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>MBI Token Callback</title>
+<style>
+  body { font-family: Arial; max-width: 600px; margin: 50px auto; padding: 20px; }
+  .token { background: #f0f0f0; padding: 15px; word-break: break-all; font-size: 12px; }
+  button { background: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer; margin-top: 10px; }
+</style>
+</head>
+<body>
+<h2>MBI Mebel — Token</h2>
+<div id="result">Yuklanmoqda...</div>
+
+<script>
+// URL dan code ni olish
+const params = new URLSearchParams(window.location.search);
+const code = params.get('code');
+const error = params.get('error');
+
+if (error) {
+  document.getElementById('result').innerHTML = '<p style="color:red">Xato: ' + error + '</p>';
+} else if (code) {
+  document.getElementById('result').innerHTML = 
+    '<p style="color:green">✅ Authorization code olindi!</p>' +
+    '<p>Quyidagi kodni nusxalab Claude ga yuboring:</p>' +
+    '<div class="token" id="code">' + code + '</div>' +
+    '<button onclick="navigator.clipboard.writeText(document.getElementById(\'code\').innerText); alert(\'Nusxalandi!\')">Nusxalash</button>';
+} else {
+  document.getElementById('result').innerHTML = '<p>Kod topilmadi. URL: ' + window.location.href + '</p>';
+}
+</script>
+</body>
+</html>
