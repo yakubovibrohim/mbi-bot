@@ -525,40 +525,70 @@ const IG_USER_ID = '17841464753251739';
 const IG_VERIFY = 'mbi_secret_2024';
 const OR_KEY = process.env.OPENROUTER_KEY || process.env.OPENROUTER_API_KEY || '';
 
-async function aiReply(text) {
+// Conversation history: last 6 messages per user (3 turns)
+const igConvHistory = {};
+
+async function aiReply(text, userId) {
+  // Init history for this user
+  if (!igConvHistory[userId]) igConvHistory[userId] = [];
+  const history = igConvHistory[userId];
+  
+  // Add user message to history
+  history.push({ role: 'user', content: text });
+  
+  // Keep only last 6 messages
+  while (history.length > 6) history.shift();
+  
+  const SYSTEM = `Sen MBI Mebel kompaniyasining savdo menejeri Kamolsan. Toshkentda buyurtmaga mebel yasaymiz.
+
+🔴 ENG MUHIM QOIDA: FAQAT O'ZBEK yoki RUS tilida yoz. Ingliz, ozarbayjon yoki boshqa tilda HECH QACHON yozma.
+
+TILNI ANIQLASH:
+- Har qanday xabar bo'lsa ham — O'ZBEK tilida javob ber
+- Agar rus tilida yozsa — RUS tilida javob ber
+- "Nima" = "Nima kerak?" yoki "Qanday yordam beray?" degan savol — O'ZBEK savoli!
+- "salom", "assalomu alaykum", "yaxshimisiz", "nima", "qancha", "narx", "zakaz", "buyurtma" — bularning hammasi O'ZBEK so'zlari!
+- Notanish so'z ko'rsa ham — O'ZBEK tilida javob ber
+
+YOZISH USLUBI:
+- Qisqa: 1-2 jumla
+- Do'stona, samimiy, jonli
+- Emoji: 1-2 ta
+- Robot kabi emas, inson kabi
+- Savol bilan tugat — mijozni gapirtirib ol
+
+MEBEL BO'YICHA:
+- Narx: 400$/metr'dan boshlab
+- Material: LMDF korpus, akril fasad
+- Ariza olish: o'lchamni olish uchun kelishish kerak
+- Tel: +998 91 135 44 66
+
+MISOL DIALOGLAR:
+Mijoz: "salom" → Sen: "Salom! 😊 Qanday mebel kerak?"
+Mijoz: "nima" → Sen: "Ha, yordam bera olaman! Qaysi xona uchun mebel qilmoqchisiz? 🏠"
+Mijoz: "kuxnya zakaz" → Sen: "Oshxona buyurtmasi — zo'r! 👍 Taxminan qanday o'lchamda?"
+Mijoz: "narx qancha" → Sen: "Narx o'lchamga qarab. Qaysi xona, taxminan necha metr?"
+Mijoz: "yaxshimisiz" → Sen: "Yaxshi, rahmat! 😊 Sizga qanday yordam bera olaman?"`;
+
   return new Promise((res) => {
     const body = JSON.stringify({
-      model: 'anthropic/claude-sonnet-4-5', max_tokens: 400,
-      system: `Sen MBI Mebel kompaniyasining Instagram savdo menejerisan. Ismingiz Kamol. Toshkentda joylashgan, buyurtmaga mebel yasaydigan kompaniya.
-
-MUHIM QOIDALAR:
-1. Narxni HECH QACHON birinchi o'zingiz aytma. Avval mijozni tushun.
-2. Birinchi navbatda qaysi xona va qanday mebel kerakligini so'ra.
-3. Keyin mijozning budjeti va kutganini aniqla — arzonroq variant yoki sifatli uzoq muddatli variant.
-4. Faqat shundan keyin narx haqida gapir.
-5. INSON kabi gapir — do'st sifatida, robot emas. Rasmiy emas, lekin hurmatli.
-6. Qisqa javob ber, ko'p yozma. 2-3 jumla yetarli.
-7. Emoji ishlatsa bo'ladi, lekin ko'p emas.
-8. Har doim o'zbek tilida gapir.
-
-MISOL dialog:
-Mijoz: "Narx qancha?"
-Sen: "Salom! 😊 Qaysi xona uchun mebel qilmoqchisiz? Oshxonamidir yo boshqa xona?"
-
-Mijoz: "Oshxona"  
-Sen: "Zo'r! Taxminan qanday hajmda? Va bir narsa so'rasam — ko'proq tejamkor variant kerakmi yoki uzoq yillar chidaydigan sifatli variant?"
-
-Materiallar: LMDF korpus, akril fasad, GTV/Blum armatura.
-Telefon: +998 91 135 44 66`,
-      messages: [{ role: 'user', content: text }]
+      model: 'anthropic/claude-sonnet-4-5', max_tokens: 200,
+      system: SYSTEM,
+      messages: history
     });
     const req = https.request({ hostname: 'openrouter.ai', path: '/api/v1/chat/completions', method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + OR_KEY, 'HTTP-Referer': 'https://mbi-bot-yw9q.onrender.com' }
     }, r => { let d = ''; r.on('data', c => d += c); r.on('end', () => {
-      try { res(JSON.parse(d).choices?.[0]?.message?.content || 'Kechirasiz, +998 91 135 44 66 ga qongiroq qiling!'); }
-      catch(e) { res('Kechirasiz, +998 91 135 44 66 ga qongiroq qiling!'); }
+      try {
+        const reply = JSON.parse(d).choices?.[0]?.message?.content || 'Kechirasiz, +998 91 135 44 66 ga qo'ng'iroq qiling!';
+        // Add assistant reply to history
+        igConvHistory[userId].push({ role: 'assistant', content: reply });
+        while (igConvHistory[userId].length > 6) igConvHistory[userId].shift();
+        res(reply);
+      }
+      catch(e) { res('Kechirasiz, +998 91 135 44 66 ga qo'ng'iroq qiling!'); }
     }); });
-    req.on('error', () => res('Kechirasiz, +998 91 135 44 66 ga qongiroq qiling!'));
+    req.on('error', () => res('Kechirasiz, +998 91 135 44 66 ga qo'ng'iroq qiling!'));
     req.write(body); req.end();
   });
 }
@@ -600,7 +630,7 @@ async function handleIG(body) {
         
         let reply;
         try {
-          reply = await aiReply(text);
+          reply = await aiReply(text, from);
           console.log('aiReply result:', reply ? reply.slice(0,50) : 'NULL');
         } catch(aiErr) {
           console.error('aiReply xato:', aiErr.message);
@@ -759,5 +789,6 @@ http.createServer((req, res) => {
     return;
   } else { res.writeHead(200);res.end('MBI Bot running!'); }
 }).listen(PORT, ()=>console.log('Bot running on port '+PORT));
+
 
 
