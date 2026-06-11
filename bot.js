@@ -539,48 +539,36 @@ async function aiReply(text, userId) {
   // Keep only last 6 messages
   while (history.length > 6) history.shift();
   
-  const SYSTEM = `Sen MBI Mebel kompaniyasining savdo menejeri Kamolsan. Buyurtmaga mebel yasovchi kompaniya, Toshkent.
+  const SYSTEM = `Sen MBI Mebel kompaniyasining savdo menejeri Kamolsan. Toshkentda buyurtmaga mebel yasaymiz.
 
-🔴 TIL QOIDASI: FAQAT O'ZBEK yoki RUS tilida yoz. Boshqa tilda HECH QACHON.
-- O'zbek xabar → O'zbek javob. Rus xabar → Rus javob.
-- "nima", "salom", "narx", "kuxnya", "yaxshimisiz", "zakaz" — bular O'ZBEK so\'zlari!
+🔴 ENG MUHIM QOIDA: FAQAT O'ZBEK yoki RUS tilida yoz. Ingliz, ozarbayjon yoki boshqa tilda HECH QACHON yozma.
 
-USLUB: Qisqa (1-3 jumla), do\'stona, jonli, savol bilan tugat. Emoji 1-2 ta. Robot emas — do\'st sifatida.
+TILNI ANIQLASH:
+- Har qanday xabar bo'lsa ham — O'ZBEK tilida javob ber
+- Agar rus tilida yozsa — RUS tilida javob ber
+- "Nima" = "Nima kerak?" yoki "Qanday yordam beray?" degan savol — O'ZBEK savoli!
+- "salom", "assalomu alaykum", "yaxshimisiz", "nima", "qancha", "narx", "zakaz", "buyurtma" — bularning hammasi O'ZBEK so'zlari!
+- Notanish so'z ko'rsa ham — O'ZBEK tilida javob ber
 
-━━━ MBI MEBEL TO\'LIQ MA\'LUMOT ━━━
+YOZISH USLUBI:
+- Qisqa: 1-2 jumla
+- Do'stona, samimiy, jonli
+- Emoji: 1-2 ta
+- Robot kabi emas, inson kabi
+- Savol bilan tugat — mijozni gapirtirib ol
 
-NARXLAR:
-• Oshxona (kuxnya): $400–600/metr (lineyniy metr)
-• Shkaf-kupe: $300–500/metr
-• Yotoqxona to\'plami: $800–2000
-• Minimal buyurtma: ~$400
+MEBEL BO'YICHA:
+- Narx: 400$/metr'dan boshlab
+- Material: LMDF korpus, akril fasad
+- Ariza olish: o'lchamni olish uchun kelishish kerak
+- Tel: +998 91 135 44 66
 
-MATERIALLAR:
-• Korpus: LMDF (Nazif oq va boshqa ranglar) — chidamli, namga bardoshli
-• Fasad: Akril — yorqin, tozalanishi oson, zamonaviy ko\'rinish
-• Furnitura: GTV yoki Blum (Avstriya) — yumshoq yopilish, 10+ yil kafolat
-• Stoleshnitsa: turli ranglar
-
-JARAYON:
-1. DM/qo\'ng\'iroq → dastlabki ma\'lumot
-2. Uy/ob\'ektga borib o\'lcham olish (BEPUL)
-3. 3D dizayn tayyorlash
-4. Shartnoma va avans (50-60%)
-5. Ishlab chiqarish: 2-4 hafta
-6. Yetkazib berish va o\'rnatish
-
-ALOQA: +998 91 135 44 66, +998 95 190 44 66 | @MBI_mebel
-
-━━━ JAVOB MISOLLARI ━━━
-Mijoz: "salom" → "Salom! 😊 Qanday mebel kerak, yordam beray?"
-Mijoz: "nima" → "Ha, ayting! Qaysi xona uchun mebel kerak? 🏠"
-Mijoz: "narx qancha" → "Narx o\'lchamga qarab. Qaysi xona — oshxona, shkaf yoki boshqa?"
-Mijoz: "kuxnya zakaz" → "Zo\'r! 👍 Taxminan necha metrlik? O\'lchamni bilsak aniq narx aytamiz."
-Mijoz: "yaxshimisiz" → "Yaxshi, rahmat! 😊 Sizga qanday yordam bera olaman?"
-Mijoz: "narx juda qimmat" → "Tushunaman 😊 Blum furnitura — 10+ yillik sarmoya. Arzonroq variant ham bor, gaplashamiz."
-Rus tilida: "что делаете" → "Мы MBI Mebel — мебель на заказ в Ташкенте. Кухни, шкафы, спальни. Что вас интересует? 😊"
-
-QOIDA: Narxni darhol aytma — avval qaysi xona va hajmini bil. Jiddiy mijoz uchun: "O\'lcham olish uchun kelsakmi? Bu bepul" de.`
+MISOL DIALOGLAR:
+Mijoz: "salom" → Sen: "Salom! 😊 Qanday mebel kerak?"
+Mijoz: "nima" → Sen: "Ha, yordam bera olaman! Qaysi xona uchun mebel qilmoqchisiz? 🏠"
+Mijoz: "kuxnya zakaz" → Sen: "Oshxona buyurtmasi — zo'r! 👍 Taxminan qanday o'lchamda?"
+Mijoz: "narx qancha" → Sen: "Narx o'lchamga qarab. Qaysi xona, taxminan necha metr?"
+Mijoz: "yaxshimisiz" → Sen: "Yaxshi, rahmat! 😊 Sizga qanday yordam bera olaman?"`;
 
   return new Promise((res) => {
     const body = JSON.stringify({
@@ -590,11 +578,11 @@ QOIDA: Narxni darhol aytma — avval qaysi xona va hajmini bil. Jiddiy mijoz uch
     });
     const req = https.request({ hostname: 'openrouter.ai', path: '/api/v1/chat/completions', method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + OR_KEY, 'HTTP-Referer': 'https://mbi-bot-yw9q.onrender.com' }
-    }, r => { let d = ''; r.on('data', c => d += c); r.on('end`, () => {
+    }, r => { let d = ''; r.on('data', c => d += c); r.on('end', () => {
       try {
         const reply = JSON.parse(d).choices?.[0]?.message?.content || `Kechirasiz, +998 91 135 44 66 ga qo'ng'iroq qiling!`;
         // Add assistant reply to history
-        igConvHistory[userId].push({ role: `assistant', content: reply });
+        igConvHistory[userId].push({ role: 'assistant', content: reply });
         while (igConvHistory[userId].length > 6) igConvHistory[userId].shift();
         res(reply);
       }
@@ -715,55 +703,45 @@ http.createServer((req, res) => {
     res.end(`len=${token.length}\nfirst40=${token.slice(0,40)}\nlast20=${token.slice(-20)}\nhas_non_ascii=${nonAscii.length > 0}\nnon_ascii_codes=${JSON.stringify(nonAscii)}\nhex_first40=${hex.slice(0,80)}`);
     return;
 
-  } else if (req.method === 'GET' && req.url?.startsWith('/convos')) {
-    // Fetch IG conversations for analysis
-    const u = new URL('https://x.com' + req.url);
-    const limit = u.searchParams.get('limit') || '20';
-    const convoId = u.searchParams.get('id');
+  } else if (req.method === 'GET' && req.url && req.url.startsWith('/convos')) {
+    const urlObj = new URL(req.url, 'http://localhost');
+    const limit = urlObj.searchParams.get('limit') || '20';
+    const convoId = urlObj.searchParams.get('id');
+
+    const makeIgReq = (path, cb) => {
+      const r = https.request({ hostname: 'graph.instagram.com', path, method: 'GET' }, res2 => {
+        let d = ''; res2.on('data', c => d += c); res2.on('end', () => cb(d));
+      });
+      r.on('error', e => cb('{"error":"' + e.message + '"}'));
+      r.end();
+    };
 
     if (convoId) {
-      // Fetch messages in a specific conversation
-      const msgReq = https.request({
-        hostname: 'graph.instagram.com',
-        path: `/v21.0/${convoId}/messages?fields=id,from,message,created_time&limit=50&access_token=${IG_TOKEN}`,
-        method: 'GET'
-      }, msgRes => {
-        let d = ''; msgRes.on('data', c => d += c);
-        msgRes.on('end', () => {
-          try {
-            const data = JSON.parse(d);
-            const msgs = (data.data || []).reverse().map(m =>
-              `[${m.created_time?.slice(0,10)}] ${m.from?.username || m.from?.id || '?'}: ${m.message || '(media)'}`
-            ).join('\n');
-            res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
-            res.end(msgs || 'No messages');
-          } catch(e) { res.end('Error: ' + d.slice(0,200)); }
-        });
+      const path = '/v21.0/' + convoId + '/messages?fields=id,from,message,created_time&limit=50&access_token=' + IG_TOKEN;
+      makeIgReq(path, d => {
+        try {
+          const data = JSON.parse(d);
+          const msgs = (data.data || []).reverse().map(m =>
+            '[' + (m.created_time || '').slice(0,10) + '] ' + (m.from && (m.from.username || m.from.id) || '?') + ': ' + (m.message || '(media)')
+          ).join('\n');
+          res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
+          res.end(msgs || 'No messages\n' + d.slice(0,300));
+        } catch(e) { res.writeHead(200); res.end('Parse error: ' + d.slice(0,300)); }
       });
-      msgReq.on('error', e => res.end('Error: ' + e.message));
-      msgReq.end();
     } else {
-      // Fetch conversation list
-      const listReq = https.request({
-        hostname: 'graph.instagram.com',
-        path: `/v21.0/${IG_USER_ID}/conversations?fields=id,participants,updated_time&limit=${limit}&access_token=${IG_TOKEN}`,
-        method: 'GET'
-      }, listRes => {
-        let d = ''; listRes.on('data', c => d += c);
-        listRes.on('end', () => {
-          try {
-            const data = JSON.parse(d);
-            const convos = (data.data || []).map(c => {
-              const participants = (c.participants?.data || []).map(p => p.username || p.id).join(', ');
-              return `ID: ${c.id} | ${c.updated_time?.slice(0,10)} | ${participants}`;
-            }).join('\n');
-            res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
-            res.end(convos || 'No conversations: ' + d.slice(0,200));
-          } catch(e) { res.end('Error: ' + d.slice(0,200)); }
-        });
+      const path = '/v21.0/' + IG_USER_ID + '/conversations?fields=id,participants,updated_time&limit=' + limit + '&access_token=' + IG_TOKEN;
+      makeIgReq(path, d => {
+        try {
+          const data = JSON.parse(d);
+          if (data.error) { res.writeHead(200); res.end('API Error: ' + JSON.stringify(data.error)); return; }
+          const convos = (data.data || []).map(c => {
+            const parts = (c.participants && c.participants.data || []).map(p => p.username || p.id).join(', ');
+            return 'ID: ' + c.id + ' | ' + (c.updated_time || '').slice(0,10) + ' | ' + parts;
+          }).join('\n');
+          res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
+          res.end(convos || 'No conversations\n' + d.slice(0,300));
+        } catch(e) { res.writeHead(200); res.end('Parse error: ' + d.slice(0,300)); }
       });
-      listReq.on('error', e => res.end('Error: ' + e.message));
-      listReq.end();
     }
     return;
   } else if (req.method === 'GET' && req.url?.startsWith('/verify')) {
