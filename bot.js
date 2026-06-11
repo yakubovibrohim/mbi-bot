@@ -649,15 +649,18 @@ async function handleIG(body) {
         const text = m.message?.text;
         if (!from || !text) continue;
 
-        // If Ibrohim manually replied (echo) — pause bot for that user
+        // If echo — check if it's Ibrohim manually replying (no app_id)
+        // or bot's own automated reply (has app_id)
         if (m.message?.is_echo) {
+          const appId = m.message?.app_id;
           const recipient = m.recipient?.id;
-          if (recipient) {
+          // If no app_id → Ibrohim manually typed from Instagram app → pause bot
+          if (!appId && recipient) {
             igManualMode[recipient] = Date.now();
-            // Clear their conversation history so bot starts fresh when re-enabled
             delete igConvHistory[recipient];
-            console.log('Manual mode ON for:', recipient);
+            console.log('Manual mode ON (manual reply) for:', recipient);
           }
+          // If has app_id → bot's own message echo → ignore
           continue;
         }
 
