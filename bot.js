@@ -665,23 +665,28 @@ http.createServer((req, res) => {
   } else if (req.method==='OPTIONS') {
     res.writeHead(200,{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'POST,OPTIONS','Access-Control-Allow-Headers':'Content-Type'});res.end();
   } else if (req.method === 'GET' && req.url?.startsWith('/verify')) {
-    // Token ni tekshirish
     const token = IG_TOKEN;
-    const vReq = https.request({
-      hostname: 'graph.facebook.com',
-      path: '/v21.0/me?fields=id,name,username',
-      method: 'GET',
-      headers: { 'Authorization': 'Bearer ' + token }
-    }, vRes => {
-      let data = '';
-      vRes.on('data', c => data += c);
-      vRes.on('end', () => {
-        res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.end('Token length: ' + token.length + '\nFirst 20: ' + token.slice(0,20) + '\nAPI response: ' + data);
+    const encoded = encodeURIComponent(token);
+    // Test 1: /me with Bearer header
+    const makeReq = (opts, cb) => {
+      const r = https.request(opts, rs => {
+        let d = ''; rs.on('data', c => d += c); rs.on('end', () => cb(d));
+      });
+      r.on('error', e => cb('ERR:' + e.message));
+      r.end();
+    };
+    let results = `Token: len=${token.length} first20=${token.slice(0,20)}\n`;
+    makeReq({ hostname:'graph.facebook.com', path:'/v21.0/me?fields=id,name', method:'GET', headers:{'Authorization':'Bearer '+token} }, d1 => {
+      results += 'Test1 /me Bearer: ' + d1 + '\n';
+      makeReq({ hostname:'graph.facebook.com', path:'/v21.0/'+IG_USER_ID+'?fields=id,name&access_token='+encoded, method:'GET' }, d2 => {
+        results += 'Test2 /userID qp: ' + d2 + '\n';
+        makeReq({ hostname:'graph.facebook.com', path:'/v21.0/me?fields=id,name&access_token='+encoded, method:'GET' }, d3 => {
+          results += 'Test3 /me qp: ' + d3;
+          res.writeHead(200, {'Content-Type': 'text/plain'});
+          res.end(results);
+        });
       });
     });
-    vReq.on('error', e => { res.end('Error: ' + e.message); });
-    vReq.end();
     return;
   } else if (req.method === 'GET' && req.url?.startsWith('/exchange')) {
     const u = new URL(req.url, 'http://localhost');
