@@ -503,6 +503,27 @@ async function handle(upd) {
         await msg(c, `📌 *Bugungi vazifalar:*\n\n${lines}`);
         return;
       }
+      // IG bot boshqaruvi
+      if (t === '/igstop' || t.startsWith('/igstop ')) {
+        const userId = t.split(' ')[1];
+        if (userId) {
+          igManualMode[userId] = Date.now();
+          delete igConvHistory[userId];
+          await msg(c, `⏸ Bot to'xtatildi: ${userId}\n/igstart ${userId} bilan qayta yoqing.`);
+        } else {
+          const paused = Object.keys(igManualMode).join(', ') || 'yo\'q';
+          await msg(c, `⏸ Bot to'xtatilgan foydalanuvchilar: ${paused}\n\nTo\'xtatish: /igstop USER_ID\nQayta yoqish: /igstart USER_ID`);
+        }
+        return;
+      }
+      if (t.startsWith('/igstart ')) {
+        const userId = t.split(' ')[1];
+        if (userId) {
+          delete igManualMode[userId];
+          await msg(c, `▶️ Bot qayta yondi: ${userId}`);
+        }
+        return;
+      }
     }
 
     if ((upd.message.photo || upd.message.document) && !isAdmin) {
@@ -649,20 +670,8 @@ async function handleIG(body) {
         const text = m.message?.text;
         if (!from || !text) continue;
 
-        // If echo — check if it's Ibrohim manually replying (no app_id)
-        // or bot's own automated reply (has app_id)
-        if (m.message?.is_echo) {
-          const appId = m.message?.app_id;
-          const recipient = m.recipient?.id;
-          // If no app_id → Ibrohim manually typed from Instagram app → pause bot
-          if (!appId && recipient) {
-            igManualMode[recipient] = Date.now();
-            delete igConvHistory[recipient];
-            console.log('Manual mode ON (manual reply) for:', recipient);
-          }
-          // If has app_id → bot's own message echo → ignore
-          continue;
-        }
+        // Skip echo messages (our own sent messages coming back)
+        if (m.message?.is_echo) continue;
 
         console.log('IG DM from:', from, 'text:', text);
 
