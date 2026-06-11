@@ -253,6 +253,29 @@ async function handleVoice(chatId, voice) {
   }
 }
 
+// ─── Video handler (admin) ────────────────────────────────────
+async function handleVideo(chatId, video) {
+  try {
+    if (video.file_size && video.file_size > 19 * 1024 * 1024) {
+      await msg(chatId, '⚠️ Video 20MB dan katta — Telegram bot yuklab ololmaydi. Videoni qisqartirib yoki siqib qayta yuboring.');
+      return;
+    }
+    await msg(chatId, '📥 Video qabul qilindi, saqlanmoqda...');
+    const fi = await api('getFile', { file_id: video.file_id });
+    const buf = await downloadBuffer('https://api.telegram.org/file/bot' + BOT + '/' + fi.result.file_path);
+    const name = 'videos/video_' + Date.now() + '.mp4';
+    const r = await ghPut(name, buf, undefined, 'video from telegram');
+    if (r && r.content) {
+      await msg(chatId, '✅ Video saqlandi:\nhttps://raw.githubusercontent.com/' + GH_REPO + '/main/' + name);
+    } else {
+      await msg(chatId, '❌ GitHub xatosi: ' + JSON.stringify(r).slice(0, 200));
+    }
+  } catch (e) {
+    console.error('Video error:', e);
+    await msg(chatId, '❌ Video saqlashda xato: ' + e.message);
+  }
+}
+
 // ─── Invoice photo handler ────────────────────────────────────
 async function handleInvoicePhoto(chatId, photo) {
   try {
@@ -455,6 +478,10 @@ async function handle(upd) {
 
     // Admin voice
     if (upd.message.voice && isAdmin) { await handleVoice(c, upd.message.voice); return; }
+
+    // Admin video
+    if ((upd.message.video || upd.message.video_note) && isAdmin) { await handleVideo(c, upd.message.video || upd.message.video_note); return; }
+    if (upd.message.document && isAdmin && (upd.message.document.mime_type||'').startsWith('video/')) { await handleVideo(c, upd.message.document); return; }
 
     // Admin photo → invoice
     if (upd.message.photo && isAdmin) {
