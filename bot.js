@@ -528,6 +528,11 @@ const OR_KEY = process.env.OPENROUTER_KEY || process.env.OPENROUTER_API_KEY || '
 // Conversation history: last 6 messages per user (3 turns)
 const igConvHistory = {};
 
+// Manual mode: users where Ibrohim manually replied — bot pauses for them
+// Key: instagram user ID, Value: timestamp when paused
+const igManualMode = {};
+const IG_PAUSE_HOURS = 24; // hours to pause after manual reply
+
 async function aiReply(text, userId) {
   // Init history for this user
   if (!igConvHistory[userId]) igConvHistory[userId] = [];
@@ -647,32 +652,51 @@ async function handleIG(body) {
       for (const m of (entry.messaging || [])) {
         const from = m.sender?.id;
         const text = m.message?.text;
-        if (!from || !text || m.message?.is_echo) continue;
+        if (!from || !text) continue;
+
+        // If Ibrohim manually replied (echo) — pause bot for that user
+        if (m.message?.is_echo) {
+          const recipient = m.recipient?.id;
+          if (recipient) {
+            igManualMode[recipient] = Date.now();
+            // Clear their conversation history so bot starts fresh when re-enabled
+            delete igConvHistory[recipient];
+            console.log('Manual mode ON for:', recipient);
+          }
+          continue;
+        }
+
         console.log('IG DM from:', from, 'text:', text);
-        await msg(ADMIN, `📱 *Instagram DM:*\n💬 "${text}"\n_Javob yuborilmoqda..._`);
-        
+
+        // Check if bot is paused for this user
+        if (igManualMode[from]) {
+          const hoursPassed = (Date.now() - igManualMode[from]) / (1000 * 3600);
+          if (hoursPassed < IG_PAUSE_HOURS) {
+            console.log('Bot paused for user:', from, '- skipping auto-reply');
+            continue; // Bot paused — don't auto-reply
+          } else {
+            // Pause expired — re-enable bot
+            delete igManualMode[from];
+          }
+        }
+
+        // Auto-reply
         let reply;
         try {
           reply = await aiReply(text, from);
           console.log('aiReply result:', reply ? reply.slice(0,50) : 'NULL');
         } catch(aiErr) {
           console.error('aiReply xato:', aiErr.message);
-          await msg(ADMIN, `❌ AI xato: ${aiErr.message}`);
-          reply = 'Salom! Mebel haqida savol uchun: +998 91 135 44 66';
+          reply = `Salom! Mebel haqida savol uchun: +998 91 135 44 66`;
         }
-        
-        let sendResult;
+
         try {
-          sendResult = await igSend(from, reply);
-          console.log('igSend natija:', JSON.stringify(sendResult));
+          const sendResult = await igSend(from, reply);
           if (sendResult.error) {
-            await msg(ADMIN, `❌ *igSend xato:*\n\`${JSON.stringify(sendResult.error)}\``);
-          } else {
-            await msg(ADMIN, `✅ *Yuborildi:*\n"${reply}"`);
+            console.log('igSend xato:', JSON.stringify(sendResult.error));
           }
         } catch(sendErr) {
           console.error('igSend xato:', sendErr.message);
-          await msg(ADMIN, `❌ igSend exception: ${sendErr.message}`);
         }
       }
     }
