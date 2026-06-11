@@ -664,6 +664,14 @@ http.createServer((req, res) => {
     });
   } else if (req.method==='OPTIONS') {
     res.writeHead(200,{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'POST,OPTIONS','Access-Control-Allow-Headers':'Content-Type'});res.end();
+  } else if (req.method === 'GET' && req.url === '/rawdump') {
+    const token = IG_TOKEN;
+    const hex = Buffer.from(token).toString('hex');
+    const chars = [...token].map(c => c.charCodeAt(0));
+    const nonAscii = chars.filter(c => c > 127);
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end(`len=${token.length}\nfirst40=${token.slice(0,40)}\nlast20=${token.slice(-20)}\nhas_non_ascii=${nonAscii.length > 0}\nnon_ascii_codes=${JSON.stringify(nonAscii)}\nhex_first40=${hex.slice(0,80)}`);
+    return;
   } else if (req.method === 'GET' && req.url?.startsWith('/verify')) {
     const token = IG_TOKEN;
     const encoded = encodeURIComponent(token);
