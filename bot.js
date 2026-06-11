@@ -664,5 +664,64 @@ http.createServer((req, res) => {
     });
   } else if (req.method==='OPTIONS') {
     res.writeHead(200,{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'POST,OPTIONS','Access-Control-Allow-Headers':'Content-Type'});res.end();
+  } else if (req.method === 'GET' && req.url?.startsWith('/exchange')) {
+    const u = new URL(req.url, 'http://localhost');
+    const authCode = u.searchParams.get('code');
+    if (!authCode) { res.writeHead(400); res.end('no code'); return; }
+    
+    const postData = new URLSearchParams({
+      client_id: '1689794002143625',
+      client_secret: 'eb2d0afff6b0845abf068abf8bb7e248',
+      grant_type: 'authorization_code',
+      redirect_uri: 'https://yakubovibrohim.github.io/mbi-bot/callback.html',
+      code: authCode
+    }).toString();
+    
+    const igReq = https.request({
+      hostname: 'api.instagram.com', path: '/oauth/access_token', method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': Buffer.byteLength(postData) }
+    }, igRes => {
+      let data = '';
+      igRes.on('data', c => data += c);
+      igRes.on('end', async () => {
+        try {
+          const result = JSON.parse(data);
+          const shortToken = result.access_token;
+          if (shortToken) {
+            // Long-lived token olish
+            const llReq = https.request({
+              hostname: 'graph.instagram.com',
+              path: '/access_token?grant_type=ig_exchange_token&client_secret=eb2d0afff6b0845abf068abf8bb7e248&access_token=' + encodeURIComponent(shortToken),
+              method: 'GET'
+            }, llRes => {
+              let llData = '';
+              llRes.on('data', c => llData += c);
+              llRes.on('end', () => {
+                try {
+                  const ll = JSON.parse(llData);
+                  const finalToken = ll.access_token || shortToken;
+                  res.writeHead(200, {'Content-Type': 'text/html', 'Access-Control-Allow-Origin': '*'});
+                  res.end('<h2>TOKEN:</h2><p style="word-break:break-all">' + finalToken + '</p><p>Bu tokenni Claude ga yuboring!</p>');
+                } catch(e) {
+                  res.writeHead(200);
+                  res.end('Short token: ' + shortToken);
+                }
+              });
+            });
+            llReq.on('error', () => {
+              res.writeHead(200);
+              res.end('Short token: ' + shortToken);
+            });
+            llReq.end();
+          } else {
+            res.writeHead(400); res.end(data);
+          }
+        } catch(e) { res.writeHead(500); res.end(data); }
+      });
+    });
+    igReq.on('error', (e) => { res.writeHead(500); res.end(e.message); });
+    igReq.write(postData);
+    igReq.end();
+    return;
   } else { res.writeHead(200);res.end('MBI Bot running!'); }
 }).listen(PORT, ()=>console.log('Bot running on port '+PORT));
