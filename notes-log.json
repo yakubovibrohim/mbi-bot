@@ -20,5 +20,26 @@
     "ts": "2026-06-09T19:21:48.994Z",
     "client": "Тақачылы Абдуррахманаке",
     "reminded": false
+  },
+  {
+    "date": "11.06.2026",
+    "title": "📝 11.06.2026 | Aylıq xərclərin hesabatını çəkmək",
+    "text": "Aylıq xərclərin hesabatını çəkmək",
+    "type": "note",
+    "parsed": {
+      "type": "note",
+      "worker": null,
+      "present": null,
+      "amount": null,
+      "currency": null,
+      "date": "11.06.2026",
+      "time": null,
+      "client": null,
+      "text": "Aylıq xərclərin hesabatını çəkmək",
+      "remind_before_min": null
+    },
+    "transcript": " Mənim aylıq bunlar xüsabatını cönədim.",
+    "ts": "2026-06-11T11:50:26.341Z",
+    "reminded": false
   }
 ]
