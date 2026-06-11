@@ -664,6 +664,24 @@ http.createServer((req, res) => {
     });
   } else if (req.method==='OPTIONS') {
     res.writeHead(200,{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'POST,OPTIONS','Access-Control-Allow-Headers':'Content-Type'});res.end();
+  } else if (req.method === 'GET' && req.url?.startsWith('/verify')) {
+    // Token ni tekshirish
+    const token = IG_TOKEN;
+    const vReq = https.request({
+      hostname: 'graph.facebook.com',
+      path: '/v21.0/' + IG_USER_ID + '?fields=id,name&access_token=' + token,
+      method: 'GET'
+    }, vRes => {
+      let data = '';
+      vRes.on('data', c => data += c);
+      vRes.on('end', () => {
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.end('Token length: ' + token.length + '\nFirst 20: ' + token.slice(0,20) + '\nAPI response: ' + data);
+      });
+    });
+    vReq.on('error', e => { res.end('Error: ' + e.message); });
+    vReq.end();
+    return;
   } else if (req.method === 'GET' && req.url?.startsWith('/exchange')) {
     const u = new URL(req.url, 'http://localhost');
     const authCode = u.searchParams.get('code');
