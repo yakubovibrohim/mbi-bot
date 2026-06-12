@@ -127,6 +127,29 @@ function groqText(system, userText, maxTokens) {
   });
 }
 
+function orText(system, userText, maxTokens, model) {
+  return new Promise((resolve) => {
+    const key = process.env.OPENROUTER_KEY || process.env.OPENROUTER_API_KEY || '';
+    if (!key) return resolve(null);
+    const body = JSON.stringify({
+      model: model || 'anthropic/claude-haiku-4.5', max_tokens: maxTokens || 600,
+      messages: [{ role: 'system', content: system }, { role: 'user', content: userText }]
+    });
+    const req = https.request({
+      hostname: 'openrouter.ai', path: '/api/v1/chat/completions', method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key, 'Content-Length': Buffer.byteLength(body) }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => { try { resolve(JSON.parse(d).choices[0].message.content.trim()); } catch (e) { resolve(null); } });
+    });
+    req.on('error', () => resolve(null)); req.write(body); req.end();
+  });
+}
+async function aiText(system, userText, maxTokens, smart) {
+  const r = await orText(system, userText, maxTokens, smart ? 'anthropic/claude-sonnet-4.5' : 'anthropic/claude-haiku-4.5');
+  return r || groqText(system, userText, maxTokens);
+}
+
 // ─── Groq Whisper ─────────────────────────────────────────────
 function downloadBuffer(url) {
   return new Promise((resolve, reject) => {
@@ -327,7 +350,10 @@ Senga TAYYOR HISOBLANGAN raqamlar beriladi — barcha arifmetika allaqachon baja
 2. Berilgan ma'lumotda yo'q raqamni ASLO o'ylab topma.
 3. Savolga tegishli raqamlarnigina ayt — hammasini sanama.
 4. Javob qisqa, aniq, o'zbek tilida (lotin).
-Ma'lumot topilmasa ochiq ayt: "bu haqda logda ma'lumot yo'q, Ibrohim aka aytib qo'ysangiz kiritaman".` }
+Ma'lumot topilmasa ochiq ayt: "bu haqda logda ma'lumot yo'q, Ibrohim aka aytib qo'ysangiz kiritaman".` },
+  dilshod: { name: 'Dilshod', role: 'Dizayner', emoji: '🎨',
+    sys: `Sen Dilshod — MBI Mebel dizaynerisan. ${BIZ_INFO}
+Vazifang: render g'oyalari, dizayn maslahatlari, rang va material tanlovi, Bazis loyihalari uchun tavsiyalar. Ibrohim guruhga Bazis skrinshotini yuborsa, sen uni avtomatik fotorealistik render qilasan. Qisqa, amaliy, o'zbek tilida (lotin) gapir.` }
 };
 
 let officeChat = null;
@@ -400,7 +426,7 @@ async function routeAgent(text) {
   for (const k of Object.keys(AGENTS)) {
     if (t.startsWith(k) || t.startsWith(AGENTS[k].name.toLowerCase())) return k;
   }
-  const r = await groqText(`Sen router'san. Ibrohimning xabariga MBI Mebel jamoasidan qaysi xodim javob berishi kerakligini aniqla. FAQAT bitta so'z qaytar:\naziza — mijozlar, sotuv, narx taklifi, e'tiroz, Instagram, mijozga matn yozish\nsardor — pul, hisob, xarajat, qarz, avans, hisobot, moliya\nbotir — qolgan hammasi`, text, 10);
+  const r = await groqText(`Sen router'san. Ibrohimning xabariga MBI Mebel jamoasidan qaysi xodim javob berishi kerakligini aniqla. FAQAT bitta so'z qaytar:\naziza — mijozlar, sotuv, narx taklifi, e'tiroz, Instagram, mijozga matn yozish\nsardor — pul, hisob, xarajat, qarz, avans, hisobot, moliya\ndilshod — dizayn, render, rang, material, 3D, Bazis\nbotir — qolgan hammasi`, text, 10);
   const key = String(r || '').toLowerCase().replace(/[^a-z]/g, '');
   return AGENTS[key] ? key : 'botir';
 }
@@ -411,8 +437,46 @@ Xarajat (biror narsa sotib olindi/pul sarflandi): {"action":"expense","supplier"
 Avans (mijozdan pul olindi): {"action":"advance","deal":"mijoz nomi","amount":raqam}
 Yangi buyurtma/kelishuv: {"action":"new_deal","client":"mijoz nomi","contract":raqam,"advance":raqam,"stage":"Yangi buyurtma"}
 Bosqich o'zgarishi (masalan yetkazib berishga o'tdi): {"action":"stage","deal":"mijoz nomi","stage":"yangi bosqich"}
+Vazifa berish (kimgadir topshiriq): {"action":"task","assignee":"aziza"|"sardor"|"dilshod"|"botir","text":"vazifa matni","deadline":"muddat yoki bo'sh"}
+Vazifani yopish: {"action":"task_done","id":raqam}
+Vazifani qayta ochish: {"action":"task_reopen","id":raqam}
+Vazifalar ro'yxatini so'rash: {"action":"tasks_list"}
 Agar bu SAVOL, hisobot so'rovi yoki oddiy suhbat bo'lsa: {"action":"none"}
 Raqamlar: "2 mln"=2000000, "500 ming"=500000, "1.5 million"=1500000. Valyuta aytilmasa UZS. Dollar/$ bo'lsa USD.`;
+
+async function createTask(c, assignee, text, deadline) {
+  const tasks = await ghReadAll('office-tasks.json');
+  const id = tasks.reduce((m, x) => Math.max(m, Number(x.id) || 100), 100) + 1;
+  const agentKey = AGENTS[assignee] ? assignee : 'botir';
+  await ghWrite('office-tasks.json', {
+    id, date: todayStr(), assignee: agentKey, text, deadline: deadline || '', status: 'open', result: ''
+  }, 'office: task #' + id);
+  await agentMsg(c, agentKey, `Qabul qildim ✅ *Vazifa #${id}*: ${text}${deadline ? '\nMuddat: ' + deadline : ''}\nHozir ishlayman...`);
+  const res = await aiText(AGENTS[agentKey].sys,
+    `Senga vazifa #${id} berildi: "${text}". Agar buni matn ko'rinishida bajarish mumkin bo'lsa (reja, matn, ro'yxat, tahlil, taklif) — TO'LIQ TAYYOR natijani yoz. Agar jismoniy/tashqi ish bo'lsa — qisqa bajarish rejasi va nimalar kerakligini yoz.`, 1400, true);
+  if (res) {
+    await agentMsg(c, agentKey, `📌 *Vazifa #${id} natijasi:*\n\n${res}`);
+    await updateTask(id, { status: 'done', result: String(res).slice(0, 1500) });
+  }
+}
+async function updateTask(id, patch) {
+  const { data, sha } = await ghRead('office-tasks.json');
+  const t = data.find(x => Number(x.id) === Number(id));
+  if (!t) return false;
+  Object.assign(t, patch);
+  await ghPut('office-tasks.json', JSON.stringify(data, null, 2), sha, 'office: task #' + id + ' update');
+  return true;
+}
+async function listTasks(c) {
+  const tasks = await ghReadAll('office-tasks.json');
+  const open = tasks.filter(x => x.status === 'open');
+  const done = tasks.filter(x => x.status === 'done').slice(-5);
+  let out = open.length
+    ? '📋 *OCHIQ VAZIFALAR:*\n' + open.map(x => `#${x.id} → ${AGENTS[x.assignee] ? AGENTS[x.assignee].name : x.assignee}: ${x.text}${x.deadline ? ' (muddat: ' + x.deadline + ')' : ''}`).join('\n')
+    : 'Ochiq vazifa yo\'q ✅';
+  if (done.length) out += '\n\n*Oxirgi bajarilganlar:*\n' + done.map(x => `✅ #${x.id} ${String(x.text).slice(0, 60)}`).join('\n');
+  await agentMsg(c, 'botir', out);
+}
 
 async function officeApplyData(c, p) {
   const today = todayStr();
@@ -456,13 +520,88 @@ async function officeApplyData(c, p) {
     await agentMsg(c, 'sardor', `✅ ${d.client} bosqichi yangilandi: *${d.stage}*`);
     return true;
   }
+  if (p.action === 'task' && p.text) { await createTask(c, p.assignee, p.text, p.deadline); return true; }
+  if (p.action === 'task_done' && p.id) {
+    const ok = await updateTask(p.id, { status: 'done' });
+    await agentMsg(c, 'botir', ok ? `Vazifa #${p.id} yopildi ✅` : `#${p.id} topilmadi`);
+    return true;
+  }
+  if (p.action === 'task_reopen' && p.id) {
+    const ok = await updateTask(p.id, { status: 'open' });
+    await agentMsg(c, 'botir', ok ? `Vazifa #${p.id} qayta ochildi 🔄` : `#${p.id} topilmadi`);
+    return true;
+  }
+  if (p.action === 'tasks_list') { await listTasks(c); return true; }
   return false;
 }
+
+const DEFAULT_RENDER_PROMPT = "photorealistic interior photography of a luxury custom furniture interior, elegant panel cabinets, marble countertop, warm natural daylight, professional architectural photography, 4k, highly detailed";
+
+function getSecretKey(name) {
+  return new Promise((resolve) => {
+    const req = https.request({
+      hostname: 'api.github.com', path: '/repos/yakubovibrohim/mbi-secrets/contents/keys.json', method: 'GET',
+      headers: { 'Authorization': 'token ' + GH_TOKEN, 'User-Agent': 'mbi-bot', 'Accept': 'application/vnd.github.v3+json' }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => { try { resolve(JSON.parse(Buffer.from(JSON.parse(d).content, 'base64').toString())[name]); } catch (e) { resolve(null); } });
+    });
+    req.on('error', () => resolve(null)); req.end();
+  });
+}
+
+function ghPutRepo(repo, path, buf, label) {
+  return new Promise((resolve) => {
+    const body = JSON.stringify({ message: label, content: Buffer.from(buf).toString('base64') });
+    const req = https.request({
+      hostname: 'api.github.com', path: '/repos/' + repo + '/contents/' + path, method: 'PUT',
+      headers: { 'Authorization': 'token ' + GH_TOKEN, 'User-Agent': 'mbi-bot', 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => { try { resolve(JSON.parse(d).content.download_url); } catch (e) { resolve(null); } });
+    });
+    req.on('error', () => resolve(null)); req.write(body); req.end();
+  });
+}
+
+async function handleOfficeRender(c, m) {
+  try {
+    await agentMsg(c, 'dilshod', 'Rasmni oldim, fotorealistik render qilyapman... ⏳ (~1 daqiqa)');
+    const ph = m.photo[m.photo.length - 1];
+    const fi = await api('getFile', { file_id: ph.file_id });
+    const buf = await downloadBuffer('https://api.telegram.org/file/bot' + BOT + '/' + fi.result.file_path);
+    const url = await ghPutRepo('yakubovibrohim/MBI_anketa', 'renders/office_' + Date.now() + '.jpg', buf, 'office render input');
+    const key = await getSecretKey('myarchitectai_api_key');
+    if (!url || !key) { await agentMsg(c, 'dilshod', 'Tayyorgarlikda xato bo\'ldi ❌ keyinroq urinib ko\'ring.'); return; }
+    let prompt = (m.caption || '').trim();
+    if (prompt) {
+      prompt = await aiText("Sen interior render prompt mutaxassisisan. Foydalanuvchining istagini ingliz tilida professional photorealistic interior photography prompt'iga aylantir. FAQAT promptni qaytar, boshqa hech narsa yozma.", prompt, 300, false) || DEFAULT_RENDER_PROMPT;
+    } else prompt = DEFAULT_RENDER_PROMPT;
+    const body = JSON.stringify({ image: url, outputFormat: 'jpg', prompt });
+    const res = await new Promise((resolve) => {
+      const rq = https.request({
+        hostname: 'api.myarchitectai.com', path: '/v1/render/interior', method: 'POST',
+        headers: { 'x-api-key': key, 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) }
+      }, r => { let d = ''; r.on('data', x => d += x); r.on('end', () => { try { resolve(JSON.parse(d)); } catch (e) { resolve(null); } }); });
+      rq.on('error', () => resolve(null));
+      rq.setTimeout(170000, () => { rq.destroy(); resolve(null); });
+      rq.write(body); rq.end();
+    });
+    const out = res && (Array.isArray(res.output) ? res.output[0] : res.output);
+    if (!out) { await agentMsg(c, 'dilshod', 'Render xatosi ❌ Birozdan keyin qayta yuborib ko\'ring.'); return; }
+    await api('sendPhoto', { chat_id: c, photo: out, caption: '🎨 Dilshod | Dizayner — render tayyor! 4K kerak bo\'lsa "4k qil" deb yozing.' });
+    lastRenderUrl = out;
+  } catch (e) { console.error('office render:', e.message); }
+}
+let lastRenderUrl = null;
 
 async function handleOffice(upd) {
   const m = upd.message; const c = m.chat.id;
   const fromAdmin = String(m.from.id) === String(ADMIN);
   let t = m.text || '';
+
+  // Rasm -> Dilshod render (fire-and-forget, webhook'ni ushlab turmaslik uchun)
+  if (m.photo && fromAdmin) { handleOfficeRender(c, m).catch(e => console.error(e)); return; }
 
   if (m.voice && fromAdmin) {
     try {
@@ -485,9 +624,34 @@ async function handleOffice(upd) {
   }
   if (!fromAdmin) return;
 
+  if (t === '/dashboard' || t === '/dashboard@mbi_mebel_bot') {
+    await api('sendMessage', { chat_id: c, text: '🖥 *MBI AI Office — boshqaruv paneli*', parse_mode: 'Markdown',
+      reply_markup: { inline_keyboard: [[{ text: '📊 Dashboard ochish', url: 'https://yakubovibrohim.github.io/mbi-bot/office.html' }]] } });
+    return;
+  }
+
+  // "4k qil" — oxirgi renderni upscale
+  if (/^4k/i.test(t.trim()) && lastRenderUrl) {
+    const key = await getSecretKey('myarchitectai_api_key');
+    if (key) {
+      await agentMsg(c, 'dilshod', '4K qilyapman... ⏳');
+      const body = JSON.stringify({ image: lastRenderUrl, outputFormat: 'jpg' });
+      const res = await new Promise((resolve) => {
+        const rq = https.request({ hostname: 'api.myarchitectai.com', path: '/v1/upscale-4k', method: 'POST',
+          headers: { 'x-api-key': key, 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) } },
+          r => { let d = ''; r.on('data', x => d += x); r.on('end', () => { try { resolve(JSON.parse(d)); } catch (e) { resolve(null); } }); });
+        rq.on('error', () => resolve(null)); rq.setTimeout(170000, () => { rq.destroy(); resolve(null); });
+        rq.write(body); rq.end();
+      });
+      if (res && res.output) await api('sendDocument', { chat_id: c, document: res.output, caption: '🎨 4K render (' + (res.balance != null ? 'balans: $' + res.balance : '') + ')' });
+      else await agentMsg(c, 'dilshod', '4K xatosi ❌');
+    }
+    return;
+  }
+
   // Avval: bu yangi ma'lumot kiritishmi?
   try {
-    const pr = await groqText(OFFICE_PARSER_SYS, t, 200);
+    const pr = await aiText(OFFICE_PARSER_SYS, t, 250, false);
     const p = JSON.parse(String(pr || '').replace(/```json|```/g, '').trim());
     if (p && p.action && p.action !== 'none') {
       officeHistory.push({ from: 'Ibrohim', text: t.slice(0, 400) });
@@ -505,7 +669,7 @@ async function handleOffice(upd) {
   if (key === 'sardor') extra = '\n\nREAL MA\'LUMOTLAR:\n' + await financeContext();
   if (hist) extra += `\n\nSO'NGGI SUHBAT:\n${hist}`;
 
-  const reply = await groqText(AGENTS[key].sys + extra, t, 700);
+  const reply = await aiText(AGENTS[key].sys + extra, t, 900, true);
   if (!reply) { await msg(c, '⚠️ Javob olinmadi, birozdan keyin qayta urinib ko\'ring.'); return; }
 
   let main = reply, hand = null;
@@ -516,7 +680,7 @@ async function handleOffice(upd) {
 
   if (hand && hand !== key) {
     let extra2 = hand === 'sardor' ? '\n\nREAL MA\'LUMOTLAR:\n' + await financeContext() : '';
-    const r2 = await groqText(AGENTS[hand].sys + extra2,
+    const r2 = await aiText(AGENTS[hand].sys + extra2,
       `Hamkasbing ${AGENTS[key].name} bu so'rovni senga uzatdi. Ibrohimning so'rovi: ${t}`, 700);
     if (r2) await agentMsg(c, hand, r2.replace(/\[\[\w+\]\]/g, '').trim());
   }
@@ -534,7 +698,7 @@ setInterval(async () => {
       const fin = await financeContext();
       const tasks = await ghReadAll('tasks-log.json');
       const tt = tasks.filter(l => l.date === today).map(l => (l.done ? '✅' : '⬜') + ' ' + l.text).join('\n');
-      const rep = await groqText(AGENTS.sardor.sys,
+      const rep = await aiText(AGENTS.sardor.sys,
         `Bugun ${today}. Quyidagi real ma'lumotlardan qisqa ertalabki hisobot tuz: kelishuvlar holati, qarzlar, oxirgi xarajatlar, bugungi vazifalar. Faqat mavjud ma'lumotga asoslan.\n\n${fin}\n\nBUGUNGI VAZIFALAR:\n${tt || '—'}`, 800);
       if (rep) await agentMsg(target, 'sardor', '🌅 *Ertalabki hisobot*\n\n' + rep);
     }
