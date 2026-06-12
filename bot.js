@@ -299,16 +299,28 @@ async function handleVideo(chatId, video) {
 }
 
 // ─── AI OFFICE ────────────────────────────────────────────────
+function apiBot(token, method, data) {
+  return new Promise((res, rej) => {
+    const body = JSON.stringify(data);
+    const req = https.request({
+      hostname: 'api.telegram.org',
+      path: '/bot' + token + '/' + method, method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) }
+    }, r => { let d = ''; r.on('data', c => d += c); r.on('end', () => { try { res(JSON.parse(d)); } catch (e) { res(null); } }); });
+    req.on('error', () => res(null)); req.write(body); req.end();
+  });
+}
+
 const BIZ_INFO = `MBI Mebel (Mebel by Ibrohim) — Toshkentda buyurtma asosida mebel ishlab chiqaradi. Korpus: LMDF, fasadlar: akril, furnitura: GTV/Blum, stoleshnitsa: DSP. Narx: 1 pogonaj metr $400 dan. Tel: +998 91 135 44 66. Telegram: @MBI_mebel, Instagram: @mbi_mebel. Ishlab chiqarishda Diyor va Sherzod ishlaydi. Xo'jayin: Ibrohim. Kurs: 12000 so'm = 1 USD.`;
 
 const AGENTS = {
-  botir: { name: 'Botir', role: 'Bosh yordamchi', emoji: '🤖',
+  botir: { name: 'Botir', role: 'Bosh yordamchi', emoji: '🤖', token: '8662814862:AAE2KEPp_2xsGpAF3U2n7xE-WzLksc4sqsA',
     sys: `Sen Botir — MBI Mebel xo'jayini Ibrohimning bosh AI yordamchisisan. ${BIZ_INFO}
 Vazifang: umumiy savollarga javob berish va ishlarni muvofiqlashtirish. Qisqa, aniq, samimiy o'zbek tilida (lotin alifbosi) gapir. Agar savol pul/hisob/xarajat haqida bo'lsa, javobing oxiriga [[sardor]] deb qo'sh; mijoz/sotuv/Instagram haqida bo'lsa [[aziza]] deb qo'sh — o'sha hamkasbing davom etadi.` },
-  aziza: { name: 'Aziza', role: 'Sotuv menejeri', emoji: '👩‍💼',
+  aziza: { name: 'Aziza', role: 'Sotuv menejeri', emoji: '👩‍💼', token: '8542107010:AAGvRTKULwcplJzXaSaG7lRLoY356yDLnSw',
     sys: `Sen Aziza — MBI Mebel sotuv menejerisan. ${BIZ_INFO}
 Vazifang: mijozlarga yozish uchun tayyor matnlar, narx takliflari, e'tirozlarga javoblar, Instagram javoblari. Tabiiy, iliq, robotga o'xshamaydigan jonli o'zbek tilida yoz — rasmiy shablon ishlatma. Narxni har doim qiymat bilan asosla: material sifati, aniq muddat, kafolat. Javoblaring qisqa va ishlatishga tayyor bo'lsin.` },
-  sardor: { name: 'Sardor', role: 'Hisobchi', emoji: '📊',
+  sardor: { name: 'Sardor', role: 'Hisobchi', emoji: '📊', token: '8616044877:AAFp7Bp6yxUZ1N5LwbArrvSaIwhDXNUA5_0',
     sys: `Sen Sardor — MBI Mebel hisobchisisan. ${BIZ_INFO}
 Vazifang: kirim-chiqim, avanslar, qarzlar, xarajatlar tahlili va hisobotlar. Senga real log ma'lumotlari beriladi — FAQAT shularga asoslan, o'zingdan raqam to'qima. Ma'lumot yetmasa, ochiq ayt. Aniq raqamlar bilan qisqa, tartibli javob ber, o'zbek tilida (lotin).` }
 };
@@ -336,6 +348,10 @@ function agentMsg(chatId, key, text) {
   const a = AGENTS[key];
   officeHistory.push({ from: a.name, text: String(text).slice(0, 400) });
   if (officeHistory.length > 24) officeHistory.shift();
+  if (a.token && !a.token.includes('PLACEHOLDER')) {
+    return apiBot(a.token, 'sendMessage', { chat_id: chatId, text: String(text), parse_mode: 'Markdown' })
+      .then(r => (r && r.ok) ? r : apiBot(a.token, 'sendMessage', { chat_id: chatId, text: String(text) }));
+  }
   return msg(chatId, `${a.emoji} *${a.name} | ${a.role}*\n\n${text}`);
 }
 
