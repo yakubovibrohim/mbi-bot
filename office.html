@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MBI AI Office</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  :root { --bg:#0f1218; --card:#1a1f2a; --card2:#222937; --txt:#e8ecf4; --mut:#8b93a7; --acc:#4f8cff; --ok:#2ecc71; --warn:#f1c40f; }
+  * { margin:0; padding:0; box-sizing:border-box; font-family:-apple-system,'Segoe UI',Roboto,sans-serif; }
+  body { background:var(--bg); color:var(--txt); padding:16px; max-width:520px; margin:0 auto; }
+  h1 { font-size:20px; margin-bottom:4px; }
+  .sub { color:var(--mut); font-size:13px; margin-bottom:16px; }
+  .stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:16px; }
+  .stat { background:var(--card); border-radius:14px; padding:12px; text-align:center; }
+  .stat b { display:block; font-size:20px; margin-bottom:2px; }
+  .stat span { font-size:11px; color:var(--mut); }
+  h2 { font-size:14px; color:var(--mut); margin:18px 0 8px; text-transform:uppercase; letter-spacing:1px; }
+  .team { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .agent { background:var(--card); border-radius:14px; padding:12px; display:flex; gap:10px; align-items:center; }
+  .ava { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; color:#fff; font-size:18px; flex-shrink:0; }
+  .agent b { font-size:14px; display:block; }
+  .agent span { font-size:11px; color:var(--mut); }
+  .dot { width:8px; height:8px; background:var(--ok); border-radius:50%; margin-left:auto; flex-shrink:0; box-shadow:0 0 6px var(--ok); }
+  .card { background:var(--card); border-radius:14px; padding:12px 14px; margin-bottom:8px; }
+  .card .row { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .card small { color:var(--mut); font-size:12px; }
+  .pill { font-size:11px; padding:3px 8px; border-radius:20px; background:var(--card2); color:var(--mut); white-space:nowrap; }
+  .pill.open { background:#3a2f12; color:var(--warn); }
+  .pill.done { background:#143323; color:var(--ok); }
+  .money { font-weight:700; }
+  .debt { color:var(--warn); }
+  .empty { color:var(--mut); font-size:13px; padding:8px 2px; }
+  .err { color:#e74c3c; font-size:13px; }
+</style>
+</head>
+<body>
+<h1>🏢 MBI AI Office</h1>
+<div class="sub" id="upd">Yuklanmoqda...</div>
+
+<div class="stats">
+  <div class="stat"><b id="s-tasks">—</b><span>Ochiq vazifa</span></div>
+  <div class="stat"><b id="s-debt">—</b><span>Jami qarz (so'm)</span></div>
+  <div class="stat"><b id="s-exp">—</b><span>Xarajatlar (so'm)</span></div>
+</div>
+
+<h2>Jamoa</h2>
+<div class="team" id="team"></div>
+
+<h2>Vazifalar</h2>
+<div id="tasks"></div>
+
+<h2>Kelishuvlar</h2>
+<div id="deals"></div>
+
+<h2>Oxirgi xarajatlar</h2>
+<div id="expenses"></div>
+
+<script>
+const RAW = 'https://raw.githubusercontent.com/yakubovibrohim/mbi-bot/main/';
+const RATE = 12000;
+const AGENTS = [
+  { k:'botir',  n:'Botir',  r:'Bosh yordamchi', c:'linear-gradient(135deg,#6366f1,#1e293b)', l:'B' },
+  { k:'aziza',  n:'Aziza',  r:'Sotuv menejeri', c:'linear-gradient(135deg,#e96443,#904e95)', l:'A' },
+  { k:'sardor', n:'Sardor', r:'Hisobchi',       c:'linear-gradient(135deg,#11998e,#385994)', l:'S' },
+  { k:'dilshod',n:'Dilshod',r:'Dizayner',       c:'linear-gradient(135deg,#f7971e,#c0392b)', l:'D' },
+];
+const fmt = n => Number(n||0).toLocaleString('ru-RU');
+const j = async f => { const r = await fetch(RAW + f + '?t=' + Date.now()); return r.ok ? r.json() : []; };
+
+(async () => {
+  try { if (window.Telegram && Telegram.WebApp) { Telegram.WebApp.ready(); Telegram.WebApp.expand(); } } catch(e){}
+  document.getElementById('team').innerHTML = AGENTS.map(a =>
+    `<div class="agent"><div class="ava" style="background:${a.c}">${a.l}</div><div><b>${a.n}</b><span>${a.r}</span></div><div class="dot"></div></div>`).join('');
+  try {
+    const [deals, exp, tasks] = await Promise.all([j('deals-log.json'), j('expenses-log.json'), j('office-tasks.json')]);
+
+    const expCalc = exp.map(x => {
+      let t = x.total_override != null ? +x.total_override : (x.items||[]).reduce((s,i)=>s+(+i.total||0),0);
+      return { ...x, uzs: (x.currency||'').toUpperCase()==='USD' ? Math.round(t*RATE) : t };
+    });
+    const totalExp = expCalc.reduce((s,e)=>s+e.uzs,0);
+    const totalDebt = deals.reduce((s,d)=>s+(+d.debt_uzs||0),0);
+    const open = tasks.filter(t=>t.status==='open');
+
+    document.getElementById('s-tasks').textContent = open.length;
+    document.getElementById('s-debt').textContent = fmt(totalDebt);
+    document.getElementById('s-exp').textContent = fmt(totalExp);
+    document.getElementById('upd').textContent = 'Yangilandi: ' + new Date().toLocaleString('ru-RU');
+
+    document.getElementById('tasks').innerHTML = tasks.length ? tasks.slice(-12).reverse().map(t => {
+      const a = AGENTS.find(x=>x.k===t.assignee);
+      return `<div class="card"><div class="row"><div><b>#${t.id}</b> ${t.text}<br><small>${a?a.n:t.assignee} · ${t.date||''}${t.deadline?' · muddat: '+t.deadline:''}</small></div><span class="pill ${t.status}">${t.status==='done'?'✅ bajarildi':'⏳ ochiq'}</span></div></div>`;
+    }).join('') : '<div class="empty">Hozircha vazifa yo\'q</div>';
+
+    document.getElementById('deals').innerHTML = deals.length ? deals.slice(-8).reverse().map(d => {
+      const dealExp = expCalc.filter(e=>(e.deal||'').toLowerCase()===(d.client||'').toLowerCase()).reduce((s,e)=>s+e.uzs,0);
+      return `<div class="card"><div class="row"><div><b>${d.client}</b><br><small>${d.stage||''} · shartnoma ${fmt(d.contract_sum_uzs)} · xarajat ${fmt(dealExp)}</small></div><span class="money debt">${fmt(d.debt_uzs)}<br><small>qarz</small></span></div></div>`;
+    }).join('') : '<div class="empty">Kelishuvlar yo\'q</div>';
+
+    document.getElementById('expenses').innerHTML = expCalc.length ? expCalc.slice(-8).reverse().map(e =>
+      `<div class="card"><div class="row"><div><b>${e.supplier||'—'}</b><br><small>${e.date||''} · ${e.deal||''}</small></div><span class="money">${fmt(e.uzs)}<br><small>so'm</small></span></div></div>`
+    ).join('') : '<div class="empty">Xarajatlar yo\'q</div>';
+  } catch (e) {
+    document.getElementById('upd').innerHTML = '<span class="err">Ma\'lumot yuklashda xato: ' + e.message + '</span>';
+  }
+})();
+</script>
+</body>
+</html>
