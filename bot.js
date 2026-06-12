@@ -322,7 +322,12 @@ Vazifang: umumiy savollarga javob berish va ishlarni muvofiqlashtirish. Qisqa, a
 Vazifang: mijozlarga yozish uchun tayyor matnlar, narx takliflari, e'tirozlarga javoblar, Instagram javoblari. Tabiiy, iliq, robotga o'xshamaydigan jonli o'zbek tilida yoz — rasmiy shablon ishlatma. Narxni har doim qiymat bilan asosla: material sifati, aniq muddat, kafolat. Javoblaring qisqa va ishlatishga tayyor bo'lsin.` },
   sardor: { name: 'Sardor', role: 'Hisobchi', emoji: '📊', token: '8616044877:AAFp7Bp6yxUZ1N5LwbArrvSaIwhDXNUA5_0',
     sys: `Sen Sardor — MBI Mebel hisobchisisan. ${BIZ_INFO}
-Vazifang: kirim-chiqim, avanslar, qarzlar, xarajatlar tahlili va hisobotlar. Senga real log ma'lumotlari beriladi — FAQAT shularga asoslan, o'zingdan raqam to'qima. Ma'lumot yetmasa, ochiq ayt. Aniq raqamlar bilan qisqa, tartibli javob ber, o'zbek tilida (lotin).` }
+Senga TAYYOR HISOBLANGAN raqamlar beriladi — barcha arifmetika allaqachon bajarilgan. QOIDALAR:
+1. O'ZING HECH QANDAY HISOB-KITOB QILMA (qo'shish, ayirish, ko'paytirish taqiqlanadi). Faqat berilgan tayyor raqamlarni o'qib taqdim et.
+2. Berilgan ma'lumotda yo'q raqamni ASLO o'ylab topma.
+3. Savolga tegishli raqamlarnigina ayt — hammasini sanama.
+4. Javob qisqa, aniq, o'zbek tilida (lotin).
+Ma'lumot topilmasa ochiq ayt: "bu haqda logda ma'lumot yo'q, Ibrohim aka aytib qo'ysangiz kiritaman".` }
 };
 
 let officeChat = null;
@@ -355,18 +360,38 @@ function agentMsg(chatId, key, text) {
   return msg(chatId, `${a.emoji} *${a.name} | ${a.role}*\n\n${text}`);
 }
 
+const USD_RATE = 12000;
+
 async function financeContext() {
   try {
     const [deals, exp] = await Promise.all([ghReadAll('deals-log.json'), ghReadAll('expenses-log.json')]);
-    const d = deals.slice(-10).map(x => JSON.stringify(x)).join('\n');
-    const e = exp.slice(-15).map(x => {
-      if (x.items && Array.isArray(x.items)) {
-        const sum = x.items.reduce((s, i) => s + (Number(i.total) || 0), 0);
-        return `${x.date || ''} | ${x.supplier || ''} | loyiha: ${x.deal || '-'} | faktura ${x.invoice || ''} | jami: ${sum} | ${x.items.length} pozitsiya: ${x.items.map(i => i.name + ' x' + i.qty).join(', ').slice(0, 300)}`;
-      }
-      return JSON.stringify(x).slice(0, 300);
+
+    // Har bir xarajatning so'mdagi summasini hisoblash
+    const expCalc = exp.map(x => {
+      let total = x.total_override != null ? Number(x.total_override)
+        : (x.items || []).reduce((s, i) => s + (Number(i.total) || 0), 0);
+      const isUsd = (x.currency || '').toUpperCase() === 'USD';
+      const totalUzs = isUsd ? Math.round(total * USD_RATE) : total;
+      return { ...x, _total: total, _totalUzs: totalUzs, _cur: isUsd ? 'USD' : 'UZS' };
+    });
+
+    // Kelishuvlar bo'yicha tayyor hisob
+    const dealLines = deals.slice(-10).map(d => {
+      const name = d.client || d.title || '?';
+      const dealExp = expCalc.filter(e => (e.deal || '').toLowerCase() === name.toLowerCase());
+      const expSum = dealExp.reduce((s, e) => s + e._totalUzs, 0);
+      const contract = Number(d.contract_sum_uzs) || 0;
+      const advance = Number(d.advance_uzs) || 0;
+      const debt = d.debt_uzs != null ? Number(d.debt_uzs) : (contract - advance);
+      const profit = contract - expSum;
+      return `• ${name} (${d.stage || '-'}): shartnoma ${contract.toLocaleString()} so'm | avans olingan ${advance.toLocaleString()} so'm | QARZ QOLDI ${debt.toLocaleString()} so'm | xarajatlar jami ${expSum.toLocaleString()} so'm (${dealExp.length} ta chek) | taxminiy foyda ${profit.toLocaleString()} so'm`;
     }).join('\n');
-    return `KELISHUVLAR (JSON, summalar so'mda agar _uzs bo'lsa):\n${d || '—'}\n\nXARAJATLAR (oxirgilari):\n${e || '—'}`;
+
+    const expLines = expCalc.slice(-15).map(e =>
+      `• ${e.date || ''} | ${e.supplier || ''} | loyiha: ${e.deal || '-'} | ${e._total.toLocaleString()} ${e._cur}${e._cur === 'USD' ? ` (=${e._totalUzs.toLocaleString()} so'm)` : ''} | ${(e.items || []).map(i => i.name).join(', ').slice(0, 200)}`
+    ).join('\n');
+
+    return `TAYYOR HISOBLANGAN MA'LUMOTLAR (barcha arifmetika bajarilgan, kurs 1 USD = ${USD_RATE} so'm):\n\nKELISHUVLAR:\n${dealLines || '—'}\n\nXARAJATLAR RO'YXATI:\n${expLines || '—'}`;
   } catch (e) { return ''; }
 }
 
