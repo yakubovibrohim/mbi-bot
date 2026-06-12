@@ -405,6 +405,60 @@ async function routeAgent(text) {
   return AGENTS[key] ? key : 'botir';
 }
 
+// ─── Office: ma'lumot kiritish (xarajat/avans/buyurtma/bosqich) ───
+const OFFICE_PARSER_SYS = `Sen parser'san. Ibrohimning xabarini tahlil qil. Agar u YANGI MOLIYAVIY MA'LUMOT kiritayotgan bo'lsa, FAQAT bitta JSON qaytar (boshqa matn yozma):
+Xarajat (biror narsa sotib olindi/pul sarflandi): {"action":"expense","supplier":"do'kon nomi","amount":raqam,"currency":"UZS" yoki "USD","deal":"loyiha/mijoz nomi","note":"nima olindi"}
+Avans (mijozdan pul olindi): {"action":"advance","deal":"mijoz nomi","amount":raqam}
+Yangi buyurtma/kelishuv: {"action":"new_deal","client":"mijoz nomi","contract":raqam,"advance":raqam,"stage":"Yangi buyurtma"}
+Bosqich o'zgarishi (masalan yetkazib berishga o'tdi): {"action":"stage","deal":"mijoz nomi","stage":"yangi bosqich"}
+Agar bu SAVOL, hisobot so'rovi yoki oddiy suhbat bo'lsa: {"action":"none"}
+Raqamlar: "2 mln"=2000000, "500 ming"=500000, "1.5 million"=1500000. Valyuta aytilmasa UZS. Dollar/$ bo'lsa USD.`;
+
+async function officeApplyData(c, p) {
+  const today = todayStr();
+  if (p.action === 'expense' && p.amount) {
+    const cur = (p.currency || 'UZS').toUpperCase();
+    await ghWrite('expenses-log.json', {
+      date: today, supplier: p.supplier || '', deal: p.deal || '', currency: cur,
+      total_override: Number(p.amount) || 0,
+      items: p.note ? [{ name: String(p.note), qty: 1 }] : []
+    }, 'office: expense');
+    await agentMsg(c, 'sardor', `Yozib qo'ydim ✅\n📤 Xarajat: ${(Number(p.amount) || 0).toLocaleString()} ${cur}\n🏪 ${p.supplier || '-'}\n📁 Loyiha: ${p.deal || '-'}${p.note ? '\n📝 ' + p.note : ''}`);
+    return true;
+  }
+  if (p.action === 'advance' && p.amount) {
+    const { data, sha } = await ghRead('deals-log.json');
+    const q = (p.deal || '').toLowerCase();
+    const d = data.find(x => (x.client || '').toLowerCase().includes(q) || q.includes((x.client || '').toLowerCase().split(' ')[0]));
+    if (!d) { await agentMsg(c, 'sardor', `"${p.deal}" nomli kelishuv logda topilmadi. "Yangi buyurtma: ${p.deal}, shartnoma ..., avans ..." deb kiritsangiz ochaman.`); return true; }
+    d.advance_uzs = (Number(d.advance_uzs) || 0) + (Number(p.amount) || 0);
+    d.debt_uzs = (Number(d.contract_sum_uzs) || 0) - d.advance_uzs;
+    await ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, 'office: advance');
+    await agentMsg(c, 'sardor', `Yozib qo'ydim ✅\n💰 ${d.client}: avans +${(Number(p.amount) || 0).toLocaleString()} so'm\nJami avans: ${d.advance_uzs.toLocaleString()} so'm\nQarz qoldi: ${d.debt_uzs.toLocaleString()} so'm`);
+    return true;
+  }
+  if (p.action === 'new_deal' && p.client) {
+    const contract = Number(p.contract) || 0, adv = Number(p.advance) || 0;
+    await ghWrite('deals-log.json', {
+      date: today, client: p.client, contract_sum_uzs: contract,
+      advance_uzs: adv, debt_uzs: contract - adv, stage: p.stage || 'Yangi buyurtma'
+    }, 'office: new deal');
+    await agentMsg(c, 'sardor', `Yangi buyurtma ochildi ✅\n👤 ${p.client}\nShartnoma: ${contract.toLocaleString()} so'm\nAvans: ${adv.toLocaleString()} so'm\nQarz: ${(contract - adv).toLocaleString()} so'm\n\nBitrix'ga ham kiritishni unutmang.`);
+    return true;
+  }
+  if (p.action === 'stage' && p.deal) {
+    const { data, sha } = await ghRead('deals-log.json');
+    const q = (p.deal || '').toLowerCase();
+    const d = data.find(x => (x.client || '').toLowerCase().includes(q) || q.includes((x.client || '').toLowerCase().split(' ')[0]));
+    if (!d) { await agentMsg(c, 'sardor', `"${p.deal}" kelishuvi logda topilmadi.`); return true; }
+    d.stage = p.stage || d.stage;
+    await ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, 'office: stage');
+    await agentMsg(c, 'sardor', `✅ ${d.client} bosqichi yangilandi: *${d.stage}*`);
+    return true;
+  }
+  return false;
+}
+
 async function handleOffice(upd) {
   const m = upd.message; const c = m.chat.id;
   const fromAdmin = String(m.from.id) === String(ADMIN);
@@ -430,6 +484,17 @@ async function handleOffice(upd) {
     return;
   }
   if (!fromAdmin) return;
+
+  // Avval: bu yangi ma'lumot kiritishmi?
+  try {
+    const pr = await groqText(OFFICE_PARSER_SYS, t, 200);
+    const p = JSON.parse(String(pr || '').replace(/```json|```/g, '').trim());
+    if (p && p.action && p.action !== 'none') {
+      officeHistory.push({ from: 'Ibrohim', text: t.slice(0, 400) });
+      if (officeHistory.length > 24) officeHistory.shift();
+      if (await officeApplyData(c, p)) return;
+    }
+  } catch (e) {}
 
   const key = await routeAgent(t);
   const hist = officeHistory.slice(-12).map(h => `${h.from}: ${h.text}`).join('\n');
