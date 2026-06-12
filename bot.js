@@ -2,7 +2,7 @@ const https = require('https');
 const http = require('http');
 const FormData = require('form-data');
 
-const BOT      = '8811277023:AAH_1iBPjb-dlmPDWc1vwMCPQEITzLuWDec';
+let BOT = process.env.BOT_TOKEN || '';  // secrets'dan yuklanadi
 const ADMIN    = '1487569442';
 const GROQ_KEY = process.env.GROQ_API_KEY;
 const GH_TOKEN = process.env.GITHUB_TOKEN;
@@ -337,13 +337,13 @@ function apiBot(token, method, data) {
 const BIZ_INFO = `MBI Mebel (Mebel by Ibrohim) — Toshkentda buyurtma asosida mebel ishlab chiqaradi. Korpus: LMDF, fasadlar: akril, furnitura: GTV/Blum, stoleshnitsa: DSP. Narx: 1 pogonaj metr $400 dan. Tel: +998 91 135 44 66. Telegram: @MBI_mebel, Instagram: @mbi_mebel. Ishlab chiqarishda Diyor va Sherzod ishlaydi. Xo'jayin: Ibrohim. Kurs: 12000 so'm = 1 USD.`;
 
 const AGENTS = {
-  botir: { name: 'Botir', role: 'Bosh yordamchi', emoji: '🤖', token: '8662814862:AAE2KEPp_2xsGpAF3U2n7xE-WzLksc4sqsA',
+  botir: { name: 'Botir', role: 'Bosh yordamchi', emoji: '🤖', token: '',
     sys: `Sen Botir — MBI Mebel xo'jayini Ibrohimning bosh AI yordamchisisan. ${BIZ_INFO}
 Vazifang: umumiy savollarga javob berish va ishlarni muvofiqlashtirish. Qisqa, aniq, samimiy o'zbek tilida (lotin alifbosi) gapir. Agar savol pul/hisob/xarajat haqida bo'lsa, javobing oxiriga [[sardor]] deb qo'sh; mijoz/sotuv/Instagram haqida bo'lsa [[aziza]] deb qo'sh — o'sha hamkasbing davom etadi.` },
-  aziza: { name: 'Aziza', role: 'Sotuv menejeri', emoji: '👩‍💼', token: '8542107010:AAGvRTKULwcplJzXaSaG7lRLoY356yDLnSw',
+  aziza: { name: 'Aziza', role: 'Sotuv menejeri', emoji: '👩‍💼', token: '',
     sys: `Sen Aziza — MBI Mebel sotuv menejerisan. ${BIZ_INFO}
 Vazifang: mijozlarga yozish uchun tayyor matnlar, narx takliflari, e'tirozlarga javoblar, Instagram javoblari. Tabiiy, iliq, robotga o'xshamaydigan jonli o'zbek tilida yoz — rasmiy shablon ishlatma. Narxni har doim qiymat bilan asosla: material sifati, aniq muddat, kafolat. Javoblaring qisqa va ishlatishga tayyor bo'lsin.` },
-  sardor: { name: 'Sardor', role: 'Hisobchi', emoji: '📊', token: '8616044877:AAFp7Bp6yxUZ1N5LwbArrvSaIwhDXNUA5_0',
+  sardor: { name: 'Sardor', role: 'Hisobchi', emoji: '📊', token: '',
     sys: `Sen Sardor — MBI Mebel hisobchisisan. ${BIZ_INFO}
 Senga TAYYOR HISOBLANGAN raqamlar beriladi — barcha arifmetika allaqachon bajarilgan. QOIDALAR:
 1. O'ZING HECH QANDAY HISOB-KITOB QILMA (qo'shish, ayirish, ko'paytirish taqiqlanadi). Faqat berilgan tayyor raqamlarni o'qib taqdim et.
@@ -351,10 +351,26 @@ Senga TAYYOR HISOBLANGAN raqamlar beriladi — barcha arifmetika allaqachon baja
 3. Savolga tegishli raqamlarnigina ayt — hammasini sanama.
 4. Javob qisqa, aniq, o'zbek tilida (lotin).
 Ma'lumot topilmasa ochiq ayt: "bu haqda logda ma'lumot yo'q, Ibrohim aka aytib qo'ysangiz kiritaman".` },
-  dilshod: { name: 'Dilshod', role: 'Dizayner', emoji: '🎨',
+  dilshod: { name: 'Dilshod', role: 'Dizayner', emoji: '🎨', token: '',
     sys: `Sen Dilshod — MBI Mebel dizaynerisan. ${BIZ_INFO}
 Vazifang: render g'oyalari, dizayn maslahatlari, rang va material tanlovi, Bazis loyihalari uchun tavsiyalar. Ibrohim guruhga Bazis skrinshotini yuborsa, sen uni avtomatik fotorealistik render qilasan. Qisqa, amaliy, o'zbek tilida (lotin) gapir.` }
 };
+
+// ─── Maxfiy tokenlarni yuklash (mbi-secrets, private repo) ───
+let secretsReady = (async function loadSecrets() {
+  try {
+    const get = (name) => getSecretKey(name);
+    const [bt, az, sd, bo, di] = await Promise.all([
+      get('bot_token'), get('aziza_token'), get('sardor_token'), get('botir_token'), get('dilshod_token')
+    ]);
+    if (!BOT && bt) BOT = bt;
+    if (az) AGENTS.aziza.token = az;
+    if (sd) AGENTS.sardor.token = sd;
+    if (bo) AGENTS.botir.token = bo;
+    if (di) AGENTS.dilshod.token = di;
+    console.log('Secrets loaded. BOT:', BOT ? 'ok' : 'MISSING');
+  } catch (e) { console.error('Secrets load error:', e.message); }
+})();
 
 let officeChat = null;
 let officeHistory = [];
@@ -899,6 +915,7 @@ async function handle(upd) {
       return;
     }
 
+    await secretsReady;
     if (!upd.message) return;
     const c = upd.message.chat.id;
 
