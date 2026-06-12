@@ -358,9 +358,15 @@ function agentMsg(chatId, key, text) {
 async function financeContext() {
   try {
     const [deals, exp] = await Promise.all([ghReadAll('deals-log.json'), ghReadAll('expenses-log.json')]);
-    const d = deals.slice(-10).map(x => x.title || JSON.stringify(x)).join('\n');
-    const e = exp.slice(-15).map(x => x.title || JSON.stringify(x)).join('\n');
-    return `KELISHUVLAR (oxirgilari):\n${d || '—'}\n\nXARAJATLAR (oxirgilari):\n${e || '—'}`;
+    const d = deals.slice(-10).map(x => JSON.stringify(x)).join('\n');
+    const e = exp.slice(-15).map(x => {
+      if (x.items && Array.isArray(x.items)) {
+        const sum = x.items.reduce((s, i) => s + (Number(i.total) || 0), 0);
+        return `${x.date || ''} | ${x.supplier || ''} | loyiha: ${x.deal || '-'} | faktura ${x.invoice || ''} | jami: ${sum} | ${x.items.length} pozitsiya: ${x.items.map(i => i.name + ' x' + i.qty).join(', ').slice(0, 300)}`;
+      }
+      return JSON.stringify(x).slice(0, 300);
+    }).join('\n');
+    return `KELISHUVLAR (JSON, summalar so'mda agar _uzs bo'lsa):\n${d || '—'}\n\nXARAJATLAR (oxirgilari):\n${e || '—'}`;
   } catch (e) { return ''; }
 }
 
