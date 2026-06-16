@@ -562,7 +562,8 @@ async function showHomeMenu(c) {
       [{ text: '👷 Xodimlar', callback_data: 'menu_staff' }, { text: '💰 Kassa', callback_data: 'menu_cash' }],
       [{ text: '🏭 Ishxona xarajatlari', callback_data: 'menu_office_exp' }],
       [{ text: '👛 Shaxsiy xarajatlar', callback_data: 'menu_personal_exp' }],
-      [{ text: '💳 Qarzlar', callback_data: 'menu_debts' }]
+      [{ text: '💳 Qarzlar', callback_data: 'menu_debts' }],
+      [{ text: '📊 Umumiy hisobot', callback_data: 'menu_summary' }]
     ] } });
 }
 
@@ -970,6 +971,187 @@ async function cashSetSave(c, amountUzs) {
   await ghPut('cashbox.json', JSON.stringify(cfg, null, 2), sha, 'cashbox opening');
   await msg(c, `✅ Boshlang'ich qoldiq o'rnatildi: ${fmtUzs(amountUzs)} so'm`);
   await showCashbox(c);
+}
+
+// ══════════════════════════════════════════════════════════════
+// 4-BOSQICH: Umumiy hisobot, Excel, avtomatik eslatma, backup
+// ══════════════════════════════════════════════════════════════
+
+// Berilgan oy uchun barcha ma'lumotni yig'adi (y, m: m=0-11)
+async function gatherMonth(y, m) {
+  const inMon = (dateStr) => { const p = dmyParts(dateStr); return p && p.y === y && p.m === m; };
+  const { data: deals } = await ghRead('deals-log.json');
+  // shu oyda olingan buyurtmalar
+  const monthDeals = deals.filter(o => inMon(o.date));
+  let income = 0, dealExp = 0;
+  const allPayments = [], allExpenses = [];
+  for (const o of deals) {
+    for (const p of (o.payments || [])) if (inMon(p.date)) { income += p.amount_uzs || 0; allPayments.push({ client: o.client, ...p }); }
+    for (const e of (o.expenses || [])) if (inMon(e.date)) { dealExp += e.total_uzs || 0; allExpenses.push({ client: o.client, ...e }); }
+  }
+  const officeRows = (await ghReadAll('office-expenses-log.json')).filter(e => inMon(e.date));
+  const officeExp = officeRows.reduce((s, e) => s + (e.amount_uzs || 0), 0);
+  const persRows = (await ghReadAll('expenses-personal-log.json')).map(e => {
+    const p = e.parsed || {}; let a = e.amount_uzs || 0;
+    if (!a && p.amount) a = (String(p.currency).toUpperCase() === 'USD') ? p.amount * USD_UZS : p.amount;
+    else if (!a && e.amount) a = (String(e.currency).toUpperCase() === 'USD') ? e.amount * USD_UZS : e.amount;
+    return { date: e.date, note: e.note || p.text || e.text || '', amtUzs: a };
+  }).filter(e => inMon(e.date));
+  const pers = persRows.reduce((s, e) => s + (e.amtUzs || 0), 0);
+  const staff = await ghReadAll('staff-log.json');
+  let staffAdv = 0;
+  for (const w of staff) for (const a of (w.advances || [])) if (inMon(a.date)) staffAdv += (a.amount_usd || 0) * USD_UZS;
+  const bizProfit = income - dealExp - officeExp - staffAdv;
+  const realRemain = bizProfit - pers;
+  return { monthDeals, income, dealExp, officeRows, officeExp, persRows, pers, staff, staffAdv, allExpenses, allPayments, bizProfit, realRemain };
+}
+
+const UZ_MONTHS = ['Yanvar','Fevral','Mart','Aprel','May','Iyun','Iyul','Avgust','Sentyabr','Oktyabr','Noyabr','Dekabr'];
+
+async function showSummary(c) {
+  const now = nowTZ();
+  const g = await gatherMonth(now.getFullYear(), now.getMonth());
+  const monthName = UZ_MONTHS[now.getMonth()];
+  await btn(c, `📊 *Umumiy hisobot — ${monthName} ${now.getFullYear()}*\n\n` +
+    `🆕 Yangi buyurtmalar: ${g.monthDeals.length} ta\n` +
+    `📥 Kirim (to'lovlar): ${fmtUzs(g.income)} so'm\n` +
+    `📤 Buyurtma xarajati: ${fmtUzs(g.dealExp)} so'm\n` +
+    `🏭 Ishxona xarajati: ${fmtUzs(g.officeExp)} so'm\n` +
+    `👷 Xodim avanslari: ${fmtUzs(g.staffAdv)} so'm\n` +
+    `━━━━━━━━━━━━\n` +
+    `📈 Biznes sof foyda: *${fmtUzs(g.bizProfit)} so'm*\n` +
+    `👛 Shaxsiy chiqim: ${fmtUzs(g.pers)} so'm\n` +
+    `💵 *Real qoldiq: ${fmtUzs(g.realRemain)} so'm*`, [
+    [{ text: '📥 Excel yuklash (shu oy)', callback_data: 'xls_now' }],
+    [{ text: '📅 Oylik hisobotlar', callback_data: 'xls_list' }],
+    [{ text: '◀️ Ortga', callback_data: 'menu_home' }]
+  ]);
+}
+
+// Telegramga fayl (buffer) yuborish
+function sendDocBuffer(chatId, buffer, filename, caption) {
+  return new Promise((resolve) => {
+    const form = new FormData();
+    form.append('chat_id', String(chatId));
+    if (caption) form.append('caption', caption);
+    form.append('document', buffer, { filename, contentType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const req = https.request({
+      hostname: 'api.telegram.org', path: '/bot' + BOT + '/sendDocument', method: 'POST',
+      headers: form.getHeaders()
+    }, r => { let d = ''; r.on('data', c => d += c); r.on('end', () => { try { resolve(JSON.parse(d)); } catch (e) { resolve(null); } }); });
+    req.on('error', () => resolve(null));
+    form.pipe(req);
+  });
+}
+
+// Oylik Excel yaratadi (buffer qaytaradi)
+async function buildMonthExcel(y, m) {
+  const XLSX = require('xlsx');
+  const g = await gatherMonth(y, m);
+  const wb = XLSX.utils.book_new();
+
+  // 1. Buyurtmalar
+  const ordersRows = g.monthDeals.map(o => ({
+    'Sana': o.date, 'Mijoz': o.client, 'Telefon': o.phone || '',
+    'Turi': (o.types || []).join(', '),
+    'Shartnoma (so\'m)': o.contract_sum_uzs || 0,
+    'To\'langan (so\'m)': (o.payments || []).reduce((s, p) => s + (p.amount_uzs || 0), 0),
+    'Qarz (so\'m)': dealDebtUzs(o),
+    'Xarajat (so\'m)': dealExpUzs(o),
+    'Holat': o.stage || '', 'Status': o.status || 'active'
+  }));
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(ordersRows.length ? ordersRows : [{ 'Ma\'lumot': 'yo\'q' }]), 'Buyurtmalar');
+
+  // 2. Xarajatlar (buyurtma + ishxona)
+  const expRows = [];
+  g.allExpenses.forEach(e => {
+    const prods = (e.products || []).map(p => `${p.name} ×${p.qty}`).join(', ');
+    expRows.push({ 'Sana': e.date, 'Tur': 'Buyurtma: ' + e.client, 'Tafsilot': prods, 'Summa (so\'m)': e.total_uzs || 0 });
+  });
+  g.officeRows.forEach(e => expRows.push({ 'Sana': e.date, 'Tur': 'Ishxona', 'Tafsilot': e.name, 'Summa (so\'m)': e.amount_uzs || 0 }));
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(expRows.length ? expRows : [{ 'Ma\'lumot': 'yo\'q' }]), 'Xarajatlar');
+
+  // 3. Xodimlar
+  const staffRows = g.staff.filter(s => s.active !== false).map(s => {
+    const advThis = (s.advances || []).filter(a => { const p = dmyParts(a.date); return p && p.y === y && p.m === m; }).reduce((sum, a) => sum + (a.amount_usd || 0), 0);
+    const absThis = (s.absences || []).filter(a => { const p = dmyParts(a.date); return p && p.y === y && p.m === m; }).length;
+    return { 'Ism': s.name, 'Oylik ($)': s.salary_usd || 0, 'Kelmagan kun': absThis, 'Olgan avans ($)': advThis };
+  });
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(staffRows.length ? staffRows : [{ 'Ma\'lumot': 'yo\'q' }]), 'Xodimlar');
+
+  // 4. Yakun
+  const yakun = [
+    { 'Ko\'rsatkich': 'Yangi buyurtmalar', 'Qiymat': g.monthDeals.length + ' ta' },
+    { 'Ko\'rsatkich': 'Kirim (to\'lovlar)', 'Qiymat': g.income },
+    { 'Ko\'rsatkich': 'Buyurtma xarajati', 'Qiymat': g.dealExp },
+    { 'Ko\'rsatkich': 'Ishxona xarajati', 'Qiymat': g.officeExp },
+    { 'Ko\'rsatkich': 'Xodim avanslari', 'Qiymat': g.staffAdv },
+    { 'Ko\'rsatkich': 'BIZNES SOF FOYDA', 'Qiymat': g.bizProfit },
+    { 'Ko\'rsatkich': 'Shaxsiy chiqim', 'Qiymat': g.pers },
+    { 'Ko\'rsatkich': 'REAL QOLDIQ', 'Qiymat': g.realRemain }
+  ];
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(yakun), 'Yakun');
+
+  return XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
+}
+
+// Oylik hisobotni yaratib: GitHub'ga saqlaydi + adminга yuboradi
+async function generateAndSendMonth(y, m, toChat) {
+  const buf = await buildMonthExcel(y, m);
+  const fname = `${UZ_MONTHS[m]}-${y}.xlsx`;
+  // GitHub'ga saqlash (hisobotlar papkasi)
+  try { await ghPutRepo('yakubovibrohim/mbi-bot', 'hisobotlar/' + fname, buf, 'report: ' + fname); } catch (e) { console.error('report save:', e.message); }
+  await sendDocBuffer(toChat, buf, fname, `📊 ${UZ_MONTHS[m]} ${y} — oylik hisobot`);
+}
+
+async function showReportsList(c) {
+  // hisobotlar papkasidagi fayllar
+  let files = [];
+  try {
+    const list = await ghGetDir('hisobotlar');
+    files = (list || []).filter(f => f.name.endsWith('.xlsx')).map(f => f.name);
+  } catch (e) {}
+  if (!files.length) { await msg(c, '📅 *Oylik hisobotlar*\n\n_Hali saqlangan hisobot yo\'q. «Excel yuklash» bilan shu oyniki yaratiladi._'); await showSummary(c); return; }
+  const rows = files.sort().reverse().map(f => [{ text: '📄 ' + f.replace('.xlsx', ''), callback_data: 'xls_get_' + f }]);
+  rows.push([{ text: '◀️ Ortga', callback_data: 'menu_summary' }]);
+  await btn(c, '📅 *Oylik hisobotlar:*', rows);
+}
+
+// GitHub papka ro'yxati
+function ghGetDir(path) {
+  return new Promise((resolve) => {
+    const req = https.request({
+      hostname: 'api.github.com', path: '/repos/' + GH_REPO + '/contents/' + path, method: 'GET',
+      headers: { 'Authorization': 'token ' + GH_TOKEN, 'User-Agent': 'mbi-bot', 'Accept': 'application/vnd.github.v3+json' }
+    }, r => { let d = ''; r.on('data', c => d += c); r.on('end', () => { try { const j = JSON.parse(d); resolve(Array.isArray(j) ? j : []); } catch (e) { resolve([]); } }); });
+    req.on('error', () => resolve([])); req.end();
+  });
+}
+// Saqlangan faylni o'qib yuborish
+async function sendSavedReport(c, fname) {
+  const buf = await downloadBuffer('https://raw.githubusercontent.com/' + GH_REPO + '/main/hisobotlar/' + fname);
+  if (buf) await sendDocBuffer(c, buf, fname, '📊 ' + fname.replace('.xlsx', ''));
+  else await msg(c, '⚠️ Fayl topilmadi.');
+}
+
+// Yillik Excel: har oy bo'yicha yakun + umumiy
+async function buildYearExcel(y) {
+  const XLSX = require('xlsx');
+  const wb = XLSX.utils.book_new();
+  const rows = [];
+  let totIncome = 0, totExp = 0, totProfit = 0, totPers = 0;
+  for (let m = 0; m < 12; m++) {
+    const g = await gatherMonth(y, m);
+    const exp = g.dealExp + g.officeExp + g.staffAdv;
+    rows.push({
+      'Oy': UZ_MONTHS[m], 'Buyurtma': g.monthDeals.length,
+      'Kirim': g.income, 'Xarajat': exp, 'Biznes foyda': g.bizProfit, 'Shaxsiy': g.pers, 'Real qoldiq': g.realRemain
+    });
+    totIncome += g.income; totExp += exp; totProfit += g.bizProfit; totPers += g.pers;
+  }
+  rows.push({ 'Oy': 'JAMI', 'Buyurtma': '', 'Kirim': totIncome, 'Xarajat': totExp, 'Biznes foyda': totProfit, 'Shaxsiy': totPers, 'Real qoldiq': totProfit - totPers });
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows), y + '-yil');
+  return XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
 }
 
 // ─── Groq call ────────────────────────────────────────────────
@@ -1806,6 +1988,47 @@ async function checkReminders() {
     if (hhmm === '09:00' && lastMorningBriefing !== today) {
       lastMorningBriefing = today;
       await sendDailyBriefing(ADMIN);
+      // ── Buyurtma muddati eslatmasi (3 kun yoki kam) ──
+      try {
+        const { data: deals } = await ghRead('deals-log.json');
+        const lines = [];
+        for (const o of deals) {
+          if ((o.status || 'active') !== 'active' || !o.deadline_date) continue;
+          const left = workdaysBetween(now, parseDmy(o.deadline_date));
+          const due = parseDmy(o.deadline_date);
+          if (due < now && fmtDate(due) !== today) { lines.push(`⚠️ ${o.client} — muddat o'tdi (${o.deadline_date})`); }
+          else if (left <= 3) { lines.push(`⏳ ${o.client} — ${left} ish kuni qoldi (${o.deadline_date})`); }
+        }
+        if (lines.length) await msg(ADMIN, '📅 *Muddat eslatmasi:*\n\n' + lines.join('\n'));
+      } catch (e) { console.error('deadline reminder:', e.message); }
+
+      // ── Kunlik backup (barcha ma'lumot fayllari) ──
+      try {
+        const files = ['deals-log.json', 'staff-log.json', 'office-expenses-log.json', 'expenses-personal-log.json', 'debts-log.json', 'cashbox.json'];
+        for (const f of files) {
+          try {
+            const buf = await downloadBuffer('https://raw.githubusercontent.com/' + GH_REPO + '/main/' + f);
+            if (buf) await ghPutRepo('yakubovibrohim/mbi-bot', 'backup/' + today.replace(/\./g, '-') + '/' + f, buf, 'backup ' + today);
+          } catch (e) {}
+        }
+      } catch (e) { console.error('backup:', e.message); }
+
+      // ── Oyning 1-kuni: o'tgan oy Excel hisoboti ──
+      if (now.getDate() === 1) {
+        try {
+          let py = now.getFullYear(), pm = now.getMonth() - 1;
+          if (pm < 0) { pm = 11; py -= 1; }
+          await generateAndSendMonth(py, pm, ADMIN);
+          if (now.getMonth() === 0) {
+            try {
+              const buf = await buildYearExcel(py);
+              const fname = `Yillik-${py}.xlsx`;
+              await ghPutRepo('yakubovibrohim/mbi-bot', 'hisobotlar/' + fname, buf, 'report: ' + fname);
+              await sendDocBuffer(ADMIN, buf, fname, `📊 ${py}-yil — yillik hisobot`);
+            } catch (e) { console.error('yearly:', e.message); }
+          }
+        } catch (e) { console.error('monthly excel:', e.message); }
+      }
     }
 
     // Meeting reminders
@@ -1887,6 +2110,11 @@ async function handle(upd) {
       if (cd === 'menu_personal_exp') { await showPersonalExp(c); return; }
       if (cd === 'psx_add') { await personalExpAddStart(c); return; }
       if (cd === 'menu_debts') { await showDebts(c); return; }
+      // ── 4-bosqich: hisobot, Excel ──
+      if (cd === 'menu_summary') { await showSummary(c); return; }
+      if (cd === 'xls_now') { await msg(c, '⏳ Excel tayyorlanyapti...'); const n = nowTZ(); await generateAndSendMonth(n.getFullYear(), n.getMonth(), c); return; }
+      if (cd === 'xls_list') { await showReportsList(c); return; }
+      if (cd.startsWith('xls_get_')) { await sendSavedReport(c, cd.slice(8)); return; }
       if (cd === 'debt_add_in') { await debtAddStart(c, 'in'); return; }
       if (cd === 'debt_add_out') { await debtAddStart(c, 'out'); return; }
       if (cd === 'debt_pay') { await showDebtPayList(c); return; }
@@ -2081,7 +2309,8 @@ async function handle(upd) {
             [{ text: '👷 Xodimlar', callback_data: 'menu_staff' }, { text: '💰 Kassa', callback_data: 'menu_cash' }],
             [{ text: '🏭 Ishxona xarajatlari', callback_data: 'menu_office_exp' }],
             [{ text: '👛 Shaxsiy xarajatlar', callback_data: 'menu_personal_exp' }],
-            [{ text: '💳 Qarzlar', callback_data: 'menu_debts' }]
+            [{ text: '💳 Qarzlar', callback_data: 'menu_debts' }],
+            [{ text: '📊 Umumiy hisobot', callback_data: 'menu_summary' }]
           ] } });
         return;
       }
