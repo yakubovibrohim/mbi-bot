@@ -82,21 +82,91 @@ async function ghReadAll(file) {
   return data;
 }
 
-// ─── Yangi buyurtma: qadama-qadam ─────────────────────────────
-// Bosqichlar ketma-ketligi
-const ORDER_STEPS = ['client', 'amount_usd', 'advance_usd', 'note'];
+// ─── Eski yozuvlarni yangi formatga moslash (migration) ──────
+// Eski deal'larda id/payments/expenses/status bo'lmasligi mumkin.
+// Buzmasdan, faqat yetishmayotgan maydonlarni to'ldiramiz.
+function migrateDeal(o) {
+  let changed = false;
+  if (!o.id) { o.id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6); changed = true; }
+  if (!o.status) { o.status = 'active'; changed = true; }
+  if (!Array.isArray(o.payments)) {
+    o.payments = [];
+    // eski advance_uzs ni birinchi to'lov sifatida ko'chiramiz
+    if (o.advance_uzs && o.advance_uzs > 0) {
+      o.payments.push({ id: Date.now().toString(36) + 'a', date: o.date || '', amount_uzs: o.advance_uzs, rate: o.rate || 12000, note: 'Avans (eski)' });
+    }
+    changed = true;
+  }
+  if (!Array.isArray(o.expenses)) { o.expenses = []; changed = true; }
+  if (!Array.isArray(o.types)) { o.types = o.types ? [o.types] : []; changed = true; }
+  if (o.finished_date === undefined) { o.finished_date = null; changed = true; }
+  if (o.cancelled_date === undefined) { o.cancelled_date = null; changed = true; }
+  return changed;
+}
+// Barcha deal'larni o'qib, kerak bo'lsa migratsiya qilib, qaytaradi
+async function readDealsMigrated() {
+  const { data, sha } = await ghRead('deals-log.json');
+  let anyChanged = false;
+  for (const o of data) { if (migrateDeal(o)) anyChanged = true; }
+  if (anyChanged) {
+    try { await ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, 'migrate: eski yozuvlarni yangilash'); } catch (e) { console.error('migrate save:', e.message); }
+    return (await ghRead('deals-log.json'));
+  }
+  return { data, sha };
+}
+
+// ══════════════════════════════════════════════════════════════
+// 1-BOSQICH: Yangi buyurtma oqimi + mijoz bo'limi
+// ══════════════════════════════════════════════════════════════
+const fmtUzs = n => Math.round(n || 0).toLocaleString('ru-RU');
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+
+// "45$" yoki "540000" → so'm. $ bo'lsa kurs bilan o'tkazadi.
+function parseMoneyToUzs(txt) {
+  const hasUsd = /\$|dollar|dol\b/i.test(txt);
+  const n = parseFloat(String(txt).replace(/[^\d.,]/g, '').replace(/,/g, '.'));
+  if (isNaN(n) || n < 0) return null;
+  return hasUsd ? Math.round(n * USD_UZS) : Math.round(n);
+}
+
+// Ish kuni qo'shish: bugundan boshlab N ta ish kuni (yakshanba o'tkaziladi)
+function addWorkdays(startDate, workdays) {
+  const d = new Date(startDate);
+  let added = 0;
+  while (added < workdays) {
+    d.setDate(d.getDate() + 1);
+    if (d.getDay() !== 0) added++; // 0 = yakshanba
+  }
+  return d;
+}
+// Ikki sana orasidagi ish kunlari soni (yakshanbasiz)
+function workdaysBetween(from, to) {
+  const a = new Date(from), b = new Date(to);
+  if (b < a) return 0;
+  let cnt = 0;
+  const d = new Date(a);
+  while (d < b) { d.setDate(d.getDate() + 1); if (d.getDay() !== 0) cnt++; }
+  return cnt;
+}
+function fmtDate(d) {
+  return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2) + '.' + d.getFullYear();
+}
+
+const ORDER_STAGES = ['Yangi buyurtma', "O'lchov olindi", 'Ishlab chiqarilmoqda', 'Yetkazildi', 'To\'landi'];
 
 function orderPrompt(step) {
   switch (step) {
-    case 'client':      return '👤 *Mijoz ismini* yozing:\n\n_Masalan: Boxodir aka_';
-    case 'amount_usd':  return '💵 *Shartnoma summasi* (dollarda):\n\n_Masalan: 800_';
-    case 'advance_usd': return '💰 *Avans* (dollarda, olingan bo\'lsa):\n\n_Masalan: 500. Avans yo\'q bo\'lsa: 0_';
-    case 'note':        return '📝 *Izoh* (material, nima sotib olindi va h.k.):\n\n_Masalan: ACACIA: LMDF Nazif oq, kromka, raspil. Izoh yo\'q bo\'lsa: -_';
+    case 'client':   return '👤 *Mijoz ismini* yozing:';
+    case 'phone':    return '📞 *Telefon raqami* (majburiy):';
+    case 'types':    return '🪚 *Buyurtma turini* yozing:\n\n_Masalan: Oshxona mebeli_';
+    case 'amount':   return '💵 *Shartnoma summasi* (dollarda):\n\n_Masalan: 800_';
+    case 'advance':  return '💰 *Avans* (dollarda):\n\n_Avans yo\'q bo\'lsa «O\'tkazib yuborish»_';
+    case 'address':  return '📍 *Manzil* (o\'lchov/yetkazish joyi):';
+    case 'deadline': return '📅 *Topshirish muddati* (necha kun):\n\n_Faqat ish kunlari sanaladi (yakshanbasiz). Masalan: 30_';
+    case 'note':     return '📝 *Izoh* (material va h.k.):';
   }
 }
-
-// Har bosqich uchun pastki tugmalar (Ortga / Bekor)
-function orderKb(step, withSkip) {
+function orderNav(step, withSkip) {
   const rows = [];
   if (withSkip) rows.push([{ text: "⏭ O'tkazib yuborish", callback_data: 'ord_skip' }]);
   const nav = [];
@@ -107,40 +177,49 @@ function orderKb(step, withSkip) {
 }
 
 async function orderStart(c) {
-  orderState[c] = { step: 'client', data: {} };
-  await btn(c, '🆕 *Yangi buyurtma*\n\nQadama-qadam to\'ldiramiz. Adashsangiz «Ortga» bosing.\n\n' + orderPrompt('client'),
-    orderKb('client', false));
+  orderState[c] = { step: 'client', data: { types: [] } };
+  await btn(c, '🆕 *Yangi buyurtma*\n\nQadama-qadam to\'ldiramiz. Adashsangiz «Ortga» bosing.\n\n' + orderPrompt('client'), orderNav('client', false));
+}
+
+// Buyurtma turi bosqichida — "Yana +" / "Davom etamiz" tugmalari
+async function orderTypesMenu(c) {
+  const st = orderState[c];
+  const list = st.data.types.length ? st.data.types.join(', ') : '_(hali yo\'q)_';
+  await btn(c, `🪚 *Buyurtma turlari:* ${list}\n\nYana qo\'shasizmi yoki davom etamizmi?`, [
+    [{ text: '➕ Yana +', callback_data: 'ord_type_more' }, { text: '✅ Davom etamiz', callback_data: 'ord_type_done' }],
+    [{ text: '◀️ Ortga', callback_data: 'ord_back' }, { text: '❌ Bekor qilish', callback_data: 'ord_cancel' }]
+  ]);
 }
 
 async function orderAsk(c) {
   const st = orderState[c];
-  const withSkip = (st.step === 'advance_usd' || st.step === 'note');
-  await btn(c, orderPrompt(st.step), orderKb(st.step, withSkip));
+  const withSkip = ['advance', 'address', 'deadline', 'note'].includes(st.step);
+  await btn(c, orderPrompt(st.step), orderNav(st.step, withSkip));
 }
 
 function orderSummary(d) {
-  const amtUsd = d.amount_usd || 0;
-  const advUsd = d.advance_usd || 0;
-  const amtUzs = amtUsd * USD_UZS;
-  const advUzs = advUsd * USD_UZS;
+  const amtUzs = (d.amount_usd || 0) * USD_UZS;
+  const advUzs = (d.advance_usd || 0) * USD_UZS;
   const debtUzs = amtUzs - advUzs;
-  const f = n => n.toLocaleString('ru-RU');
-  return {
-    text: `📋 *Tekshiring:*\n\n` +
-      `👤 Mijoz: *${d.client}*\n` +
-      `💵 Shartnoma: *$${amtUsd}* (${f(amtUzs)} so'm)\n` +
-      `💰 Avans: *$${advUsd}* (${f(advUzs)} so'm)\n` +
-      `📉 Qolgan qarz: *${f(debtUzs)} so'm* ($${amtUsd - advUsd})\n` +
-      `📝 Izoh: ${d.note || '-'}`,
-    amtUzs, advUzs, debtUzs
-  };
+  let dl = '-';
+  if (d.deadline_days) dl = `${d.deadline_days} ish kuni → *${d.deadline_date}*`;
+  const text = `📋 *Tekshiring:*\n\n` +
+    `👤 Mijoz: *${d.client}*\n` +
+    `📞 Tel: ${d.phone}\n` +
+    `🪚 Turi: ${d.types.join(', ')}\n` +
+    `💵 Shartnoma: *$${d.amount_usd}* (${fmtUzs(amtUzs)} so'm)\n` +
+    `💰 Avans: *$${d.advance_usd || 0}* (${fmtUzs(advUzs)} so'm)\n` +
+    `📉 Qolgan qarz: *${fmtUzs(debtUzs)} so'm* ($${(d.amount_usd || 0) - (d.advance_usd || 0)})\n` +
+    `📍 Manzil: ${d.address || '-'}\n` +
+    `📅 Muddat: ${dl}\n` +
+    `📝 Izoh: ${d.note || '-'}`;
+  return { text, amtUzs, advUzs, debtUzs };
 }
 
 async function orderConfirm(c) {
-  const d = orderState[c].data;
-  const s = orderSummary(d);
-  orderState[c].step = 'confirm';
-  await btn(c, s.text, [
+  const st = orderState[c];
+  st.step = 'confirm';
+  await btn(c, orderSummary(st.data).text, [
     [{ text: '✅ Saqlash', callback_data: 'ord_save' }],
     [{ text: '◀️ Ortga', callback_data: 'ord_back' }, { text: '❌ Bekor qilish', callback_data: 'ord_cancel' }]
   ]);
@@ -150,85 +229,325 @@ async function orderSave(c) {
   const d = orderState[c].data;
   const s = orderSummary(d);
   const today = todayStr();
+  const advUsd = d.advance_usd || 0;
   const entry = {
+    id: uid(),
     date: today,
+    ts: new Date().toISOString(),
     client: d.client,
+    phone: d.phone,
+    types: d.types,
     contract_sum_usd: d.amount_usd || 0,
     contract_sum_uzs: s.amtUzs,
-    advance_usd: d.advance_usd || 0,
-    advance_uzs: s.advUzs,
-    debt_uzs: s.debtUzs,
-    stage: 'Yangi buyurtma',
+    rate: USD_UZS,
+    address: d.address || '',
+    deadline_days: d.deadline_days || null,
+    deadline_date: d.deadline_date || null,
     note: d.note || '',
-    ts: new Date().toISOString()
+    stage: 'Yangi buyurtma',
+    status: 'active',            // active | done | cancelled
+    payments: advUsd > 0 ? [{ id: uid(), date: today, amount_uzs: advUsd * USD_UZS, rate: USD_UZS, note: 'Avans' }] : [],
+    expenses: [],                // {id,date,products:[{name,qty,price_uzs,rate}],total_uzs,note,source}
+    finished_date: null,
+    cancelled_date: null,
+    cancel_reason: ''
   };
   const ok = await ghWrite('deals-log.json', entry, `order: ${d.client} $${d.amount_usd}`);
   delete orderState[c];
   if (ok) {
-    await msg(c, `✅ *Buyurtma saqlandi!*\n\n👤 ${d.client}\n💵 $${d.amount_usd}\n📉 Qarz: ${s.debtUzs.toLocaleString('ru-RU')} so'm\n\n📊 Hisobot: /hisobot`);
+    await msg(c, `✅ *Buyurtma saqlandi!*\n\n👤 ${d.client}\n💵 $${d.amount_usd}\n📉 Qarz: ${fmtUzs(s.debtUzs)} so'm\n📅 ${d.deadline_date || '-'}\n\n📁 Ko'rish: bosh menyu → Buyurtmalar`);
   } else {
-    await msg(c, '⚠️ Saqlashda xatolik. Qayta urinib ko\'ring: «🆕 Yangi buyurtma»');
+    await msg(c, '⚠️ Saqlashda xatolik. Qayta urinib ko\'ring.');
   }
 }
 
-// Matn javobini tegishli bosqichga yozadi. true = oqim davom etdi
+// Matn javobi → bosqich. true = oqim davom etdi
 async function orderHandleText(c, t) {
   const st = orderState[c];
   if (!st) return false;
   const txt = (t || '').trim();
   if (!txt) return false;
 
-  if (st.step === 'client') {
-    st.data.client = txt;
-    st.step = 'amount_usd';
-    await orderAsk(c);
-    return true;
-  }
-  if (st.step === 'amount_usd') {
-    const n = parseFloat(txt.replace(/[^\d.]/g, ''));
-    if (isNaN(n) || n <= 0) { await msg(c, '❗️ Faqat raqam yozing. Masalan: 800'); return true; }
-    st.data.amount_usd = n;
-    st.step = 'advance_usd';
-    await orderAsk(c);
-    return true;
-  }
-  if (st.step === 'advance_usd') {
-    const n = parseFloat(txt.replace(/[^\d.]/g, ''));
-    if (isNaN(n) || n < 0) { await msg(c, '❗️ Faqat raqam yozing. Avans yo\'q bo\'lsa: 0'); return true; }
-    if (n > st.data.amount_usd) { await msg(c, `❗️ Avans shartnomadan ($${st.data.amount_usd}) ko'p bo'lmasligi kerak.`); return true; }
-    st.data.advance_usd = n;
-    st.step = 'note';
-    await orderAsk(c);
-    return true;
-  }
-  if (st.step === 'note') {
-    st.data.note = (txt === '-') ? '' : txt;
-    await orderConfirm(c);
-    return true;
+  switch (st.step) {
+    case 'client':
+      st.data.client = txt; st.step = 'phone'; await orderAsk(c); return true;
+    case 'phone':
+      st.data.phone = txt; st.step = 'types'; await orderAsk(c); return true;
+    case 'types': {
+      st.data.types.push(txt);
+      st.step = 'types_menu'; await orderTypesMenu(c); return true;
+    }
+    case 'types_menu':
+      // bu bosqichda matn kelsa, yana tur sifatida qo'sh
+      st.data.types.push(txt); await orderTypesMenu(c); return true;
+    case 'amount': {
+      const n = parseFloat(txt.replace(/[^\d.]/g, ''));
+      if (isNaN(n) || n <= 0) { await msg(c, '❗️ Faqat raqam yozing. Masalan: 800'); return true; }
+      st.data.amount_usd = n; st.step = 'advance'; await orderAsk(c); return true;
+    }
+    case 'advance': {
+      const n = parseFloat(txt.replace(/[^\d.]/g, ''));
+      if (isNaN(n) || n < 0) { await msg(c, '❗️ Faqat raqam yozing yoki «O\'tkazib yuborish».'); return true; }
+      if (n > st.data.amount_usd) { await msg(c, `❗️ Avans shartnomadan ($${st.data.amount_usd}) ko'p bo'lmasin.`); return true; }
+      st.data.advance_usd = n; st.step = 'address'; await orderAsk(c); return true;
+    }
+    case 'address':
+      st.data.address = txt; st.step = 'deadline'; await orderAsk(c); return true;
+    case 'deadline': {
+      const n = parseInt(txt.replace(/[^\d]/g, ''), 10);
+      if (isNaN(n) || n <= 0) { await msg(c, '❗️ Necha kun? Faqat raqam yozing. Masalan: 30'); return true; }
+      st.data.deadline_days = n;
+      st.data.deadline_date = fmtDate(addWorkdays(nowTZ(), n));
+      st.step = 'note';
+      await msg(c, `✅ ${n} ish kuni → *${st.data.deadline_date}*\n_(yakshanbalar o'tkazildi)_`);
+      await orderAsk(c); return true;
+    }
+    case 'note':
+      st.data.note = (txt === '-') ? '' : txt; await orderConfirm(c); return true;
   }
   return false;
 }
 
-// Tugma (callback) javoblari. true = ishlov berildi
+const ORDER_SEQ = ['client', 'phone', 'types', 'types_menu', 'amount', 'advance', 'address', 'deadline', 'note', 'confirm'];
+
 async function orderHandleCallback(c, data) {
   const st = orderState[c];
   if (!st) return false;
   if (data === 'ord_cancel') { delete orderState[c]; await msg(c, '❌ Bekor qilindi.'); return true; }
+
+  if (data === 'ord_type_more') { st.step = 'types'; await orderAsk(c); return true; }
+  if (data === 'ord_type_done') {
+    if (!st.data.types.length) { await msg(c, '❗️ Kamida bitta mebel turini yozing.'); await orderTypesMenu(c); return true; }
+    st.step = 'amount'; await orderAsk(c); return true;
+  }
   if (data === 'ord_skip') {
-    if (st.step === 'advance_usd') { st.data.advance_usd = 0; st.step = 'note'; await orderAsk(c); }
+    if (st.step === 'advance') { st.data.advance_usd = 0; st.step = 'address'; await orderAsk(c); }
+    else if (st.step === 'address') { st.data.address = ''; st.step = 'deadline'; await orderAsk(c); }
+    else if (st.step === 'deadline') { st.data.deadline_days = null; st.data.deadline_date = null; st.step = 'note'; await orderAsk(c); }
     else if (st.step === 'note') { st.data.note = ''; await orderConfirm(c); }
     return true;
   }
   if (data === 'ord_back') {
-    const order = ['client', 'amount_usd', 'advance_usd', 'note', 'confirm'];
-    const idx = order.indexOf(st.step);
+    const idx = ORDER_SEQ.indexOf(st.step);
     if (idx <= 0) { delete orderState[c]; await msg(c, '❌ Bekor qilindi.'); return true; }
-    st.step = order[idx - 1];
-    if (st.step === 'confirm') { await orderConfirm(c); } else { await orderAsk(c); }
+    let prev = ORDER_SEQ[idx - 1];
+    // types_menu ga qaytsa, oxirgi turni olib tashlaymiz (qayta yozish uchun emas, menyuni ko'rsatamiz)
+    st.step = prev;
+    if (prev === 'types_menu') { await orderTypesMenu(c); }
+    else if (prev === 'confirm') { await orderConfirm(c); }
+    else await orderAsk(c);
     return true;
   }
   if (data === 'ord_save') { await orderSave(c); return true; }
   return false;
+}
+
+// ─── BUYURTMALAR BO'LIMI (faol/tugatilgan/bekor) ──────────────
+function dealDebtUzs(o) {
+  const paid = (o.payments || []).reduce((s, p) => s + (p.amount_uzs || 0), 0);
+  return (o.contract_sum_uzs || 0) - paid;
+}
+function dealExpUzs(o) {
+  return (o.expenses || []).reduce((s, e) => s + (e.total_uzs || 0), 0);
+}
+function dealPaidUzs(o) {
+  return (o.payments || []).reduce((s, p) => s + (p.amount_uzs || 0), 0);
+}
+
+async function showOrdersList(c, status) {
+  const { data: deals } = await readDealsMigrated();
+  const filtered = deals.filter(o => (o.status || 'active') === status);
+  const titleMap = { active: '📁 Faol buyurtmalar', done: '✅ Tugatilgan buyurtmalar', cancelled: '🚫 Bekor qilinganlar' };
+  if (!filtered.length) { await msg(c, `${titleMap[status]}\n\n_Hozircha yo'q._`); return; }
+  const rows = filtered.map(o => {
+    let extra = '';
+    if (status === 'active' && o.deadline_date) {
+      const left = workdaysBetween(nowTZ(), parseDmy(o.deadline_date));
+      extra = ` (${left} kun)`;
+    }
+    return [{ text: `👤 ${o.client}${extra}`, callback_data: 'ord_open_' + o.id }];
+  });
+  await btn(c, titleMap[status] + ' — mijozni tanlang:', rows);
+}
+
+function parseDmy(s) {
+  const m = String(s).match(/(\d{2})\.(\d{2})\.(\d{4})/);
+  if (!m) return nowTZ();
+  return new Date(+m[3], +m[2] - 1, +m[1]);
+}
+
+async function findDeal(id) {
+  let { data, sha } = await ghRead('deals-log.json');
+  let anyChanged = false;
+  for (const o of data) { if (migrateDeal(o)) anyChanged = true; }
+  if (anyChanged) {
+    try { const r = await ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, 'migrate'); if (r && r.content && r.content.sha) sha = r.content.sha; } catch (e) { console.error('findDeal migrate:', e.message); }
+  }
+  const idx = data.findIndex(o => o.id === id);
+  return { data, sha, idx, deal: idx >= 0 ? data[idx] : null };
+}
+
+async function showClientMenu(c, id) {
+  const { deal } = await findDeal(id);
+  if (!deal) { await msg(c, '⚠️ Buyurtma topilmadi.'); return; }
+  let head = `👤 *${deal.client}*\n📞 ${deal.phone || '-'}`;
+  if ((deal.status || 'active') === 'active' && deal.deadline_date) {
+    const left = workdaysBetween(nowTZ(), parseDmy(deal.deadline_date));
+    head += left >= 0 ? `\n📅 Topshirishga *${left} kun* qoldi ⏳` : `\n⚠️ Muddat o'tdi`;
+  }
+  if ((deal.status) === 'done') head += `\n✅ Tugatilgan: ${deal.finished_date}`;
+  if ((deal.status) === 'cancelled') head += `\n🚫 Bekor: ${deal.cancelled_date}`;
+  const rows = [
+    [{ text: '📊 Hisobot', callback_data: 'cl_report_' + id }, { text: '💸 Xarajatlar', callback_data: 'cl_exp_' + id }],
+    [{ text: '💰 To\'lovlar', callback_data: 'cl_pay_' + id }, { text: '👤 Ma\'lumotlar', callback_data: 'cl_info_' + id }],
+    [{ text: '📊 Holat: ' + (deal.stage || '-'), callback_data: 'cl_stage_' + id }]
+  ];
+  if ((deal.status || 'active') === 'active') {
+    rows.push([{ text: '🏁 Yakunlash', callback_data: 'cl_finish_' + id }, { text: '🚫 Bekor qilish', callback_data: 'cl_cancel_' + id }]);
+  }
+  rows.push([{ text: '◀️ Ortga', callback_data: 'cl_back_' + ((deal.status) || 'active') }]);
+  await btn(c, head + '\n\nBo\'limni tanlang:', rows);
+}
+
+async function showClientReport(c, id) {
+  const { deal } = await findDeal(id);
+  if (!deal) { await msg(c, '⚠️ Topilmadi.'); return; }
+  const contract = deal.contract_sum_uzs || 0;
+  const paid = dealPaidUzs(deal);
+  const exp = dealExpUzs(deal);
+  const debt = contract - paid;
+  const profit = contract - exp;
+  await btn(c, `📊 *${deal.client} — hisobot*\n\n` +
+    `💵 Shartnoma: ${fmtUzs(contract)} so'm\n` +
+    `💰 To'langan: ${fmtUzs(paid)} so'm\n` +
+    `📉 Qolgan qarz: *${fmtUzs(debt)} so'm*\n` +
+    `💸 Xarajat: ${fmtUzs(exp)} so'm\n` +
+    `📈 Sof foyda: *${fmtUzs(profit)} so'm*`,
+    [[{ text: '◀️ Ortga', callback_data: 'ord_open_' + id }]]);
+}
+
+async function showClientInfo(c, id) {
+  const { deal } = await findDeal(id);
+  if (!deal) { await msg(c, '⚠️ Topilmadi.'); return; }
+  await btn(c, `👤 *${deal.client}*\n\n` +
+    `📞 ${deal.phone || '-'}\n` +
+    `🪚 ${(deal.types || []).join(', ') || '-'}\n` +
+    `💵 $${deal.contract_sum_usd} (${fmtUzs(deal.contract_sum_uzs)} so'm)\n` +
+    `📍 ${deal.address || '-'}\n` +
+    `📅 ${deal.deadline_date || '-'}${deal.deadline_days ? ' (' + deal.deadline_days + ' ish kuni)' : ''}\n` +
+    `🗓 Olingan: ${deal.date}\n` +
+    `📝 ${deal.note || '-'}`,
+    [[{ text: '◀️ Ortga', callback_data: 'ord_open_' + id }]]);
+}
+
+async function showClientPayments(c, id) {
+  const { deal } = await findDeal(id);
+  if (!deal) { await msg(c, '⚠️ Topilmadi.'); return; }
+  const lines = (deal.payments || []).map(p => `• ${p.date} — ${fmtUzs(p.amount_uzs)} so'm${p.note ? ' (' + p.note + ')' : ''}`).join('\n') || '_(hali yo\'q)_';
+  const debt = dealDebtUzs(deal);
+  await btn(c, `💰 *${deal.client} — to'lovlar*\n\n${lines}\n\n📉 Qolgan qarz: *${fmtUzs(debt)} so'm*`,
+    [[{ text: '➕ To\'lov qo\'shish', callback_data: 'pay_add_' + id }], [{ text: '◀️ Ortga', callback_data: 'ord_open_' + id }]]);
+}
+
+async function showClientExpenses(c, id) {
+  const { deal } = await findDeal(id);
+  if (!deal) { await msg(c, '⚠️ Topilmadi.'); return; }
+  const lines = (deal.expenses || []).map(e => {
+    const prods = (e.products || []).map(p => `${p.name} ×${p.qty}`).join(', ');
+    return `• ${e.date} — ${prods} = ${fmtUzs(e.total_uzs)} so'm`;
+  }).join('\n') || '_(hali yo\'q)_';
+  await btn(c, `💸 *${deal.client} — xarajatlar*\n\n${lines}\n\n*Jami: ${fmtUzs(dealExpUzs(deal))} so'm*`,
+    [[{ text: '➕ Xarajat qo\'shish', callback_data: 'exp_add_' + id }], [{ text: '◀️ Ortga', callback_data: 'ord_open_' + id }]]);
+}
+
+async function showClientStage(c, id) {
+  const rows = ORDER_STAGES.map(s => [{ text: s, callback_data: 'stg_' + id + '_' + ORDER_STAGES.indexOf(s) }]);
+  rows.push([{ text: '◀️ Ortga', callback_data: 'ord_open_' + id }]);
+  await btn(c, '📊 *Holatni tanlang:*', rows);
+}
+
+async function setStage(c, id, stageIdx) {
+  const { data, sha, idx } = await findDeal(id);
+  if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return; }
+  data[idx].stage = ORDER_STAGES[stageIdx] || data[idx].stage;
+  await ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, 'stage: ' + data[idx].client);
+  await msg(c, `✅ Holat: *${data[idx].stage}*`);
+  await showClientMenu(c, id);
+}
+
+async function finishOrder(c, id) {
+  const { data, sha, idx } = await findDeal(id);
+  if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return; }
+  const o = data[idx];
+  o.status = 'done';
+  o.finished_date = todayStr();
+  const days = o.deadline_days ? workdaysBetween(parseDmy(o.date), parseDmy(o.finished_date)) : null;
+  o.finished_workdays = days;
+  await ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, 'finish: ' + o.client);
+  let verdict = '';
+  if (o.deadline_days && days != null) {
+    if (days <= o.deadline_days) verdict = `\n✅ Muddatida bitdi (${days}/${o.deadline_days} ish kuni)`;
+    else verdict = `\n⚠️ Kechikdi (${days} ish kuni, va'da: ${o.deadline_days})`;
+  }
+  await msg(c, `🏁 *${o.client}* — buyurtma yakunlandi!\n🗓 Tugadi: ${o.finished_date}${verdict}`);
+}
+
+async function cancelOrderStart(c, id) {
+  orderState[c] = { step: 'cancel_reason', cancelId: id };
+  await btn(c, '🚫 *Bekor qilish*\n\nSababini yozing:', [[{ text: '◀️ Bekor qilmaymiz', callback_data: 'ord_open_' + id }]]);
+}
+async function cancelOrderSave(c, id, reason) {
+  const { data, sha, idx } = await findDeal(id);
+  if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return; }
+  data[idx].status = 'cancelled';
+  data[idx].cancelled_date = todayStr();
+  data[idx].cancel_reason = reason;
+  await ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, 'cancel: ' + data[idx].client);
+  await msg(c, `🚫 *${data[idx].client}* bekor qilindi.\nSabab: ${reason}`);
+}
+
+// ─── To'lov qo'shish oqimi ────────────────────────────────────
+async function payAddStart(c, id) {
+  orderState[c] = { step: 'pay_amount', payId: id };
+  await btn(c, '💰 *To\'lov summasi:*\n\n_So\'mda yoki dollarda ($). Masalan: 2000000 yoki 200$_',
+    [[{ text: '❌ Bekor', callback_data: 'ord_open_' + id }]]);
+}
+async function paySave(c, id, amountUzs) {
+  const { data, sha, idx } = await findDeal(id);
+  if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return; }
+  data[idx].payments = data[idx].payments || [];
+  data[idx].payments.push({ id: uid(), date: todayStr(), amount_uzs: amountUzs, rate: USD_UZS, note: '' });
+  await ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, 'payment: ' + data[idx].client);
+  await msg(c, `✅ To'lov qo'shildi: ${fmtUzs(amountUzs)} so'm\n📉 Qolgan qarz: *${fmtUzs(dealDebtUzs(data[idx]))} so'm*`);
+  await showClientPayments(c, id);
+}
+
+// ─── Xarajat qo'shish oqimi (qo'lda) ──────────────────────────
+async function expAddStart(c, id) {
+  orderState[c] = { step: 'exp_name', expId: id, expProducts: [], expCur: {} };
+  await btn(c, '💸 *Mahsulot nomi:*\n\n_Masalan: LMDF Nazif oq_', [[{ text: '❌ Bekor', callback_data: 'ord_open_' + id }]]);
+}
+async function expProductsMenu(c) {
+  const st = orderState[c];
+  const lines = st.expProducts.map(p => `• ${p.name} ×${p.qty} — ${fmtUzs(p.price_uzs)} = ${fmtUzs(p.qty * p.price_uzs)}`).join('\n') || '_(hali yo\'q)_';
+  const total = st.expProducts.reduce((s, p) => s + p.qty * p.price_uzs, 0);
+  await btn(c, `💸 *Mahsulotlar:*\n${lines}\n\n*Jami: ${fmtUzs(total)} so'm*`, [
+    [{ text: '➕ Yana mahsulot', callback_data: 'exp_more' }, { text: '✅ Tugatish', callback_data: 'exp_done' }],
+    [{ text: '❌ Bekor', callback_data: 'ord_open_' + st.expId }]
+  ]);
+}
+async function expSave(c) {
+  const st = orderState[c];
+  const id = st.expId;
+  const total = st.expProducts.reduce((s, p) => s + p.qty * p.price_uzs, 0);
+  const { data, sha, idx } = await findDeal(id);
+  if (idx < 0) { delete orderState[c]; await msg(c, '⚠️ Topilmadi.'); return; }
+  data[idx].expenses = data[idx].expenses || [];
+  data[idx].expenses.push({ id: uid(), date: todayStr(), products: st.expProducts, total_uzs: total, rate: USD_UZS, note: '', source: 'manual' });
+  await ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, 'expense: ' + data[idx].client);
+  delete orderState[c];
+  await msg(c, `✅ Xarajat saqlandi: ${fmtUzs(total)} so'm`);
+  await showClientExpenses(c, id);
 }
 
 // ─── Groq call ────────────────────────────────────────────────
@@ -1059,9 +1378,29 @@ async function handle(upd) {
   try {
     if (upd.callback_query) {
       const cq = upd.callback_query; const c = cq.message.chat.id; await acb(cq.id);
-      if (cq.data && cq.data.startsWith('ord_')) { if (await orderHandleCallback(c, cq.data)) return; }
-      if (cq.data==='start_order') { await orderStart(c); return; }
-      if (cq.data==='til_uz'){state[c]={lang:'uz',step:'ask_file'};await btn(c,'Sizda tayyor loyiha yoki xona rasmi bormi?',[[{text:'Ha, bor',callback_data:'file_ha'}],[{text:"Yo'q",callback_data:'file_yoq'}]]);}
+      const cd = cq.data || '';
+      // ── Buyurtmalar bo'limi navigatsiyasi ──
+      if (cd === 'start_order') { await orderStart(c); return; }
+      if (cd === 'menu_orders') { await showOrdersList(c, 'active'); return; }
+      if (cd === 'menu_done') { await showOrdersList(c, 'done'); return; }
+      if (cd === 'menu_cancelled') { await showOrdersList(c, 'cancelled'); return; }
+      if (cd.startsWith('cl_back_')) { await showOrdersList(c, cd.slice(8)); return; }
+      if (cd.startsWith('ord_open_')) { await showClientMenu(c, cd.slice(9)); return; }
+      if (cd.startsWith('cl_report_')) { await showClientReport(c, cd.slice(10)); return; }
+      if (cd.startsWith('cl_info_')) { await showClientInfo(c, cd.slice(8)); return; }
+      if (cd.startsWith('cl_pay_')) { await showClientPayments(c, cd.slice(7)); return; }
+      if (cd.startsWith('cl_exp_')) { await showClientExpenses(c, cd.slice(7)); return; }
+      if (cd.startsWith('cl_stage_')) { await showClientStage(c, cd.slice(9)); return; }
+      if (cd.startsWith('cl_finish_')) { await finishOrder(c, cd.slice(10)); return; }
+      if (cd.startsWith('cl_cancel_')) { await cancelOrderStart(c, cd.slice(10)); return; }
+      if (cd.startsWith('stg_')) { const rest = cd.slice(4); const li = rest.lastIndexOf('_'); await setStage(c, rest.slice(0, li), +rest.slice(li + 1)); return; }
+      if (cd.startsWith('pay_add_')) { await payAddStart(c, cd.slice(8)); return; }
+      if (cd.startsWith('exp_add_')) { await expAddStart(c, cd.slice(8)); return; }
+      if (cd === 'exp_more') { if (orderState[c]) { orderState[c].step = 'exp_name'; await btn(c, '💸 *Mahsulot nomi:*', [[{ text: '❌ Bekor', callback_data: 'ord_open_' + orderState[c].expId }]]); } return; }
+      if (cd === 'exp_done') { if (orderState[c] && orderState[c].expProducts && orderState[c].expProducts.length) { await expSave(c); } else { await msg(c, '❗️ Kamida bitta mahsulot qo\'shing.'); if (orderState[c]) await expProductsMenu(c); } return; }
+      // ── Yangi buyurtma oqimi tugmalari ──
+      if (cd.startsWith('ord_')) { if (await orderHandleCallback(c, cd)) return; }
+      if (cd==='til_uz'){state[c]={lang:'uz',step:'ask_file'};await btn(c,'Sizda tayyor loyiha yoki xona rasmi bormi?',[[{text:'Ha, bor',callback_data:'file_ha'}],[{text:"Yo'q",callback_data:'file_yoq'}]]);}
       else if(cq.data==='til_ru'){state[c]={lang:'ru',step:'ask_file'};await btn(c,'U vas est gotoviy proekt?',[[{text:'Da, est',callback_data:'file_ha'}],[{text:'Net',callback_data:'file_yoq'}]]);}
       else if(cq.data==='file_ha'){const l=(state[c]||{}).lang||'uz';state[c]={lang:l,step:'waiting_file'};await msg(c,l==='uz'?'Fayl yuboring:':'Otpravte fayl:');}
       else if(cq.data==='file_yoq'){const l=(state[c]||{}).lang||'uz';state[c]={lang:l,step:'done'};await anketa(c,l);}
@@ -1110,10 +1449,31 @@ async function handle(upd) {
       return;
     }
 
-    // Yangi buyurtma oqimi faol bo'lsa, matnni shu yerga yo'naltir
+    // Yangi buyurtma / xarajat / to'lov / bekor oqimi faol bo'lsa
     if (isAdmin && orderState[c]) {
+      const st = orderState[c];
       if (t === '/bekor' || t === '/cancel') { delete orderState[c]; await msg(c, '❌ Bekor qilindi.'); return; }
       if (t && t.startsWith('/')) { delete orderState[c]; }  // boshqa buyruq → oqim bekor
+      else if (st.step === 'cancel_reason') { const id = st.cancelId; delete orderState[c]; await cancelOrderSave(c, id, t.trim()); return; }
+      else if (st.step === 'pay_amount') {
+        const uzs = parseMoneyToUzs(t);
+        if (uzs == null || uzs <= 0) { await msg(c, '❗️ Summani to\'g\'ri yozing. Masalan: 2000000 yoki 200$'); return; }
+        const id = st.payId; delete orderState[c]; await paySave(c, id, uzs); return;
+      }
+      else if (st.step === 'exp_name') { st.expCur = { name: t.trim() }; st.step = 'exp_qty'; await btn(c, '🔢 *Soni:*\n\n_Masalan: 3_', [[{ text: '❌ Bekor', callback_data: 'ord_open_' + st.expId }]]); return; }
+      else if (st.step === 'exp_qty') {
+        const q = parseFloat(t.replace(/[^\d.]/g, ''));
+        if (isNaN(q) || q <= 0) { await msg(c, '❗️ Soni raqam bo\'lsin. Masalan: 3'); return; }
+        st.expCur.qty = q; st.step = 'exp_price';
+        await btn(c, '💵 *Narxi (1 tasi uchun):*\n\n_So\'mda yoki $ bilan. Masalan: 549000 yoki 45$_', [[{ text: '❌ Bekor', callback_data: 'ord_open_' + st.expId }]]); return;
+      }
+      else if (st.step === 'exp_price') {
+        const uzs = parseMoneyToUzs(t);
+        if (uzs == null || uzs <= 0) { await msg(c, '❗️ Narxni to\'g\'ri yozing. Masalan: 549000 yoki 45$'); return; }
+        st.expCur.price_uzs = uzs; st.expCur.rate = USD_UZS;
+        st.expProducts.push(st.expCur); st.expCur = {}; st.step = 'exp_menu';
+        await expProductsMenu(c); return;
+      }
       else if (await orderHandleText(c, t)) return;
     }
 
@@ -1128,7 +1488,11 @@ async function handle(upd) {
       if (isAdmin) {
         await api('sendMessage', { chat_id: c, parse_mode: 'Markdown',
           text: '👋 *Assalomu alaykum, Ibrohim!*\n\n📱 *Botga nima yuborsa bo\'ladi:*\n\n🎤 *Ovozli xabar:*\n  • "Sherzod kelmadi"\n  • "Diyor 100 dollar avans oldi"\n  • "Soat 3 da Boxodir aka bilan uchrashuv"\n  • "Shaxsiy xarajat 50000 so\'m benzin"\n\n📸 *Nakładnoy rasmi* → mijoz so\'raldi → saqlanadi\n\n📋 *Buyruqlar:*\n/hisobot — oylik hisobot\n/bugun — bugungi reja\n/vazifalar — bugungi vazifalar',
-          reply_markup: { inline_keyboard: [[{ text: '🆕 Yangi buyurtma', callback_data: 'start_order' }]] } });
+          reply_markup: { inline_keyboard: [
+            [{ text: '🆕 Yangi buyurtma', callback_data: 'start_order' }],
+            [{ text: '📁 Buyurtmalar', callback_data: 'menu_orders' }],
+            [{ text: '✅ Tugatilganlar', callback_data: 'menu_done' }, { text: '🚫 Bekor qilinganlar', callback_data: 'menu_cancelled' }]
+          ] } });
         return;
       }
       await btn(c, 'MEBEL BY IBROHIM\n\nTilni tanlang:', [[{text:"O'zbek tili",callback_data:'til_uz'}],[{text:'Russkiy yazyk',callback_data:'til_ru'}]]);
