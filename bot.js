@@ -13,6 +13,7 @@ const state = {};
 const phoneToChat = {};
 const invoiceState = {};
 const orderState = {};   // qadama-qadam yangi buyurtma kiritish
+const officePending = {}; // guruhda tasdiq kutayotgan amallar (davomat/avans)
 const USD_UZS = 12000;   // 1 USD = 12000 so'm
 
 // ─── Time helpers ─────────────────────────────────────────────
@@ -550,6 +551,177 @@ async function expSave(c) {
   await showClientExpenses(c, id);
 }
 
+// ─── Bosh menyu (tugmalar) ────────────────────────────────────
+async function showHomeMenu(c) {
+  await api('sendMessage', { chat_id: c, parse_mode: 'Markdown',
+    text: '🏠 *MBI Mebel — bosh menyu*\n\nKerakli bo\'limni tanlang:',
+    reply_markup: { inline_keyboard: [
+      [{ text: '🆕 Yangi buyurtma', callback_data: 'start_order' }],
+      [{ text: '📁 Buyurtmalar', callback_data: 'menu_orders' }],
+      [{ text: '✅ Tugatilganlar', callback_data: 'menu_done' }, { text: '🚫 Bekor qilinganlar', callback_data: 'menu_cancelled' }],
+      [{ text: '👷 Xodimlar', callback_data: 'menu_staff' }]
+    ] } });
+}
+
+// ══════════════════════════════════════════════════════════════
+// 2-BOSQICH: Xodimlar tizimi (oylik)
+// staff-log.json: [{id,name,salary_usd,active,created,
+//   absences:[{date}], advances:[{id,date,amount_usd}]}]
+// ══════════════════════════════════════════════════════════════
+
+// Oyning ish kunlari soni (yakshanbasiz). y,m: m = 0-11
+function workdaysInMonth(y, m) {
+  const days = new Date(y, m + 1, 0).getDate();
+  let cnt = 0;
+  for (let d = 1; d <= days; d++) { if (new Date(y, m, d).getDay() !== 0) cnt++; }
+  return cnt;
+}
+// Oy boshidan berilgan kungacha o'tgan ish kunlari (shu kun ichida)
+function workdaysPassed(y, m, uptoDay) {
+  let cnt = 0;
+  for (let d = 1; d <= uptoDay; d++) { if (new Date(y, m, d).getDay() !== 0) cnt++; }
+  return cnt;
+}
+// "DD.MM.YYYY" → {y,m,d}
+function dmyParts(s) {
+  const mm = String(s).match(/(\d{2})\.(\d{2})\.(\d{4})/);
+  if (!mm) return null;
+  return { d: +mm[1], m: +mm[2] - 1, y: +mm[3] };
+}
+
+async function readStaff() { return await ghReadAll('staff-log.json'); }
+async function findStaff(id) {
+  const { data, sha } = await ghRead('staff-log.json');
+  const idx = data.findIndex(s => s.id === id);
+  return { data, sha, idx, staff: idx >= 0 ? data[idx] : null };
+}
+// Ismdan xodim topish (davomat/avans ovozi uchun) — faqat active
+function staffByName(list, name) {
+  if (!name) return null;
+  const n = name.trim().toLowerCase();
+  return list.find(s => s.active !== false && s.name.trim().toLowerCase() === n)
+    || list.find(s => s.active !== false && s.name.trim().toLowerCase().startsWith(n))
+    || null;
+}
+
+// Joriy oy uchun xodim hisobi (oy o'rtasida — shu kungacha)
+function payrollThisMonth(s) {
+  const now = nowTZ();
+  const y = now.getFullYear(), m = now.getMonth(), today = now.getDate();
+  const totalWd = workdaysInMonth(y, m);
+  const passedWd = workdaysPassed(y, m, today);
+  const dailyUsd = s.salary_usd ? s.salary_usd / totalWd : 0;
+  // shu oydagi kelmagan kunlar (ish kunlari, yakshanba bo'lsa hisoblamaymiz)
+  const absDates = (s.absences || []).filter(a => {
+    const p = dmyParts(a.date); if (!p) return false;
+    if (p.y !== y || p.m !== m) return false;
+    return new Date(p.y, p.m, p.d).getDay() !== 0;
+  });
+  const absCount = absDates.length;
+  // hozirgacha ishlangan ish kunlari = o'tgan ish kunlari − kelmaganlar
+  const workedWd = Math.max(0, passedWd - absCount);
+  const earnedUsd = dailyUsd * workedWd;
+  const advUsd = (s.advances || []).filter(a => {
+    const p = dmyParts(a.date); return p && p.y === y && p.m === m;
+  }).reduce((sum, a) => sum + (a.amount_usd || 0), 0);
+  const remainUsd = earnedUsd - advUsd;
+  return { y, m, totalWd, passedWd, dailyUsd, absCount, workedWd, earnedUsd, advUsd, remainUsd };
+}
+
+async function showStaffList(c) {
+  const list = await readStaff();
+  const active = list.filter(s => s.active !== false);
+  const rows = active.map(s => [{ text: `👷 ${s.name} ($${s.salary_usd || 0})`, callback_data: 'stf_open_' + s.id }]);
+  rows.push([{ text: '➕ Yangi xodim', callback_data: 'stf_add' }]);
+  rows.push([{ text: '◀️ Ortga', callback_data: 'menu_home' }]);
+  await btn(c, '👷 *Xodimlar*' + (active.length ? '' : '\n\n_Hozircha xodim yo\'q. «Yangi xodim» qo\'shing._'), rows);
+}
+
+async function showStaffCard(c, id) {
+  const { staff: s } = await findStaff(id);
+  if (!s) { await msg(c, '⚠️ Xodim topilmadi.'); return; }
+  const p = payrollThisMonth(s);
+  const monthName = nowTZ().toLocaleDateString('uz-UZ', { month: 'long' });
+  const txt = `👷 *${s.name}*\n\n` +
+    `💵 Oylik: *$${s.salary_usd || 0}*\n` +
+    `📅 ${monthName}: ${p.totalWd} ish kuni\n` +
+    `📆 Bugungacha: ${p.passedWd} kun\n` +
+    `❌ Kelmagan: ${p.absCount} kun\n` +
+    `✅ Ishlangan: ${p.workedWd} kun\n` +
+    `💰 Kunlik: $${p.dailyUsd.toFixed(2)}\n` +
+    `📈 Hozirgacha topgani: *$${p.earnedUsd.toFixed(2)}*\n` +
+    `💸 Olgan avans: $${p.advUsd.toFixed(2)}\n` +
+    `📉 Qolgan haq: *$${p.remainUsd.toFixed(2)}* (${fmtUzs(p.remainUsd * USD_UZS)} so'm)`;
+  await btn(c, txt, [
+    [{ text: '💸 Avans qo\'shish', callback_data: 'stf_adv_' + id }, { text: '❌ Kelmagan kun', callback_data: 'stf_abs_' + id }],
+    [{ text: '✏️ Oylikni o\'zgartirish', callback_data: 'stf_sal_' + id }],
+    [{ text: '🗑 Xodimni o\'chirish', callback_data: 'stf_del_' + id }],
+    [{ text: '◀️ Ortga', callback_data: 'menu_staff' }]
+  ]);
+}
+
+// Yangi xodim qo'shish
+async function staffAddStart(c) {
+  orderState[c] = { step: 'stf_name' };
+  await btn(c, '➕ *Yangi xodim*\n\n👤 Ismini yozing:', [[{ text: '❌ Bekor', callback_data: 'menu_staff' }]]);
+}
+async function staffSaveNew(c, name, salaryUsd) {
+  const { data, sha } = await ghRead('staff-log.json');
+  data.push({ id: uid(), name: name.trim(), salary_usd: salaryUsd, active: true, created: todayStr(), absences: [], advances: [] });
+  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'staff add: ' + name);
+  await msg(c, `✅ Xodim qo'shildi: *${name}* — oylik $${salaryUsd}`);
+  await showStaffList(c);
+}
+
+// Avans (tugma orqali)
+async function staffAdvStart(c, id) {
+  orderState[c] = { step: 'stf_adv_amount', staffId: id };
+  await btn(c, '💸 *Avans summasi:*\n\n_Dollarda yoki $ bilan. Masalan: 100_', [[{ text: '❌ Bekor', callback_data: 'stf_open_' + id }]]);
+}
+async function staffAddAdvance(c, id, amountUsd, dateStr) {
+  const { data, sha, idx } = await findStaff(id);
+  if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return false; }
+  data[idx].advances = data[idx].advances || [];
+  data[idx].advances.push({ id: uid(), date: dateStr || todayStr(), amount_usd: amountUsd });
+  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'staff advance: ' + data[idx].name);
+  return data[idx].name;
+}
+
+// Kelmagan kun (tugma orqali — bugun)
+async function staffAddAbsence(c, id, dateStr) {
+  const { data, sha, idx } = await findStaff(id);
+  if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return false; }
+  data[idx].absences = data[idx].absences || [];
+  const dt = dateStr || todayStr();
+  if (!data[idx].absences.some(a => a.date === dt)) data[idx].absences.push({ date: dt });
+  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'staff absence: ' + data[idx].name);
+  return data[idx].name;
+}
+
+// Oylikni o'zgartirish
+async function staffSalStart(c, id) {
+  orderState[c] = { step: 'stf_sal_amount', staffId: id };
+  await btn(c, '✏️ *Yangi oylik* (dollarda):', [[{ text: '❌ Bekor', callback_data: 'stf_open_' + id }]]);
+}
+async function staffSetSalary(c, id, salaryUsd) {
+  const { data, sha, idx } = await findStaff(id);
+  if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return; }
+  data[idx].salary_usd = salaryUsd;
+  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'staff salary: ' + data[idx].name);
+  await msg(c, `✅ Oylik yangilandi: *${data[idx].name}* — $${salaryUsd}`);
+  await showStaffCard(c, id);
+}
+
+// O'chirish (active=false — ma'lumot saqlanadi)
+async function staffDelete(c, id) {
+  const { data, sha, idx } = await findStaff(id);
+  if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return; }
+  data[idx].active = false;
+  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'staff remove: ' + data[idx].name);
+  await msg(c, `🗑 *${data[idx].name}* ro'yxatdan olib tashlandi.`);
+  await showStaffList(c);
+}
+
 // ─── Groq call ────────────────────────────────────────────────
 function groqChat(system, userText, maxTokens) {
   return new Promise((resolve) => {
@@ -921,6 +1093,9 @@ async function routeAgent(text) {
 const OFFICE_PARSER_SYS = `Sen parser'san. Ibrohimning xabarini tahlil qil. Agar u YANGI MOLIYAVIY MA'LUMOT kiritayotgan bo'lsa, FAQAT bitta JSON qaytar (boshqa matn yozma):
 Xarajat (biror narsa sotib olindi/pul sarflandi): {"action":"expense","supplier":"do'kon nomi","amount":raqam,"currency":"UZS" yoki "USD","deal":"loyiha/mijoz nomi","note":"nima olindi"}
 Avans (mijozdan pul olindi): {"action":"advance","deal":"mijoz nomi","amount":raqam}
+Xodim ishga kelmadi (davomat): {"action":"staff_absence","worker":"xodim ismi","days":1}
+Xodim bir necha kun kelmaydi: {"action":"staff_absence","worker":"xodim ismi","days":raqam}
+Xodimga avans berildi (oylik avansi): {"action":"staff_advance","worker":"xodim ismi","amount":raqam,"currency":"USD"}
 Yangi buyurtma/kelishuv: {"action":"new_deal","client":"mijoz nomi","contract":raqam,"advance":raqam,"stage":"Yangi buyurtma"}
 Bosqich o'zgarishi (masalan yetkazib berishga o'tdi): {"action":"stage","deal":"mijoz nomi","stage":"yangi bosqich"}
 Vazifa berish (kimgadir topshiriq): {"action":"task","assignee":"aziza"|"sardor"|"dilshod"|"botir","text":"vazifa matni","deadline":"muddat yoki bo'sh"}
@@ -1018,6 +1193,33 @@ async function officeApplyData(c, p) {
     return true;
   }
   if (p.action === 'tasks_list') { await listTasks(c); return true; }
+  // ── Xodim davomati (kelmadi) — tasdiq bilan ──
+  if (p.action === 'staff_absence' && p.worker) {
+    const list = await readStaff();
+    const s = staffByName(list, p.worker);
+    if (!s) { await agentMsg(c, 'sardor', `⚠️ "${p.worker}" nomli xodim ro'yxatda yo'q. Avval botda «👷 Xodimlar → ➕ Yangi xodim» orqali qo'shing.`); return true; }
+    const days = Math.max(1, Number(p.days) || 1);
+    const pid = 'p' + uid();
+    officePending[pid] = { kind: 'absence', staffId: s.id, days };
+    await api('sendMessage', { chat_id: c, parse_mode: 'Markdown',
+      text: `👷 *Davomat — tasdiqlang*\n\n❌ ${s.name} — *${days} kun* kelmaydi/kelmadi deb belgilansinmi?`,
+      reply_markup: { inline_keyboard: [[{ text: '✅ Ha, to\'g\'ri', callback_data: 'ofc_ok_' + pid }, { text: '❌ Yo\'q', callback_data: 'ofc_no_' + pid }]] } });
+    return true;
+  }
+  // ── Xodimga avans — tasdiq bilan ──
+  if (p.action === 'staff_advance' && p.worker && p.amount) {
+    const list = await readStaff();
+    const s = staffByName(list, p.worker);
+    if (!s) { await agentMsg(c, 'sardor', `⚠️ "${p.worker}" nomli xodim ro'yxatda yo'q. Avval botda qo'shing.`); return true; }
+    let usd = Number(p.amount) || 0;
+    if ((p.currency || 'USD').toUpperCase() === 'UZS') usd = usd / USD_UZS;
+    const pid = 'p' + uid();
+    officePending[pid] = { kind: 'advance', staffId: s.id, usd };
+    await api('sendMessage', { chat_id: c, parse_mode: 'Markdown',
+      text: `💸 *Avans — tasdiqlang*\n\n${s.name} — *$${usd.toFixed(2)}* avans berildi deb yozilsinmi?`,
+      reply_markup: { inline_keyboard: [[{ text: '✅ Ha, to\'g\'ri', callback_data: 'ofc_ok_' + pid }, { text: '❌ Yo\'q', callback_data: 'ofc_no_' + pid }]] } });
+    return true;
+  }
   return false;
 }
 
@@ -1379,11 +1581,44 @@ async function handle(upd) {
     if (upd.callback_query) {
       const cq = upd.callback_query; const c = cq.message.chat.id; await acb(cq.id);
       const cd = cq.data || '';
+      // ── Guruhda davomat/avans tasdiqlash ──
+      if (cd.startsWith('ofc_ok_') || cd.startsWith('ofc_no_')) {
+        const ok = cd.startsWith('ofc_ok_');
+        const pid = cd.slice(7);
+        const pend = officePending[pid];
+        if (!pend) { await api('sendMessage', { chat_id: c, text: '⚠️ Bu so\'rov eskirgan.' }); return; }
+        delete officePending[pid];
+        if (!ok) { await api('sendMessage', { chat_id: c, text: '❌ Bekor qilindi.' }); return; }
+        if (pend.kind === 'absence') {
+          const { staff } = await findStaff(pend.staffId);
+          if (!staff) { await api('sendMessage', { chat_id: c, text: '⚠️ Xodim topilmadi.' }); return; }
+          // bugundan boshlab N ish kunini kelmagan deb belgilaymiz
+          let added = 0; const d = nowTZ();
+          while (added < pend.days) {
+            if (d.getDay() !== 0) { await staffAddAbsence(c, pend.staffId, fmtDate(new Date(d))); added++; }
+            d.setDate(d.getDate() + 1);
+          }
+          await api('sendMessage', { chat_id: c, parse_mode: 'Markdown', text: `✅ ${staff.name} — ${pend.days} kun kelmagan deb belgilandi.` });
+        } else if (pend.kind === 'advance') {
+          const name = await staffAddAdvance(c, pend.staffId, pend.usd);
+          await api('sendMessage', { chat_id: c, parse_mode: 'Markdown', text: `✅ ${name} — $${pend.usd.toFixed(2)} avans yozildi.` });
+        }
+        return;
+      }
       // ── Buyurtmalar bo'limi navigatsiyasi ──
       if (cd === 'start_order') { await orderStart(c); return; }
       if (cd === 'menu_orders') { await showOrdersList(c, 'active'); return; }
       if (cd === 'menu_done') { await showOrdersList(c, 'done'); return; }
       if (cd === 'menu_cancelled') { await showOrdersList(c, 'cancelled'); return; }
+      if (cd === 'menu_staff') { await showStaffList(c); return; }
+      if (cd === 'menu_home') { await showHomeMenu(c); return; }
+      // ── Xodimlar ──
+      if (cd === 'stf_add') { await staffAddStart(c); return; }
+      if (cd.startsWith('stf_open_')) { await showStaffCard(c, cd.slice(9)); return; }
+      if (cd.startsWith('stf_adv_')) { await staffAdvStart(c, cd.slice(8)); return; }
+      if (cd.startsWith('stf_abs_')) { const name = await staffAddAbsence(c, cd.slice(8)); if (name) { await msg(c, `❌ ${name} — bugun kelmagan deb belgilandi.`); await showStaffCard(c, cd.slice(8)); } return; }
+      if (cd.startsWith('stf_sal_')) { await staffSalStart(c, cd.slice(8)); return; }
+      if (cd.startsWith('stf_del_')) { await staffDelete(c, cd.slice(8)); return; }
       if (cd.startsWith('cl_back_')) { await showOrdersList(c, cd.slice(8)); return; }
       if (cd.startsWith('ord_open_')) { await showClientMenu(c, cd.slice(9)); return; }
       if (cd.startsWith('cl_report_')) { await showClientReport(c, cd.slice(10)); return; }
@@ -1474,6 +1709,26 @@ async function handle(upd) {
         st.expProducts.push(st.expCur); st.expCur = {}; st.step = 'exp_menu';
         await expProductsMenu(c); return;
       }
+      // ── Xodim oqimlari ──
+      else if (st.step === 'stf_name') { st.staffName = t.trim(); st.step = 'stf_salary'; await btn(c, `💵 *${t.trim()}* — oyligi (dollarda):\n\n_Masalan: 600_`, [[{ text: '❌ Bekor', callback_data: 'menu_staff' }]]); return; }
+      else if (st.step === 'stf_salary') {
+        const n = parseFloat(t.replace(/[^\d.]/g, ''));
+        if (isNaN(n) || n <= 0) { await msg(c, '❗️ Oylikni raqam bilan yozing. Masalan: 600'); return; }
+        const name = st.staffName; delete orderState[c]; await staffSaveNew(c, name, n); return;
+      }
+      else if (st.step === 'stf_adv_amount') {
+        const n = parseFloat(t.replace(/[^\d.]/g, ''));
+        if (isNaN(n) || n <= 0) { await msg(c, '❗️ Summani raqam bilan yozing. Masalan: 100'); return; }
+        const id = st.staffId; delete orderState[c];
+        const name = await staffAddAdvance(c, id, n);
+        if (name) { await msg(c, `✅ Avans qo'shildi: *${name}* — $${n}`); await showStaffCard(c, id); }
+        return;
+      }
+      else if (st.step === 'stf_sal_amount') {
+        const n = parseFloat(t.replace(/[^\d.]/g, ''));
+        if (isNaN(n) || n <= 0) { await msg(c, '❗️ Oylikni raqam bilan yozing.'); return; }
+        const id = st.staffId; delete orderState[c]; await staffSetSalary(c, id, n); return;
+      }
       else if (await orderHandleText(c, t)) return;
     }
 
@@ -1491,7 +1746,8 @@ async function handle(upd) {
           reply_markup: { inline_keyboard: [
             [{ text: '🆕 Yangi buyurtma', callback_data: 'start_order' }],
             [{ text: '📁 Buyurtmalar', callback_data: 'menu_orders' }],
-            [{ text: '✅ Tugatilganlar', callback_data: 'menu_done' }, { text: '🚫 Bekor qilinganlar', callback_data: 'menu_cancelled' }]
+            [{ text: '✅ Tugatilganlar', callback_data: 'menu_done' }, { text: '🚫 Bekor qilinganlar', callback_data: 'menu_cancelled' }],
+            [{ text: '👷 Xodimlar', callback_data: 'menu_staff' }]
           ] } });
         return;
       }
