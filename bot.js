@@ -559,7 +559,10 @@ async function showHomeMenu(c) {
       [{ text: '🆕 Yangi buyurtma', callback_data: 'start_order' }],
       [{ text: '📁 Buyurtmalar', callback_data: 'menu_orders' }],
       [{ text: '✅ Tugatilganlar', callback_data: 'menu_done' }, { text: '🚫 Bekor qilinganlar', callback_data: 'menu_cancelled' }],
-      [{ text: '👷 Xodimlar', callback_data: 'menu_staff' }]
+      [{ text: '👷 Xodimlar', callback_data: 'menu_staff' }, { text: '💰 Kassa', callback_data: 'menu_cash' }],
+      [{ text: '🏭 Ishxona xarajatlari', callback_data: 'menu_office_exp' }],
+      [{ text: '👛 Shaxsiy xarajatlar', callback_data: 'menu_personal_exp' }],
+      [{ text: '💳 Qarzlar', callback_data: 'menu_debts' }]
     ] } });
 }
 
@@ -771,6 +774,202 @@ async function staffDelete(c, id) {
   await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'staff remove: ' + data[idx].name);
   await msg(c, `🗑 *${data[idx].name}* ro'yxatdan olib tashlandi.`);
   await showStaffList(c);
+}
+
+// ══════════════════════════════════════════════════════════════
+// 3-BOSQICH: Kassa, ishxona xarajatlari, shaxsiy xarajatlar, qarzlar
+// ══════════════════════════════════════════════════════════════
+
+// ─── ISHXONA XARAJATLARI (office-expenses-log.json) ───────────
+// [{id,date,name,amount_uzs,rate,note}]
+async function showOfficeExp(c) {
+  const list = await ghReadAll('office-expenses-log.json');
+  const now = nowTZ();
+  const thisMonth = list.filter(e => { const p = dmyParts(e.date); return p && p.y === now.getFullYear() && p.m === now.getMonth(); });
+  const lines = thisMonth.slice(-15).map(e => `• ${e.date} — ${e.name}: ${fmtUzs(e.amount_uzs)} so'm`).join('\n') || '_(shu oyda yo\'q)_';
+  const total = thisMonth.reduce((s, e) => s + (e.amount_uzs || 0), 0);
+  const monthName = now.toLocaleDateString('uz-UZ', { month: 'long' });
+  await btn(c, `🏭 *Ishxona xarajatlari — ${monthName}*\n\n${lines}\n\n*Jami: ${fmtUzs(total)} so'm*`, [
+    [{ text: '➕ Xarajat qo\'shish', callback_data: 'ofx_add' }],
+    [{ text: '◀️ Ortga', callback_data: 'menu_home' }]
+  ]);
+}
+async function officeExpAddStart(c) {
+  orderState[c] = { step: 'ofx_name' };
+  await btn(c, '🏭 *Ishxona xarajati*\n\nNomi (masalan: Arenda, Svet, Suv):', [[{ text: '❌ Bekor', callback_data: 'menu_office_exp' }]]);
+}
+async function officeExpSave(c, name, amountUzs) {
+  const { data, sha } = await ghRead('office-expenses-log.json');
+  data.push({ id: uid(), date: todayStr(), name: name.trim(), amount_uzs: amountUzs, rate: USD_UZS, note: '' });
+  await ghPut('office-expenses-log.json', JSON.stringify(data, null, 2), sha, 'office expense: ' + name);
+  await msg(c, `✅ Ishxona xarajati saqlandi:\n🏭 ${name} — ${fmtUzs(amountUzs)} so'm`);
+  await showOfficeExp(c);
+}
+
+// ─── SHAXSIY XARAJATLAR (expenses-personal-log.json) ──────────
+async function showPersonalExp(c) {
+  const list = await ghReadAll('expenses-personal-log.json');
+  const now = nowTZ();
+  // turli eski formatlar bo'lishi mumkin — date va summani moslab olamiz
+  const norm = list.map(e => {
+    const p = e.parsed || {};
+    let amtUzs = 0;
+    if (e.amount_uzs) amtUzs = e.amount_uzs;
+    else if (p.amount) amtUzs = (String(p.currency).toUpperCase() === 'USD') ? p.amount * USD_UZS : p.amount;
+    else if (e.amount) amtUzs = (String(e.currency).toUpperCase() === 'USD') ? e.amount * USD_UZS : e.amount;
+    const note = e.note || p.text || e.text || '';
+    return { date: e.date, amtUzs, note };
+  });
+  const thisMonth = norm.filter(e => { const p = dmyParts(e.date); return p && p.y === now.getFullYear() && p.m === now.getMonth(); });
+  const lines = thisMonth.slice(-15).map(e => `• ${e.date} — ${e.note || 'xarajat'}: ${fmtUzs(e.amtUzs)} so'm`).join('\n') || '_(shu oyda yo\'q)_';
+  const total = thisMonth.reduce((s, e) => s + (e.amtUzs || 0), 0);
+  const monthName = now.toLocaleDateString('uz-UZ', { month: 'long' });
+  await btn(c, `👛 *Shaxsiy xarajatlar — ${monthName}*\n\n${lines}\n\n*Jami: ${fmtUzs(total)} so'm*\n\n_Qo'shish: MBI AI Office guruhiga ovozli yoki matn yuboring (bot tasdiq so'raydi)._`, [
+    [{ text: '➕ Qo\'lda qo\'shish', callback_data: 'psx_add' }],
+    [{ text: '◀️ Ortga', callback_data: 'menu_home' }]
+  ]);
+}
+async function personalExpAddStart(c) {
+  orderState[c] = { step: 'psx_note' };
+  await btn(c, '👛 *Shaxsiy xarajat*\n\nNima uchun? (izoh, masalan: Benzin):', [[{ text: '❌ Bekor', callback_data: 'menu_personal_exp' }]]);
+}
+async function personalExpSave(c, note, amountUzs) {
+  const { data, sha } = await ghRead('expenses-personal-log.json');
+  data.push({ date: todayStr(), note: note.trim(), amount_uzs: amountUzs, rate: USD_UZS, type: 'personal', ts: new Date().toISOString() });
+  await ghPut('expenses-personal-log.json', JSON.stringify(data, null, 2), sha, 'personal expense');
+  await msg(c, `✅ Shaxsiy xarajat saqlandi:\n👛 ${note} — ${fmtUzs(amountUzs)} so'm`);
+  await showPersonalExp(c);
+}
+
+// ─── QARZLAR (debts-log.json) ─────────────────────────────────
+// [{id,dir:'in'|'out',name,amount_uzs,paid_uzs,date,note}]
+// dir 'in' = menga qarzdor, 'out' = men qarzdorman
+async function showDebts(c) {
+  const manual = await ghReadAll('debts-log.json');
+  // mijoz qarzlari (avtomatik, faqat faol buyurtmalar)
+  const { data: deals } = await readDealsMigrated();
+  const clientDebts = deals.filter(o => (o.status || 'active') === 'active').map(o => ({ name: o.client + ' (buyurtma)', remain: dealDebtUzs(o) })).filter(x => x.remain > 0);
+  const inManual = manual.filter(d => d.dir === 'in');
+  const out = manual.filter(d => d.dir === 'out');
+
+  let txt = '💳 *Qarzlar*\n\n📥 *Menga qarzdorlar:*\n';
+  let totalIn = 0;
+  clientDebts.forEach(x => { txt += `• ${x.name}: ${fmtUzs(x.remain)} so'm\n`; totalIn += x.remain; });
+  inManual.forEach(d => { const r = (d.amount_uzs || 0) - (d.paid_uzs || 0); txt += `• ${d.name}: ${fmtUzs(r)} so'm${d.note ? ' — ' + d.note : ''}\n`; totalIn += r; });
+  if (!clientDebts.length && !inManual.length) txt += '_yo\'q_\n';
+  txt += `*Jami menga: ${fmtUzs(totalIn)} so'm*\n\n📤 *Men qarzdorman:*\n`;
+  let totalOut = 0;
+  out.forEach(d => { const r = (d.amount_uzs || 0) - (d.paid_uzs || 0); txt += `• ${d.name}: ${fmtUzs(r)} so'm${d.note ? ' — ' + d.note : ''}\n`; totalOut += r; });
+  if (!out.length) txt += '_yo\'q_\n';
+  txt += `*Jami men: ${fmtUzs(totalOut)} so'm*`;
+
+  await btn(c, txt, [
+    [{ text: '📥 Menga qarzdor qo\'shish', callback_data: 'debt_add_in' }],
+    [{ text: '📤 Men qarzdorman qo\'shish', callback_data: 'debt_add_out' }],
+    [{ text: '💵 Qarzni to\'lash', callback_data: 'debt_pay' }],
+    [{ text: '◀️ Ortga', callback_data: 'menu_home' }]
+  ]);
+}
+async function debtAddStart(c, dir) {
+  orderState[c] = { step: 'debt_name', debtDir: dir };
+  const who = dir === 'in' ? 'Kim sizga qarzdor' : 'Kimga qarzdorsiz';
+  await btn(c, `💳 *${who}* — ism/nom yozing:`, [[{ text: '❌ Bekor', callback_data: 'menu_debts' }]]);
+}
+async function debtSave(c, dir, name, amountUzs, note) {
+  const { data, sha } = await ghRead('debts-log.json');
+  data.push({ id: uid(), dir, name: name.trim(), amount_uzs: amountUzs, paid_uzs: 0, date: todayStr(), note: note || '' });
+  await ghPut('debts-log.json', JSON.stringify(data, null, 2), sha, 'debt add: ' + name);
+  await msg(c, `✅ Qarz qo'shildi:\n${dir === 'in' ? '📥' : '📤'} ${name} — ${fmtUzs(amountUzs)} so'm`);
+  await showDebts(c);
+}
+// To'lash — qarzlar ro'yxatini tugma qilib ko'rsatadi
+async function showDebtPayList(c) {
+  const manual = await ghReadAll('debts-log.json');
+  const open = manual.filter(d => (d.amount_uzs || 0) - (d.paid_uzs || 0) > 0);
+  if (!open.length) { await msg(c, '_To\'lanmagan qo\'lda qo\'shilgan qarz yo\'q._\n\n(Mijoz qarzlari buyurtma → To\'lovlar orqali to\'lanadi.)'); await showDebts(c); return; }
+  const rows = open.map(d => { const r = (d.amount_uzs || 0) - (d.paid_uzs || 0); return [{ text: `${d.dir === 'in' ? '📥' : '📤'} ${d.name} — ${fmtUzs(r)}`, callback_data: 'debtpay_' + d.id }]; });
+  rows.push([{ text: '◀️ Ortga', callback_data: 'menu_debts' }]);
+  await btn(c, '💵 *Qaysi qarz to\'landi?*', rows);
+}
+async function debtPayStart(c, id) {
+  orderState[c] = { step: 'debt_pay_amount', debtId: id };
+  await btn(c, '💵 *To\'langan summa:*\n\n_So\'mda yoki $ bilan. To\'liq yopilsa — to\'liq summani yozing._', [[{ text: '❌ Bekor', callback_data: 'menu_debts' }]]);
+}
+async function debtPaySave(c, id, amountUzs) {
+  const { data, sha } = await ghRead('debts-log.json');
+  const idx = data.findIndex(d => d.id === id);
+  if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return; }
+  data[idx].paid_uzs = (data[idx].paid_uzs || 0) + amountUzs;
+  const remain = (data[idx].amount_uzs || 0) - data[idx].paid_uzs;
+  await ghPut('debts-log.json', JSON.stringify(data, null, 2), sha, 'debt pay: ' + data[idx].name);
+  await msg(c, `✅ To'lov yozildi: ${fmtUzs(amountUzs)} so'm\n${remain > 0 ? '📉 Qoldi: ' + fmtUzs(remain) + ' so\'m' : '✔️ To\'liq yopildi!'}`);
+  await showDebts(c);
+}
+
+// ─── KASSA (cashbox.json + barcha kirim/chiqimdan hisob) ──────
+async function readCashbox() {
+  try { const { data } = await ghRead('cashbox.json'); return (data && !Array.isArray(data)) ? data : { opening_uzs: null, opening_date: null }; }
+  catch (e) { return { opening_uzs: null, opening_date: null }; }
+}
+// Kassa qoldig'i = boshlang'ich + barcha kirim − barcha chiqim
+async function computeCashbox() {
+  const cfg = await readCashbox();
+  const opening = cfg.opening_uzs || 0;
+  const { data: deals } = await ghRead('deals-log.json');
+  let income = 0, dealExp = 0;
+  for (const o of deals) {
+    income += (o.payments || []).reduce((s, p) => s + (p.amount_uzs || 0), 0);
+    dealExp += (o.expenses || []).reduce((s, e) => s + (e.total_uzs || 0), 0);
+  }
+  const officeExp = (await ghReadAll('office-expenses-log.json')).reduce((s, e) => s + (e.amount_uzs || 0), 0);
+  // shaxsiy
+  const pers = (await ghReadAll('expenses-personal-log.json')).reduce((s, e) => {
+    const p = e.parsed || {};
+    let a = e.amount_uzs || 0;
+    if (!a && p.amount) a = (String(p.currency).toUpperCase() === 'USD') ? p.amount * USD_UZS : p.amount;
+    else if (!a && e.amount) a = (String(e.currency).toUpperCase() === 'USD') ? e.amount * USD_UZS : e.amount;
+    return s + a;
+  }, 0);
+  // xodim avanslari (chiqim)
+  const staff = await ghReadAll('staff-log.json');
+  const staffAdv = staff.reduce((s, w) => s + (w.advances || []).reduce((a, x) => a + (x.amount_usd || 0) * USD_UZS, 0), 0);
+  const balance = opening + income - dealExp - officeExp - pers - staffAdv;
+  return { opening, income, dealExp, officeExp, pers, staffAdv, balance, hasOpening: cfg.opening_uzs != null };
+}
+async function showCashbox(c) {
+  const k = await computeCashbox();
+  if (!k.hasOpening) {
+    await btn(c, '💰 *Kassa*\n\n_Boshlang\'ich qoldiq hali kiritilmagan._\nHozir qo\'lingizda/kassada qancha pul borligini kiriting.', [
+      [{ text: '➕ Boshlang\'ich qoldiqni kiritish', callback_data: 'cash_set' }],
+      [{ text: '◀️ Ortga', callback_data: 'menu_home' }]
+    ]);
+    return;
+  }
+  await btn(c, `💰 *Kassa*\n\n` +
+    `🏦 Boshlang'ich: ${fmtUzs(k.opening)} so'm\n` +
+    `📥 Kirim (to'lovlar): +${fmtUzs(k.income)}\n` +
+    `📤 Buyurtma xarajat: −${fmtUzs(k.dealExp)}\n` +
+    `🏭 Ishxona: −${fmtUzs(k.officeExp)}\n` +
+    `👷 Xodim avans: −${fmtUzs(k.staffAdv)}\n` +
+    `👛 Shaxsiy: −${fmtUzs(k.pers)}\n` +
+    `━━━━━━━━━━━━\n` +
+    `💵 *Hozirgi qoldiq: ${fmtUzs(k.balance)} so'm*`, [
+    [{ text: '✏️ Boshlang\'ich qoldiqni o\'zgartirish', callback_data: 'cash_set' }],
+    [{ text: '◀️ Ortga', callback_data: 'menu_home' }]
+  ]);
+}
+async function cashSetStart(c) {
+  orderState[c] = { step: 'cash_amount' };
+  await btn(c, '💰 *Boshlang\'ich qoldiq:*\n\n_Hozir qancha pulingiz bor? So\'mda yoki $ bilan._', [[{ text: '❌ Bekor', callback_data: 'menu_cash' }]]);
+}
+async function cashSetSave(c, amountUzs) {
+  const { data, sha } = await ghRead('cashbox.json');
+  const cfg = (data && !Array.isArray(data)) ? data : {};
+  cfg.opening_uzs = amountUzs;
+  cfg.opening_date = todayStr();
+  await ghPut('cashbox.json', JSON.stringify(cfg, null, 2), sha, 'cashbox opening');
+  await msg(c, `✅ Boshlang'ich qoldiq o'rnatildi: ${fmtUzs(amountUzs)} so'm`);
+  await showCashbox(c);
 }
 
 // ─── Groq call ────────────────────────────────────────────────
@@ -1147,6 +1346,7 @@ Avans (mijozdan pul olindi): {"action":"advance","deal":"mijoz nomi","amount":ra
 Xodim ishga kelmadi (davomat): {"action":"staff_absence","worker":"xodim ismi","days":1}
 Xodim bir necha kun kelmaydi: {"action":"staff_absence","worker":"xodim ismi","days":raqam}
 Xodimga avans berildi (oylik avansi): {"action":"staff_advance","worker":"xodim ismi","amount":raqam,"currency":"USD"}
+Shaxsiy xarajat (Ibrohimning shaxsiy harajati, biznesga aloqasiz — benzin, ovqat, shaxsiy): {"action":"personal_expense","amount":raqam,"currency":"UZS","note":"nima uchun"}
 Yangi buyurtma/kelishuv: {"action":"new_deal","client":"mijoz nomi","contract":raqam,"advance":raqam,"stage":"Yangi buyurtma"}
 Bosqich o'zgarishi (masalan yetkazib berishga o'tdi): {"action":"stage","deal":"mijoz nomi","stage":"yangi bosqich"}
 Vazifa berish (kimgadir topshiriq): {"action":"task","assignee":"aziza"|"sardor"|"dilshod"|"botir","text":"vazifa matni","deadline":"muddat yoki bo'sh"}
@@ -1268,6 +1468,17 @@ async function officeApplyData(c, p) {
     officePending[pid] = { kind: 'advance', staffId: s.id, usd };
     await api('sendMessage', { chat_id: c, parse_mode: 'Markdown',
       text: `💸 *Avans — tasdiqlang*\n\n${s.name} — *$${usd.toFixed(2)}* avans berildi deb yozilsinmi?`,
+      reply_markup: { inline_keyboard: [[{ text: '✅ Ha, to\'g\'ri', callback_data: 'ofc_ok_' + pid }, { text: '❌ Yo\'q', callback_data: 'ofc_no_' + pid }]] } });
+    return true;
+  }
+  // ── Shaxsiy xarajat — tasdiq bilan ──
+  if (p.action === 'personal_expense' && p.amount) {
+    let uzs = Number(p.amount) || 0;
+    if ((p.currency || 'UZS').toUpperCase() === 'USD') uzs = uzs * USD_UZS;
+    const pid = 'p' + uid();
+    officePending[pid] = { kind: 'personal', uzs, note: p.note || '' };
+    await api('sendMessage', { chat_id: c, parse_mode: 'Markdown',
+      text: `👛 *Shaxsiy xarajat — tasdiqlang*\n\n${p.note || 'xarajat'} — *${fmtUzs(uzs)} so'm* yozilsinmi?`,
       reply_markup: { inline_keyboard: [[{ text: '✅ Ha, to\'g\'ri', callback_data: 'ofc_ok_' + pid }, { text: '❌ Yo\'q', callback_data: 'ofc_no_' + pid }]] } });
     return true;
   }
@@ -1653,6 +1864,11 @@ async function handle(upd) {
         } else if (pend.kind === 'advance') {
           const name = await staffAddAdvance(c, pend.staffId, pend.usd);
           await api('sendMessage', { chat_id: c, parse_mode: 'Markdown', text: `✅ ${name} — $${pend.usd.toFixed(2)} avans yozildi.` });
+        } else if (pend.kind === 'personal') {
+          const { data, sha } = await ghRead('expenses-personal-log.json');
+          data.push({ date: todayStr(), note: pend.note, amount_uzs: pend.uzs, rate: USD_UZS, type: 'personal', ts: new Date().toISOString() });
+          await ghPut('expenses-personal-log.json', JSON.stringify(data, null, 2), sha, 'personal expense (voice)');
+          await api('sendMessage', { chat_id: c, parse_mode: 'Markdown', text: `✅ Shaxsiy xarajat yozildi: ${pend.note} — ${fmtUzs(pend.uzs)} so'm` });
         }
         return;
       }
@@ -1663,6 +1879,19 @@ async function handle(upd) {
       if (cd === 'menu_cancelled') { await showOrdersList(c, 'cancelled'); return; }
       if (cd === 'menu_staff') { await showStaffList(c); return; }
       if (cd === 'menu_home') { await showHomeMenu(c); return; }
+      // ── 3-bosqich: kassa, ishxona, shaxsiy, qarzlar ──
+      if (cd === 'menu_cash') { await showCashbox(c); return; }
+      if (cd === 'cash_set') { await cashSetStart(c); return; }
+      if (cd === 'menu_office_exp') { await showOfficeExp(c); return; }
+      if (cd === 'ofx_add') { await officeExpAddStart(c); return; }
+      if (cd === 'menu_personal_exp') { await showPersonalExp(c); return; }
+      if (cd === 'psx_add') { await personalExpAddStart(c); return; }
+      if (cd === 'menu_debts') { await showDebts(c); return; }
+      if (cd === 'debt_add_in') { await debtAddStart(c, 'in'); return; }
+      if (cd === 'debt_add_out') { await debtAddStart(c, 'out'); return; }
+      if (cd === 'debt_pay') { await showDebtPayList(c); return; }
+      if (cd.startsWith('debtpay_')) { await debtPayStart(c, cd.slice(8)); return; }
+      if (cd === 'debt_note_skip') { const st = orderState[c]; if (st && st.step === 'debt_note') { const dir = st.debtDir, name = st.debtName, amt = st.debtAmount; delete orderState[c]; await debtSave(c, dir, name, amt, ''); } return; }
       // ── Xodimlar ──
       if (cd === 'stf_add') { await staffAddStart(c); return; }
       if (cd === 'stf_hire_today') { const st = orderState[c]; if (st && st.step === 'stf_hire') { const name = st.staffName, sal = st.staffSalary; delete orderState[c]; await staffSaveNew(c, name, sal, todayStr()); } return; }
@@ -1788,6 +2017,43 @@ async function handle(upd) {
         if (isNaN(n) || n <= 0) { await msg(c, '❗️ Oylikni raqam bilan yozing.'); return; }
         const id = st.staffId; delete orderState[c]; await staffSetSalary(c, id, n); return;
       }
+      // ── Ishxona xarajati ──
+      else if (st.step === 'ofx_name') { st.ofxName = t.trim(); st.step = 'ofx_amount'; await btn(c, `🏭 *${t.trim()}* — summasi:\n\n_So'mda yoki $ bilan_`, [[{ text: '❌ Bekor', callback_data: 'menu_office_exp' }]]); return; }
+      else if (st.step === 'ofx_amount') {
+        const uzs = parseMoneyToUzs(t);
+        if (uzs == null || uzs <= 0) { await msg(c, '❗️ Summani to\'g\'ri yozing. Masalan: 2000000 yoki 150$'); return; }
+        const name = st.ofxName; delete orderState[c]; await officeExpSave(c, name, uzs); return;
+      }
+      // ── Shaxsiy xarajat (qo'lda) ──
+      else if (st.step === 'psx_note') { st.psxNote = t.trim(); st.step = 'psx_amount'; await btn(c, `👛 *${t.trim()}* — summasi:\n\n_So'mda yoki $ bilan_`, [[{ text: '❌ Bekor', callback_data: 'menu_personal_exp' }]]); return; }
+      else if (st.step === 'psx_amount') {
+        const uzs = parseMoneyToUzs(t);
+        if (uzs == null || uzs <= 0) { await msg(c, '❗️ Summani to\'g\'ri yozing.'); return; }
+        const note = st.psxNote; delete orderState[c]; await personalExpSave(c, note, uzs); return;
+      }
+      // ── Qarz qo'shish ──
+      else if (st.step === 'debt_name') { st.debtName = t.trim(); st.step = 'debt_amount'; await btn(c, `💳 *${t.trim()}* — summa:\n\n_So'mda yoki $ bilan_`, [[{ text: '❌ Bekor', callback_data: 'menu_debts' }]]); return; }
+      else if (st.step === 'debt_amount') {
+        const uzs = parseMoneyToUzs(t);
+        if (uzs == null || uzs <= 0) { await msg(c, '❗️ Summani to\'g\'ri yozing.'); return; }
+        st.debtAmount = uzs; st.step = 'debt_note';
+        await btn(c, '📝 *Izoh* (kim, nima uchun qarz):\n\n_Masalan: Akmal — fanera uchun. Yoki «O\'tkazib yuborish»._', [[{ text: '⏭ O\'tkazib yuborish', callback_data: 'debt_note_skip' }], [{ text: '❌ Bekor', callback_data: 'menu_debts' }]]); return;
+      }
+      else if (st.step === 'debt_note') {
+        const dir = st.debtDir, name = st.debtName, amt = st.debtAmount; delete orderState[c];
+        await debtSave(c, dir, name, amt, t.trim()); return;
+      }
+      else if (st.step === 'debt_pay_amount') {
+        const uzs = parseMoneyToUzs(t);
+        if (uzs == null || uzs <= 0) { await msg(c, '❗️ Summani to\'g\'ri yozing.'); return; }
+        const id = st.debtId; delete orderState[c]; await debtPaySave(c, id, uzs); return;
+      }
+      // ── Kassa boshlang'ich qoldiq ──
+      else if (st.step === 'cash_amount') {
+        const uzs = parseMoneyToUzs(t);
+        if (uzs == null || uzs < 0) { await msg(c, '❗️ Summani to\'g\'ri yozing. Masalan: 5000000 yoki 400$'); return; }
+        delete orderState[c]; await cashSetSave(c, uzs); return;
+      }
       else if (await orderHandleText(c, t)) return;
       else {
         // Noma'lum holat — oqimni tozalaymiz, foydalanuvchi qotib qolmasin
@@ -1812,7 +2078,10 @@ async function handle(upd) {
             [{ text: '🆕 Yangi buyurtma', callback_data: 'start_order' }],
             [{ text: '📁 Buyurtmalar', callback_data: 'menu_orders' }],
             [{ text: '✅ Tugatilganlar', callback_data: 'menu_done' }, { text: '🚫 Bekor qilinganlar', callback_data: 'menu_cancelled' }],
-            [{ text: '👷 Xodimlar', callback_data: 'menu_staff' }]
+            [{ text: '👷 Xodimlar', callback_data: 'menu_staff' }, { text: '💰 Kassa', callback_data: 'menu_cash' }],
+            [{ text: '🏭 Ishxona xarajatlari', callback_data: 'menu_office_exp' }],
+            [{ text: '👛 Shaxsiy xarajatlar', callback_data: 'menu_personal_exp' }],
+            [{ text: '💳 Qarzlar', callback_data: 'menu_debts' }]
           ] } });
         return;
       }
