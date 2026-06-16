@@ -573,6 +573,8 @@ async function showHomeMenu(c) {
 //   absences:[{date}], advances:[{id,date,amount_usd}]}]
 // ══════════════════════════════════════════════════════════════
 
+const UZ_MONTHS = ['Yanvar','Fevral','Mart','Aprel','May','Iyun','Iyul','Avgust','Sentyabr','Oktyabr','Noyabr','Dekabr'];
+
 // Oyning ish kunlari soni (yakshanbasiz). y,m: m = 0-11
 function workdaysInMonth(y, m) {
   const days = new Date(y, m + 1, 0).getDate();
@@ -646,27 +648,57 @@ function staffByName(list, name) {
 }
 
 // Joriy oy uchun xodim hisobi (oy o'rtasida — shu kungacha)
-function payrollThisMonth(s) {
-  const now = nowTZ();
-  const y = now.getFullYear(), m = now.getMonth(), today = now.getDate();
+// Berilgan oy uchun bitta oylik hisob (carry-oversiz, faqat shu oy)
+// partial=true bo'lsa, faqat shu kungacha o'tgan ish kunlarini sanaydi (joriy oy uchun)
+function payrollForMonth(s, y, m, partial, uptoDay) {
   const totalWd = workdaysInMonth(y, m);
-  const passedWd = workdaysPassed(y, m, today);
+  const consideredWd = partial ? workdaysPassed(y, m, uptoDay) : totalWd;
   const dailyUsd = s.salary_usd ? s.salary_usd / totalWd : 0;
-  // shu oydagi kelmagan kunlar (ish kunlari, yakshanba bo'lsa hisoblamaymiz)
   const absDates = (s.absences || []).filter(a => {
     const p = dmyParts(a.date); if (!p) return false;
     if (p.y !== y || p.m !== m) return false;
-    return new Date(p.y, p.m, p.d).getDay() !== 0;
+    if (new Date(p.y, p.m, p.d).getDay() === 0) return false;
+    if (partial && p.d > uptoDay) return false; // kelajakdagi kelmagan kun hisobga olinmaydi
+    return true;
   });
   const absCount = absDates.length;
-  // hozirgacha ishlangan ish kunlari = o'tgan ish kunlari − kelmaganlar
-  const workedWd = Math.max(0, passedWd - absCount);
+  const workedWd = Math.max(0, consideredWd - absCount);
   const earnedUsd = dailyUsd * workedWd;
   const advUsd = (s.advances || []).filter(a => {
-    const p = dmyParts(a.date); return p && p.y === y && p.m === m;
+    const p = dmyParts(a.date); if (!p || p.y !== y || p.m !== m) return false;
+    if (partial && p.d > uptoDay) return false;
+    return true;
   }).reduce((sum, a) => sum + (a.amount_usd || 0), 0);
-  const remainUsd = earnedUsd - advUsd;
-  return { y, m, totalWd, passedWd, dailyUsd, absCount, workedWd, earnedUsd, advUsd, remainUsd };
+  return { y, m, totalWd, consideredWd, dailyUsd, absCount, workedWd, earnedUsd, advUsd, monthBalance: earnedUsd - advUsd };
+}
+
+// Ishga kelgan oydan to joriy oygacha — har oy balansi + jami carry
+// Qoldiq avtomatik keyingi oyga o'tadi (musbat=siz qarzdor, manfiy=xodim qarzdor)
+function staffPayrollHistory(s) {
+  const now = nowTZ();
+  const cy = now.getFullYear(), cm = now.getMonth(), cd = now.getDate();
+  // boshlanish oyi: hire_date bor bo'lsa o'sha, bo'lmasa joriy oy
+  let sy, sm;
+  const hp = dmyParts(s.hire_date);
+  if (hp) { sy = hp.y; sm = hp.m; } else { sy = cy; sm = cm; }
+  // agar manual_carry bo'lsa (eski oylar botdan oldin bo'lgan), o'shandan boshlanadi
+  const history = [];
+  let carry = s.opening_balance_usd || 0;
+  let y = sy, m = sm;
+  // xavfsizlik: ko'pi bilan 120 oy
+  for (let i = 0; i < 120; i++) {
+    const isCurrent = (y === cy && m === cm);
+    const future = (y > cy || (y === cy && m > cm));
+    if (future) break;
+    const pr = payrollForMonth(s, y, m, isCurrent, cd);
+    const carryIn = carry;
+    const balance = carryIn + pr.monthBalance;
+    history.push({ y, m, ...pr, carryIn, balance, isCurrent });
+    carry = balance;
+    if (isCurrent) break;
+    m++; if (m > 11) { m = 0; y++; }
+  }
+  return { history, currentBalance: carry };
 }
 
 async function showStaffList(c) {
@@ -681,27 +713,52 @@ async function showStaffList(c) {
 async function showStaffCard(c, id) {
   const { staff: s } = await findStaff(id);
   if (!s) { await msg(c, '⚠️ Xodim topilmadi.'); return; }
-  const p = payrollThisMonth(s);
-  const monthName = nowTZ().toLocaleDateString('uz-UZ', { month: 'long' });
+  const { history, currentBalance } = staffPayrollHistory(s);
+  const cur = history[history.length - 1] || {};
+  const monthName = UZ_MONTHS[nowTZ().getMonth()];
   let hireLine = '';
   if (s.hire_date) { const tn = tenureText(s.hire_date); hireLine = `📅 Ishga kelgan: ${s.hire_date}${tn ? ' (' + tn + ')' : ''}\n`; }
+  const balSign = currentBalance >= 0 ? `SIZ qarzdorsiz` : `${s.name} qarzdor`;
   const txt = `👷 *${s.name}*\n\n` +
     hireLine +
-    `💵 Oylik: *$${s.salary_usd || 0}*\n` +
-    `📅 ${monthName}: ${p.totalWd} ish kuni\n` +
-    `📆 Bugungacha: ${p.passedWd} kun\n` +
-    `❌ Kelmagan: ${p.absCount} kun\n` +
-    `✅ Ishlangan: ${p.workedWd} kun\n` +
-    `💰 Kunlik: $${p.dailyUsd.toFixed(2)}\n` +
-    `📈 Hozirgacha topgani: *$${p.earnedUsd.toFixed(2)}*\n` +
-    `💸 Olgan avans: $${p.advUsd.toFixed(2)}\n` +
-    `📉 Qolgan haq: *$${p.remainUsd.toFixed(2)}* (${fmtUzs(p.remainUsd * USD_UZS)} so'm)`;
+    `💵 Oylik: *$${s.salary_usd || 0}* · kunlik $${(cur.dailyUsd || 0).toFixed(2)}\n\n` +
+    `📊 *${monthName} (shu oy):*\n` +
+    `✅ Ishlangan: ${cur.workedWd || 0} kun${cur.absCount ? ` (${cur.absCount} kelmagan)` : ''}\n` +
+    `📈 Topgani: $${(cur.earnedUsd || 0).toFixed(2)}\n` +
+    `💸 Avans: $${(cur.advUsd || 0).toFixed(2)}\n` +
+    `↪️ O'tgan oydan: ${fmtSigned(cur.carryIn || 0)}\n` +
+    `━━━━━━━━━━━━\n` +
+    `💵 *Joriy balans: ${fmtSigned(currentBalance)}*\n` +
+    `_(${balSign})_`;
   await btn(c, txt, [
     [{ text: '💸 Avans qo\'shish', callback_data: 'stf_adv_' + id }, { text: '❌ Kelmagan kun', callback_data: 'stf_abs_' + id }],
+    [{ text: '📅 Oylik tarix', callback_data: 'stf_hist_' + id }],
     [{ text: '✏️ Oylikni o\'zgartirish', callback_data: 'stf_sal_' + id }],
     [{ text: '🗑 Xodimni o\'chirish', callback_data: 'stf_del_' + id }],
     [{ text: '◀️ Ortga', callback_data: 'menu_staff' }]
   ]);
+}
+
+// $ belgili formatlash (musbat/manfiy)
+function fmtSigned(usd) {
+  const v = Math.round(usd * 100) / 100;
+  return (v < 0 ? '-$' : '$') + Math.abs(v).toFixed(2);
+}
+
+// Oylik tarix ko'rsatish
+async function showStaffHistory(c, id) {
+  const { staff: s } = await findStaff(id);
+  if (!s) { await msg(c, '⚠️ Topilmadi.'); return; }
+  const { history } = staffPayrollHistory(s);
+  let txt = `📅 *${s.name} — oylik tarix*\n\n`;
+  history.forEach(h => {
+    const sign = h.balance >= 0 ? 'SIZ qarzdor' : `${s.name} qarzdor`;
+    txt += `*${UZ_MONTHS[h.m]} ${h.y}*${h.isCurrent ? ' (joriy)' : ''}\n` +
+      `  Ishlagan: ${h.workedWd} kun${h.absCount ? `, kelmagan ${h.absCount}` : ''}\n` +
+      `  Topgani: $${h.earnedUsd.toFixed(2)}, avans: $${h.advUsd.toFixed(2)}\n` +
+      `  O'tgan: ${fmtSigned(h.carryIn)} → Balans: *${fmtSigned(h.balance)}* (${sign})\n\n`;
+  });
+  await btn(c, txt, [[{ text: '◀️ Ortga', callback_data: 'stf_open_' + id }]]);
 }
 
 // Yangi xodim qo'shish
@@ -721,12 +778,13 @@ async function staffAskHireDate(c) {
 }
 async function staffSaveNew(c, name, salaryUsd, hireDate) {
   const { data, sha } = await ghRead('staff-log.json');
-  data.push({ id: uid(), name: name.trim(), salary_usd: salaryUsd, active: true, created: todayStr(), hire_date: hireDate || null, absences: [], advances: [] });
+  data.push({ id: uid(), name: name.trim(), salary_usd: salaryUsd, active: true, created: todayStr(), hire_date: hireDate || null, opening_balance_usd: 0, absences: [], advances: [] });
   await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'staff add: ' + name);
   let extra = hireDate ? `\n📅 Ishga kelgan: ${hireDate}` : '';
   await msg(c, `✅ Xodim qo'shildi: *${name}* — oylik $${salaryUsd}${extra}`);
   await showStaffList(c);
 }
+
 
 // Avans (tugma orqali)
 async function staffAdvStart(c, id) {
@@ -1005,8 +1063,6 @@ async function gatherMonth(y, m) {
   const realRemain = bizProfit - pers;
   return { monthDeals, income, dealExp, officeRows, officeExp, persRows, pers, staff, staffAdv, allExpenses, allPayments, bizProfit, realRemain };
 }
-
-const UZ_MONTHS = ['Yanvar','Fevral','Mart','Aprel','May','Iyun','Iyul','Avgust','Sentyabr','Oktyabr','Noyabr','Dekabr'];
 
 async function showSummary(c) {
   const now = nowTZ();
@@ -2126,6 +2182,7 @@ async function handle(upd) {
       if (cd === 'stf_hire_skip') { const st = orderState[c]; if (st && st.step === 'stf_hire') { const name = st.staffName, sal = st.staffSalary; delete orderState[c]; await staffSaveNew(c, name, sal, null); } return; }
       if (cd.startsWith('stf_open_')) { await showStaffCard(c, cd.slice(9)); return; }
       if (cd.startsWith('stf_adv_')) { await staffAdvStart(c, cd.slice(8)); return; }
+      if (cd.startsWith('stf_hist_')) { await showStaffHistory(c, cd.slice(9)); return; }
       if (cd.startsWith('stf_abs_')) { const name = await staffAddAbsence(c, cd.slice(8)); if (name) { await msg(c, `❌ ${name} — bugun kelmagan deb belgilandi.`); await showStaffCard(c, cd.slice(8)); } return; }
       if (cd.startsWith('stf_sal_')) { await staffSalStart(c, cd.slice(8)); return; }
       if (cd.startsWith('stf_del_')) { await staffDelete(c, cd.slice(8)); return; }
