@@ -12,6 +12,8 @@ const TZ       = 'Asia/Tashkent';
 const state = {};
 const phoneToChat = {};
 const invoiceState = {};
+const orderState = {};   // qadama-qadam yangi buyurtma kiritish
+const USD_UZS = 12000;   // 1 USD = 12000 so'm
 
 // ─── Time helpers ─────────────────────────────────────────────
 function nowTZ() { return new Date(new Date().toLocaleString('en-US', { timeZone: TZ })); }
@@ -78,6 +80,155 @@ async function ghWrite(file, newEntry, label) {
 async function ghReadAll(file) {
   const { data } = await ghRead(file);
   return data;
+}
+
+// ─── Yangi buyurtma: qadama-qadam ─────────────────────────────
+// Bosqichlar ketma-ketligi
+const ORDER_STEPS = ['client', 'amount_usd', 'advance_usd', 'note'];
+
+function orderPrompt(step) {
+  switch (step) {
+    case 'client':      return '👤 *Mijoz ismini* yozing:\n\n_Masalan: Boxodir aka_';
+    case 'amount_usd':  return '💵 *Shartnoma summasi* (dollarda):\n\n_Masalan: 800_';
+    case 'advance_usd': return '💰 *Avans* (dollarda, olingan bo\'lsa):\n\n_Masalan: 500. Avans yo\'q bo\'lsa: 0_';
+    case 'note':        return '📝 *Izoh* (material, nima sotib olindi va h.k.):\n\n_Masalan: ACACIA: LMDF Nazif oq, kromka, raspil. Izoh yo\'q bo\'lsa: -_';
+  }
+}
+
+// Har bosqich uchun pastki tugmalar (Ortga / Bekor)
+function orderKb(step, withSkip) {
+  const rows = [];
+  if (withSkip) rows.push([{ text: "⏭ O'tkazib yuborish", callback_data: 'ord_skip' }]);
+  const nav = [];
+  if (step !== 'client') nav.push({ text: '◀️ Ortga', callback_data: 'ord_back' });
+  nav.push({ text: '❌ Bekor qilish', callback_data: 'ord_cancel' });
+  rows.push(nav);
+  return rows;
+}
+
+async function orderStart(c) {
+  orderState[c] = { step: 'client', data: {} };
+  await btn(c, '🆕 *Yangi buyurtma*\n\nQadama-qadam to\'ldiramiz. Adashsangiz «Ortga» bosing.\n\n' + orderPrompt('client'),
+    orderKb('client', false));
+}
+
+async function orderAsk(c) {
+  const st = orderState[c];
+  const withSkip = (st.step === 'advance_usd' || st.step === 'note');
+  await btn(c, orderPrompt(st.step), orderKb(st.step, withSkip));
+}
+
+function orderSummary(d) {
+  const amtUsd = d.amount_usd || 0;
+  const advUsd = d.advance_usd || 0;
+  const amtUzs = amtUsd * USD_UZS;
+  const advUzs = advUsd * USD_UZS;
+  const debtUzs = amtUzs - advUzs;
+  const f = n => n.toLocaleString('ru-RU');
+  return {
+    text: `📋 *Tekshiring:*\n\n` +
+      `👤 Mijoz: *${d.client}*\n` +
+      `💵 Shartnoma: *$${amtUsd}* (${f(amtUzs)} so'm)\n` +
+      `💰 Avans: *$${advUsd}* (${f(advUzs)} so'm)\n` +
+      `📉 Qolgan qarz: *${f(debtUzs)} so'm* ($${amtUsd - advUsd})\n` +
+      `📝 Izoh: ${d.note || '-'}`,
+    amtUzs, advUzs, debtUzs
+  };
+}
+
+async function orderConfirm(c) {
+  const d = orderState[c].data;
+  const s = orderSummary(d);
+  orderState[c].step = 'confirm';
+  await btn(c, s.text, [
+    [{ text: '✅ Saqlash', callback_data: 'ord_save' }],
+    [{ text: '◀️ Ortga', callback_data: 'ord_back' }, { text: '❌ Bekor qilish', callback_data: 'ord_cancel' }]
+  ]);
+}
+
+async function orderSave(c) {
+  const d = orderState[c].data;
+  const s = orderSummary(d);
+  const today = todayStr();
+  const entry = {
+    date: today,
+    client: d.client,
+    contract_sum_usd: d.amount_usd || 0,
+    contract_sum_uzs: s.amtUzs,
+    advance_usd: d.advance_usd || 0,
+    advance_uzs: s.advUzs,
+    debt_uzs: s.debtUzs,
+    stage: 'Yangi buyurtma',
+    note: d.note || '',
+    ts: new Date().toISOString()
+  };
+  const ok = await ghWrite('deals-log.json', entry, `order: ${d.client} $${d.amount_usd}`);
+  delete orderState[c];
+  if (ok) {
+    await msg(c, `✅ *Buyurtma saqlandi!*\n\n👤 ${d.client}\n💵 $${d.amount_usd}\n📉 Qarz: ${s.debtUzs.toLocaleString('ru-RU')} so'm\n\n📊 Hisobot: /hisobot`);
+  } else {
+    await msg(c, '⚠️ Saqlashda xatolik. Qayta urinib ko\'ring: «🆕 Yangi buyurtma»');
+  }
+}
+
+// Matn javobini tegishli bosqichga yozadi. true = oqim davom etdi
+async function orderHandleText(c, t) {
+  const st = orderState[c];
+  if (!st) return false;
+  const txt = (t || '').trim();
+  if (!txt) return false;
+
+  if (st.step === 'client') {
+    st.data.client = txt;
+    st.step = 'amount_usd';
+    await orderAsk(c);
+    return true;
+  }
+  if (st.step === 'amount_usd') {
+    const n = parseFloat(txt.replace(/[^\d.]/g, ''));
+    if (isNaN(n) || n <= 0) { await msg(c, '❗️ Faqat raqam yozing. Masalan: 800'); return true; }
+    st.data.amount_usd = n;
+    st.step = 'advance_usd';
+    await orderAsk(c);
+    return true;
+  }
+  if (st.step === 'advance_usd') {
+    const n = parseFloat(txt.replace(/[^\d.]/g, ''));
+    if (isNaN(n) || n < 0) { await msg(c, '❗️ Faqat raqam yozing. Avans yo\'q bo\'lsa: 0'); return true; }
+    if (n > st.data.amount_usd) { await msg(c, `❗️ Avans shartnomadan ($${st.data.amount_usd}) ko'p bo'lmasligi kerak.`); return true; }
+    st.data.advance_usd = n;
+    st.step = 'note';
+    await orderAsk(c);
+    return true;
+  }
+  if (st.step === 'note') {
+    st.data.note = (txt === '-') ? '' : txt;
+    await orderConfirm(c);
+    return true;
+  }
+  return false;
+}
+
+// Tugma (callback) javoblari. true = ishlov berildi
+async function orderHandleCallback(c, data) {
+  const st = orderState[c];
+  if (!st) return false;
+  if (data === 'ord_cancel') { delete orderState[c]; await msg(c, '❌ Bekor qilindi.'); return true; }
+  if (data === 'ord_skip') {
+    if (st.step === 'advance_usd') { st.data.advance_usd = 0; st.step = 'note'; await orderAsk(c); }
+    else if (st.step === 'note') { st.data.note = ''; await orderConfirm(c); }
+    return true;
+  }
+  if (data === 'ord_back') {
+    const order = ['client', 'amount_usd', 'advance_usd', 'note', 'confirm'];
+    const idx = order.indexOf(st.step);
+    if (idx <= 0) { delete orderState[c]; await msg(c, '❌ Bekor qilindi.'); return true; }
+    st.step = order[idx - 1];
+    if (st.step === 'confirm') { await orderConfirm(c); } else { await orderAsk(c); }
+    return true;
+  }
+  if (data === 'ord_save') { await orderSave(c); return true; }
+  return false;
 }
 
 // ─── Groq call ────────────────────────────────────────────────
@@ -908,6 +1059,8 @@ async function handle(upd) {
   try {
     if (upd.callback_query) {
       const cq = upd.callback_query; const c = cq.message.chat.id; await acb(cq.id);
+      if (cq.data && cq.data.startsWith('ord_')) { if (await orderHandleCallback(c, cq.data)) return; }
+      if (cq.data==='start_order') { await orderStart(c); return; }
       if (cq.data==='til_uz'){state[c]={lang:'uz',step:'ask_file'};await btn(c,'Sizda tayyor loyiha yoki xona rasmi bormi?',[[{text:'Ha, bor',callback_data:'file_ha'}],[{text:"Yo'q",callback_data:'file_yoq'}]]);}
       else if(cq.data==='til_ru'){state[c]={lang:'ru',step:'ask_file'};await btn(c,'U vas est gotoviy proekt?',[[{text:'Da, est',callback_data:'file_ha'}],[{text:'Net',callback_data:'file_yoq'}]]);}
       else if(cq.data==='file_ha'){const l=(state[c]||{}).lang||'uz';state[c]={lang:l,step:'waiting_file'};await msg(c,l==='uz'?'Fayl yuboring:':'Otpravte fayl:');}
@@ -957,14 +1110,25 @@ async function handle(upd) {
       return;
     }
 
+    // Yangi buyurtma oqimi faol bo'lsa, matnni shu yerga yo'naltir
+    if (isAdmin && orderState[c]) {
+      if (t === '/bekor' || t === '/cancel') { delete orderState[c]; await msg(c, '❌ Bekor qilindi.'); return; }
+      if (t && t.startsWith('/')) { delete orderState[c]; }  // boshqa buyruq → oqim bekor
+      else if (await orderHandleText(c, t)) return;
+    }
+
     // Commands
     const phoneMatch = t.match(/(\+998|998)\d{9}/);
     if (phoneMatch) phoneToChat[phoneMatch[0].replace(/\D/g,'')] = c;
 
+    if (isAdmin && (t === '/yangi' || t === '/buyurtma')) { await orderStart(c); return; }
+
     if (t === '/start') {
       state[c] = {};
       if (isAdmin) {
-        await msg(c, '👋 *Assalomu alaykum, Ibrohim!*\n\n📱 *Botga nima yuborsa bo\'ladi:*\n\n🎤 *Ovozli xabar:*\n  • "Sherzod kelmadi"\n  • "Diyor 100 dollar avans oldi"\n  • "Soat 3 da Boxodir aka bilan uchrashuv"\n  • "Shaxsiy xarajat 50000 so\'m benzin"\n  • "Alisher bilan 2000 dollar kelishdilik"\n  • "Bugun qilishim kerak: ..."\n\n📸 *Nakładnoy rasmi* → mijoz so\'raldi → saqlanadi\n\n📋 *Buyruqlar:*\n/hisobot — oylik hisobot\n/bugun — bugungi reja\n/vazifalar — bugungi vazifalar');
+        await api('sendMessage', { chat_id: c, parse_mode: 'Markdown',
+          text: '👋 *Assalomu alaykum, Ibrohim!*\n\n📱 *Botga nima yuborsa bo\'ladi:*\n\n🎤 *Ovozli xabar:*\n  • "Sherzod kelmadi"\n  • "Diyor 100 dollar avans oldi"\n  • "Soat 3 da Boxodir aka bilan uchrashuv"\n  • "Shaxsiy xarajat 50000 so\'m benzin"\n\n📸 *Nakładnoy rasmi* → mijoz so\'raldi → saqlanadi\n\n📋 *Buyruqlar:*\n/hisobot — oylik hisobot\n/bugun — bugungi reja\n/vazifalar — bugungi vazifalar',
+          reply_markup: { inline_keyboard: [[{ text: '🆕 Yangi buyurtma', callback_data: 'start_order' }]] } });
         return;
       }
       await btn(c, 'MEBEL BY IBROHIM\n\nTilni tanlang:', [[{text:"O'zbek tili",callback_data:'til_uz'}],[{text:'Russkiy yazyk',callback_data:'til_ru'}]]);
