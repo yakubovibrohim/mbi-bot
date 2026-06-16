@@ -8,5 +8,41 @@
     "debt_uzs": 3600000,
     "stage": "Ishlab chiqarish",
     "note": "ACACIA: LMDF Nazif oq, prisadka, kromka, raspil KDT, Rover"
+  },
+  {
+    "id": "mqggznqvj909",
+    "date": "16/06/2026",
+    "ts": "2026-06-16T09:59:07.255Z",
+    "client": "Nodira opa",
+    "phone": "+998901904466",
+    "types": [
+      "Oshxona mebeli",
+      "O’gil bolalar xonasi",
+      "Qiz bolalar xonasi",
+      "Prixojka",
+      "Gorderob"
+    ],
+    "contract_sum_usd": 13000,
+    "contract_sum_uzs": 156000000,
+    "rate": 12000,
+    "address": "Olmazor tumani turin university yonida",
+    "deadline_days": 40,
+    "deadline_date": "01.08.2026",
+    "note": "",
+    "stage": "Yangi buyurtma",
+    "status": "active",
+    "payments": [
+      {
+        "id": "mqggznqvrbot",
+        "date": "16/06/2026",
+        "amount_uzs": 60000000,
+        "rate": 12000,
+        "note": "Avans"
+      }
+    ],
+    "expenses": [],
+    "finished_date": null,
+    "cancelled_date": null,
+    "cancel_reason": ""
   }
 ]
