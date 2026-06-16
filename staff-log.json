@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": "mqgi1s5yhy49",
+    "name": "diyor",
+    "salary_usd": 600,
+    "active": true,
+    "created": "16/06/2026",
+    "absences": [],
+    "advances": []
+  }
+]
