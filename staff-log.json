@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "id": "19ed0c10ef1hlec",
+    "name": "Diyor",
+    "salary_usd": 600,
+    "active": true,
+    "created": "16.06.2026",
+    "hire_date": "08.04.2026",
+    "absences": [],
+    "advances": []
+  }
+]
