@@ -1,25 +1,104 @@
 [
   {
     "id": "mqgh0841wgzi",
-    "date": "02.06.2026",
+    "date": "05.06.2026",
     "ts": "2026-06-02T00:00:00.000Z",
     "client": "Boxodir aka",
-    "phone": "",
-    "types": [],
+    "phone": "980000775",
+    "types": [
+      "Zina tagi shkaf"
+    ],
     "contract_sum_usd": 800,
     "contract_sum_uzs": 9600000,
     "rate": 12000,
-    "address": "",
+    "address": "Shofayz mahallasi",
     "deadline_days": null,
-    "deadline_date": null,
-    "note": "ACACIA: LMDF Nazif oq, prisadka, kromka, raspil KDT, Rover",
-    "stage": "Ishlab chiqarilmoqda",
-    "status": "active",
+    "deadline_date": "15.06.2026",
+    "note": "Bitrix: Nakl.68798 MEVAX",
+    "stage": "To'landi",
+    "status": "done",
     "payments": [
-      { "id": "mqgh0841a", "date": "02.06.2026", "amount_uzs": 6000000, "rate": 12000, "note": "Avans" }
+      {
+        "id": "mqgh0841a",
+        "date": "02.06.2026",
+        "amount_uzs": 6000000,
+        "rate": 12000,
+        "note": "Avans"
+      }
     ],
-    "expenses": [],
-    "finished_date": null,
+    "expenses": [
+      {
+        "id": "19ed131286bfcki",
+        "date": "15.06.2026",
+        "products": [
+          {
+            "name": "LMDF Nazif oq 2750x1830 16mm",
+            "qty": 3,
+            "price_uzs": 549000,
+            "rate": 12000
+          },
+          {
+            "name": "Rover",
+            "qty": 1,
+            "price_uzs": 108000,
+            "rate": 12000
+          },
+          {
+            "name": "Prisadka",
+            "qty": 1,
+            "price_uzs": 573950,
+            "rate": 12000
+          },
+          {
+            "name": "Raspil KDT",
+            "qty": 3,
+            "price_uzs": 45000,
+            "rate": 12000
+          },
+          {
+            "name": "Kromka 19/1",
+            "qty": 74.5,
+            "price_uzs": 4200,
+            "rate": 12000
+          },
+          {
+            "name": "TYTAN jidkiy gvozd",
+            "qty": 4,
+            "price_uzs": 52800,
+            "rate": 12000
+          },
+          {
+            "name": "MC600 Modern Slayd 3D 600mm",
+            "qty": 6,
+            "price_uzs": 150000,
+            "rate": 12000
+          },
+          {
+            "name": "GTV Petlya G08-3D (bez evro sh.)",
+            "qty": 10,
+            "price_uzs": 12000,
+            "rate": 12000
+          },
+          {
+            "name": "GTV Petlya G09-3D (bez evro sh.)",
+            "qty": 10,
+            "price_uzs": 12000,
+            "rate": 12000
+          },
+          {
+            "name": "Rover",
+            "qty": 1,
+            "price_uzs": 150000,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 4278050,
+        "rate": 12000,
+        "note": "Bitrix Nakl.68798 MEVAX",
+        "source": "bitrix"
+      }
+    ],
+    "finished_date": "15.06.2026",
     "cancelled_date": null,
     "cancel_reason": ""
   }
