@@ -4,17 +4,19 @@
     "name": "diyor",
     "salary_usd": 600,
     "active": true,
-    "created": "16/06/2026",
+    "created": "16.06.2026",
     "absences": [],
-    "advances": []
+    "advances": [],
+    "hire_date": null
   },
   {
     "id": "mqgi2h2uq3w1",
     "name": "Sherzod",
     "salary_usd": 600,
     "active": true,
-    "created": "16/06/2026",
+    "created": "16.06.2026",
     "absences": [],
-    "advances": []
+    "advances": [],
+    "hire_date": null
   }
 ]
