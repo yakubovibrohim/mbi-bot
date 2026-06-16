@@ -18,7 +18,7 @@ const USD_UZS = 12000;   // 1 USD = 12000 so'm
 
 // ─── Time helpers ─────────────────────────────────────────────
 function nowTZ() { return new Date(new Date().toLocaleString('en-US', { timeZone: TZ })); }
-function todayStr() { return nowTZ().toLocaleDateString('uz-UZ', { day: '2-digit', month: '2-digit', year: 'numeric' }); }
+function todayStr() { const d = nowTZ(); return ('0'+d.getDate()).slice(-2) + '.' + ('0'+(d.getMonth()+1)).slice(-2) + '.' + d.getFullYear(); }
 function nowHHMM() { const d = nowTZ(); return ('0'+d.getHours()).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2); }
 
 // ─── Telegram helpers ─────────────────────────────────────────
@@ -372,7 +372,7 @@ async function showOrdersList(c, status) {
 }
 
 function parseDmy(s) {
-  const m = String(s).match(/(\d{2})\.(\d{2})\.(\d{4})/);
+  const m = String(s).match(/(\d{2})[.\/](\d{2})[.\/](\d{4})/);
   if (!m) return nowTZ();
   return new Date(+m[3], +m[2] - 1, +m[1]);
 }
@@ -582,9 +582,9 @@ function workdaysPassed(y, m, uptoDay) {
   for (let d = 1; d <= uptoDay; d++) { if (new Date(y, m, d).getDay() !== 0) cnt++; }
   return cnt;
 }
-// "DD.MM.YYYY" → {y,m,d}
+// "DD.MM.YYYY" yoki "DD/MM/YYYY" → {y,m,d}
 function dmyParts(s) {
-  const mm = String(s).match(/(\d{2})\.(\d{2})\.(\d{4})/);
+  const mm = String(s).match(/(\d{2})[.\/](\d{2})[.\/](\d{4})/);
   if (!mm) return null;
   return { d: +mm[1], m: +mm[2] - 1, y: +mm[3] };
 }
@@ -613,7 +613,20 @@ function tenureText(hireDate) {
   return parts.join(' ');
 }
 
-async function readStaff() { return await ghReadAll('staff-log.json'); }
+async function readStaff() {
+  const { data, sha } = await ghRead('staff-log.json');
+  let changed = false;
+  for (const s of data) {
+    if (!Array.isArray(s.absences)) { s.absences = []; changed = true; }
+    if (!Array.isArray(s.advances)) { s.advances = []; changed = true; }
+    if (s.hire_date === undefined) { s.hire_date = null; changed = true; }
+    if (s.active === undefined) { s.active = true; changed = true; }
+    if (s.created && s.created.indexOf('/') >= 0) { s.created = s.created.replace(/\//g, '.'); changed = true; }
+    if (s.hire_date && s.hire_date.indexOf('/') >= 0) { s.hire_date = s.hire_date.replace(/\//g, '.'); changed = true; }
+  }
+  if (changed) { try { await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'migrate staff'); } catch (e) { console.error('staff migrate:', e.message); } }
+  return data;
+}
 async function findStaff(id) {
   const { data, sha } = await ghRead('staff-log.json');
   const idx = data.findIndex(s => s.id === id);
@@ -1853,10 +1866,14 @@ async function handle(upd) {
     if (!(state[c]||{}).lang && !isAdmin) {
       await btn(c,'MEBEL BY IBROHIM\n\nTilni tanlang:',[[{text:"O'zbek tili",callback_data:'til_uz'}],[{text:'Russkiy yazyk',callback_data:'til_ru'}]]);
     }
-  } catch (e) { console.error(e); }
+  } catch (e) {
+    console.error(e);
+    try {
+      const cc = (upd.callback_query && upd.callback_query.message.chat.id) || (upd.message && upd.message.chat.id);
+      if (cc && String(cc) === String(ADMIN)) { await api('sendMessage', { chat_id: cc, text: '⚠️ Texnik xatolik: ' + (e.message || e) + '\n\n/start orqali qayta boshlang.' }); }
+    } catch (e2) {}
+  }
 }
-
-// ─── Instagram ────────────────────────────────────────────────
 const IG_TOKEN = (process.env.IG_TOKEN || '').trim().replace(/[\r\n]/g, '');
 const IG_USER_ID = '17841464753251739';
 const IG_VERIFY = 'mbi_secret_2024';
