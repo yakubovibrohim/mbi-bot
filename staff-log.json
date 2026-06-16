@@ -1,12 +1,127 @@
 [
   {
-    "id": "19ed0c10ef1hlec",
+    "id": "19ed11f3c13aglg",
     "name": "Diyor",
     "salary_usd": 600,
     "active": true,
     "created": "16.06.2026",
-    "hire_date": "08.04.2026",
-    "absences": [],
-    "advances": []
+    "hire_date": "01.04.2026",
+    "opening_balance_usd": 0,
+    "absences": [
+      {
+        "date": "01.04.2026"
+      },
+      {
+        "date": "02.04.2026"
+      },
+      {
+        "date": "03.04.2026"
+      },
+      {
+        "date": "04.04.2026"
+      },
+      {
+        "date": "06.04.2026"
+      },
+      {
+        "date": "07.04.2026"
+      },
+      {
+        "date": "08.04.2026"
+      }
+    ],
+    "advances": [
+      {
+        "id": "19ed11f3c13nlgk",
+        "date": "15.04.2026",
+        "amount_usd": 600
+      },
+      {
+        "id": "19ed11f3c13ehoj",
+        "date": "15.05.2026",
+        "amount_usd": 58.33
+      },
+      {
+        "id": "19ed11f3c13dkeo",
+        "date": "25.05.2026",
+        "amount_usd": 100
+      },
+      {
+        "id": "19ed11f3c13aehf",
+        "date": "16.06.2026",
+        "amount_usd": 200
+      }
+    ]
+  },
+  {
+    "id": "19ed11f3c1djihj",
+    "name": "Sherzod",
+    "salary_usd": 600,
+    "active": true,
+    "created": "16.06.2026",
+    "hire_date": "01.04.2026",
+    "opening_balance_usd": 0,
+    "absences": [
+      {
+        "date": "01.04.2026"
+      },
+      {
+        "date": "02.04.2026"
+      },
+      {
+        "date": "03.04.2026"
+      },
+      {
+        "date": "04.04.2026"
+      },
+      {
+        "date": "06.04.2026"
+      },
+      {
+        "date": "07.04.2026"
+      },
+      {
+        "date": "08.04.2026"
+      },
+      {
+        "date": "15.05.2026"
+      },
+      {
+        "date": "06.06.2026"
+      },
+      {
+        "date": "08.06.2026"
+      },
+      {
+        "date": "13.06.2026"
+      }
+    ],
+    "advances": [
+      {
+        "id": "19ed11f3c1dcbef",
+        "date": "15.04.2026",
+        "amount_usd": 100
+      },
+      {
+        "id": "19ed11f3c1dkjig",
+        "date": "20.04.2026",
+        "amount_usd": 8.33
+      },
+      {
+        "id": "19ed11f3c1dihgf",
+        "date": "15.05.2026",
+        "amount_usd": 100
+      },
+      {
+        "id": "19ed11f3c1dhabl",
+        "date": "10.06.2026",
+        "amount_usd": 200
+      },
+      {
+        "id": "19ed11f3c1dofag",
+        "date": "16.06.2026",
+        "amount_usd": 200
+      }
+    ]
   }
 ]
