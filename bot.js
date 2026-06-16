@@ -589,6 +589,30 @@ function dmyParts(s) {
   return { d: +mm[1], m: +mm[2] - 1, y: +mm[3] };
 }
 
+// Ish staji: "3 oy 1 kun" ko'rinishida
+function tenureText(hireDate) {
+  const p = dmyParts(hireDate);
+  if (!p) return '';
+  const from = new Date(p.y, p.m, p.d);
+  const now = nowTZ();
+  if (from > now) return '';
+  let months = (now.getFullYear() - from.getFullYear()) * 12 + (now.getMonth() - from.getMonth());
+  let dayDiff = now.getDate() - from.getDate();
+  if (dayDiff < 0) {
+    months -= 1;
+    const prevMonthDays = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+    dayDiff += prevMonthDays;
+  }
+  if (months < 0) months = 0;
+  const parts = [];
+  const years = Math.floor(months / 12);
+  const remMonths = months % 12;
+  if (years > 0) parts.push(`${years} yil`);
+  if (remMonths > 0) parts.push(`${remMonths} oy`);
+  parts.push(`${dayDiff} kun`);
+  return parts.join(' ');
+}
+
 async function readStaff() { return await ghReadAll('staff-log.json'); }
 async function findStaff(id) {
   const { data, sha } = await ghRead('staff-log.json');
@@ -642,7 +666,10 @@ async function showStaffCard(c, id) {
   if (!s) { await msg(c, '⚠️ Xodim topilmadi.'); return; }
   const p = payrollThisMonth(s);
   const monthName = nowTZ().toLocaleDateString('uz-UZ', { month: 'long' });
+  let hireLine = '';
+  if (s.hire_date) { const tn = tenureText(s.hire_date); hireLine = `📅 Ishga kelgan: ${s.hire_date}${tn ? ' (' + tn + ')' : ''}\n`; }
   const txt = `👷 *${s.name}*\n\n` +
+    hireLine +
     `💵 Oylik: *$${s.salary_usd || 0}*\n` +
     `📅 ${monthName}: ${p.totalWd} ish kuni\n` +
     `📆 Bugungacha: ${p.passedWd} kun\n` +
@@ -665,11 +692,22 @@ async function staffAddStart(c) {
   orderState[c] = { step: 'stf_name' };
   await btn(c, '➕ *Yangi xodim*\n\n👤 Ismini yozing:', [[{ text: '❌ Bekor', callback_data: 'menu_staff' }]]);
 }
-async function staffSaveNew(c, name, salaryUsd) {
+// Oylik kiritilgach — ishga kelgan sanani so'raydi
+async function staffAskHireDate(c) {
+  const st = orderState[c];
+  st.step = 'stf_hire';
+  await btn(c, `📅 *${st.staffName}* — ishga kelgan sanasi:\n\n_Yangi xodim bo'lsa «Bugundan». Eski xodim bo'lsa sanani yozing yoki «Noma'lum»._`, [
+    [{ text: '📅 Bugundan', callback_data: 'stf_hire_today' }],
+    [{ text: "⏭ Noma'lum", callback_data: 'stf_hire_skip' }],
+    [{ text: '❌ Bekor', callback_data: 'menu_staff' }]
+  ]);
+}
+async function staffSaveNew(c, name, salaryUsd, hireDate) {
   const { data, sha } = await ghRead('staff-log.json');
-  data.push({ id: uid(), name: name.trim(), salary_usd: salaryUsd, active: true, created: todayStr(), absences: [], advances: [] });
+  data.push({ id: uid(), name: name.trim(), salary_usd: salaryUsd, active: true, created: todayStr(), hire_date: hireDate || null, absences: [], advances: [] });
   await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'staff add: ' + name);
-  await msg(c, `✅ Xodim qo'shildi: *${name}* — oylik $${salaryUsd}`);
+  let extra = hireDate ? `\n📅 Ishga kelgan: ${hireDate}` : '';
+  await msg(c, `✅ Xodim qo'shildi: *${name}* — oylik $${salaryUsd}${extra}`);
   await showStaffList(c);
 }
 
@@ -1614,6 +1652,8 @@ async function handle(upd) {
       if (cd === 'menu_home') { await showHomeMenu(c); return; }
       // ── Xodimlar ──
       if (cd === 'stf_add') { await staffAddStart(c); return; }
+      if (cd === 'stf_hire_today') { const st = orderState[c]; if (st && st.step === 'stf_hire') { const name = st.staffName, sal = st.staffSalary; delete orderState[c]; await staffSaveNew(c, name, sal, todayStr()); } return; }
+      if (cd === 'stf_hire_skip') { const st = orderState[c]; if (st && st.step === 'stf_hire') { const name = st.staffName, sal = st.staffSalary; delete orderState[c]; await staffSaveNew(c, name, sal, null); } return; }
       if (cd.startsWith('stf_open_')) { await showStaffCard(c, cd.slice(9)); return; }
       if (cd.startsWith('stf_adv_')) { await staffAdvStart(c, cd.slice(8)); return; }
       if (cd.startsWith('stf_abs_')) { const name = await staffAddAbsence(c, cd.slice(8)); if (name) { await msg(c, `❌ ${name} — bugun kelmagan deb belgilandi.`); await showStaffCard(c, cd.slice(8)); } return; }
@@ -1714,7 +1754,13 @@ async function handle(upd) {
       else if (st.step === 'stf_salary') {
         const n = parseFloat(t.replace(/[^\d.]/g, ''));
         if (isNaN(n) || n <= 0) { await msg(c, '❗️ Oylikni raqam bilan yozing. Masalan: 600'); return; }
-        const name = st.staffName; delete orderState[c]; await staffSaveNew(c, name, n); return;
+        st.staffSalary = n; await staffAskHireDate(c); return;
+      }
+      else if (st.step === 'stf_hire') {
+        const p = dmyParts(t);
+        if (!p) { await msg(c, '❗️ Sanani DD.MM.YYYY ko\'rinishida yozing. Masalan: 15.03.2026. Yoki «Bugundan»/«Noma\'lum» tugmasini bosing.'); return; }
+        const name = st.staffName, sal = st.staffSalary; delete orderState[c];
+        await staffSaveNew(c, name, sal, t.trim()); return;
       }
       else if (st.step === 'stf_adv_amount') {
         const n = parseFloat(t.replace(/[^\d.]/g, ''));
