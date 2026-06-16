@@ -1776,6 +1776,12 @@ async function handle(upd) {
         const id = st.staffId; delete orderState[c]; await staffSetSalary(c, id, n); return;
       }
       else if (await orderHandleText(c, t)) return;
+      else {
+        // Noma'lum holat — oqimni tozalaymiz, foydalanuvchi qotib qolmasin
+        delete orderState[c];
+        await msg(c, 'Bekor qilindi. /start orqali bosh menyuni oching.');
+        return;
+      }
     }
 
     // Commands
@@ -1788,7 +1794,7 @@ async function handle(upd) {
       state[c] = {};
       if (isAdmin) {
         await api('sendMessage', { chat_id: c, parse_mode: 'Markdown',
-          text: '👋 *Assalomu alaykum, Ibrohim!*\n\n📱 *Botga nima yuborsa bo\'ladi:*\n\n🎤 *Ovozli xabar:*\n  • "Sherzod kelmadi"\n  • "Diyor 100 dollar avans oldi"\n  • "Soat 3 da Boxodir aka bilan uchrashuv"\n  • "Shaxsiy xarajat 50000 so\'m benzin"\n\n📸 *Nakładnoy rasmi* → mijoz so\'raldi → saqlanadi\n\n📋 *Buyruqlar:*\n/hisobot — oylik hisobot\n/bugun — bugungi reja\n/vazifalar — bugungi vazifalar',
+          text: '👋 *Assalomu alaykum, Ibrohim!* (v2.1)\n\n📱 *Botga nima yuborsa bo\'ladi:*\n\n🎤 *Ovozli xabar:*\n  • "Sherzod kelmadi"\n  • "Diyor 100 dollar avans oldi"\n  • "Soat 3 da Boxodir aka bilan uchrashuv"\n  • "Shaxsiy xarajat 50000 so\'m benzin"\n\n📸 *Nakładnoy rasmi* → mijoz so\'raldi → saqlanadi\n\n📋 *Buyruqlar:*\n/hisobot — oylik hisobot\n/bugun — bugungi reja\n/vazifalar — bugungi vazifalar',
           reply_markup: { inline_keyboard: [
             [{ text: '🆕 Yangi buyurtma', callback_data: 'start_order' }],
             [{ text: '📁 Buyurtmalar', callback_data: 'menu_orders' }],
