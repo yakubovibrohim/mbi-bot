@@ -1,0 +1,80 @@
+[
+  {
+    "date": "02.06.2026",
+    "client": "Boxodir aka",
+    "contract_sum_uzs": 9600000,
+    "contract_sum_usd": 800,
+    "advance_uzs": 6000000,
+    "debt_uzs": 3600000,
+    "stage": "Ishlab chiqarish",
+    "note": "ACACIA: LMDF Nazif oq, prisadka, kromka, raspil KDT, Rover",
+    "id": "mqgh0841wgzi",
+    "status": "active",
+    "payments": [
+      {
+        "id": "mqgh0841a",
+        "date": "02.06.2026",
+        "amount_uzs": 6000000,
+        "rate": 12000,
+        "note": "Avans (eski)"
+      }
+    ],
+    "expenses": [],
+    "types": [],
+    "finished_date": null,
+    "cancelled_date": null
+  },
+  {
+    "id": "mqggznqvj909",
+    "date": "16/06/2026",
+    "ts": "2026-06-16T09:59:07.255Z",
+    "client": "Nodira opa",
+    "phone": "+998901904466",
+    "types": [
+      "Oshxona mebeli",
+      "O’gil bolalar xonasi",
+      "Qiz bolalar xonasi",
+      "Prixojka",
+      "Gorderob"
+    ],
+    "contract_sum_usd": 13000,
+    "contract_sum_uzs": 156000000,
+    "rate": 12000,
+    "address": "Olmazor tumani turin university yonida",
+    "deadline_days": 40,
+    "deadline_date": "01.08.2026",
+    "note": "",
+    "stage": "O'lchov olindi",
+    "status": "active",
+    "payments": [
+      {
+        "id": "mqggznqvrbot",
+        "date": "16/06/2026",
+        "amount_uzs": 60000000,
+        "rate": 12000,
+        "note": "Avans"
+      }
+    ],
+    "expenses": [
+      {
+        "id": "mqgh1gndc3b9",
+        "date": "16/06/2026",
+        "products": [
+          {
+            "name": "Lmdf",
+            "qty": 5,
+            "price_uzs": 600000,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 3000000,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
+      }
+    ],
+    "finished_date": null,
+    "cancelled_date": null,
+    "cancel_reason": ""
+  }
+]
