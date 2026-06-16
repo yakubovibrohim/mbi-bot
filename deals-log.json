@@ -24,6 +24,13 @@
         "amount_uzs": 6000000,
         "rate": 12000,
         "note": "Avans"
+      },
+      {
+        "id": "mqgu9lh5jtcv",
+        "date": "16.06.2026",
+        "amount_uzs": 3600000,
+        "rate": 12000,
+        "note": ""
       }
     ],
     "expenses": [
