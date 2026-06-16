@@ -55,7 +55,24 @@
         "note": "Avans"
       }
     ],
-    "expenses": [],
+    "expenses": [
+      {
+        "id": "mqgh1gndc3b9",
+        "date": "16/06/2026",
+        "products": [
+          {
+            "name": "Lmdf",
+            "qty": 5,
+            "price_uzs": 600000,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 3000000,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
+      }
+    ],
     "finished_date": null,
     "cancelled_date": null,
     "cancel_reason": ""
