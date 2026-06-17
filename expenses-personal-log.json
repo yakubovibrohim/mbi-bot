@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "date": "17.06.2026",
+    "note": "Uy uchun ro’zg’or",
+    "amount_uzs": 4150000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-17T10:10:53.772Z"
+  }
+]
