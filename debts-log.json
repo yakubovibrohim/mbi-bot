@@ -7,5 +7,14 @@
     "paid_uzs": 2400000,
     "date": "17.06.2026",
     "note": "oyliklar fevral mart"
+  },
+  {
+    "id": "mqi1x8bswolm",
+    "dir": "out",
+    "name": "Rustam aka mebel usta",
+    "amount_uzs": 10800000,
+    "paid_uzs": 0,
+    "date": "17.06.2026",
+    "note": "obshiy hamasi bo’lib"
   }
 ]
