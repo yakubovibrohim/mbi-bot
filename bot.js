@@ -1536,34 +1536,56 @@ const USD_RATE = 12000;
 
 async function financeContext() {
   try {
-    const [deals, exp] = await Promise.all([ghReadAll('deals-log.json'), ghReadAll('expenses-log.json')]);
+    const [deals, debtsManual, staff] = await Promise.all([
+      ghReadAll('deals-log.json'), ghReadAll('debts-log.json'), ghReadAll('staff-log.json')
+    ]);
+    const f = n => Math.round(n || 0).toLocaleString('ru-RU');
+    const statusUz = { active: 'Faol', done: 'Tugatilgan', cancelled: 'Bekor qilingan' };
 
-    // Har bir xarajatning so'mdagi summasini hisoblash
-    const expCalc = exp.map(x => {
-      let total = x.total_override != null ? Number(x.total_override)
-        : (x.items || []).reduce((s, i) => s + (Number(i.total) || 0), 0);
-      const isUsd = (x.currency || '').toUpperCase() === 'USD';
-      const totalUzs = isUsd ? Math.round(total * USD_RATE) : total;
-      return { ...x, _total: total, _totalUzs: totalUzs, _cur: isUsd ? 'USD' : 'UZS' };
-    });
-
-    // Kelishuvlar bo'yicha tayyor hisob
-    const dealLines = deals.slice(-10).map(d => {
+    // Kelishuvlar — yangi tuzilma (payments[], expenses[])
+    const dealLines = deals.slice(-12).map(d => {
       const name = d.client || d.title || '?';
-      const dealExp = expCalc.filter(e => (e.deal || '').toLowerCase() === name.toLowerCase());
-      const expSum = dealExp.reduce((s, e) => s + e._totalUzs, 0);
       const contract = Number(d.contract_sum_uzs) || 0;
-      const advance = Number(d.advance_uzs) || 0;
-      const debt = d.debt_uzs != null ? Number(d.debt_uzs) : (contract - advance);
+      const paid = (d.payments || []).reduce((s, p) => s + (Number(p.amount_uzs) || 0), 0)
+        + ((!d.payments || !d.payments.length) && d.advance_uzs ? Number(d.advance_uzs) : 0); // eski format faqat payments bo'sh bo'lsa
+      const expSum = (d.expenses || []).reduce((s, e) => s + (Number(e.total_uzs) || 0), 0);
+      const debt = contract - paid;
       const profit = contract - expSum;
-      return `• ${name} (${d.stage || '-'}): shartnoma ${contract.toLocaleString()} so'm | avans olingan ${advance.toLocaleString()} so'm | QARZ QOLDI ${debt.toLocaleString()} so'm | xarajatlar jami ${expSum.toLocaleString()} so'm (${dealExp.length} ta chek) | taxminiy foyda ${profit.toLocaleString()} so'm`;
+      const st = statusUz[d.status || 'active'] || (d.stage || '-');
+      return `• ${name} (${st}${d.stage ? ', ' + d.stage : ''}): shartnoma ${f(contract)} so'm | to'langan ${f(paid)} so'm | QARZ QOLDI ${f(debt)} so'm | xarajatlar jami ${f(expSum)} so'm | sof foyda ${f(profit)} so'm`;
     }).join('\n');
 
-    const expLines = expCalc.slice(-15).map(e =>
-      `• ${e.date || ''} | ${e.supplier || ''} | loyiha: ${e.deal || '-'} | ${e._total.toLocaleString()} ${e._cur}${e._cur === 'USD' ? ` (=${e._totalUzs.toLocaleString()} so'm)` : ''} | ${(e.items || []).map(i => i.name).join(', ').slice(0, 200)}`
+    // Oxirgi xarajatlar — deal'lar ichidagi expenses
+    const allExp = [];
+    for (const d of deals) for (const e of (d.expenses || [])) {
+      const prods = (e.products || []).map(p => `${p.name} x${p.qty}`).join(', ');
+      allExp.push({ date: e.date || '', client: d.client, total: e.total_uzs || 0, prods });
+    }
+    const expLines = allExp.slice(-15).map(e =>
+      `• ${e.date} | ${e.client} | ${f(e.total)} so'm | ${e.prods.slice(0, 200)}`
     ).join('\n');
 
-    return `TAYYOR HISOBLANGAN MA'LUMOTLAR (barcha arifmetika bajarilgan, kurs 1 USD = ${USD_RATE} so'm):\n\nKELISHUVLAR:\n${dealLines || '—'}\n\nXARAJATLAR RO'YXATI:\n${expLines || '—'}`;
+    // Qarzlar (qo'lda + mijoz qarzlari)
+    let debtIn = 0, debtOut = 0;
+    for (const d of deals) if ((d.status || 'active') === 'active') {
+      const contract = Number(d.contract_sum_uzs) || 0;
+      const paid = (d.payments || []).reduce((s, p) => s + (Number(p.amount_uzs) || 0), 0) + ((!d.payments || !d.payments.length) && d.advance_uzs ? Number(d.advance_uzs) : 0);
+      const r = contract - paid; if (r > 0) debtIn += r;
+    }
+    (debtsManual || []).forEach(x => { const r = (x.amount_uzs || 0) - (x.paid_uzs || 0); if (x.dir === 'in') debtIn += r; else debtOut += r; });
+
+    // Xodimlar joriy balansi (oddiy: oylik − shu oy avanslari, tahminiy)
+    const now = nowTZ();
+    const staffLines = (staff || []).filter(s => s.active !== false).map(s => {
+      const advThis = (s.advances || []).filter(a => { const p = dmyParts(a.date); return p && p.y === now.getFullYear() && p.m === now.getMonth(); }).reduce((sm, a) => sm + (a.amount_usd || 0), 0);
+      return `• ${s.name}: oylik $${s.salary_usd || 0}, shu oy avans $${advThis.toFixed(2)}`;
+    }).join('\n');
+
+    return `TAYYOR HISOBLANGAN MA'LUMOTLAR (barcha arifmetika bajarilgan, kurs 1 USD = ${USD_RATE} so'm):\n\n` +
+      `KELISHUVLAR:\n${dealLines || '—'}\n\n` +
+      `OXIRGI XARAJATLAR:\n${expLines || '—'}\n\n` +
+      `QARZLAR: menga qarzdorlar jami ${f(debtIn)} so'm | men qarzdorman jami ${f(debtOut)} so'm\n\n` +
+      `XODIMLAR:\n${staffLines || '—'}`;
   } catch (e) { return ''; }
 }
 
