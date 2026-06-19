@@ -650,26 +650,98 @@ function staffByName(list, name) {
 // Joriy oy uchun xodim hisobi (oy o'rtasida — shu kungacha)
 // Berilgan oy uchun bitta oylik hisob (carry-oversiz, faqat shu oy)
 // partial=true bo'lsa, faqat shu kungacha o'tgan ish kunlarini sanaydi (joriy oy uchun)
+// ─── Soat hisobi (yo'qlama tizimi) ────────────────────────────
+// "HH:MM" → daqiqa (soat boshidan)
+function hmToMin(hm) {
+  const m = String(hm).match(/(\d{1,2}):(\d{2})/);
+  if (!m) return null;
+  return (+m[1]) * 60 + (+m[2]);
+}
+function minToHm(min) {
+  const h = Math.floor(min / 60), mm = Math.round(min % 60);
+  return ('0' + h).slice(-2) + ':' + ('0' + mm).slice(-2);
+}
+// Bir kunlik yozuvdan oddiy va qo'shimcha soatni hisoblaydi.
+// Qoidalar: ish oynasi 09:00–18:00. Oddiy = shu oyna ichidagi vaqt.
+// 14:00 (840 daq) dan QAT'IY OLDIN kelgan bo'lsa −1 soat tushlik.
+// Qo'shimcha = 18:00 dan keyingi vaqt (alohida, maoshsiz).
+const WORK_START = 9 * 60;    // 09:00
+const WORK_END = 18 * 60;     // 18:00
+const LUNCH_CUTOFF = 14 * 60; // 14:00
+const LUNCH_MIN = 60;         // 1 soat
+function computeDayHours(inHm, outHm) {
+  const inM = hmToMin(inHm), outM = hmToMin(outHm);
+  if (inM == null || outM == null || outM <= inM) return { normalH: 0, extraH: 0 };
+  // Oddiy oyna: max(in,9:00) .. min(out,18:00)
+  const ns = Math.max(inM, WORK_START);
+  const ne = Math.min(outM, WORK_END);
+  let normalMin = Math.max(0, ne - ns);
+  // tushlik: faqat 14:00 dan oldin kelgan bo'lsa
+  if (inM < LUNCH_CUTOFF && normalMin > 0) normalMin = Math.max(0, normalMin - LUNCH_MIN);
+  // qo'shimcha: 18:00 dan keyin
+  const extraMin = Math.max(0, outM - Math.max(inM, WORK_END));
+  return { normalH: normalMin / 60, extraH: extraMin / 60 };
+}
+
 function payrollForMonth(s, y, m, partial, uptoDay) {
   const totalWd = workdaysInMonth(y, m);
-  const consideredWd = partial ? workdaysPassed(y, m, uptoDay) : totalWd;
   const dailyUsd = s.salary_usd ? s.salary_usd / totalWd : 0;
+  const hourlyUsd = s.salary_usd ? s.salary_usd / (totalWd * 8) : 0; // soatlik = oylik / (ish kunlari × 8)
+
+  // Shu oyda attendance (soat) yozuvlari bormi?
+  const att = (s.attendance || []).filter(a => { const p = dmyParts(a.date); return p && p.y === y && p.m === m; });
+  const hasHours = att.length > 0;
+
+  // KUNLIK rejim (eski oylar — attendance yo'q)
+  const consideredWd = partial ? workdaysPassed(y, m, uptoDay) : totalWd;
   const absDates = (s.absences || []).filter(a => {
     const p = dmyParts(a.date); if (!p) return false;
     if (p.y !== y || p.m !== m) return false;
     if (new Date(p.y, p.m, p.d).getDay() === 0) return false;
-    if (partial && p.d > uptoDay) return false; // kelajakdagi kelmagan kun hisobga olinmaydi
+    if (partial && p.d > uptoDay) return false;
     return true;
   });
   const absCount = absDates.length;
   const workedWd = Math.max(0, consideredWd - absCount);
-  const earnedUsd = dailyUsd * workedWd;
+
+  // avanslar (faqat tasdiqlangan)
   const advUsd = (s.advances || []).filter(a => {
+    if (a.pending) return false; // tasdiqlanmagan hisobga olinmaydi
     const p = dmyParts(a.date); if (!p || p.y !== y || p.m !== m) return false;
     if (partial && p.d > uptoDay) return false;
     return true;
   }).reduce((sum, a) => sum + (a.amount_usd || 0), 0);
-  return { y, m, totalWd, consideredWd, dailyUsd, absCount, workedWd, earnedUsd, advUsd, monthBalance: earnedUsd - advUsd };
+  // bonuslar (haqqa qo'shiladi)
+  const bonusUsd = (s.bonuses || []).filter(b => {
+    const p = dmyParts(b.date); if (!p || p.y !== y || p.m !== m) return false;
+    if (partial && p.d > uptoDay) return false;
+    return true;
+  }).reduce((sum, b) => sum + (b.amount_usd || 0), 0);
+  // qo'shimcha to'lovlar (ishlaganidan ortiq berilgan — "qo'shimcha haq")
+  const extraPayUsd = (s.extra_pays || []).filter(b => {
+    const p = dmyParts(b.date); if (!p || p.y !== y || p.m !== m) return false;
+    if (partial && p.d > uptoDay) return false;
+    return true;
+  }).reduce((sum, b) => sum + (b.amount_usd || 0), 0);
+
+  let earnedUsd, normalHours = 0, extraHours = 0;
+  if (hasHours) {
+    for (const a of att) {
+      const d = computeDayHours(a.in, a.out);
+      normalHours += (a.normalH != null ? a.normalH : d.normalH);
+      extraHours += (a.extraH != null ? a.extraH : d.extraH);
+    }
+    earnedUsd = normalHours * hourlyUsd;
+  } else {
+    earnedUsd = dailyUsd * workedWd;
+  }
+  earnedUsd += bonusUsd; // bonus haqqa qo'shiladi
+
+  // oy yopilgan bo'lsa, balans 0 (qo'lda yopilgan oylar)
+  const closed = (s.closed_months || []).find(cm => cm.y === y && cm.m === m);
+  const monthBalance = closed ? 0 : (earnedUsd - advUsd);
+
+  return { y, m, totalWd, dailyUsd, hourlyUsd, hasHours, absCount, workedWd, normalHours, extraHours, earnedUsd, advUsd, bonusUsd, monthBalance, closed: !!closed };
 }
 
 // Ishga kelgan oydan to joriy oygacha — har oy balansi + jami carry
@@ -719,20 +791,36 @@ async function showStaffCard(c, id) {
   let hireLine = '';
   if (s.hire_date) { const tn = tenureText(s.hire_date); hireLine = `📅 Ishga kelgan: ${s.hire_date}${tn ? ' (' + tn + ')' : ''}\n`; }
   const balSign = currentBalance >= 0 ? `SIZ qarzdorsiz` : `${s.name} qarzdor`;
+  const tgLine = s.tg_chat_id ? `📲 Telegram: ulangan ✅\n` : `📲 Telegram: ulanmagan ❌\n`;
+
+  // shu oy ish ko'rsatkichi (soat yoki kun)
+  let workLine;
+  if (cur.hasHours) {
+    workLine = `🕐 Ishlangan: ${(cur.normalHours || 0).toFixed(1)} soat` + (cur.extraHours ? ` + ${cur.extraHours.toFixed(1)} qo'shimcha` : '');
+  } else {
+    workLine = `✅ Ishlangan: ${cur.workedWd || 0} kun${cur.absCount ? ` (${cur.absCount} kelmagan)` : ''}`;
+  }
+  // tasdiq kutayotgan avanslar soni
+  const pendingAdv = (s.advances || []).filter(a => a.pending).length;
+
   const txt = `👷 *${s.name}*\n\n` +
-    hireLine +
-    `💵 Oylik: *$${s.salary_usd || 0}* · kunlik $${(cur.dailyUsd || 0).toFixed(2)}\n\n` +
+    hireLine + tgLine +
+    `💵 Oylik: *$${s.salary_usd || 0}* · soatlik $${(cur.hourlyUsd || 0).toFixed(2)}\n\n` +
     `📊 *${monthName} (shu oy):*\n` +
-    `✅ Ishlangan: ${cur.workedWd || 0} kun${cur.absCount ? ` (${cur.absCount} kelmagan)` : ''}\n` +
-    `📈 Topgani: $${(cur.earnedUsd || 0).toFixed(2)}\n` +
+    `${workLine}\n` +
+    `📈 Hisoblangan haq: $${(cur.earnedUsd || 0).toFixed(2)}\n` +
+    (cur.bonusUsd ? `🎁 Bonus: $${cur.bonusUsd.toFixed(2)}\n` : '') +
     `💸 Avans: $${(cur.advUsd || 0).toFixed(2)}\n` +
     `↪️ O'tgan oydan: ${fmtSigned(cur.carryIn || 0)}\n` +
     `━━━━━━━━━━━━\n` +
     `💵 *Joriy balans: ${fmtSigned(currentBalance)}*\n` +
-    `_(${balSign})_`;
+    `_(${balSign})_` +
+    (pendingAdv ? `\n\n⏳ ${pendingAdv} ta avans tasdiq kutmoqda` : '');
   await btn(c, txt, [
-    [{ text: '💸 Avans qo\'shish', callback_data: 'stf_adv_' + id }, { text: '❌ Kelmagan kun', callback_data: 'stf_abs_' + id }],
-    [{ text: '📅 Oylik tarix', callback_data: 'stf_hist_' + id }],
+    [{ text: '💸 Avans qo\'shish', callback_data: 'stf_adv_' + id }, { text: '🎁 Bonus', callback_data: 'stf_bonus_' + id }],
+    [{ text: '🕐 Davomat (kun-kun)', callback_data: 'stf_att_' + id }],
+    [{ text: '📅 Oylik tarix', callback_data: 'stf_hist_' + id }, { text: '🔒 Oyni yopish', callback_data: 'stf_close_' + id }],
+    [{ text: s.tg_chat_id ? '📲 Telegramni uzish' : '📲 Telegram biriktirish', callback_data: 'stf_tg_' + id }],
     [{ text: '✏️ Oylikni o\'zgartirish', callback_data: 'stf_sal_' + id }],
     [{ text: '🗑 Xodimni o\'chirish', callback_data: 'stf_del_' + id }],
     [{ text: '◀️ Ortga', callback_data: 'menu_staff' }]
@@ -810,6 +898,234 @@ async function staffAddAbsence(c, id, dateStr) {
   await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'staff absence: ' + data[idx].name);
   return data[idx].name;
 }
+
+// ═══════════ YO'QLAMA / SOAT TIZIMI ═══════════
+
+// Telegram biriktirish/uzish
+async function staffTgToggle(c, id) {
+  const { staff: s } = await findStaff(id);
+  if (!s) { await msg(c, '⚠️ Topilmadi.'); return; }
+  if (s.tg_chat_id) {
+    // uzish
+    const { data, sha, idx } = await findStaff(id);
+    delete data[idx].tg_chat_id;
+    await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'staff tg unbind: ' + s.name);
+    await msg(c, `📲 ${s.name} — Telegram uzildi.`);
+    await showStaffCard(c, id);
+    return;
+  }
+  // biriktirish: /start bosgan, hali ulanmagan foydalanuvchilarni ko'rsatamiz
+  const pend = await ghReadAll('pending-tg.json');
+  if (!pend.length) {
+    await btn(c, `📲 *Telegram biriktirish — ${s.name}*\n\nXodim botga \`/start\` yozsin, keyin shu tugma orqali tanlaysiz.\n\n_Hozircha /start bosgan yangi foydalanuvchi yo'q._`, [[{ text: '🔄 Yangilash', callback_data: 'stf_tg_' + id }], [{ text: '◀️ Ortga', callback_data: 'stf_open_' + id }]]);
+    return;
+  }
+  const rows = pend.map(p => [{ text: `${p.name || 'Foydalanuvchi'} (${p.chat_id})`, callback_data: 'stf_bindpick_' + id + '_' + p.chat_id }]);
+  rows.push([{ text: '◀️ Ortga', callback_data: 'stf_open_' + id }]);
+  await btn(c, `📲 *${s.name}* uchun Telegram tanlang:\n\n_Quyidagilar botga /start bosgan:_`, rows);
+}
+
+async function staffBindPick(c, payload) {
+  // payload = "<staffId>_<chatId>"
+  const us = payload.lastIndexOf('_');
+  const id = payload.slice(0, us), chatId = payload.slice(us + 1);
+  const { data, sha, idx } = await findStaff(id);
+  if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return; }
+  data[idx].tg_chat_id = chatId;
+  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'staff tg bind: ' + data[idx].name);
+  // pending'dan o'chiramiz
+  const pend = await ghReadAll('pending-tg.json');
+  const np = pend.filter(p => String(p.chat_id) !== String(chatId));
+  const ps = await ghRead('pending-tg.json');
+  await ghPut('pending-tg.json', JSON.stringify(np, null, 2), ps.sha, 'pending tg remove');
+  await msg(c, `✅ ${data[idx].name} Telegram'ga ulandi. Endi u botdan keldim/ketdim belgilashi mumkin.`);
+  // xodimga xush kelibsiz
+  try { await msg(chatId, `Assalomu alaykum, ${data[idx].name}!\n\nSiz MBI Mebel ish vaqti tizimiga ulandingiz. Har kuni ishga kelganda va ketganda shu yerda belgilab borasiz.`); } catch (e) {}
+  await showStaffCard(c, id);
+}
+
+// Davomat ko'rish (kun-kun, shu oy)
+async function showAttendance(c, id) {
+  const { staff: s } = await findStaff(id);
+  if (!s) { await msg(c, '⚠️ Topilmadi.'); return; }
+  const now = nowTZ();
+  const att = (s.attendance || []).filter(a => { const p = dmyParts(a.date); return p && p.y === now.getFullYear() && p.m === now.getMonth(); })
+    .sort((a, b) => { const pa = dmyParts(a.date), pb = dmyParts(b.date); return pa.d - pb.d; });
+  let txt = `🕐 *${s.name} — davomat (${UZ_MONTHS[now.getMonth()]})*\n\n`;
+  if (!att.length) txt += '_Bu oyda hali yo\'qlama yozuvi yo\'q._';
+  else {
+    att.forEach(a => {
+      const d = computeDayHours(a.in, a.out);
+      const nh = (a.normalH != null ? a.normalH : d.normalH);
+      const eh = (a.extraH != null ? a.extraH : d.extraH);
+      txt += `📅 ${a.date}: ${a.in || '—'}–${a.out || '...'} → ${nh.toFixed(1)} soat${eh ? ` (+${eh.toFixed(1)} qo'sh.)` : ''}\n`;
+    });
+  }
+  await btn(c, txt, [[{ text: '◀️ Ortga', callback_data: 'stf_open_' + id }]]);
+}
+
+// Bonus
+async function staffBonusStart(c, id) {
+  orderState[c] = { step: 'stf_bonus_amount', staffId: id };
+  await btn(c, '🎁 *Bonus summasi:*\n\n_$ bo\'lsa dollar, bo\'lmasa so\'m. Masalan: 35$_', [[{ text: '❌ Bekor', callback_data: 'stf_open_' + id }]]);
+}
+async function staffSaveBonus(c, id, amountUsd, reason) {
+  const { data, sha, idx } = await findStaff(id);
+  if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return; }
+  data[idx].bonuses = data[idx].bonuses || [];
+  data[idx].bonuses.push({ id: uid(), date: todayStr(), amount_usd: amountUsd, reason: reason || '' });
+  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'staff bonus: ' + data[idx].name);
+  await msg(c, `✅ Bonus qo'shildi: *${data[idx].name}* — $${amountUsd.toFixed(2)}`);
+  // xodimga darrov xabar
+  if (data[idx].tg_chat_id) {
+    try { await msg(data[idx].tg_chat_id, `🎁 Siz $${amountUsd.toFixed(2)} bonus oldingiz, Ibrohim tomonidan!${reason ? '\n\nSabab: ' + reason : ''}`); } catch (e) {}
+  }
+  await showStaffCard(c, id);
+}
+
+// Oyni qo'lda yopish
+async function staffCloseMonthStart(c, id) {
+  orderState[c] = { step: 'stf_close_amount', staffId: id };
+  const { staff: s } = await findStaff(id);
+  const { currentBalance } = staffPayrollHistory(s);
+  await btn(c, `🔒 *Oyni yopish — ${s.name}*\n\nJoriy balans: ${fmtSigned(currentBalance)}\n\n_Xodimga shu oy uchun jami qancha to'ladingiz? ($ yoki so'm). Yozsangiz, balans 0 bo'ladi va keyingi oyga o'tmaydi._`, [[{ text: '❌ Bekor', callback_data: 'stf_open_' + id }]]);
+}
+async function staffCloseMonth(c, id, paidUsd) {
+  const { data, sha, idx } = await findStaff(id);
+  if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return; }
+  const now = nowTZ();
+  const s = data[idx];
+  s.closed_months = s.closed_months || [];
+  if (!s.closed_months.some(cm => cm.y === now.getFullYear() && cm.m === now.getMonth()))
+    s.closed_months.push({ y: now.getFullYear(), m: now.getMonth(), paid_usd: paidUsd, date: todayStr() });
+  // to'langan summani to'lov sifatida yozamiz (avans emas — yopilgan oy uchun)
+  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'staff close month: ' + s.name);
+  await msg(c, `🔒 ${s.name} — ${UZ_MONTHS[now.getMonth()]} oyi yopildi. To'langan: $${paidUsd.toFixed(2)}. Balans 0.`);
+  await showStaffCard(c, id);
+}
+
+// ─── Xodim check-in/out (yo'qlama) ───
+// Xodim chat_id si bo'yicha xodimni topish
+async function staffByChat(chatId) {
+  const list = await readStaff();
+  return list.find(s => String(s.tg_chat_id) === String(chatId) && s.active !== false);
+}
+// bugungi attendance yozuvini olish/yaratish
+function todayAtt(s) {
+  const dt = todayStr();
+  s.attendance = s.attendance || [];
+  let rec = s.attendance.find(a => a.date === dt);
+  return { rec, dt };
+}
+async function attCheckIn(c, timeHm, isLate) {
+  const s = await staffByChat(c);
+  if (!s) { await msg(c, '⚠️ Siz tizimga ulanmagansiz.'); return; }
+  const { data, sha, idx } = await findStaff(s.id);
+  const dt = todayStr();
+  data[idx].attendance = data[idx].attendance || [];
+  let rec = data[idx].attendance.find(a => a.date === dt);
+  const inTime = timeHm || '09:00';
+  if (rec) { rec.in = inTime; } else { rec = { date: dt, in: inTime, out: null }; data[idx].attendance.push(rec); }
+  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'attendance in: ' + s.name);
+  await msg(c, `✅ Belgilandi: ishga keldingiz — ${inTime}\n\nIsh kuni yakunida «🏁 Ketdim» ni bosing.`);
+}
+async function attCheckInLate(c) {
+  orderState[c] = { step: 'att_in_time' };
+  await btn(c, '🕐 *Nechada keldingiz?*\n\n_Soatni yozing, masalan: 9:20 yoki 11:00_', [[{ text: '❌ Bekor', callback_data: 'noop' }]]);
+}
+async function attMarkAbsent(c) {
+  const s = await staffByChat(c);
+  if (!s) { await msg(c, '⚠️ Siz tizimga ulanmagansiz.'); return; }
+  const { data, sha, idx } = await findStaff(s.id);
+  data[idx].absences = data[idx].absences || [];
+  const dt = todayStr();
+  if (!data[idx].absences.some(a => a.date === dt)) data[idx].absences.push({ date: dt });
+  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'attendance absent: ' + s.name);
+  await msg(c, '✅ Belgilandi: bugun kelmaysiz. Sog' + "'" + ' bo\'ling!');
+  // adminga xabar
+  try { await msg(ADMIN, `❌ ${s.name} bugun ishga kelmaydi deb belgiladi (${dt}).`); } catch (e) {}
+}
+async function attCheckOut(c, timeHm) {
+  const s = await staffByChat(c);
+  if (!s) { await msg(c, '⚠️ Siz tizimga ulanmagansiz.'); return; }
+  const { data, sha, idx } = await findStaff(s.id);
+  const dt = todayStr();
+  data[idx].attendance = data[idx].attendance || [];
+  let rec = data[idx].attendance.find(a => a.date === dt);
+  const outTime = timeHm || '18:00';
+  if (!rec) { rec = { date: dt, in: '09:00', out: outTime }; data[idx].attendance.push(rec); }
+  else rec.out = outTime;
+  const d = computeDayHours(rec.in, rec.out);
+  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'attendance out: ' + s.name);
+  await msg(c, `🏁 Belgilandi: ish tugadi — ${outTime}\n\n📊 Bugun: ${d.normalH.toFixed(1)} soat${d.extraH ? ` (+${d.extraH.toFixed(1)} qo'shimcha)` : ''}\n\nRahmat, mehnatingiz uchun!`);
+}
+async function attStillWorking(c) {
+  await msg(c, '⏰ Yaxshi, ishni davom ettiring. Ketganингizда «🏁 Ketdim» ni bosing — o\'sha vaqт yozilади (18:00 dan keyingi vaqt qo\'shimcha bo\'ladi).');
+  const s = await staffByChat(c);
+  if (s) {
+    await btn(c, 'Ishni tugatganda bosing:', [[{ text: '🏁 Hozir ketdim', callback_data: 'att_out_now' }]]);
+  }
+}
+
+// ─── Avans ikki tomonlama tasdiq ───
+async function advConfirm(c, advId, ok) {
+  const list = await readStaff();
+  let found = null, sIdx = -1, aIdx = -1;
+  for (let i = 0; i < list.length; i++) {
+    const ai = (list[i].advances || []).findIndex(a => a.id === advId && a.pending);
+    if (ai >= 0) { found = list[i]; sIdx = i; aIdx = ai; break; }
+  }
+  if (!found) { await msg(c, '⚠️ Bu avans topilmadi yoki allaqachon hal qilingan.'); return; }
+  const { data, sha } = await ghRead('staff-log.json');
+  const adv = data[sIdx].advances[aIdx];
+  if (ok) {
+    delete adv.pending;
+    await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'advance confirmed: ' + found.name);
+    await msg(c, `✅ Avans tasdiqlandi: ${found.name} — $${adv.amount_usd.toFixed(2)}`);
+    // ikkinchi tomonga xabar
+    const other = (adv.entered_by === 'admin') ? found.tg_chat_id : ADMIN;
+    if (other) { try { await msg(other, `✅ Avans tasdiqlandi: ${found.name} — $${adv.amount_usd.toFixed(2)}`); } catch (e) {} }
+  } else {
+    data[sIdx].advances.splice(aIdx, 1);
+    await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'advance rejected: ' + found.name);
+    await msg(c, `❌ Avans rad etildi: ${found.name} — $${adv.amount_usd.toFixed(2)}`);
+    const other = (adv.entered_by === 'admin') ? found.tg_chat_id : ADMIN;
+    if (other) { try { await msg(other, `❌ Avans rad etildi: ${found.name} — $${adv.amount_usd.toFixed(2)}`); } catch (e) {} }
+  }
+}
+
+// ─── Xodim paneli (o'zi ko'radigan) ───
+async function showWorkerPanel(c, s) {
+  const today = todayStr();
+  const rec = (s.attendance || []).find(a => a.date === today);
+  let statusLine;
+  if (rec && rec.in && rec.out) statusLine = `Bugun: ${rec.in}–${rec.out} ✅`;
+  else if (rec && rec.in) statusLine = `Bugun keldingiz: ${rec.in} 🟢 (hali ketmadingiz)`;
+  else statusLine = 'Bugun hali belgilanmadi';
+  const rows = [];
+  if (!rec || !rec.in) rows.push([{ text: '✅ Keldim', callback_data: 'att_in_09' }, { text: '🕐 Kechroq', callback_data: 'att_in_late' }, { text: '❌ Kelmayman', callback_data: 'att_absent' }]);
+  else if (!rec.out) rows.push([{ text: '🏁 Ketdim', callback_data: 'att_out_18' }, { text: '⏰ Hali ishlayapman', callback_data: 'att_out_working' }]);
+  rows.push([{ text: '💵 Mening hisobim', callback_data: 'worker_me' }]);
+  await btn(c, `👷 *${s.name}* — ish vaqti\n\n${statusLine}`, rows);
+}
+async function showWorkerAccount(c, s) {
+  const { history, currentBalance } = staffPayrollHistory(s);
+  const cur = history[history.length - 1] || {};
+  const balSign = currentBalance >= 0 ? `Ibrohim sizga qarzdor` : `Siz Ibrohimga qarzdor`;
+  let workLine = cur.hasHours ? `🕐 Ishlangan: ${(cur.normalHours||0).toFixed(1)} soat${cur.extraHours?` + ${cur.extraHours.toFixed(1)} qo'shimcha`:''}` : `✅ Ishlangan: ${cur.workedWd||0} kun`;
+  let txt = `💵 *Mening hisobim — ${s.name}*\n\n` +
+    `💰 Oylik: $${s.salary_usd||0}\n` +
+    `📊 *${UZ_MONTHS[nowTZ().getMonth()]} (shu oy):*\n${workLine}\n` +
+    `📈 Hisoblangan haq: $${(cur.earnedUsd||0).toFixed(2)}\n` +
+    (cur.bonusUsd?`🎁 Bonus: $${cur.bonusUsd.toFixed(2)}\n`:'') +
+    `💸 Avans: $${(cur.advUsd||0).toFixed(2)}\n` +
+    `↪️ O'tgan oydan: ${fmtSigned(cur.carryIn||0)}\n` +
+    `━━━━━━━━━━━━\n💵 *Joriy balans: ${fmtSigned(currentBalance)}*\n_(${balSign})_`;
+  if (history.length > 1) { txt += `\n\n📅 *Oylik tarix:*\n`; history.forEach(h => { txt += `${UZ_MONTHS[h.m]}: ${fmtSigned(h.balance)}\n`; }); }
+  await btn(c, txt, [[{ text: '◀️ Ortga', callback_data: 'worker_panel' }]]);
+}
+
+
 
 // Oylikni o'zgartirish
 async function staffSalStart(c, id) {
@@ -2056,6 +2372,7 @@ async function sendDailyBriefing(chatId) {
 
 // ─── Reminder checker (runs every minute) ────────────────────
 let lastMorningBriefing = '';
+let lastEveningReminder = '';
 async function checkReminders() {
   try {
     const now = nowTZ();
@@ -2066,6 +2383,23 @@ async function checkReminders() {
     if (hhmm === '09:00' && lastMorningBriefing !== today) {
       lastMorningBriefing = today;
       await sendDailyBriefing(ADMIN);
+
+      // ── Xodimlarga kelish eslatmasi (faqat ish kuni, telegram ulangan) ──
+      try {
+        if (now.getDay() !== 0) { // yakshanba emas
+          const staff = await readStaff();
+          for (const s of staff) {
+            if (s.active === false || !s.tg_chat_id) continue;
+            const rec = (s.attendance || []).find(a => a.date === today);
+            if (rec && rec.in) continue; // allaqachon belgilangan
+            await btn(s.tg_chat_id, `🌅 Xayrli tong, ${s.name}!\n\nIshga keldingizmi?`, [[
+              { text: '✅ Keldim', callback_data: 'att_in_09' },
+              { text: '🕐 Kechroq', callback_data: 'att_in_late' },
+              { text: '❌ Kelmayman', callback_data: 'att_absent' }
+            ]]);
+          }
+        }
+      } catch (e) { console.error('staff checkin reminder:', e.message); }
       // ── Buyurtma muddati eslatmasi (3 kun yoki kam) ──
       try {
         const { data: deals } = await ghRead('deals-log.json');
@@ -2107,6 +2441,26 @@ async function checkReminders() {
           }
         } catch (e) { console.error('monthly excel:', e.message); }
       }
+    }
+
+    // ── Xodimlarga ketish eslatmasi (18:00) ──
+    if (hhmm === '18:00' && lastEveningReminder !== today) {
+      lastEveningReminder = today;
+      try {
+        if (now.getDay() !== 0) {
+          const staff = await readStaff();
+          for (const s of staff) {
+            if (s.active === false || !s.tg_chat_id) continue;
+            const rec = (s.attendance || []).find(a => a.date === today);
+            if (!rec || !rec.in) continue; // kelmagan bo'lsa eslatma yo'q
+            if (rec.out) continue; // allaqachon ketgan
+            await btn(s.tg_chat_id, `🌆 Ish vaqti tugadi, ${s.name}.\n\nHali ishlayapsizmi?`, [[
+              { text: '🏁 Ketdim', callback_data: 'att_out_18' },
+              { text: '⏰ Hali ishlayapman', callback_data: 'att_out_working' }
+            ]]);
+          }
+        }
+      } catch (e) { console.error('staff checkout reminder:', e.message); }
     }
 
     // Meeting reminders
@@ -2205,9 +2559,27 @@ async function handle(upd) {
       if (cd.startsWith('stf_open_')) { await showStaffCard(c, cd.slice(9)); return; }
       if (cd.startsWith('stf_adv_')) { await staffAdvStart(c, cd.slice(8)); return; }
       if (cd.startsWith('stf_hist_')) { await showStaffHistory(c, cd.slice(9)); return; }
-      if (cd.startsWith('stf_abs_')) { const name = await staffAddAbsence(c, cd.slice(8)); if (name) { await msg(c, `❌ ${name} — bugun kelmagan deb belgilandi.`); await showStaffCard(c, cd.slice(8)); } return; }
+      if (cd.startsWith('stf_att_')) { await showAttendance(c, cd.slice(8)); return; }
+      if (cd.startsWith('stf_bonus_')) { await staffBonusStart(c, cd.slice(10)); return; }
+      if (cd.startsWith('stf_close_')) { await staffCloseMonthStart(c, cd.slice(10)); return; }
+      if (cd.startsWith('stf_tg_')) { await staffTgToggle(c, cd.slice(7)); return; }
+      if (cd.startsWith('stf_bindpick_')) { await staffBindPick(c, cd.slice(13)); return; }
       if (cd.startsWith('stf_sal_')) { await staffSalStart(c, cd.slice(8)); return; }
       if (cd.startsWith('stf_del_')) { await staffDelete(c, cd.slice(8)); return; }
+      // xodim check-in/out (yo'qlama javoblari)
+      if (cd.startsWith('att_in_')) { await attCheckIn(c, cd === 'att_in_09' ? '09:00' : null, false); return; }
+      if (cd === 'att_in_late') { await attCheckInLate(c); return; }
+      if (cd === 'att_absent') { await attMarkAbsent(c); return; }
+      if (cd === 'att_out_18') { await attCheckOut(c, '18:00'); return; }
+      if (cd.startsWith('att_out_') && cd !== 'att_out_working' && cd !== 'att_out_now') { await attCheckOut(c, null); return; }
+      if (cd === 'worker_me') { const s = await staffByChat(c); if (s) await showWorkerAccount(c, s); return; }
+      if (cd === 'worker_panel') { const s = await staffByChat(c); if (s) await showWorkerPanel(c, s); return; }
+      if (cd === 'att_out_now') { const now = nowTZ(); await attCheckOut(c, ('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2)); return; }
+      if (cd === 'bonus_noreason') { const st = orderState[c]; if (st && st.step === 'stf_bonus_reason') { const id = st.staffId, amt = st.bonusUsd; delete orderState[c]; await staffSaveBonus(c, id, amt, ''); } return; }
+      if (cd === 'noop') { return; }
+      // avans tasdiqlash
+      if (cd.startsWith('advok_')) { await advConfirm(c, cd.slice(6), true); return; }
+      if (cd.startsWith('advno_')) { await advConfirm(c, cd.slice(6), false); return; }
       if (cd.startsWith('cl_back_')) { await showOrdersList(c, cd.slice(8)); return; }
       if (cd.startsWith('ord_open_')) { await showClientMenu(c, cd.slice(9)); return; }
       if (cd.startsWith('cl_report_')) { await showClientReport(c, cd.slice(10)); return; }
@@ -2315,10 +2687,54 @@ async function handle(upd) {
         const hasUsd = /\$|dollar|dol\b/i.test(t);
         const num = parseFloat(t.replace(/[^\d.,]/g, '').replace(/,/g, '.'));
         if (isNaN(num) || num <= 0) { await msg(c, '❗️ Summani raqam bilan yozing. Masalan: 100$ yoki 500000 (so\'m)'); return; }
-        const usd = hasUsd ? num : num / USD_UZS; // $ bo'lsa dollar, bo'lmasa so'mni dollarga
+        const usd = Math.round((hasUsd ? num : num / USD_UZS) * 100) / 100;
         const id = st.staffId; delete orderState[c];
-        const name = await staffAddAdvance(c, id, Math.round(usd * 100) / 100);
-        if (name) { await msg(c, `✅ Avans qo'shildi: *${name}* — $${(Math.round(usd * 100) / 100).toFixed(2)}${hasUsd ? '' : ' (' + fmtUzs(num) + ' so\'m)'}`); await showStaffCard(c, id); }
+        // admin kiritdi → pending, xodimga tasdiq uchun
+        const { data, sha, idx } = await findStaff(id);
+        if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return; }
+        const s2 = data[idx];
+        const advId = uid();
+        s2.advances = s2.advances || [];
+        const needConfirm = !!s2.tg_chat_id; // telegram ulangan bo'lsa tasdiq kerak
+        s2.advances.push({ id: advId, date: todayStr(), amount_usd: usd, entered_by: 'admin', pending: needConfirm });
+        await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'advance by admin: ' + s2.name);
+        if (needConfirm) {
+          await msg(c, `⏳ Avans yuborildi: *${s2.name}* — $${usd.toFixed(2)}\nXodim tasdiqlashini kutmoqda.`);
+          await btn(s2.tg_chat_id, `💸 *Avans tasdiqlash*\n\nIbrohim sizga $${usd.toFixed(2)} avans berdi deb belgiladi. To'g'rimi?`, [[{ text: '✅ Ha, oldim', callback_data: 'advok_' + advId }, { text: '❌ Yo\'q', callback_data: 'advno_' + advId }]]);
+        } else {
+          await msg(c, `✅ Avans qo'shildi: *${s2.name}* — $${usd.toFixed(2)}${hasUsd ? '' : ' (' + fmtUzs(num) + ' so\'m)'}\n\n_(Telegram ulanmagani uchun tasdiqsiz yozildi.)_`);
+        }
+        await showStaffCard(c, id);
+        return;
+      }
+      else if (st.step === 'stf_bonus_amount') {
+        const hasUsd = /\$|dollar|dol\b/i.test(t);
+        const num = parseFloat(t.replace(/[^\d.,]/g, '').replace(/,/g, '.'));
+        if (isNaN(num) || num <= 0) { await msg(c, '❗️ Summani raqam bilan yozing. Masalan: 35$'); return; }
+        st.bonusUsd = Math.round((hasUsd ? num : num / USD_UZS) * 100) / 100;
+        st.step = 'stf_bonus_reason';
+        await btn(c, `🎁 *Bonus sababi?*\n\n_Qisqa yozing (masalan: yaxshi ishlagani uchun) yoki «Sababsiz»._`, [[{ text: 'Sababsiz', callback_data: 'bonus_noreason' }], [{ text: '❌ Bekor', callback_data: 'stf_open_' + st.staffId }]]);
+        return;
+      }
+      else if (st.step === 'stf_bonus_reason') {
+        const id = st.staffId, amt = st.bonusUsd; delete orderState[c];
+        await staffSaveBonus(c, id, amt, t.trim());
+        return;
+      }
+      else if (st.step === 'stf_close_amount') {
+        const hasUsd = /\$|dollar|dol\b/i.test(t);
+        const num = parseFloat(t.replace(/[^\d.,]/g, '').replace(/,/g, '.'));
+        if (isNaN(num) || num < 0) { await msg(c, '❗️ Summani raqam bilan yozing.'); return; }
+        const usd = Math.round((hasUsd ? num : num / USD_UZS) * 100) / 100;
+        const id = st.staffId; delete orderState[c];
+        await staffCloseMonth(c, id, usd);
+        return;
+      }
+      else if (st.step === 'att_in_time') {
+        const hm = hmToMin(t);
+        if (hm == null) { await msg(c, '❗️ Soatni HH:MM ko\'rinishida yozing. Masalan: 9:20'); return; }
+        delete orderState[c];
+        await attCheckIn(c, minToHm(hm), true);
         return;
       }
       else if (st.step === 'stf_sal_amount') {
@@ -2395,6 +2811,19 @@ async function handle(upd) {
           ] } });
         return;
       }
+      // Xodimmi? (telegram ulangan)
+      const staffMember = await staffByChat(c);
+      if (staffMember) { await showWorkerPanel(c, staffMember); return; }
+      // Aks holda: pending-tg ga qo'shamiz (admin keyin biriktirishi uchun) + til tanlash
+      try {
+        const ps = await ghRead('pending-tg.json');
+        const pend = Array.isArray(ps.data) ? ps.data : [];
+        if (!pend.some(p => String(p.chat_id) === String(c))) {
+          const uname = upd.message.from ? [upd.message.from.first_name, upd.message.from.last_name].filter(Boolean).join(' ') : '';
+          pend.push({ chat_id: c, name: uname || '', ts: Date.now() });
+          await ghPut('pending-tg.json', JSON.stringify(pend, null, 2), ps.sha, 'pending tg add');
+        }
+      } catch (e) {}
       await btn(c, 'MEBEL BY IBROHIM\n\nTilni tanlang:', [[{text:"O'zbek tili",callback_data:'til_uz'}],[{text:'Russkiy yazyk',callback_data:'til_ru'}]]);
       return;
     }
