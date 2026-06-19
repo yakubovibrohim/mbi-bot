@@ -38,5 +38,13 @@
     "rate": 12000,
     "type": "personal",
     "ts": "2026-06-19T04:42:51.178Z"
+  },
+  {
+    "date": "19.06.2026",
+    "note": "Su uchun shaxsiy ehtiyoj",
+    "amount_uzs": 30000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-19T12:39:34.396Z"
   }
 ]
