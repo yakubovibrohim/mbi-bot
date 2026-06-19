@@ -108,5 +108,41 @@
     "finished_date": "15.06.2026",
     "cancelled_date": null,
     "cancel_reason": ""
+  },
+  {
+    "id": "mqkgiyvfpuwz",
+    "date": "19.06.2026",
+    "ts": "2026-06-19T04:57:13.227Z",
+    "client": "Nodira opa olmazor",
+    "phone": "+998909940728",
+    "types": [
+      "Oshxona mebeli",
+      "O’g’il bolalar mebeli",
+      "Qiz bolalar mebeli",
+      "Gorderob mebeli",
+      "Prixojka mebeli"
+    ],
+    "contract_sum_usd": 13132,
+    "contract_sum_uzs": 157584000,
+    "rate": 12000,
+    "address": "Olmazor tuman Turin university yoni",
+    "deadline_days": 40,
+    "deadline_date": "05.08.2026",
+    "note": "Farhod tog’am bergan zakazlari",
+    "stage": "Yangi buyurtma",
+    "status": "active",
+    "payments": [
+      {
+        "id": "mqkgiyvfe5d9",
+        "date": "19.06.2026",
+        "amount_uzs": 60000000,
+        "rate": 12000,
+        "note": "Avans"
+      }
+    ],
+    "expenses": [],
+    "finished_date": null,
+    "cancelled_date": null,
+    "cancel_reason": ""
   }
 ]
