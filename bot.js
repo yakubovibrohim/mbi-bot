@@ -789,7 +789,7 @@ async function staffSaveNew(c, name, salaryUsd, hireDate) {
 // Avans (tugma orqali)
 async function staffAdvStart(c, id) {
   orderState[c] = { step: 'stf_adv_amount', staffId: id };
-  await btn(c, '💸 *Avans summasi:*\n\n_Dollarda yoki $ bilan. Masalan: 100_', [[{ text: '❌ Bekor', callback_data: 'stf_open_' + id }]]);
+  await btn(c, '💸 *Avans summasi:*\n\n_$ bo\'lsa dollar, bo\'lmasa so\'m. Masalan: 100$ yoki 500000 (so\'m)_', [[{ text: '❌ Bekor', callback_data: 'stf_open_' + id }]]);
 }
 async function staffAddAdvance(c, id, amountUsd, dateStr) {
   const { data, sha, idx } = await findStaff(id);
@@ -2312,11 +2312,13 @@ async function handle(upd) {
         await staffSaveNew(c, name, sal, t.trim()); return;
       }
       else if (st.step === 'stf_adv_amount') {
-        const n = parseFloat(t.replace(/[^\d.]/g, ''));
-        if (isNaN(n) || n <= 0) { await msg(c, '❗️ Summani raqam bilan yozing. Masalan: 100'); return; }
+        const hasUsd = /\$|dollar|dol\b/i.test(t);
+        const num = parseFloat(t.replace(/[^\d.,]/g, '').replace(/,/g, '.'));
+        if (isNaN(num) || num <= 0) { await msg(c, '❗️ Summani raqam bilan yozing. Masalan: 100$ yoki 500000 (so\'m)'); return; }
+        const usd = hasUsd ? num : num / USD_UZS; // $ bo'lsa dollar, bo'lmasa so'mni dollarga
         const id = st.staffId; delete orderState[c];
-        const name = await staffAddAdvance(c, id, n);
-        if (name) { await msg(c, `✅ Avans qo'shildi: *${name}* — $${n}`); await showStaffCard(c, id); }
+        const name = await staffAddAdvance(c, id, Math.round(usd * 100) / 100);
+        if (name) { await msg(c, `✅ Avans qo'shildi: *${name}* — $${(Math.round(usd * 100) / 100).toFixed(2)}${hasUsd ? '' : ' (' + fmtUzs(num) + ' so\'m)'}`); await showStaffCard(c, id); }
         return;
       }
       else if (st.step === 'stf_sal_amount') {
