@@ -14,5 +14,13 @@
     "rate": 12000,
     "type": "personal",
     "ts": "2026-06-19T02:54:12.731Z"
+  },
+  {
+    "date": "19.06.2026",
+    "note": "Moshina zaryadka + ujin",
+    "amount_uzs": 206000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-19T02:57:02.703Z"
   }
 ]
