@@ -1110,7 +1110,7 @@ async function showWorkerPanel(c, s) {
   const rows = [];
   if (!rec || !rec.in) rows.push([{ text: '✅ Keldim', callback_data: 'att_in_09' }, { text: '🕐 Kechroq', callback_data: 'att_in_late' }, { text: '❌ Kelmayman', callback_data: 'att_absent' }]);
   else if (!rec.out) rows.push([{ text: '🏁 Ketdim', callback_data: 'att_out_18' }, { text: '⏰ Hali ishlayapman', callback_data: 'att_out_working' }]);
-  rows.push([{ text: '💵 Mening hisobim', callback_data: 'worker_me' }]);
+  rows.push([{ text: '💵 Mening hisobim', callback_data: 'worker_me' }, { text: '💸 Avans oldim', callback_data: 'worker_adv' }]);
   await btn(c, `👷 *${s.name}* — ish vaqti\n\n${statusLine}`, rows);
 }
 async function showWorkerAccount(c, s) {
@@ -2580,6 +2580,7 @@ async function handle(upd) {
       if (cd.startsWith('att_out_') && cd !== 'att_out_working' && cd !== 'att_out_now') { await attCheckOut(c, null); return; }
       if (cd === 'worker_me') { const s = await staffByChat(c); if (s) await showWorkerAccount(c, s); return; }
       if (cd === 'worker_panel') { const s = await staffByChat(c); if (s) await showWorkerPanel(c, s); return; }
+      if (cd === 'worker_adv') { const s = await staffByChat(c); if (s) { orderState[c] = { step: 'worker_adv_amount', staffId: s.id }; await btn(c, '💸 *Qancha avans oldingiz?*\n\n_$ bo\'lsa dollar, bo\'lmasa so\'m. Masalan: 100$ yoki 500000_', [[{ text: '❌ Bekor', callback_data: 'worker_panel' }]]); } return; }
       if (cd === 'att_out_now') { const now = nowTZ(); await attCheckOut(c, ('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2)); return; }
       if (cd === 'bonus_noreason') { const st = orderState[c]; if (st && st.step === 'stf_bonus_reason') { const id = st.staffId, amt = st.bonusUsd; delete orderState[c]; await staffSaveBonus(c, id, amt, ''); } return; }
       if (cd === 'noop') { return; }
@@ -2741,6 +2742,24 @@ async function handle(upd) {
         if (hm == null) { await msg(c, '❗️ Soatni HH:MM ko\'rinishida yozing. Masalan: 9:20'); return; }
         delete orderState[c];
         await attCheckIn(c, minToHm(hm), true);
+        return;
+      }
+      else if (st.step === 'worker_adv_amount') {
+        const hasUsd = /\$|dollar|dol\b/i.test(t);
+        const num = parseFloat(t.replace(/[^\d.,]/g, '').replace(/,/g, '.'));
+        if (isNaN(num) || num <= 0) { await msg(c, '❗️ Summani raqam bilan yozing. Masalan: 100$ yoki 500000'); return; }
+        const usd = Math.round((hasUsd ? num : num / USD_UZS) * 100) / 100;
+        const id = st.staffId; delete orderState[c];
+        const { data, sha, idx } = await findStaff(id);
+        if (idx < 0) { await msg(c, '⚠️ Xatolik.'); return; }
+        const s2 = data[idx];
+        const advId = uid();
+        s2.advances = s2.advances || [];
+        s2.advances.push({ id: advId, date: todayStr(), amount_usd: usd, entered_by: 'worker', pending: true });
+        await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'advance by worker: ' + s2.name);
+        await msg(c, `⏳ Avans yuborildi: $${usd.toFixed(2)}\nIbrohim tasdiqlashini kuting.`);
+        // adminga tasdiq uchun
+        await btn(ADMIN, `💸 *Avans tasdiqlash*\n\n${s2.name} $${usd.toFixed(2)} avans oldim deb belgiladi. To'g'rimi?`, [[{ text: '✅ Ha, berdim', callback_data: 'advok_' + advId }, { text: '❌ Yo\'q', callback_data: 'advno_' + advId }]]);
         return;
       }
       else if (st.step === 'stf_sal_amount') {
