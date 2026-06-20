@@ -1024,7 +1024,7 @@ async function attCheckIn(c, timeHm, isLate) {
   const dt = todayStr();
   data[idx].attendance = data[idx].attendance || [];
   let rec = data[idx].attendance.find(a => a.date === dt);
-  const inTime = timeHm || '09:00';
+  const inTime = timeHm || nowHHMM();
   if (rec) { rec.in = inTime; } else { rec = { date: dt, in: inTime, out: null }; data[idx].attendance.push(rec); }
   await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'attendance in: ' + s.name);
   await msg(c, `✅ Belgilandi: ishga keldingiz — ${inTime}\n\nIsh kuni yakunida «🏁 Ketdim» ni bosing.`);
@@ -1055,7 +1055,7 @@ async function attCheckOut(c, timeHm) {
   const dt = todayStr();
   data[idx].attendance = data[idx].attendance || [];
   let rec = data[idx].attendance.find(a => a.date === dt);
-  const outTime = timeHm || '18:00';
+  const outTime = timeHm || nowHHMM();
   if (!rec) { rec = { date: dt, in: '09:00', out: outTime }; data[idx].attendance.push(rec); }
   else rec.out = outTime;
   const d = computeDayHours(rec.in, rec.out);
@@ -2572,10 +2572,11 @@ async function handle(upd) {
       if (cd.startsWith('stf_sal_')) { await staffSalStart(c, cd.slice(8)); return; }
       if (cd.startsWith('stf_del_')) { await staffDelete(c, cd.slice(8)); return; }
       // xodim check-in/out (yo'qlama javoblari)
-      if (cd.startsWith('att_in_')) { await attCheckIn(c, cd === 'att_in_09' ? '09:00' : null, false); return; }
+      if (cd === 'att_in_09') { const cur = nowHHMM(); const useTime = (hmToMin(cur) <= WORK_START) ? '09:00' : cur; await attCheckIn(c, useTime, false); return; }
+      if (cd.startsWith('att_in_') && cd !== 'att_in_late') { await attCheckIn(c, null, false); return; }
       if (cd === 'att_in_late') { await attCheckInLate(c); return; }
       if (cd === 'att_absent') { await attMarkAbsent(c); return; }
-      if (cd === 'att_out_18') { await attCheckOut(c, '18:00'); return; }
+      if (cd === 'att_out_18') { await attCheckOut(c, nowHHMM()); return; }
       if (cd.startsWith('att_out_') && cd !== 'att_out_working' && cd !== 'att_out_now') { await attCheckOut(c, null); return; }
       if (cd === 'worker_me') { const s = await staffByChat(c); if (s) await showWorkerAccount(c, s); return; }
       if (cd === 'worker_panel') { const s = await staffByChat(c); if (s) await showWorkerPanel(c, s); return; }
