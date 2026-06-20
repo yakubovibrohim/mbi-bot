@@ -46,5 +46,13 @@
     "rate": 12000,
     "type": "personal",
     "ts": "2026-06-19T12:39:34.396Z"
+  },
+  {
+    "date": "20.06.2026",
+    "note": "Xotinga",
+    "amount_uzs": 400000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-20T10:24:55.488Z"
   }
 ]
