@@ -1028,6 +1028,8 @@ async function attCheckIn(c, timeHm, isLate) {
   if (rec) { rec.in = inTime; } else { rec = { date: dt, in: inTime, out: null }; data[idx].attendance.push(rec); }
   await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'attendance in: ' + s.name);
   await msg(c, `✅ Belgilandi: ishga keldingiz — ${inTime}\n\nIsh kuni yakunida «🏁 Ketdim» ni bosing.`);
+  // guruhga xabar (Botir botidan)
+  if (officeChat) { try { await agentMsg(officeChat, 'botir', `🟢 ${s.name} ishga keldi — ${inTime}`); } catch (e) {} }
 }
 async function attCheckInLate(c) {
   orderState[c] = { step: 'att_in_time' };
@@ -1042,8 +1044,9 @@ async function attMarkAbsent(c) {
   if (!data[idx].absences.some(a => a.date === dt)) data[idx].absences.push({ date: dt });
   await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'attendance absent: ' + s.name);
   await msg(c, '✅ Belgilandi: bugun kelmaysiz. Sog' + "'" + ' bo\'ling!');
-  // adminga xabar
-  try { await msg(ADMIN, `❌ ${s.name} bugun ishga kelmaydi deb belgiladi (${dt}).`); } catch (e) {}
+  // guruhga xabar (Botir botidan), bo'lmasa adminga
+  if (officeChat) { try { await agentMsg(officeChat, 'botir', `⚪️ ${s.name} bugun ishga kelmaydi`); } catch (e) {} }
+  else { try { await msg(ADMIN, `❌ ${s.name} bugun ishga kelmaydi deb belgiladi (${dt}).`); } catch (e) {} }
 }
 async function attCheckOut(c, timeHm) {
   const s = await staffByChat(c);
@@ -1058,6 +1061,8 @@ async function attCheckOut(c, timeHm) {
   const d = computeDayHours(rec.in, rec.out);
   await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'attendance out: ' + s.name);
   await msg(c, `🏁 Belgilandi: ish tugadi — ${outTime}\n\n📊 Bugun: ${d.normalH.toFixed(1)} soat${d.extraH ? ` (+${d.extraH.toFixed(1)} qo'shimcha)` : ''}\n\nRahmat, mehnatingiz uchun!`);
+  // guruhga xabar (Botir botidan)
+  if (officeChat) { try { await agentMsg(officeChat, 'botir', `🔴 ${s.name} ishdan ketdi — ${outTime}`); } catch (e) {} }
 }
 async function attStillWorking(c) {
   await msg(c, '⏰ Yaxshi, ishni davom ettiring. Ketganингizда «🏁 Ketdim» ni bosing — o\'sha vaqт yozilади (18:00 dan keyingi vaqt qo\'shimcha bo\'ladi).');
