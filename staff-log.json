@@ -232,8 +232,7 @@
         "id": "mqme1a65wurt",
         "date": "20.06.2026",
         "amount_usd": 400,
-        "entered_by": "admin",
-        "pending": true
+        "entered_by": "admin"
       }
     ],
     "attendance": [
