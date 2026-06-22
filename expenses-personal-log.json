@@ -62,5 +62,13 @@
     "rate": 12000,
     "type": "personal",
     "ts": "2026-06-20T12:15:40.302Z"
+  },
+  {
+    "date": "22.06.2026",
+    "note": "Paynet xadica",
+    "amount_uzs": 70000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-22T05:50:15.679Z"
   }
 ]
