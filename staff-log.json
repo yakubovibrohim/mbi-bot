@@ -55,8 +55,7 @@
         "id": "mqp760cwzf1m",
         "date": "22.06.2026",
         "amount_usd": 100,
-        "entered_by": "admin",
-        "pending": true
+        "entered_by": "admin"
       }
     ],
     "attendance": [
