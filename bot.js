@@ -2925,23 +2925,48 @@ const igDebounce = {}; // userId -> { timer, parts: [] }
 const IG_DEBOUNCE_MS = 15000; // 15 seconds
 
 // ─── Instagram COMMENTS auto-reply ───────────────────────────
-// Keywords that signal a sales/info intent in a comment.
+// Keywords that signal an intent worth replying to (sales OR praise).
 // To add more later, just append to this array (lowercase).
 const IG_COMMENT_KEYWORDS = [
-  '+', 'narx', 'narxi', 'narxlari', 'qancha', 'qancha turadi', 'qanca',
-  'price', 'cena', 'сколько', 'цена', 'почем', 'pochom',
-  'kerak', 'kere', 'buyurtma', 'zakaz', 'заказ', 'заказать',
-  'metr', 'metri', 'metiri', 'информация', 'malumot', 'ma\'lumot',
-  'info', 'kuxnya', 'кухня', 'oshxona', 'shkaf', 'шкаф', 'mebel', 'мебель'
+  // narx / sotib olish niyati
+  '+', 'narx', 'narxi', 'narxlari', 'narhi', 'narhini', 'qancha', 'qanca', 'qiymat',
+  'price', 'cena', 'сколько', 'цена', 'почем', 'почём', 'pochom', 'нечпул', 'неч пул',
+  'nech pul', 'nechi pul', 'nech', 'nechi', 'nichi pul', 'pul boldi', 'pulga',
+  'kerak', 'kere', 'kerey', 'buyurtma', 'zakaz', 'заказ', 'заказать',
+  'metr', 'metri', 'metiri', 'размер', 'razmer', 'информация', 'malumot', "ma'lumot",
+  'info', 'kuxnya', 'кухня', 'oshxona', 'shkaf', 'шкаф', 'mebel', 'мебель', 'mebil',
+  'komplekt', 'комплект', 'krovat', 'кровати', 'shourum', 'шоурум', 'showroom',
+  'manzil', 'где', 'qayer', 'qayerda', 'viloyat', 'yetkaz', 'junat', 'jonat',
+  // maqtov / qiziqish (iliq javob beriladi)
+  'zor', "zo'r", 'зур', 'зўр', 'ajoyib', 'alo', "a'lo", 'super', 'супер',
+  'chiroyli', "go'zal", 'havas', 'xavas', 'хавас', 'yoqdi', 'yokdi', 'йокди',
+  'mashaalloh', 'masha alloh', 'maa sha alloh', 'chiqibti', 'chiqibdi'
 ];
 // Remember comment IDs we already answered (avoid double-replies)
 const igRepliedComments = new Set();
-// Public replies under the comment (short, rotated to avoid looking robotic)
-const IG_COMMENT_PUBLIC_REPLIES = [
-  'Rahmat qiziqishingiz uchun! 😊 Batafsil ma\'lumotni shaxsiy xabaringizga (DM) yozdik.',
-  'Albatta! Hammasini DM\'ga batafsil yozdik, qarab chiqing 😊',
-  'Yozdik DM\'ga — narx va detallar bo\'yicha shu yerda gaplashamiz 👍'
-];
+
+// AI writes the public under-comment reply. Reads the comment, picks the right tone.
+const IG_COMMENT_SYSTEM = `Sen MBI Mebel Instagram menejerisan. Postlarga kelgan kommentga QISQA ochiq javob yozasan (komment ostiga, hamma ko'radi).
+
+FAQAT O'zbek yoki Rus tilida, mijoz qaysi tilda yozsa shu tilda.
+
+QOIDALAR:
+- JUDA QISQA: 1 jumla, ko'pi bilan 12 so'z.
+- NARXNI HECH QACHON kommentda aytma! Narx, o'lcham, hisob - bularni "shaxsiyga (DM) yozdik" deb yo'naltir.
+- Tabiiy, iliq, har safar boshqacha yoz - shablon takrorlama.
+- 1 ta emoji ishlat (smiley yoki barmoq), ko'p emas.
+
+KOMMENT TURIGA QARAB:
+1. Narx/o'lcham/buyurtma so'rasa ("narxi qancha", "nech pul", "metri", "kerak", "+"):
+   -> "Shaxsiyingizga (DM) batafsil yozdik, qarang" turida. Narx aytma.
+2. Manzil/viloyat/yetkazib berish so'rasa:
+   -> "DM'ga yozdik, viloyatlarga ham qilamiz, batafsil aytamiz" turida.
+3. Maqtov ("zo'r chiqibti", "havas qildim", "menga ham kerak", "ajoyib"):
+   -> Avval samimiy rahmat, keyin nozik taklif: "Rahmat! Sizga ham qilib beramiz, DM'ga yozing" turida.
+4. Faqat emoji yoki juda umumiy, lekin maqtov ohangida:
+   -> Qisqa iliq rahmat: "Rahmat!" turida.
+
+Faqat javob matnini yoz, boshqa hech narsa qo'shma.`;
 
 async function aiReply(text, userId) {
   // Init history for this user
@@ -3166,8 +3191,14 @@ async function handleIGComment(c) {
     igRepliedComments.delete(first);
   }
 
-  // 1) Public reply under the comment (social proof + redirect to DM)
-  const pub = IG_COMMENT_PUBLIC_REPLIES[Math.floor(Math.random() * IG_COMMENT_PUBLIC_REPLIES.length)];
+  // 1) Public reply under the comment (AI reads comment, picks right tone)
+  let pub;
+  try {
+    pub = await aiCommentReply(text);
+  } catch(e) {
+    console.log('aiCommentReply xato, fallback:', e.message);
+  }
+  if (!pub) pub = 'Shaxsiyingizga (DM) batafsil yozdik, qarang 😊';
   await igReplyToComment(commentId, pub);
 
   // 2) Private DM with full sales conversation (seed via aiReply)
@@ -3192,6 +3223,37 @@ async function handleIGComment(c) {
 }
 
 // Post a public reply under a specific comment
+// Generate a short public comment reply via GROQ
+function aiCommentReply(commentText) {
+  return new Promise((res) => {
+    const body = JSON.stringify({
+      model: 'meta-llama/llama-4-scout-17b-16e-instruct',
+      max_tokens: 60,
+      messages: [
+        { role: 'system', content: IG_COMMENT_SYSTEM },
+        { role: 'user', content: commentText }
+      ]
+    });
+    const req = https.request({
+      hostname: 'api.groq.com',
+      path: '/openai/v1/chat/completions',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + GROQ_KEY }
+    }, r => {
+      let d = ''; r.on('data', c => d += c);
+      r.on('end', () => {
+        try {
+          let t = JSON.parse(d).choices?.[0]?.message?.content || '';
+          t = t.trim().replace(/^["']|["']$/g, '');
+          res(t || null);
+        } catch(e) { res(null); }
+      });
+    });
+    req.on('error', () => res(null));
+    req.write(body); req.end();
+  });
+}
+
 function igReplyToComment(commentId, message) {
   return new Promise((res) => {
     const body = 'message=' + encodeURIComponent(message) + '&access_token=' + encodeURIComponent(IG_TOKEN);
