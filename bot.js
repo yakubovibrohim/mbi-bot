@@ -2920,6 +2920,10 @@ const igConvHistory = {};
 const igManualMode = {};
 const IG_PAUSE_HOURS = 24; // hours to pause after manual reply
 
+// Debounce: collect split messages from a user, reply once after they stop typing
+const igDebounce = {}; // userId -> { timer, parts: [] }
+const IG_DEBOUNCE_MS = 15000; // 15 seconds
+
 async function aiReply(text, userId) {
   // Init history for this user
   if (!igConvHistory[userId]) igConvHistory[userId] = [];
@@ -2928,49 +2932,86 @@ async function aiReply(text, userId) {
   // Add user message to history
   history.push({ role: 'user', content: text });
   
-  // Keep only last 6 messages
-  while (history.length > 6) history.shift();
+  // Keep only last 30 messages
+  while (history.length > 30) history.shift();
   
-  const SYSTEM = `Sen MBI Mebel Instagram menejerisan. Ism: Kamol.
+  const SYSTEM = `Sen MBI Mebel'ning Instagram menejerisan. Isming Kamol. Mebel ishini puxta biladigan, ishonchli, tajribali sotuv mutaxassisisan — sovuq robot emas, tirik odam. Maqsading: mijozni iliq suhbat orqali ishontirib, qo'ng'iroqqa olib chiqish.
 
-FAQAT O'ZBEK yoki RUS tilida yoz.
+FAQAT O'zbek yoki Rus tilida yoz. Mijoz qaysi tilda yozsa — shu tilda javob ber.
 
-🔴 ASOSIY QOIDA: Suhbat tarixini o'qi. Mijoz aytgan narsani QAYTA SO'RAMA.
+═══ QANDAY GAPIRASAN (eng muhim) ═══
+- Ohang: ishbilarmon, ishonchli, lekin jonli va iliq. Tirik odam borligi sezilsin.
+- Avval mijozning gapiga qisqa insoniy reaksiya ber, keyin ishga o't ("Yaxshi tanlov", "To'g'ri yo'ldasiz", "Tushunaman").
+- Quruq, shablon, buyruq ohangidan qoch. "Anketani to'ldiring" deb buyruq berma — taklif qil va sababini ayt.
+- Emoji KAM ishlat — ba'zan bittada bitta, faqat iliqlik uchun. Ko'p emoji yozma.
+- Hech qachon o'zingni bot/AI deb aytma. Sen Kamolsan.
 
-IDEAL SUXBAT — 3 QADAM:
-1. Qaysi xona? (agar aytmagan bo'lsa)
-2. Necha metr? (agar aytmagan bo'lsa)
-3. Narx ayt + ANKETA yuborish
+═══ JAVOB FORMATI ═══
+- QISQA yoz. Har javob 2-3 ta kichik bo'lakdan oshmasin, har bo'lak 1 jumla.
+- Bo'laklarni "|||" belgisi bilan ajrat. Tizim ularni alohida xabar qilib yuboradi.
+  Masalan: "Zo'r, 3 metrli oshxona qulay chiqadi.|||Bunaqasi bizda 390$dan boshlanadi.|||Aniq narx uchun bir-ikki narsani aniqlasak bo'ldi."
+- Agar javob bitta qisqa jumla bo'lsa, "|||" shart emas.
 
-ANKETA QACHON YUBORISH:
-Mijoz xona va metrni aytgandan keyin — DARHOL anketa linkini yubor.
-O'zbek tilida: https://yakubovibrohim.github.io/MBI_anketa/mebel_anketa.html
-Rus tilida: https://yakubovibrohim.github.io/MBI_anketa/mebel_anketa_ru.html
+═══ ASOSIY QOIDA ═══
+🔴 Suhbat tarixini diqqat bilan o'qi. Mijoz ALLAQACHON javob bergan savolni HECH QACHON qayta so'rama. Xona va o'lcham ma'lum bo'lsa — to'g'ridan-to'g'ri narx/qiymat va keyingi qadamga o't.
 
-MISOL — TO'G'RI OQIM:
-Mijoz: "kuxnya kerak" → "Necha metr taxminan?"
-Mijoz: "3 metr" → "3 metrli oshxona 390$dan! Anketani to'ldiring, kerak narsalarni bilaylik: https://yakubovibrohim.github.io/MBI_anketa/mebel_anketa.html"
-Mijoz agar rus tilida yozsa → rus anketasini yubor
+═══ SOTUV MANTIG'I (bosqichma-bosqich) ═══
 
-MBI MEBEL:
+1-BOSQICH — EHTIYOJNI OCH (SPIN):
+Narxni darrov tashlama. Avval mijozni tushun. Tabiiy savollar:
+- "Yangi uyga ko'chyapsizmi, yoki eskisini yangilamoqchimisiz?"
+- "Hozirgi mebelingizda nima ko'proq bezovta qilyapti?"
+- "Qanaqa uslub yoqadi — zamonaviy, klassik?"
+Mijoz o'zi ehtiyojini aytsa — uni yechimga bog'la.
+
+2-BOSQICH — QIYMAT, KEYIN NARX:
+Narx so'rasa, quruq raqam tashlama. Avval nima olishini ko'rsat:
+- "Bizda korpus LMDF, fasad esa AKRIL — suvga, namga, tirnalishga chidamli, yillab rangi o'chmaydi."
+- "Furnitura BLUM (Avstriya) — yumshoq yopiladi, umrbod ishlaydi. Bu arzon sex mebelidan tubdan farq qiladi."
+KEYIN narx: Oshxona 390-600$/metr, Shkaf 300-500$/metr. "Aniq narx o'lcham va dizaynga bog'liq."
+
+3-BOSQICH — ISHONCH (ijtimoiy dalil + avtoritet):
+- "Biz 200+ oilaga mebel o'rnatganmiz, Instagram profilimizda ishlarimizni ko'rishingiz mumkin."
+- "8 yillik tajriba, har bir ishga kafolat beramiz."
+- "Kelib namunalarni qo'lda ushlab ko'rsangiz, sifatni o'zingiz his qilasiz."
+
+4-BOSQICH — E'TIROZNI YOP ("qimmat" deganda):
+Narxni himoya qilma — avval rozilik bildir, keyin qiymatga bur (empatiya):
+- "Narx muhim ekanini tushunaman."
+- "Lekin bu 15-20 yillik mebel — yiliga hisoblasangiz juda arzonga tushadi. Arzonini 3-4 yilda almashtirasiz."
+- Kalibrlangan savol: "Taxminan qanaqa byudjet o'ylab turibsiz? Shunga qarab eng mos variantni tanlaymiz."
+TO'LOV YENGILLIGI (ishonch beradi): "To'lov ham qulay — 70% oldindan, qolgan 30% ish to'liq bitib, siz qabul qilganingizdan keyin. Ya'ni hammasini oldindan bermaysiz."
+
+5-BOSQICH — TAKLIFNI KUCHAYTIR (Hormozi):
+"Anketani to'ldirsangiz, sizga BEPUL aniq loyiha, o'lchov va narx hisoblab beramiz — hech narsaga majbur emassiz."
+Anketa O'zbekcha: https://yakubovibrohim.github.io/MBI_anketa/mebel_anketa.html
+Anketa Ruscha: https://yakubovibrohim.github.io/MBI_anketa/mebel_anketa_ru.html
+
+6-BOSQICH — ASOSIY MAQSAD: QO'NG'IROQQA OLIB CHIQ:
+Mijoz qiziqsa, raqamini ol va qo'ng'iroqqa o'tkaz:
+- "Sizga qulay bo'lsa, telefon raqamingizni qoldiring — menejerimiz qo'ng'iroq qilib hammasini batafsil tushuntiradi va aniq narx aytadi."
+- Yoki: "To'g'ridan-to'g'ri gaplashsak osonroq bo'ladi — bizga qo'ng'iroq qiling: +998 91 135 44 66"
+
+═══ MBI MA'LUMOT ═══
 - Material: LMDF korpus + AKRIL fasad (faqat shu)
 - Furnitura: BLUM yoki GTV
-- Narx: Oshxona 390-600$/metr. Shkaf 300-500$/metr.
+- Narx: Oshxona 390-600$/metr, Shkaf 300-500$/metr
+- To'lov: 70% oldindan / 30% ish bitgach
 - Manzil: Yakkasaroy, Qushbegi 6 (Tekstilniy 6-blok)
 - Tel: +998 91 135 44 66
 
-QOIDALAR:
-- Qisqa yoz: 1-2 jumla
-- Anketa linkini faqat bir marta yubor (takrorlanmaydi)
-- Mijoz "qimmat" desa → "Aniq narx o'lchamga qarab. Anketani to'ldirsangiz aniqlaymiz"
-- Mijoz "adres" so'rasa → "Yakkasaroy, Qushbegi 6 (Tekstilniy 6-blok)"`;
+═══ QO'SHIMCHA QOIDALAR ═══
+- Anketa linkini faqat bir marta yubor (takrorlama).
+- Soxta "navbat bor / o'rin tugayapti" kabi bosim ishlatma — halol qiymat bilan ishontir.
+- Mijoz "adres" so'rasa → "Yakkasaroy, Qushbegi 6 (Tekstilniy 6-blok). Kelib namunalarni jonli ko'rsangiz bo'ladi."
+- Har javob suhbatni oldinga sursin. "O'ylab ko'raman" deganni ham ushlab qol: "Albatta, o'ylang.|||Faqat raqamingizni qoldiring, menejerimiz bepul loyiha qilib bersin — keyin qaror qilasiz."`;
 
   return new Promise((res) => {
     // Use GROQ API - fast, good Uzbek support
     const messages = [{ role: 'system', content: SYSTEM }, ...history];
     const body = JSON.stringify({
       model: 'meta-llama/llama-4-scout-17b-16e-instruct',
-      max_tokens: 200,
+      max_tokens: 280,
       messages: messages
     });
     const req = https.request({
@@ -2986,7 +3027,7 @@ QOIDALAR:
         try {
           const reply = JSON.parse(d).choices?.[0]?.message?.content || `Kechirasiz, +998 91 135 44 66 ga qo'ng'iroq qiling!`;
           igConvHistory[userId].push({ role: 'assistant', content: reply });
-          while (igConvHistory[userId].length > 6) igConvHistory[userId].shift();
+          while (igConvHistory[userId].length > 30) igConvHistory[userId].shift();
           res(reply);
         }
         catch(e) {
@@ -3041,42 +3082,76 @@ async function handleIG(body) {
 
         console.log('IG DM from:', from, 'text:', text);
 
-        // Check if bot is paused for this user
+        // If bot is paused for this user (manual mode), skip entirely
         if (igManualMode[from]) {
           const hoursPassed = (Date.now() - igManualMode[from]) / (1000 * 3600);
           if (hoursPassed < IG_PAUSE_HOURS) {
-            console.log('Bot paused for user:', from, '- skipping auto-reply');
-            continue; // Bot paused — don't auto-reply
+            console.log('Bot paused for user:', from, '- skipping');
+            continue;
           } else {
-            // Pause expired — re-enable bot
             delete igManualMode[from];
           }
         }
 
-        // Auto-reply
-        let reply;
-        try {
-          reply = await aiReply(text, from);
-        } catch(aiErr) {
-          console.error('aiReply xato:', aiErr.message);
-          await msg(ADMIN, `⚠️ *IG bot xatolik*\nMijoz: ${from}\nXabar: "${text.slice(0,50)}"\nXato: ${aiErr.message}`);
-          reply = `Salom! Mebel haqida savol uchun: +998 91 135 44 66`;
-        }
-
-        try {
-          const sendResult = await igSend(from, reply);
-          if (sendResult.error) {
-            await msg(ADMIN, `⚠️ *IG javob yuborilmadi*\nMijoz: ${from}\nXato: ${sendResult.error.message || JSON.stringify(sendResult.error).slice(0,100)}`);
-          }
-        } catch(sendErr) {
-          console.error('igSend xato:', sendErr.message);
-          await msg(ADMIN, `⚠️ *IG bot ishlamadi*\nMijoz: ${from}\nXato: ${sendErr.message}`);
-        }
+        // Debounce: client may send message in several pieces.
+        // Collect parts, wait IG_DEBOUNCE_MS after the last one, then reply once.
+        if (!igDebounce[from]) igDebounce[from] = { timer: null, parts: [] };
+        igDebounce[from].parts.push(text);
+        if (igDebounce[from].timer) clearTimeout(igDebounce[from].timer);
+        igDebounce[from].timer = setTimeout(() => { igFlush(from); }, IG_DEBOUNCE_MS);
+        console.log('IG debounce: buffered for', from, '| parts:', igDebounce[from].parts.length);
       }
     }
   } catch(e) { 
     console.error('IG error:', e);
     await msg(ADMIN, `❌ handleIG xato: ${e.message}`);
+  }
+}
+
+// After debounce window: combine buffered parts, get AI reply, send split into pieces
+async function igFlush(from) {
+  const buf = igDebounce[from];
+  if (!buf) return;
+  delete igDebounce[from];
+  const combined = buf.parts.join('\n').trim();
+  if (!combined) return;
+
+  // Re-check pause (client may have been picked up manually during the wait)
+  if (igManualMode[from]) {
+    const hoursPassed = (Date.now() - igManualMode[from]) / (1000 * 3600);
+    if (hoursPassed < IG_PAUSE_HOURS) {
+      console.log('Bot paused for user:', from, '- skipping flush');
+      return;
+    } else {
+      delete igManualMode[from];
+    }
+  }
+
+  // Get AI reply
+  let reply;
+  try {
+    reply = await aiReply(combined, from);
+  } catch(aiErr) {
+    console.error('aiReply xato:', aiErr.message);
+    await msg(ADMIN, `⚠️ *IG bot xatolik*\nMijoz: ${from}\nXabar: "${combined.slice(0,50)}"\nXato: ${aiErr.message}`);
+    reply = `Salom! Mebel haqida savol uchun: +998 91 135 44 66`;
+  }
+
+  // Split reply into separate messages on "|||" and send with a small pause
+  const pieces = reply.split('|||').map(p => p.trim()).filter(Boolean);
+  for (let i = 0; i < pieces.length; i++) {
+    try {
+      const sendResult = await igSend(from, pieces[i]);
+      if (sendResult.error) {
+        await msg(ADMIN, `⚠️ *IG javob yuborilmadi*\nMijoz: ${from}\nXato: ${sendResult.error.message || JSON.stringify(sendResult.error).slice(0,100)}`);
+        break;
+      }
+    } catch(sendErr) {
+      console.error('igSend xato:', sendErr.message);
+      await msg(ADMIN, `⚠️ *IG bot ishlamadi*\nMijoz: ${from}\nXato: ${sendErr.message}`);
+      break;
+    }
+    if (i < pieces.length - 1) await new Promise(r => setTimeout(r, 1500));
   }
 }
 
