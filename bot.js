@@ -2924,6 +2924,25 @@ const IG_PAUSE_HOURS = 24; // hours to pause after manual reply
 const igDebounce = {}; // userId -> { timer, parts: [] }
 const IG_DEBOUNCE_MS = 15000; // 15 seconds
 
+// ─── Instagram COMMENTS auto-reply ───────────────────────────
+// Keywords that signal a sales/info intent in a comment.
+// To add more later, just append to this array (lowercase).
+const IG_COMMENT_KEYWORDS = [
+  '+', 'narx', 'narxi', 'narxlari', 'qancha', 'qancha turadi', 'qanca',
+  'price', 'cena', 'сколько', 'цена', 'почем', 'pochom',
+  'kerak', 'kere', 'buyurtma', 'zakaz', 'заказ', 'заказать',
+  'metr', 'metri', 'metiri', 'информация', 'malumot', 'ma\'lumot',
+  'info', 'kuxnya', 'кухня', 'oshxona', 'shkaf', 'шкаф', 'mebel', 'мебель'
+];
+// Remember comment IDs we already answered (avoid double-replies)
+const igRepliedComments = new Set();
+// Public replies under the comment (short, rotated to avoid looking robotic)
+const IG_COMMENT_PUBLIC_REPLIES = [
+  'Rahmat qiziqishingiz uchun! 😊 Batafsil ma\'lumotni shaxsiy xabaringizga (DM) yozdik.',
+  'Albatta! Hammasini DM\'ga batafsil yozdik, qarab chiqing 😊',
+  'Yozdik DM\'ga — narx va detallar bo\'yicha shu yerda gaplashamiz 👍'
+];
+
 async function aiReply(text, userId) {
   // Init history for this user
   if (!igConvHistory[userId]) igConvHistory[userId] = [];
@@ -3101,11 +3120,93 @@ async function handleIG(body) {
         igDebounce[from].timer = setTimeout(() => { igFlush(from); }, IG_DEBOUNCE_MS);
         console.log('IG debounce: buffered for', from, '| parts:', igDebounce[from].parts.length);
       }
+
+      // ── Comments: webhook delivers these in entry.changes ──
+      for (const ch of (entry.changes || [])) {
+        if (ch.field !== 'comments') continue;
+        try { await handleIGComment(ch.value); }
+        catch(cErr) {
+          console.error('IG comment xato:', cErr.message);
+          await msg(ADMIN, `⚠️ *IG komment xatolik*\nXato: ${cErr.message}`);
+        }
+      }
     }
   } catch(e) { 
     console.error('IG error:', e);
     await msg(ADMIN, `❌ handleIG xato: ${e.message}`);
   }
+}
+
+// Handle a single incoming Instagram comment
+async function handleIGComment(c) {
+  if (!c) return;
+  const commentId = c.id;
+  const text = (c.text || '').trim();
+  const commenterId = c.from?.id;
+  const commenterName = c.from?.username || '';
+
+  // Ignore our own comments and empties
+  if (!commentId || !text) return;
+  if (commenterId && commenterId === IG_USER_ID) return;
+  if (igRepliedComments.has(commentId)) return; // already handled
+
+  // Keyword filter — only react to sales/info intent
+  const low = text.toLowerCase();
+  const hit = IG_COMMENT_KEYWORDS.some(k => low.includes(k));
+  if (!hit) {
+    console.log('IG comment: no keyword, skipping:', text.slice(0, 40));
+    return;
+  }
+
+  console.log('IG comment MATCH from', commenterName, '| text:', text);
+  igRepliedComments.add(commentId);
+  // Keep the set from growing forever
+  if (igRepliedComments.size > 2000) {
+    const first = igRepliedComments.values().next().value;
+    igRepliedComments.delete(first);
+  }
+
+  // 1) Public reply under the comment (social proof + redirect to DM)
+  const pub = IG_COMMENT_PUBLIC_REPLIES[Math.floor(Math.random() * IG_COMMENT_PUBLIC_REPLIES.length)];
+  await igReplyToComment(commentId, pub);
+
+  // 2) Private DM with full sales conversation (seed via aiReply)
+  if (commenterId) {
+    try {
+      const seed = `[Mijoz "${text}" deb postga komment yozdi]`;
+      const reply = await aiReply(seed, commenterId);
+      const pieces = reply.split('|||').map(p => p.trim()).filter(Boolean);
+      for (let i = 0; i < pieces.length; i++) {
+        const r = await igSend(commenterId, pieces[i]);
+        if (r.error) {
+          // Common: cannot DM a user who never opened a conversation (24h / policy)
+          console.log('IG comment DM error:', JSON.stringify(r.error).slice(0, 150));
+          break;
+        }
+        if (i < pieces.length - 1) await new Promise(r => setTimeout(r, 1500));
+      }
+    } catch(dmErr) {
+      console.error('IG comment DM xato:', dmErr.message);
+    }
+  }
+}
+
+// Post a public reply under a specific comment
+function igReplyToComment(commentId, message) {
+  return new Promise((res) => {
+    const body = 'message=' + encodeURIComponent(message) + '&access_token=' + encodeURIComponent(IG_TOKEN);
+    const req = https.request({
+      hostname: 'graph.facebook.com',
+      path: '/v21.0/' + commentId + '/replies',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': Buffer.byteLength(body) }
+    }, r => {
+      let d = ''; r.on('data', c => d += c);
+      r.on('end', () => { console.log('igReplyToComment resp:', d.slice(0, 200)); try { res(JSON.parse(d)); } catch(e) { res({}); } });
+    });
+    req.on('error', (e) => { console.log('igReplyToComment err:', e.message); res({}); });
+    req.write(body); req.end();
+  });
 }
 
 // After debounce window: combine buffered parts, get AI reply, send split into pieces
