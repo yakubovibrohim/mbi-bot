@@ -86,5 +86,13 @@
     "rate": 12000,
     "type": "personal",
     "ts": "2026-06-23T04:06:00.166Z"
+  },
+  {
+    "date": "23.06.2026",
+    "note": "Sartorosh",
+    "amount_uzs": 100000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-23T04:08:26.764Z"
   }
 ]
