@@ -1056,6 +1056,10 @@ async function attCheckOut(c, timeHm) {
   data[idx].attendance = data[idx].attendance || [];
   let rec = data[idx].attendance.find(a => a.date === dt);
   const outTime = timeHm || nowHHMM();
+  if (rec && rec.in && hmToMin(outTime) <= hmToMin(rec.in)) {
+    await msg(c, `⚠️ Ketish vaqti (${outTime}) kelish vaqtidan (${rec.in}) keyin bo'lishi kerak.\\n\\nAgar xato bo'lsa, admin bilan bog'laning.`);
+    return;
+  }
   if (!rec) { rec = { date: dt, in: '09:00', out: outTime }; data[idx].attendance.push(rec); }
   else rec.out = outTime;
   const d = computeDayHours(rec.in, rec.out);
@@ -1111,7 +1115,23 @@ async function showWorkerPanel(c, s) {
   if (!rec || !rec.in) rows.push([{ text: '✅ Keldim', callback_data: 'att_in_09' }, { text: '🕐 Kechroq', callback_data: 'att_in_late' }, { text: '❌ Kelmayman', callback_data: 'att_absent' }]);
   else if (!rec.out) rows.push([{ text: '🏁 Ketdim', callback_data: 'att_out_18' }, { text: '⏰ Hali ishlayapman', callback_data: 'att_out_working' }]);
   rows.push([{ text: '💵 Mening hisobim', callback_data: 'worker_me' }, { text: '💸 Avans oldim', callback_data: 'worker_adv' }]);
+  rows.push([{ text: '⏱ Davomat (qo\'lda)', callback_data: 'att_manual' }]);
   await btn(c, `👷 *${s.name}* — ish vaqti\n\n${statusLine}`, rows);
+}
+// ─── Qo'lda davomat (istalgan paytda kel/ket belgilash) ───
+async function showAttManual(c, s) {
+  const today = todayStr();
+  const rec = (s.attendance || []).find(a => a.date === today);
+  let statusLine;
+  if (rec && rec.in && rec.out) statusLine = `Bugun: keldi ${rec.in} — ketdi ${rec.out} ✅`;
+  else if (rec && rec.in) statusLine = `Bugun keldingiz: ${rec.in} 🟢 (hali ketmadingiz)`;
+  else statusLine = 'Bugun hali hech narsa belgilanmagan';
+  const rows = [[
+    { text: '✅ Hozir keldim', callback_data: 'att_mark_in' },
+    { text: '🏁 Hozir ketdim', callback_data: 'att_mark_out' }
+  ]];
+  rows.push([{ text: '◀️ Ortga', callback_data: 'worker_panel' }]);
+  await btn(c, `⏱ *Davomat — qo'lda belgilash*\n\n${statusLine}\n\n_Istalgan paytda kelgan yoki ketganingizni shu yerdan belgilang. Hozirgi vaqt yoziladi._`, rows);
 }
 async function showWorkerAccount(c, s) {
   const { history, currentBalance } = staffPayrollHistory(s);
@@ -2582,6 +2602,9 @@ async function handle(upd) {
       if (cd === 'worker_panel') { const s = await staffByChat(c); if (s) await showWorkerPanel(c, s); return; }
       if (cd === 'worker_adv') { const s = await staffByChat(c); if (s) { orderState[c] = { step: 'worker_adv_amount', staffId: s.id }; await btn(c, '💸 *Qancha avans oldingiz?*\n\n_$ bo\'lsa dollar, bo\'lmasa so\'m. Masalan: 100$ yoki 500000_', [[{ text: '❌ Bekor', callback_data: 'worker_panel' }]]); } return; }
       if (cd === 'att_out_now') { const now = nowTZ(); await attCheckOut(c, ('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2)); return; }
+      if (cd === 'att_manual') { const s = await staffByChat(c); if (s) await showAttManual(c, s); return; }
+      if (cd === 'att_mark_in') { await attCheckIn(c, nowHHMM(), false); const s = await staffByChat(c); if (s) await showAttManual(c, s); return; }
+      if (cd === 'att_mark_out') { await attCheckOut(c, nowHHMM()); const s = await staffByChat(c); if (s) await showAttManual(c, s); return; }
       if (cd === 'bonus_noreason') { const st = orderState[c]; if (st && st.step === 'stf_bonus_reason') { const id = st.staffId, amt = st.bonusUsd; delete orderState[c]; await staffSaveBonus(c, id, amt, ''); } return; }
       if (cd === 'noop') { return; }
       // avans tasdiqlash
