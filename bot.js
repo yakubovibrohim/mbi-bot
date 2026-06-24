@@ -1404,26 +1404,39 @@ async function readCashbox() {
 async function computeCashbox() {
   const cfg = await readCashbox();
   const opening = cfg.opening_uzs || 0;
+  // Boshlang'ich sana: undan OLDINGI harakatlar allaqachon boshlang'ich qoldiqqa
+  // kirgan, shuning uchun ular kassa hisobida QAYTA hisoblanmaydi.
+  const op = dmyParts(cfg.opening_date);
+  const opNum = op ? (op.y * 10000 + op.m * 100 + op.d) : 0;
+  const afterOpen = (dateStr) => {
+    if (!opNum) return true; // sana yo'q bo'lsa hammasi hisoblanadi
+    const p = dmyParts(dateStr);
+    if (!p) return false;
+    return (p.y * 10000 + p.m * 100 + p.d) >= opNum;
+  };
   const { data: deals } = await ghRead('deals-log.json');
   let income = 0, dealExp = 0;
   for (const o of deals) {
-    income += (o.payments || []).reduce((s, p) => s + (p.amount_uzs || 0), 0);
-    dealExp += (o.expenses || []).reduce((s, e) => s + (e.total_uzs || 0), 0);
+    income += (o.payments || []).filter(p => afterOpen(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0);
+    dealExp += (o.expenses || []).filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.total_uzs || 0), 0);
   }
-  const officeExp = (await ghReadAll('office-expenses-log.json')).reduce((s, e) => s + (e.amount_uzs || 0), 0);
+  const officeExp = (await ghReadAll('office-expenses-log.json')).filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
   // shaxsiy
-  const pers = (await ghReadAll('expenses-personal-log.json')).reduce((s, e) => {
+  const pers = (await ghReadAll('expenses-personal-log.json')).filter(e => afterOpen(e.date)).reduce((s, e) => {
     const p = e.parsed || {};
     let a = e.amount_uzs || 0;
     if (!a && p.amount) a = (String(p.currency).toUpperCase() === 'USD') ? p.amount * USD_UZS : p.amount;
     else if (!a && e.amount) a = (String(e.currency).toUpperCase() === 'USD') ? e.amount * USD_UZS : e.amount;
     return s + a;
   }, 0);
-  // xodim avanslari (chiqim)
+  // xodim avanslari (chiqim) — faqat boshlang'ich sanadan keyingilari
   const staff = await ghReadAll('staff-log.json');
-  const staffAdv = staff.reduce((s, w) => s + (w.advances || []).reduce((a, x) => a + (x.amount_usd || 0) * USD_UZS, 0), 0);
-  const balance = opening + income - dealExp - officeExp - pers - staffAdv;
-  return { opening, income, dealExp, officeExp, pers, staffAdv, balance, hasOpening: cfg.opening_uzs != null };
+  const staffAdv = staff.reduce((s, w) => s + (w.advances || []).filter(x => afterOpen(x.date)).reduce((a, x) => a + (x.amount_usd || 0) * USD_UZS, 0), 0);
+  // qarz to'lovlari (men ustalarga to'laganim) — kassadan chiqadi
+  const debtsAll = await ghReadAll('debts-log.json');
+  const debtPaid = debtsAll.filter(d => d.dir === 'out').reduce((s, d) => s + (afterOpen(d.pay_date || d.date) ? (d.paid_uzs || 0) : 0), 0);
+  const balance = opening + income - dealExp - officeExp - pers - staffAdv - debtPaid;
+  return { opening, income, dealExp, officeExp, pers, staffAdv, debtPaid, balance, hasOpening: cfg.opening_uzs != null };
 }
 async function showCashbox(c) {
   const k = await computeCashbox();
@@ -1440,6 +1453,7 @@ async function showCashbox(c) {
     `📤 Buyurtma xarajat: −${fmtUzs(k.dealExp)}\n` +
     `🏭 Ishxona: −${fmtUzs(k.officeExp)}\n` +
     `👷 Xodim avans: −${fmtUzs(k.staffAdv)}\n` +
+    `🔴 Qarz to'lovi: −${fmtUzs(k.debtPaid)}\n` +
     `👛 Shaxsiy: −${fmtUzs(k.pers)}\n` +
     `━━━━━━━━━━━━\n` +
     `💵 *Hozirgi qoldiq: ${fmtUzs(k.balance)} so'm*`, [
@@ -1491,7 +1505,39 @@ async function gatherMonth(y, m) {
   for (const w of staff) for (const a of (w.advances || [])) if (inMon(a.date)) staffAdv += (a.amount_usd || 0) * USD_UZS;
   const bizProfit = income - dealExp - officeExp - staffAdv;
   const realRemain = bizProfit - pers;
-  return { monthDeals, income, dealExp, officeRows, officeExp, persRows, pers, staff, staffAdv, allExpenses, allPayments, bizProfit, realRemain };
+  // ── Kassa hisobi (boshlang'ich sanadan keyingi harakatlar) ──
+  const cfg = await readCashbox();
+  const opening = cfg.opening_uzs || 0;
+  const op = dmyParts(cfg.opening_date);
+  const opNum = op ? (op.y * 10000 + op.m * 100 + op.d) : 0;
+  const afterOpen = (dateStr) => {
+    if (!opNum) return true;
+    const p = dmyParts(dateStr);
+    if (!p) return false;
+    return (p.y * 10000 + p.m * 100 + p.d) >= opNum;
+  };
+  let cashIn = 0, cashDealExp = 0, cashOffice = 0, cashPers = 0, cashAdv = 0;
+  for (const o of deals) {
+    cashIn += (o.payments || []).filter(p => afterOpen(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0);
+    cashDealExp += (o.expenses || []).filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.total_uzs || 0), 0);
+  }
+  cashOffice = officeRows.filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
+  cashPers = persRows.filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.amtUzs || 0), 0);
+  for (const w of staff) for (const a of (w.advances || [])) if (inMon(a.date) && afterOpen(a.date)) cashAdv += (a.amount_usd || 0) * USD_UZS;
+  const debtsAll = await ghReadAll('debts-log.json');
+  const debtOut = debtsAll.filter(d => d.dir === 'out');
+  const cashDebtPaid = debtOut.reduce((s, d) => s + (afterOpen(d.pay_date || d.date) ? (d.paid_uzs || 0) : 0), 0);
+  // mijoz qarzlari (menga qarzdor)
+  const clientDebts = [];
+  for (const o of deals) {
+    if (o.status === 'active') {
+      const paid = (o.payments || []).reduce((s, p) => s + (p.amount_uzs || 0), 0);
+      const debt = (o.contract_sum_uzs || 0) - paid;
+      if (debt > 0) clientDebts.push({ client: o.client, contract: o.contract_sum_uzs || 0, paid, debt });
+    }
+  }
+  const cashBalance = opening + cashIn - cashDealExp - cashOffice - cashPers - cashAdv - cashDebtPaid;
+  return { monthDeals, income, dealExp, officeRows, officeExp, persRows, pers, staff, staffAdv, allExpenses, allPayments, bizProfit, realRemain, opening, openingDate: cfg.opening_date, debtOut, cashIn, cashDealExp, cashOffice, cashPers, cashAdv, cashDebtPaid, cashBalance, clientDebts };
 }
 
 async function showSummary(c) {
@@ -1530,54 +1576,111 @@ function sendDocBuffer(chatId, buffer, filename, caption) {
   });
 }
 
-// Oylik Excel yaratadi (buffer qaytaradi)
+// Oylik Excel yaratadi (buffer qaytaradi) — BITTA VARAQ, to'liq hisobot
 async function buildMonthExcel(y, m) {
   const XLSX = require('xlsx');
   const g = await gatherMonth(y, m);
+  const monthName = UZ_MONTHS[m];
+  const inMon = (dateStr) => { const p = dmyParts(dateStr); return p && p.y === y && p.m === m; };
+
+  const rows = [];
+  const merges = [];
+  const fmtCells = {};
+  const R = () => rows.length;
+  const push = (arr) => rows.push(arr);
+  const moneyAt = (ri, ci) => { fmtCells[XLSX.utils.encode_cell({ r: ri, c: ci })] = 1; };
+  const sectionRow = (title) => { const i = R(); push([title, '', '', '', '']); merges.push({ s: { r: i, c: 0 }, e: { r: i, c: 4 } }); };
+
+  // Sarlavha
+  let i = R(); push([`MBI MEBEL — ${monthName} ${y} TO'LIQ HISOBOT`, '', '', '', '']);
+  merges.push({ s: { r: i, c: 0 }, e: { r: i, c: 4 } });
+  i = R(); push(['Kurs: 1$ = 12,000 so\'m', '', '', '', '']);
+  merges.push({ s: { r: i, c: 0 }, e: { r: i, c: 4 } });
+  push(['', '', '', '', '']);
+
+  // 1. KIRIM
+  sectionRow('💰 KIRIM — kim qancha to\'ladi');
+  push(['Sana', 'Mijoz', 'Izoh', 'Summa (so\'m)', '']);
+  g.allPayments.forEach(p => { const ri = R(); push([p.date, p.client, p.note || 'To\'lov', p.amount_uzs || 0, '']); moneyAt(ri, 3); });
+  { const ri = R(); push(['JAMI KIRIM:', '', '', g.income, '']); moneyAt(ri, 3); }
+  push(['', '', '', '', '']);
+
+  // 2. ISHXONA RASXODLARI
+  sectionRow('🏭 ISHXONA RASXODLARI');
+  push(['Sana', 'Nima uchun', '', 'Summa (so\'m)', '']);
+  g.officeRows.forEach(e => { const ri = R(); push([e.date, e.name || '', '', e.amount_uzs || 0, '']); moneyAt(ri, 3); });
+  { const ri = R(); push(['JAMI ISHXONA:', '', '', g.officeExp, '']); moneyAt(ri, 3); }
+  push(['', '', '', '', '']);
+
+  // 3. ISHCHILARGA AVANS / OYLIK
+  sectionRow('👷 ISHCHILARGA BERILGAN AVANS / OYLIK');
+  push(['Sana', 'Ishchi', 'Izoh', '$', 'so\'m']);
+  const advByWorker = {};
+  g.staff.filter(s => s.active !== false).forEach(s => {
+    (s.advances || []).filter(a => inMon(a.date)).forEach(a => {
+      const usd = a.amount_usd || 0, uzs = Math.round(usd * USD_UZS);
+      const ri = R(); push([a.date, s.name, a.note || 'Avans/oylik', usd, uzs]); moneyAt(ri, 4);
+      advByWorker[s.name] = (advByWorker[s.name] || 0) + uzs;
+    });
+  });
+  { const ri = R(); push(['JAMI AVANS/OYLIK:', '', '', '', g.staffAdv]); moneyAt(ri, 4); }
+  push(['', '', '', '', '']);
+  // Ishchilar jami
+  sectionRow('   Ishchilar bo\'yicha jami');
+  push(['Ishchi', 'Oylik ($)', 'Ishlagan kun', 'Olgan avans (so\'m)', '']);
+  g.staff.filter(s => s.active !== false).forEach(s => {
+    const att = (s.attendance || []).filter(a => inMon(a.date)).length;
+    const ri = R(); push([s.name, s.salary_usd || 0, att, advByWorker[s.name] || 0, '']); moneyAt(ri, 3);
+  });
+  push(['', '', '', '', '']);
+
+  // 4. QARZLARGA TO'LANGAN
+  sectionRow('🔴 QARZLARGA TO\'LANGAN (men qarzdorman)');
+  push(['Kimga', 'Umumiy qarz', 'To\'langan', 'Qolgan', 'Izoh']);
+  let debtRemainTotal = 0, debtPaidTotal = 0;
+  g.debtOut.forEach(d => {
+    const paid = d.paid_uzs || 0, rem = (d.amount_uzs || 0) - paid; debtRemainTotal += rem; debtPaidTotal += paid;
+    const ri = R(); push([d.name, d.amount_uzs || 0, paid, rem, d.note || '']); moneyAt(ri, 1); moneyAt(ri, 2); moneyAt(ri, 3);
+  });
+  { const ri = R(); push(['JAMI TO\'LANGAN:', '', '', debtPaidTotal, '']); moneyAt(ri, 3); }
+  { const ri = R(); push(['JAMI QOLGAN QARZ:', '', '', debtRemainTotal, '']); moneyAt(ri, 3); }
+  push(['', '', '', '', '']);
+
+  // 5. SHAXSIY HARAJATLAR
+  sectionRow('👛 SHAXSIY HARAJATLAR');
+  push(['Sana', 'Nima uchun', '', 'Summa (so\'m)', '']);
+  g.persRows.forEach(e => { const ri = R(); push([e.date, e.note || '', '', e.amtUzs || 0, '']); moneyAt(ri, 3); });
+  { const ri = R(); push(['JAMI SHAXSIY:', '', '', g.pers, '']); moneyAt(ri, 3); }
+  push(['', '', '', '', '']);
+
+  // 6. MENGA QARZDOR
+  sectionRow('🟢 MENGA QARZDOR (mijozlar)');
+  push(['Mijoz', 'Shartnoma', 'To\'langan', 'Qarzi (so\'m)', '']);
+  let clientDebtTotal = 0;
+  g.clientDebts.forEach(d => { clientDebtTotal += d.debt; const ri = R(); push([d.client, d.contract, d.paid, d.debt, '']); moneyAt(ri, 1); moneyAt(ri, 2); moneyAt(ri, 3); });
+  { const ri = R(); push(['JAMI MENGA QARZ:', '', '', clientDebtTotal, '']); moneyAt(ri, 3); }
+  push(['', '', '', '', '']);
+
+  // 7. KASSA — CHO'NTAGIMDAGI REAL PUL
+  sectionRow('💵 KASSA — CHO\'NTAGIMDAGI REAL PUL');
+  const cashLine = (label, val) => { const ri = R(); push([label, '', '', val, '']); merges.push({ s: { r: ri, c: 0 }, e: { r: ri, c: 2 } }); moneyAt(ri, 3); };
+  cashLine(`🏦 Boshlang'ich qoldiq (${g.openingDate || ''})`, g.opening);
+  cashLine('(+) Kirim (to\'lovlar)', g.cashIn);
+  cashLine('(−) Buyurtma xarajati', -g.cashDealExp);
+  cashLine('(−) Ishxona rasxodi', -g.cashOffice);
+  cashLine('(−) Ishchilar avansi/oyligi', -g.cashAdv);
+  cashLine('(−) Shaxsiy harajat', -g.cashPers);
+  cashLine('(−) Qarzlarga to\'langan', -g.cashDebtPaid);
+  { const ri = R(); push(['💰 CHO\'NTAGIMDAGI REAL PUL', '', '', g.cashBalance, '']); merges.push({ s: { r: ri, c: 0 }, e: { r: ri, c: 2 } }); moneyAt(ri, 3); }
+  { const ri = R(); push(['   ($ hisobida)', '', '', Math.round(g.cashBalance / USD_UZS * 10) / 10 + ' $', '']); merges.push({ s: { r: ri, c: 0 }, e: { r: ri, c: 2 } }); }
+
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  ws['!merges'] = merges;
+  ws['!cols'] = [{ wch: 16 }, { wch: 30 }, { wch: 32 }, { wch: 18 }, { wch: 16 }];
+  for (const addr in fmtCells) { if (ws[addr] && typeof ws[addr].v === 'number') ws[addr].z = '#,##0'; }
+
   const wb = XLSX.utils.book_new();
-
-  // 1. Buyurtmalar
-  const ordersRows = g.monthDeals.map(o => ({
-    'Sana': o.date, 'Mijoz': o.client, 'Telefon': o.phone || '',
-    'Turi': (o.types || []).join(', '),
-    'Shartnoma (so\'m)': o.contract_sum_uzs || 0,
-    'To\'langan (so\'m)': (o.payments || []).reduce((s, p) => s + (p.amount_uzs || 0), 0),
-    'Qarz (so\'m)': dealDebtUzs(o),
-    'Xarajat (so\'m)': dealExpUzs(o),
-    'Holat': o.stage || '', 'Status': o.status || 'active'
-  }));
-  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(ordersRows.length ? ordersRows : [{ 'Ma\'lumot': 'yo\'q' }]), 'Buyurtmalar');
-
-  // 2. Xarajatlar (buyurtma + ishxona)
-  const expRows = [];
-  g.allExpenses.forEach(e => {
-    const prods = (e.products || []).map(p => `${p.name} ×${p.qty}`).join(', ');
-    expRows.push({ 'Sana': e.date, 'Tur': 'Buyurtma: ' + e.client, 'Tafsilot': prods, 'Summa (so\'m)': e.total_uzs || 0 });
-  });
-  g.officeRows.forEach(e => expRows.push({ 'Sana': e.date, 'Tur': 'Ishxona', 'Tafsilot': e.name, 'Summa (so\'m)': e.amount_uzs || 0 }));
-  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(expRows.length ? expRows : [{ 'Ma\'lumot': 'yo\'q' }]), 'Xarajatlar');
-
-  // 3. Xodimlar
-  const staffRows = g.staff.filter(s => s.active !== false).map(s => {
-    const advThis = (s.advances || []).filter(a => { const p = dmyParts(a.date); return p && p.y === y && p.m === m; }).reduce((sum, a) => sum + (a.amount_usd || 0), 0);
-    const absThis = (s.absences || []).filter(a => { const p = dmyParts(a.date); return p && p.y === y && p.m === m; }).length;
-    return { 'Ism': s.name, 'Oylik ($)': s.salary_usd || 0, 'Kelmagan kun': absThis, 'Olgan avans ($)': advThis };
-  });
-  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(staffRows.length ? staffRows : [{ 'Ma\'lumot': 'yo\'q' }]), 'Xodimlar');
-
-  // 4. Yakun
-  const yakun = [
-    { 'Ko\'rsatkich': 'Yangi buyurtmalar', 'Qiymat': g.monthDeals.length + ' ta' },
-    { 'Ko\'rsatkich': 'Kirim (to\'lovlar)', 'Qiymat': g.income },
-    { 'Ko\'rsatkich': 'Buyurtma xarajati', 'Qiymat': g.dealExp },
-    { 'Ko\'rsatkich': 'Ishxona xarajati', 'Qiymat': g.officeExp },
-    { 'Ko\'rsatkich': 'Xodim avanslari', 'Qiymat': g.staffAdv },
-    { 'Ko\'rsatkich': 'BIZNES SOF FOYDA', 'Qiymat': g.bizProfit },
-    { 'Ko\'rsatkich': 'Shaxsiy chiqim', 'Qiymat': g.pers },
-    { 'Ko\'rsatkich': 'REAL QOLDIQ', 'Qiymat': g.realRemain }
-  ];
-  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(yakun), 'Yakun');
-
+  XLSX.utils.book_append_sheet(wb, ws, `${monthName} ${y}`);
   return XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
 }
 
