@@ -2606,6 +2606,194 @@ async function checkReminders() {
 // Start reminder checker every 60 seconds
 setInterval(checkReminders, 60000);
 
+// ═══════════════════════════════════════════════════════════════
+// MBI MONITOR — botlarni nazorat qiluvchi ichki agent (1-bosqich)
+// Kuzatadi: tan narx bot, Instagram DM, webhook. Xavfsiz auto-fix + ogohlantirish.
+// HECH QACHON tegmaydi: kod/deploy, cashbox/staff/deals ma'lumotlari, tokenlar.
+// ═══════════════════════════════════════════════════════════════
+const MON = {
+  renderKey: process.env.RENDER_API_KEY || '',
+  tnSrv: process.env.TN_BOT_SRV || 'srv-d8psu5p194ac739ltph0',
+  tnUrl: process.env.TN_BOT_URL || 'https://mbi-tannarx-bot.onrender.com',
+  tnToken: process.env.TN_BOT_TOKEN || '',
+  mbiSrv: process.env.MBI_BOT_SRV || 'srv-d8fvkdurnols73d2q720',
+  webhookUrl: (process.env.WEBHOOK_BASE || 'https://mbi-bot-yw9q.onrender.com') + '/webhook',
+  igUserId: '17841464753251739',
+  interval: parseInt(process.env.MON_INTERVAL || '300', 10) * 1000,
+  cooldown: 3600 * 1000,  // bir muammo soatiga 1 marta
+  lastAlert: {},
+  fail: {}
+};
+
+function monAlert(key, text) {
+  const last = MON.lastAlert[key] || 0;
+  if (Date.now() - last < MON.cooldown) return;
+  MON.lastAlert[key] = Date.now();
+  msg(ADMIN, text).catch(() => {});
+}
+function monClear(key) { delete MON.lastAlert[key]; }
+function monTime() {
+  const d = nowTZ();
+  return ('0'+d.getDate()).slice(-2)+'.'+('0'+(d.getMonth()+1)).slice(-2)+' '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
+}
+
+async function monFetch(url, opts = {}, timeoutMs = 25000) {
+  const ctrl = new AbortController();
+  const tid = setTimeout(() => ctrl.abort(), timeoutMs);
+  try {
+    const r = await fetch(url, { ...opts, signal: ctrl.signal });
+    return r;
+  } finally { clearTimeout(tid); }
+}
+
+// Health: cold-start uchun bir necha urinish
+async function monHealth(url, retries = 2) {
+  for (let i = 0; i <= retries; i++) {
+    try {
+      const r = await monFetch(url, {}, 30000);
+      if (r.status === 200) return true;
+    } catch (e) { /* keyingi urinish */ }
+    if (i < retries) await new Promise(r => setTimeout(r, 8000));
+  }
+  return false;
+}
+
+async function monTgAlive(token) {
+  try {
+    const r = await monFetch(`https://api.telegram.org/bot${token}/getMe`, {}, 15000);
+    const d = await r.json();
+    return !!d.ok;
+  } catch (e) { return false; }
+}
+
+async function monRenderState(srv) {
+  if (!MON.renderKey) return 'no_key';
+  try {
+    const r = await monFetch(`https://api.render.com/v1/services/${srv}`, {
+      headers: { Authorization: 'Bearer ' + MON.renderKey }
+    }, 15000);
+    const d = await r.json();
+    return d.suspended || 'unknown';
+  } catch (e) { return 'error'; }
+}
+
+async function monRenderAction(srv, action) {  // 'resume' | 'restart'
+  if (!MON.renderKey) return false;
+  try {
+    const r = await monFetch(`https://api.render.com/v1/services/${srv}/${action}`, {
+      method: 'POST',
+      headers: { Authorization: 'Bearer ' + MON.renderKey, 'Content-Type': 'application/json' },
+      body: '{}'
+    }, 20000);
+    return r.status >= 200 && r.status < 300;
+  } catch (e) { return false; }
+}
+
+// Webhook holati (mbi-bot o'zi)
+async function monWebhook() {
+  try {
+    const r = await monFetch(`https://api.telegram.org/bot${BOT}/getWebhookInfo`, {}, 15000);
+    const d = (await r.json()).result || {};
+    return { url: d.url || '', pending: d.pending_update_count || 0, err: d.last_error_message || '' };
+  } catch (e) { return { url: '', pending: 0, err: 'error' }; }
+}
+async function monFixWebhook() {
+  try {
+    const r = await monFetch(`https://api.telegram.org/bot${BOT}/setWebhook?url=${encodeURIComponent(MON.webhookUrl)}`, {}, 15000);
+    return (await r.json()).ok === true;
+  } catch (e) { return false; }
+}
+
+// Instagram DM ochiqmi
+async function monIG() {
+  if (!IG_TOKEN) return { ok: true, err: 'skip' };
+  try {
+    const r = await monFetch(`https://graph.instagram.com/v21.0/me/conversations?limit=1&access_token=${IG_TOKEN}`, {}, 20000);
+    const d = await r.json();
+    if (d.error) return { ok: false, err: (d.error.message || '').slice(0, 120) };
+    return { ok: true, err: '' };
+  } catch (e) { return { ok: false, err: String(e).slice(0, 120) }; }
+}
+async function monFixIG() {
+  try {
+    const r = await monFetch(`https://graph.instagram.com/v21.0/${MON.igUserId}/subscribed_apps`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `subscribed_fields=messages,comments,live_comments,message_reactions&access_token=${encodeURIComponent(IG_TOKEN)}`
+    }, 20000);
+    return (await r.json()).success === true;
+  } catch (e) { return false; }
+}
+
+// Tan narx botni tekshirish (free plan, polling)
+async function monCheckTanNarx() {
+  const name = 'tan-narx-bot';
+  const healthy = await monHealth(MON.tnUrl, 2);
+  if (!healthy) {
+    MON.fail[name] = (MON.fail[name] || 0) + 1;
+    const state = await monRenderState(MON.tnSrv);
+    if (state === 'suspended') {
+      if (await monRenderAction(MON.tnSrv, 'resume'))
+        msg(ADMIN, `🔧 *${name}* to'xtagan edi — qayta yoqdim (${monTime()}).`).catch(() => {});
+      else
+        monAlert(name + '_resume', `🚨 *${name}* to'xtagan, qayta yoqib bo'lmadi. Qo'lda tekshiring.`);
+    } else if (MON.fail[name] >= 3) {  // free cold-start uchun sabr
+      if (await monRenderAction(MON.tnSrv, 'restart'))
+        monAlert(name + '_restart', `🔧 *${name}* javob bermayapti — restart qildim (${monTime()}).`);
+      else
+        monAlert(name + '_down', `🚨 *${name}* javob bermayapti, restart ham ishlamadi. Qo'lda tekshiring.`);
+    }
+    return;
+  }
+  if (MON.fail[name] > 0) { msg(ADMIN, `✅ *${name}* yana ishlayapti (${monTime()}).`).catch(() => {}); }
+  MON.fail[name] = 0;
+  monClear(name + '_restart'); monClear(name + '_down');
+  // polling tirikligi
+  if (MON.tnToken && !(await monTgAlive(MON.tnToken)))
+    monAlert(name + '_tg', `⚠️ *${name}* Telegram'ga ulanmayapti (polling to'xtagan bo'lishi mumkin).`);
+}
+
+// mbi-bot tashqi qismlari (webhook + Instagram) — o'zini kuzatmaydi
+async function monCheckSelf() {
+  // Webhook
+  const wh = await monWebhook();
+  if (wh.url && wh.url !== MON.webhookUrl) {
+    if (await monFixWebhook())
+      msg(ADMIN, `🔧 mbi-bot webhook noto'g'ri edi — qayta o'rnatdim (${monTime()}).`).catch(() => {});
+    else
+      monAlert('mbi_wh', `⚠️ mbi-bot webhook noto'g'ri: \`${wh.url.slice(0, 60)}\``);
+  }
+  if (wh.pending > 50)
+    monAlert('mbi_pending', `⚠️ mbi-bot webhook'da ${wh.pending} ta kutilayotgan yangilanish. Bot sekinlashgan bo'lishi mumkin.`);
+
+  // Instagram
+  const ig = await monIG();
+  if (!ig.ok && ig.err !== 'skip') {
+    const e = ig.err.toLowerCase();
+    if (e.includes('disabled access') || e.includes('code 200') || e.includes('(#200)')) {
+      monAlert('mbi_ig_toggle',
+        `⚠️ *Instagram DM yopilgan!*\n\nXato: \`${ig.err}\`\n\nYechim: Instagram ilovasi → Sozlamalar → «Сообщения» → «Подключенные инструменты» → «Разрешить доступ к сообщениям» yoqing.`);
+    } else {
+      if (await monFixIG())
+        msg(ADMIN, `🔧 mbi-bot Instagram obunasini qayta yoqdim (${monTime()}).`).catch(() => {});
+      else
+        monAlert('mbi_ig', `⚠️ mbi-bot Instagram muammo: \`${ig.err}\``);
+    }
+  } else { monClear('mbi_ig'); monClear('mbi_ig_toggle'); }
+}
+
+async function monitorTick() {
+  try { await monCheckTanNarx(); } catch (e) { console.error('mon tannarx:', e.message); }
+  try { await monCheckSelf(); } catch (e) { console.error('mon self:', e.message); }
+}
+
+if (MON.renderKey || MON.tnToken || IG_TOKEN) {
+  setInterval(monitorTick, MON.interval);
+  setTimeout(() => { monitorTick().catch(() => {}); }, 30000);  // startdan 30s keyin birinchi tekshiruv
+  console.log('🛡 MBI Monitor yoqildi (har ' + (MON.interval / 60000) + ' daqiqada)');
+}
+
+
 // ─── Main handler ─────────────────────────────────────────────
 async function handle(upd) {
   try {
