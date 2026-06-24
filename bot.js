@@ -35,6 +35,17 @@ function api(method, data) {
 }
 function msg(c, t) { return api('sendMessage', { chat_id: c, text: t, parse_mode: 'Markdown' }); }
 function btn(c, t, b) { return api('sendMessage', { chat_id: c, text: t, reply_markup: { inline_keyboard: b } }); }
+// Xodim uchun doimiy reply-keyboard (klaviatura ustida turadi)
+function workerKeyboard() {
+  return {
+    keyboard: [
+      [{ text: '✅ Keldim' }, { text: '🏁 Ketdim' }],
+      [{ text: '🙋 Javob so\'rash' }, { text: '💵 Hisobim' }]
+    ],
+    resize_keyboard: true, is_persistent: true
+  };
+}
+function msgKb(c, t, kb) { return api('sendMessage', { chat_id: c, text: t, parse_mode: 'Markdown', reply_markup: kb }); }
 function fwd(c, f, m) { return api('forwardMessage', { chat_id: c, from_chat_id: f, message_id: m }); }
 function acb(i) { return api('answerCallbackQuery', { callback_query_id: i }); }
 function anketa(c, l) {
@@ -669,7 +680,7 @@ const WORK_START = 9 * 60;    // 09:00
 const WORK_END = 18 * 60;     // 18:00
 const LUNCH_CUTOFF = 14 * 60; // 14:00
 const LUNCH_MIN = 60;         // 1 soat
-function computeDayHours(inHm, outHm) {
+function computeDayHours(inHm, outHm, leaveMin) {
   const inM = hmToMin(inHm), outM = hmToMin(outHm);
   if (inM == null || outM == null || outM <= inM) return { normalH: 0, extraH: 0 };
   // Oddiy oyna: max(in,9:00) .. min(out,18:00)
@@ -678,6 +689,8 @@ function computeDayHours(inHm, outHm) {
   let normalMin = Math.max(0, ne - ns);
   // tushlik: faqat 14:00 dan oldin kelgan bo'lsa
   if (inM < LUNCH_CUTOFF && normalMin > 0) normalMin = Math.max(0, normalMin - LUNCH_MIN);
+  // javob (vaqtincha chiqish) soatlari ayriladi
+  if (leaveMin && leaveMin > 0) normalMin = Math.max(0, normalMin - leaveMin);
   // qo'shimcha: 18:00 dan keyin
   const extraMin = Math.max(0, outM - Math.max(inM, WORK_END));
   return { normalH: normalMin / 60, extraH: extraMin / 60 };
@@ -727,7 +740,7 @@ function payrollForMonth(s, y, m, partial, uptoDay) {
   let earnedUsd, normalHours = 0, extraHours = 0;
   if (hasHours) {
     for (const a of att) {
-      const d = computeDayHours(a.in, a.out);
+      const d = computeDayHours(a.in, a.out, a.leave_min);
       normalHours += (a.normalH != null ? a.normalH : d.normalH);
       extraHours += (a.extraH != null ? a.extraH : d.extraH);
     }
@@ -955,7 +968,7 @@ async function showAttendance(c, id) {
   if (!att.length) txt += '_Bu oyda hali yo\'qlama yozuvi yo\'q._';
   else {
     att.forEach(a => {
-      const d = computeDayHours(a.in, a.out);
+      const d = computeDayHours(a.in, a.out, a.leave_min);
       const nh = (a.normalH != null ? a.normalH : d.normalH);
       const eh = (a.extraH != null ? a.extraH : d.extraH);
       txt += `📅 ${a.date}: ${a.in || '—'}–${a.out || '...'} → ${nh.toFixed(1)} soat${eh ? ` (+${eh.toFixed(1)} qo'sh.)` : ''}\n`;
@@ -1062,7 +1075,7 @@ async function attCheckOut(c, timeHm) {
   }
   if (!rec) { rec = { date: dt, in: '09:00', out: outTime }; data[idx].attendance.push(rec); }
   else rec.out = outTime;
-  const d = computeDayHours(rec.in, rec.out);
+  const d = computeDayHours(rec.in, rec.out, rec.leave_min);
   await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'attendance out: ' + s.name);
   await msg(c, `🏁 Belgilandi: ish tugadi — ${outTime}\n\n📊 Bugun: ${d.normalH.toFixed(1)} soat${d.extraH ? ` (+${d.extraH.toFixed(1)} qo'shimcha)` : ''}\n\nRahmat, mehnatingiz uchun!`);
   // guruhga xabar (Botir botidan)
@@ -1116,7 +1129,10 @@ async function showWorkerPanel(c, s) {
   else if (!rec.out) rows.push([{ text: '🏁 Ketdim', callback_data: 'att_out_18' }, { text: '⏰ Hali ishlayapman', callback_data: 'att_out_working' }]);
   rows.push([{ text: '💵 Mening hisobim', callback_data: 'worker_me' }, { text: '💸 Avans oldim', callback_data: 'worker_adv' }]);
   rows.push([{ text: '⏱ Davomat (qo\'lda)', callback_data: 'att_manual' }]);
+  rows.push([{ text: '🙋 Javob so\'rash', callback_data: 'leave_menu' }]);
   await btn(c, `👷 *${s.name}* — ish vaqti\n\n${statusLine}`, rows);
+  // doimiy reply-keyboard (klaviatura ustida)
+  try { await msgKb(c, '👇 Tezkor amallar pastda turadi:', workerKeyboard()); } catch (e) {}
 }
 // ─── Qo'lda davomat (istalgan paytda kel/ket belgilash) ───
 async function showAttManual(c, s) {
@@ -1132,6 +1148,79 @@ async function showAttManual(c, s) {
   ]];
   rows.push([{ text: '◀️ Ortga', callback_data: 'worker_panel' }]);
   await btn(c, `⏱ *Davomat — qo'lda belgilash*\n\n${statusLine}\n\n_Istalgan paytda kelgan yoki ketganingizni shu yerdan belgilang. Hozirgi vaqt yoziladi._`, rows);
+}
+// ─── Javob so'rash (otpros) ───
+async function showLeaveMenu(c, s) {
+  const rows = [
+    [{ text: '🕐 Vaqtincha chiqish', callback_data: 'leave_partial' }],
+    [{ text: '📅 Bugun/ertaga kelmaslik', callback_data: 'leave_dayoff' }],
+    [{ text: '🏃 Bugun erta ketish', callback_data: 'leave_early' }],
+    [{ text: '◀️ Ortga', callback_data: 'worker_panel' }]
+  ];
+  await btn(c, `🙋 *Javob so'rash*\n\nQanday javob kerak? Tanlang — so'rovingiz Ibrohimga boradi, u tasdiqlaydi.`, rows);
+}
+// admin tasdig'iga yuborish
+async function sendLeaveToAdmin(s, lv) {
+  let desc;
+  if (lv.type === 'partial') desc = `🕐 *Vaqtincha chiqish*\n${lv.hours} soatga\nSabab: ${lv.reason}`;
+  else if (lv.type === 'dayoff') desc = `📅 *Kelmaslik*\nKun: ${lv.date}\nSabab: ${lv.reason}`;
+  else desc = `🏃 *Erta ketish*\nSoat: ${lv.time} da\nSabab: ${lv.reason}`;
+  await btn(ADMIN, `🙋 *Javob so'rovi*\n\n👷 ${s.name}\n${desc}\n\nRuxsat berasizmi?`, [[
+    { text: '✅ Ruxsat', callback_data: 'lvok_' + lv.id },
+    { text: '❌ Yo\'q', callback_data: 'lvno_' + lv.id }
+  ]]);
+}
+// leave so'rovini saqlash (pending)
+async function saveLeaveRequest(c, staffId, lv) {
+  const { data, sha, idx } = await findStaff(staffId);
+  if (idx < 0) { await msg(c, '⚠️ Xatolik.'); return null; }
+  data[idx].leaves = data[idx].leaves || [];
+  data[idx].leaves.push(lv);
+  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'leave request: ' + data[idx].name);
+  return data[idx];
+}
+// admin tasdiq/rad
+async function leaveConfirm(c, lvId, ok) {
+  const list = await readStaff();
+  let found = null, sIdx = -1, lIdx = -1;
+  for (let i = 0; i < list.length; i++) {
+    const li = (list[i].leaves || []).findIndex(l => l.id === lvId && l.status === 'pending');
+    if (li >= 0) { found = list[i]; sIdx = i; lIdx = li; break; }
+  }
+  if (!found) { await msg(c, '⚠️ Bu so\'rov topilmadi yoki allaqachon hal qilingan.'); return; }
+  const { data, sha } = await ghRead('staff-log.json');
+  const lv = data[sIdx].leaves[lIdx];
+  if (ok) {
+    lv.status = 'approved';
+    // hisobga ta'sir
+    if (lv.type === 'partial') {
+      // o'sha kun yozuviga leave_min qo'shamiz
+      const dt = lv.date || todayStr();
+      data[sIdx].attendance = data[sIdx].attendance || [];
+      let rec = data[sIdx].attendance.find(a => a.date === dt);
+      const addMin = Math.round((lv.hours || 0) * 60);
+      if (rec) rec.leave_min = (rec.leave_min || 0) + addMin;
+      else data[sIdx].attendance.push({ date: dt, in: '09:00', out: '18:00', leave_min: addMin });
+    } else if (lv.type === 'dayoff') {
+      data[sIdx].absences = data[sIdx].absences || [];
+      if (!data[sIdx].absences.find(a => a.date === lv.date)) data[sIdx].absences.push({ date: lv.date, reason: lv.reason });
+    } else if (lv.type === 'early') {
+      // o'sha kun ketish vaqtini early time ga o'rnatamiz
+      const dt = lv.date || todayStr();
+      data[sIdx].attendance = data[sIdx].attendance || [];
+      let rec = data[sIdx].attendance.find(a => a.date === dt);
+      if (rec) rec.out = lv.time;
+      // agar hali kelmagan bo'lsa, faqat approved sifatida qoladi, xodim "ketdim" bosadi
+    }
+    await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'leave approved: ' + found.name);
+    await msg(c, `✅ Ruxsat berildi: ${found.name}`);
+    if (found.tg_chat_id) { try { await msg(found.tg_chat_id, `✅ *Javobingiz tasdiqlandi!*\n\nIbrohim ruxsat berdi. Ehtiyot bo'ling.`); } catch (e) {} }
+  } else {
+    lv.status = 'rejected';
+    await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'leave rejected: ' + found.name);
+    await msg(c, `❌ Rad etildi: ${found.name}`);
+    if (found.tg_chat_id) { try { await msg(found.tg_chat_id, `❌ *Javob so'rovingiz rad etildi.*\n\nIbrohim bilan gaplashing.`); } catch (e) {} }
+  }
 }
 async function showWorkerAccount(c, s) {
   const { history, currentBalance } = staffPayrollHistory(s);
@@ -2603,6 +2692,22 @@ async function handle(upd) {
       if (cd === 'worker_adv') { const s = await staffByChat(c); if (s) { orderState[c] = { step: 'worker_adv_amount', staffId: s.id }; await btn(c, '💸 *Qancha avans oldingiz?*\n\n_$ bo\'lsa dollar, bo\'lmasa so\'m. Masalan: 100$ yoki 500000_', [[{ text: '❌ Bekor', callback_data: 'worker_panel' }]]); } return; }
       if (cd === 'att_out_now') { const now = nowTZ(); await attCheckOut(c, ('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2)); return; }
       if (cd === 'att_manual') { const s = await staffByChat(c); if (s) await showAttManual(c, s); return; }
+      if (cd === 'leave_menu') { const s = await staffByChat(c); if (s) await showLeaveMenu(c, s); return; }
+      if (cd === 'leave_partial') { const s = await staffByChat(c); if (s) { orderState[c] = { step: 'leave_partial_hours', staffId: s.id }; await btn(c, '🕐 *Vaqtincha chiqish*\\n\\nNecha soatga chiqasiz? Raqam yozing. Masalan: 2 yoki 1.5', [[{ text: '❌ Bekor', callback_data: 'leave_menu' }]]); } return; }
+      if (cd === 'leave_dayoff') { const s = await staffByChat(c); if (s) { orderState[c] = { step: 'leave_dayoff_when', staffId: s.id }; await btn(c, '📅 *Kelmaslik*\\n\\nQaysi kun kela olmaysiz?', [[{ text: 'Bugun', callback_data: 'lvday_today' }, { text: 'Ertaga', callback_data: 'lvday_tomorrow' }], [{ text: '❌ Bekor', callback_data: 'leave_menu' }]]); } return; }
+      if (cd === 'leave_early') { const s = await staffByChat(c); if (s) { orderState[c] = { step: 'leave_early_time', staffId: s.id }; await btn(c, '🏃 *Erta ketish*\\n\\nBugun soat nechada ketmoqchisiz? HH:MM yozing. Masalan: 16:00', [[{ text: '❌ Bekor', callback_data: 'leave_menu' }]]); } return; }
+      if (cd === 'lvday_today' || cd === 'lvday_tomorrow') {
+        const s = await staffByChat(c);
+        if (s) {
+          const d = nowTZ(); if (cd === 'lvday_tomorrow') d.setDate(d.getDate() + 1);
+          const ds = ('0'+d.getDate()).slice(-2)+'.'+('0'+(d.getMonth()+1)).slice(-2)+'.'+d.getFullYear();
+          orderState[c] = { step: 'leave_dayoff_reason', staffId: s.id, leaveDate: ds };
+          await btn(c, `📅 *${ds}* kela olmaysiz.\\n\\nSababini qisqa yozing:`, [[{ text: '❌ Bekor', callback_data: 'leave_menu' }]]);
+        }
+        return;
+      }
+      if (cd.startsWith('lvok_')) { await leaveConfirm(c, cd.slice(5), true); return; }
+      if (cd.startsWith('lvno_')) { await leaveConfirm(c, cd.slice(5), false); return; }
       if (cd === 'att_mark_in') { await attCheckIn(c, nowHHMM(), false); const s = await staffByChat(c); if (s) await showAttManual(c, s); return; }
       if (cd === 'att_mark_out') { await attCheckOut(c, nowHHMM()); const s = await staffByChat(c); if (s) await showAttManual(c, s); return; }
       if (cd === 'bonus_noreason') { const st = orderState[c]; if (st && st.step === 'stf_bonus_reason') { const id = st.staffId, amt = st.bonusUsd; delete orderState[c]; await staffSaveBonus(c, id, amt, ''); } return; }
@@ -2646,6 +2751,17 @@ async function handle(upd) {
     const ism = upd.message.from.first_name || 'Mijoz';
     const un = upd.message.from.username ? '@'+upd.message.from.username : '-';
     const t = upd.message.text || '';
+
+    // ── Xodim reply-keyboard tugmalari (matn sifatida keladi) ──
+    if (!isAdmin && t && !orderState[c]) {
+      const ws = await staffByChat(c);
+      if (ws) {
+        if (t === '✅ Keldim') { await attCheckIn(c, nowHHMM(), false); const s2 = await staffByChat(c); if (s2) await showWorkerPanel(c, s2); return; }
+        if (t === '🏁 Ketdim') { await attCheckOut(c, nowHHMM()); const s2 = await staffByChat(c); if (s2) await showWorkerPanel(c, s2); return; }
+        if (t === '🙋 Javob so\'rash') { await showLeaveMenu(c, ws); return; }
+        if (t === '💵 Hisobim') { await showWorkerAccount(c, ws); return; }
+      }
+    }
 
     // Admin voice
     if (upd.message.voice && isAdmin) { await handleVoice(c, upd.message.voice); return; }
@@ -2783,6 +2899,41 @@ async function handle(upd) {
         await msg(c, `⏳ Avans yuborildi: $${usd.toFixed(2)}\nIbrohim tasdiqlashini kuting.`);
         // adminga tasdiq uchun
         await btn(ADMIN, `💸 *Avans tasdiqlash*\n\n${s2.name} $${usd.toFixed(2)} avans oldim deb belgiladi. To'g'rimi?`, [[{ text: '✅ Ha, berdim', callback_data: 'advok_' + advId }, { text: '❌ Yo\'q', callback_data: 'advno_' + advId }]]);
+        return;
+      }
+      else if (st.step === 'leave_partial_hours') {
+        const num = parseFloat(t.replace(/[^\d.,]/g, '').replace(/,/g, '.'));
+        if (isNaN(num) || num <= 0 || num > 9) { await msg(c, '❗️ Soatni raqam bilan yozing. Masalan: 2 yoki 1.5'); return; }
+        st.leaveHours = num; st.step = 'leave_partial_reason';
+        await btn(c, `🕐 *${num} soat*ga chiqasiz.\n\nSababini qisqa yozing:`, [[{ text: '❌ Bekor', callback_data: 'leave_menu' }]]);
+        return;
+      }
+      else if (st.step === 'leave_partial_reason') {
+        const id = st.staffId, hours = st.leaveHours, reason = t.trim(); delete orderState[c];
+        const lv = { id: uid(), type: 'partial', date: todayStr(), hours, reason, status: 'pending', requested: todayStr() };
+        const s2 = await saveLeaveRequest(c, id, lv);
+        if (s2) { await msg(c, `⏳ So'rov yuborildi: ${hours} soatga chiqish.\nIbrohim tasdiqlashini kuting.`); await sendLeaveToAdmin(s2, lv); }
+        return;
+      }
+      else if (st.step === 'leave_dayoff_reason') {
+        const id = st.staffId, date = st.leaveDate, reason = t.trim(); delete orderState[c];
+        const lv = { id: uid(), type: 'dayoff', date, reason, status: 'pending', requested: todayStr() };
+        const s2 = await saveLeaveRequest(c, id, lv);
+        if (s2) { await msg(c, `⏳ So'rov yuborildi: ${date} kelmaslik.\nIbrohim tasdiqlashini kuting.`); await sendLeaveToAdmin(s2, lv); }
+        return;
+      }
+      else if (st.step === 'leave_early_time') {
+        const hm = hmToMin(t);
+        if (hm == null) { await msg(c, '❗️ Soatni HH:MM ko\'rinishida yozing. Masalan: 16:00'); return; }
+        st.leaveTime = minToHm(hm); st.step = 'leave_early_reason';
+        await btn(c, `🏃 Bugun *${st.leaveTime}* da ketasiz.\n\nSababini qisqa yozing:`, [[{ text: '❌ Bekor', callback_data: 'leave_menu' }]]);
+        return;
+      }
+      else if (st.step === 'leave_early_reason') {
+        const id = st.staffId, time = st.leaveTime, reason = t.trim(); delete orderState[c];
+        const lv = { id: uid(), type: 'early', date: todayStr(), time, reason, status: 'pending', requested: todayStr() };
+        const s2 = await saveLeaveRequest(c, id, lv);
+        if (s2) { await msg(c, `⏳ So'rov yuborildi: bugun ${time} da ketish.\nIbrohim tasdiqlashini kuting.`); await sendLeaveToAdmin(s2, lv); }
         return;
       }
       else if (st.step === 'stf_sal_amount') {
