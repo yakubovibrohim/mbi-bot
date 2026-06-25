@@ -1553,7 +1553,8 @@ async function showSummary(c) {
     `━━━━━━━━━━━━\n` +
     `📈 Biznes sof foyda: *${fmtUzs(g.bizProfit)} so'm*\n` +
     `👛 Shaxsiy chiqim: ${fmtUzs(g.pers)} so'm\n` +
-    `💵 *Real qoldiq: ${fmtUzs(g.realRemain)} so'm*`, [
+    `━━━━━━━━━━━━\n` +
+    `💰 *Cho'ntakdagi real pul: ${fmtUzs(g.cashBalance)} so'm*`, [
     [{ text: '📥 Excel yuklash (shu oy)', callback_data: 'xls_now' }],
     [{ text: '📅 Oylik hisobotlar', callback_data: 'xls_list' }],
     [{ text: '◀️ Ortga', callback_data: 'menu_home' }]
