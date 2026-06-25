@@ -56,6 +56,13 @@
         "date": "22.06.2026",
         "amount_usd": 100,
         "entered_by": "admin"
+      },
+      {
+        "id": "mqtcilsvh2jw",
+        "date": "25.06.2026",
+        "amount_usd": 100,
+        "entered_by": "admin",
+        "pending": true
       }
     ],
     "attendance": [
