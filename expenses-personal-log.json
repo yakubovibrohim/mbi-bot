@@ -94,5 +94,13 @@
     "rate": 12000,
     "type": "personal",
     "ts": "2026-06-23T04:08:26.764Z"
+  },
+  {
+    "date": "25.06.2026",
+    "note": "kasha nutrilak 2",
+    "amount_uzs": 200000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-25T10:20:28.707Z"
   }
 ]
