@@ -1986,6 +1986,9 @@ function transcribeAudio(buf) {
     const form = new FormData();
     form.append('file', buf, { filename: 'voice.ogg', contentType: 'audio/ogg' });
     form.append('model', 'whisper-large-v3');
+    form.append('language', 'uz');
+    form.append('temperature', '0');
+    form.append('prompt', 'MBI Mebel. Mebel buyurtmalari, mijozlar, avans, kassa, xarajat, qarz, hisobot. Xodimlar: Diyor, Sherzod. Mijozlar: Boxodir aka, Nodira opa.');
     const req = https.request({
       hostname: 'api.groq.com', path: '/openai/v1/audio/transcriptions', method: 'POST',
       headers: { 'Authorization': 'Bearer ' + GROQ_KEY, ...form.getHeaders() }
