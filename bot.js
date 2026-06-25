@@ -40,12 +40,24 @@ function workerKeyboard() {
   return {
     keyboard: [
       [{ text: '✅ Keldim' }, { text: '🏁 Ketdim' }],
-      [{ text: '🙋 Javob so\'rash' }, { text: '💵 Hisobim' }]
+      [{ text: '🙋 Javob so\'rash' }, { text: '💵 Hisobim' }],
+      [{ text: '📅 Jadval' }, { text: '🏠 Bosh menyu' }]
     ],
     resize_keyboard: true, is_persistent: true
   };
 }
 function msgKb(c, t, kb) { return api('sendMessage', { chat_id: c, text: t, parse_mode: 'Markdown', reply_markup: kb }); }
+// Admin uchun doimiy reply-keyboard
+function adminKeyboard() {
+  return {
+    keyboard: [
+      [{ text: '🏠 Bosh menyu' }, { text: '📊 Hisobot' }],
+      [{ text: '👷 Xodimlar' }, { text: '👥 Davomat' }],
+      [{ text: '💰 Kassa' }, { text: '📋 Bugun' }]
+    ],
+    resize_keyboard: true, is_persistent: true
+  };
+}
 function fwd(c, f, m) { return api('forwardMessage', { chat_id: c, from_chat_id: f, message_id: m }); }
 function acb(i) { return api('answerCallbackQuery', { callback_query_id: i }); }
 function anketa(c, l) {
@@ -680,6 +692,8 @@ const WORK_START = 9 * 60;    // 09:00
 const WORK_END = 18 * 60;     // 18:00
 const LUNCH_CUTOFF = 14 * 60; // 14:00
 const LUNCH_MIN = 60;         // 1 soat
+const LATE_AFTER = 9 * 60 + 20;  // 09:20 — bundan keyin kech hisoblanadi
+const EARLY_BEFORE = 18 * 60;    // 18:00 — bundan oldin ketsa erta hisoblanadi
 function computeDayHours(inHm, outHm, leaveMin) {
   const inM = hmToMin(inHm), outM = hmToMin(outHm);
   if (inM == null || outM == null || outM <= inM) return { normalH: 0, extraH: 0 };
@@ -793,6 +807,51 @@ async function showStaffList(c) {
   rows.push([{ text: '➕ Yangi xodim', callback_data: 'stf_add' }]);
   rows.push([{ text: '◀️ Ortga', callback_data: 'menu_home' }]);
   await btn(c, '👷 *Xodimlar*' + (active.length ? '' : '\n\n_Hozircha xodim yo\'q. «Yangi xodim» qo\'shing._'), rows);
+}
+// Admin: bugungi hammaning davomati (real vaqt)
+async function showAllAttendance(c) {
+  const list = (await readStaff()).filter(s => s.active !== false);
+  const today = todayStr();
+  let txt = `👥 *Bugungi davomat — ${today}*\n\n`;
+  if (!list.length) { txt += '_Xodim yo\'q._'; await msg(c, txt); return; }
+  for (const s of list) {
+    const rec = (s.attendance || []).find(a => a.date === today);
+    const absent = (s.absences || []).find(a => a.date === today);
+    // bugun tasdiqlangan javob bormi
+    const todayLeave = (s.leaves || []).find(l => l.date === today && l.status === 'approved');
+    let line;
+    if (absent) line = `❌ kelmadi${absent.reason ? ` (${absent.reason})` : ''}`;
+    else if (rec && rec.in && rec.out) line = `✅ ${rec.in} → ${rec.out}${rec.late ? ' ⚠️kech' : ''}${rec.early ? ' 🏃erta' : ''}`;
+    else if (rec && rec.in) line = `🟢 ishda (${rec.in} dan)${rec.late ? ' ⚠️kech' : ''}`;
+    else line = `⚪️ hali belgilamagan`;
+    txt += `👷 *${s.name}*: ${line}\n`;
+    if (rec && rec.in_reason) txt += `   └ kech: _${rec.in_reason}_\n`;
+    if (rec && rec.out_reason) txt += `   └ erta: _${rec.out_reason}_\n`;
+    if (todayLeave) txt += `   └ 🙋 javob: ${todayLeave.type === 'partial' ? todayLeave.hours + ' soat' : todayLeave.type === 'early' ? 'erta ' + todayLeave.time : 'kelmaslik'}\n`;
+  }
+  await btn(c, txt, [[{ text: '🔄 Yangilash', callback_data: 'all_att' }], [{ text: '📋 Intizom hisoboti', callback_data: 'disc_report' }]]);
+}
+// Admin: oylik intizom hisoboti (kech/erta/kelmagan/javob)
+async function showDisciplineReport(c) {
+  const list = (await readStaff()).filter(s => s.active !== false);
+  const now = nowTZ(); const mo = now.getMonth(), yr = now.getFullYear();
+  const inMonth = (ds) => { const p = (ds || '').split('.'); return p.length === 3 && parseInt(p[1]) - 1 === mo && parseInt(p[2]) === yr; };
+  let txt = `📋 *Intizom hisoboti — ${UZ_MONTHS[mo]}*\n\n`;
+  if (!list.length) { txt += '_Xodim yo\'q._'; await msg(c, txt); return; }
+  for (const s of list) {
+    const att = (s.attendance || []).filter(a => inMonth(a.date));
+    const lateCnt = att.filter(a => a.late).length;
+    const earlyCnt = att.filter(a => a.early).length;
+    const absCnt = (s.absences || []).filter(a => inMonth(a.date)).length;
+    const leaveCnt = (s.leaves || []).filter(l => inMonth(l.requested || l.date)).length;
+    txt += `👷 *${s.name}*\n`;
+    txt += `   ⚠️ Kech: ${lateCnt}  🏃 Erta: ${earlyCnt}  ❌ Kelmagan: ${absCnt}  🙋 Javob: ${leaveCnt}\n`;
+    // eng ko'p sabablar
+    const reasons = att.filter(a => a.in_reason).map(a => a.in_reason);
+    if (reasons.length) txt += `   _Kech sabablari: ${reasons.slice(0, 3).join(', ')}_\n`;
+    txt += '\n';
+  }
+  await msg(c, txt);
 }
 
 async function showStaffCard(c, id) {
@@ -1038,11 +1097,20 @@ async function attCheckIn(c, timeHm, isLate) {
   data[idx].attendance = data[idx].attendance || [];
   let rec = data[idx].attendance.find(a => a.date === dt);
   const inTime = timeHm || nowHHMM();
-  if (rec) { rec.in = inTime; } else { rec = { date: dt, in: inTime, out: null }; data[idx].attendance.push(rec); }
+  const late = hmToMin(inTime) > LATE_AFTER;
+  if (rec) { rec.in = inTime; rec.late = late; } else { rec = { date: dt, in: inTime, out: null, late }; data[idx].attendance.push(rec); }
   await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'attendance in: ' + s.name);
-  await msg(c, `✅ Belgilandi: ishga keldingiz — ${inTime}\n\nIsh kuni yakunida «🏁 Ketdim» ni bosing.`);
   // guruhga xabar (Botir botidan)
-  if (officeChat) { try { await agentMsg(officeChat, 'botir', `🟢 ${s.name} ishga keldi — ${inTime}`); } catch (e) {} }
+  if (officeChat) { try { await agentMsg(officeChat, 'botir', `🟢 ${s.name} ishga keldi — ${inTime}${late ? ' (kech)' : ''}`); } catch (e) {} }
+  if (late) {
+    orderState[c] = { step: 'late_reason', staffId: s.id, date: dt, inTime };
+    await msg(c, `✅ Belgilandi: ishga keldingiz — *${inTime}*`);
+    const rows = REASON_CATS.map(r => [{ text: r.label, callback_data: `rc_late_${r.code}` }]);
+    rows.push([{ text: '⏭ Keyinroq aytaman', callback_data: 'late_skip' }]);
+    await btn(c, '⚠️ Bugun kech keldingiz. Sababini tanlang:', rows);
+  } else {
+    await msg(c, `✅ Belgilandi: ishga keldingiz — ${inTime}\n\nIsh kuni yakunida «🏁 Ketdim» ni bosing.`);
+  }
 }
 async function attCheckInLate(c) {
   orderState[c] = { step: 'att_in_time' };
@@ -1075,11 +1143,21 @@ async function attCheckOut(c, timeHm) {
   }
   if (!rec) { rec = { date: dt, in: '09:00', out: outTime }; data[idx].attendance.push(rec); }
   else rec.out = outTime;
+  const early = hmToMin(outTime) < EARLY_BEFORE;
+  rec.early = early;
   const d = computeDayHours(rec.in, rec.out, rec.leave_min);
   await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'attendance out: ' + s.name);
-  await msg(c, `🏁 Belgilandi: ish tugadi — ${outTime}\n\n📊 Bugun: ${d.normalH.toFixed(1)} soat${d.extraH ? ` (+${d.extraH.toFixed(1)} qo'shimcha)` : ''}\n\nRahmat, mehnatingiz uchun!`);
   // guruhga xabar (Botir botidan)
-  if (officeChat) { try { await agentMsg(officeChat, 'botir', `🔴 ${s.name} ishdan ketdi — ${outTime}`); } catch (e) {} }
+  if (officeChat) { try { await agentMsg(officeChat, 'botir', `🔴 ${s.name} ishdan ketdi — ${outTime}${early ? ' (erta)' : ''}`); } catch (e) {} }
+  if (early) {
+    orderState[c] = { step: 'early_reason', staffId: s.id, date: dt, outTime };
+    await msg(c, `🏁 Belgilandi: ish tugadi — *${outTime}*\n📊 Bugun: ${d.normalH.toFixed(1)} soat`);
+    const rows = REASON_CATS.map(r => [{ text: r.label, callback_data: `rc_early_${r.code}` }]);
+    rows.push([{ text: '⏭ Keyinroq aytaman', callback_data: 'early_skip' }]);
+    await btn(c, '⚠️ Bugun erta ketdingiz (18:00 dan oldin). Sababini tanlang:', rows);
+  } else {
+    await msg(c, `🏁 Belgilandi: ish tugadi — ${outTime}\n\n📊 Bugun: ${d.normalH.toFixed(1)} soat${d.extraH ? ` (+${d.extraH.toFixed(1)} qo'shimcha)` : ''}\n\nRahmat, mehnatingiz uchun!`);
+  }
 }
 async function attStillWorking(c) {
   await msg(c, '⏰ Yaxshi, ishni davom ettiring. Ketganингizда «🏁 Ketdim» ni bosing — o\'sha vaqт yozilади (18:00 dan keyingi vaqt qo\'shimcha bo\'ladi).');
@@ -1087,6 +1165,43 @@ async function attStillWorking(c) {
   if (s) {
     await btn(c, 'Ishni tugatganda bosing:', [[{ text: '🏁 Hozir ketdim', callback_data: 'att_out_now' }]]);
   }
+}
+// kech kelish / erta ketish sababini o'sha kun yozuviga saqlash
+async function attSaveReason(c, staffId, date, field, reason) {
+  const { data, sha, idx } = await findStaff(staffId);
+  if (idx < 0) return;
+  data[idx].attendance = data[idx].attendance || [];
+  let rec = data[idx].attendance.find(a => a.date === date);
+  if (!rec) { rec = { date }; data[idx].attendance.push(rec); }
+  rec[field] = reason;
+  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'attendance reason: ' + data[idx].name);
+}
+// Xodim uchun oylik davomat jadvali
+async function showAttTable(c, s) {
+  const now = nowTZ();
+  const mo = now.getMonth(), yr = now.getFullYear();
+  const inMonth = (ds) => { const p = (ds || '').split('.'); return p.length === 3 && parseInt(p[1]) - 1 === mo && parseInt(p[2]) === yr; };
+  const att = (s.attendance || []).filter(a => inMonth(a.date)).sort((a, b) => parseInt(a.date) - parseInt(b.date));
+  const abs = (s.absences || []).filter(a => inMonth(a.date));
+  let txt = `📅 *${UZ_MONTHS[mo]} davomati — ${s.name}*\n\n`;
+  if (!att.length && !abs.length) { txt += '_Bu oyda hali yozuv yo\'q._'; await msg(c, txt); return; }
+  for (const a of att) {
+    const day = a.date.split('.')[0];
+    let line = `${day} — ${a.in || '—'} → ${a.out || '—'}`;
+    const marks = [];
+    if (a.late) marks.push('⚠️kech');
+    if (a.early) marks.push('🏃erta');
+    if (!a.late && !a.early && a.out) marks.push('✅');
+    if (marks.length) line += ' ' + marks.join(' ');
+    txt += line + '\n';
+    if (a.in_reason) txt += `   └ kech: _${a.in_reason}_\n`;
+    if (a.out_reason) txt += `   └ erta: _${a.out_reason}_\n`;
+  }
+  for (const a of abs) {
+    const day = (a.date || '').split('.')[0];
+    txt += `${day} — ❌ kelmagan${a.reason ? ` (_${a.reason}_)` : ''}\n`;
+  }
+  await msg(c, txt);
 }
 
 // ─── Avans ikki tomonlama tasdiq ───
@@ -1149,6 +1264,23 @@ async function showAttManual(c, s) {
   rows.push([{ text: '◀️ Ortga', callback_data: 'worker_panel' }]);
   await btn(c, `⏱ *Davomat — qo'lda belgilash*\n\n${statusLine}\n\n_Istalgan paytda kelgan yoki ketganingizni shu yerdan belgilang. Hozirgi vaqt yoziladi._`, rows);
 }
+// ─── Sabab toifalari (tugma bilan tez tanlash) ───
+const REASON_CATS = [
+  { code: 'kasal', label: '🤒 Kasal' },
+  { code: 'oilaviy', label: '👨‍👩‍👧 Oilaviy' },
+  { code: 'shifokor', label: '🏥 Shifokor' },
+  { code: 'yol', label: '🚗 Yo\'l muammosi' },
+  { code: 'boshqa', label: '✍️ Boshqa (yozaman)' }
+];
+function reasonCatLabel(code) {
+  const f = REASON_CATS.find(r => r.code === code);
+  return f ? f.label.replace(/^[^\s]+\s/, '') : code;
+}
+// sabab toifa tugmalarini chiqarish. ctx = qaysi oqim uchun (prefiks)
+async function askReasonCats(c, ctx, title) {
+  const rows = REASON_CATS.map(r => [{ text: r.label, callback_data: `rc_${ctx}_${r.code}` }]);
+  await btn(c, title, rows);
+}
 // ─── Javob so'rash (otpros) ───
 async function showLeaveMenu(c, s) {
   const rows = [
@@ -1165,7 +1297,16 @@ async function sendLeaveToAdmin(s, lv) {
   if (lv.type === 'partial') desc = `🕐 *Vaqtincha chiqish*\n${lv.hours} soatga\nSabab: ${lv.reason}`;
   else if (lv.type === 'dayoff') desc = `📅 *Kelmaslik*\nKun: ${lv.date}\nSabab: ${lv.reason}`;
   else desc = `🏃 *Erta ketish*\nSoat: ${lv.time} da\nSabab: ${lv.reason}`;
-  await btn(ADMIN, `🙋 *Javob so'rovi*\n\n👷 ${s.name}\n${desc}\n\nRuxsat berasizmi?`, [[
+  // shu oydagi javob so'rovlari soni (tarix)
+  const now = nowTZ(); const mo = now.getMonth(), yr = now.getFullYear();
+  const monthLeaves = (s.leaves || []).filter(l => {
+    const p = (l.requested || l.date || '').split('.');
+    return p.length === 3 && parseInt(p[1]) - 1 === mo && parseInt(p[2]) === yr;
+  });
+  const cnt = monthLeaves.length;
+  let histLine = `\n📊 _Bu oy ${cnt}-marta javob so'rayapti_`;
+  if (cnt >= 4) histLine += ` ⚠️`;
+  await btn(ADMIN, `🙋 *Javob so'rovi*\n\n👷 ${s.name}\n${desc}${histLine}\n\nRuxsat berasizmi?`, [[
     { text: '✅ Ruxsat', callback_data: 'lvok_' + lv.id },
     { text: '❌ Yo\'q', callback_data: 'lvno_' + lv.id }
   ]]);
@@ -1178,6 +1319,24 @@ async function saveLeaveRequest(c, staffId, lv) {
   data[idx].leaves.push(lv);
   await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'leave request: ' + data[idx].name);
   return data[idx];
+}
+// leave oqimini yakunlash (toifa yoki matn sabab bilan)
+async function leaveFinalize(c, st) {
+  const reason = st.chosenReason || st.typedReason || '—';
+  let lv, infoLine;
+  if (st.flow === 'partial') {
+    lv = { id: uid(), type: 'partial', date: todayStr(), hours: st.leaveHours, reason, status: 'pending', requested: todayStr() };
+    infoLine = `${st.leaveHours} soatga chiqish`;
+  } else if (st.flow === 'dayoff') {
+    lv = { id: uid(), type: 'dayoff', date: st.leaveDate, reason, status: 'pending', requested: todayStr() };
+    infoLine = `${st.leaveDate} kelmaslik`;
+  } else {
+    lv = { id: uid(), type: 'early', date: todayStr(), time: st.leaveTime, reason, status: 'pending', requested: todayStr() };
+    infoLine = `bugun ${st.leaveTime} da ketish`;
+  }
+  const id = st.staffId; delete orderState[c];
+  const s2 = await saveLeaveRequest(c, id, lv);
+  if (s2) { await msg(c, `⏳ So'rov yuborildi: ${infoLine}.\nIbrohim tasdiqlashini kuting.`); await sendLeaveToAdmin(s2, lv); }
 }
 // admin tasdiq/rad
 async function leaveConfirm(c, lvId, ok) {
@@ -2591,6 +2750,7 @@ async function sendDailyBriefing(chatId) {
 // ─── Reminder checker (runs every minute) ────────────────────
 let lastMorningBriefing = '';
 let lastEveningReminder = '';
+let lastDailySummary = '';
 async function checkReminders() {
   try {
     const now = nowTZ();
@@ -2679,6 +2839,30 @@ async function checkReminders() {
           }
         }
       } catch (e) { console.error('staff checkout reminder:', e.message); }
+    }
+
+    // ── Adminga kunlik davomat xulosasi (18:30) ──
+    if (hhmm === '18:30' && lastDailySummary !== today && now.getDay() !== 0) {
+      lastDailySummary = today;
+      try {
+        const staff = (await readStaff()).filter(s => s.active !== false);
+        let txt = `🌆 *Kunlik xulosa — ${today}*\n\n`;
+        let totalH = 0;
+        for (const s of staff) {
+          const rec = (s.attendance || []).find(a => a.date === today);
+          const absent = (s.absences || []).find(a => a.date === today);
+          if (absent) { txt += `❌ ${s.name}: kelmadi${absent.reason ? ` (${absent.reason})` : ''}\n`; continue; }
+          if (!rec || !rec.in) { txt += `⚪️ ${s.name}: belgilanmagan\n`; continue; }
+          const d = computeDayHours(rec.in, rec.out || nowHHMM(), rec.leave_min);
+          totalH += d.normalH;
+          let marks = (rec.late ? ' ⚠️kech' : '') + (rec.early ? ' 🏃erta' : '');
+          txt += `${rec.out ? '✅' : '🟢'} ${s.name}: ${rec.in} → ${rec.out || 'hali ishda'}${marks} (${d.normalH.toFixed(1)}s)\n`;
+          if (rec.in_reason) txt += `   └ ${rec.in_reason}\n`;
+          if (rec.out_reason) txt += `   └ ${rec.out_reason}\n`;
+        }
+        txt += `\n📊 Jami ishlangan: *${totalH.toFixed(1)} soat*`;
+        await msg(ADMIN, txt);
+      } catch (e) { console.error('daily summary:', e.message); }
     }
 
     // Meeting reminders
@@ -2939,6 +3123,8 @@ async function handle(upd) {
       if (cd === 'menu_done') { await showOrdersList(c, 'done'); return; }
       if (cd === 'menu_cancelled') { await showOrdersList(c, 'cancelled'); return; }
       if (cd === 'menu_staff') { await showStaffList(c); return; }
+      if (cd === 'all_att') { await showAllAttendance(c); return; }
+      if (cd === 'disc_report') { await showDisciplineReport(c); return; }
       if (cd === 'menu_home') { await showHomeMenu(c); return; }
       // ── 3-bosqich: kassa, ishxona, shaxsiy, qarzlar ──
       if (cd === 'menu_cash') { await showCashbox(c); return; }
@@ -2985,6 +3171,37 @@ async function handle(upd) {
       if (cd === 'att_out_now') { const now = nowTZ(); await attCheckOut(c, ('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2)); return; }
       if (cd === 'att_manual') { const s = await staffByChat(c); if (s) await showAttManual(c, s); return; }
       if (cd === 'leave_menu') { const s = await staffByChat(c); if (s) await showLeaveMenu(c, s); return; }
+      if (cd === 'late_skip' || cd === 'early_skip') { delete orderState[c]; await msg(c, 'Mayli. Keyin xohlasangiz, jadvalga sabab qo\'shib qo\'yasiz.'); return; }
+      // Sabab toifasi tanlandi: rc_<ctx>_<code>
+      if (cd.startsWith('rc_')) {
+        const parts = cd.split('_'); const ctx = parts[1]; const code = parts.slice(2).join('_');
+        const st = orderState[c];
+        if (code === 'boshqa') {
+          // matn so'raymiz — step o'zgarmaydi, faqat belgilaymiz
+          if (st) st.awaitText = true;
+          await msg(c, '✍️ Sababini yozing:');
+          return;
+        }
+        const label = reasonCatLabel(code);
+        if (ctx === 'late' && st) {
+          await attSaveReason(c, st.staffId, st.date, 'in_reason', label);
+          const nm = (await staffByChat(c) || {}).name || '';
+          delete orderState[c];
+          await msg(c, '✅ Rahmat, sabab yozildi.');
+          try { await msg(ADMIN, `⚠️ *Kech kelish*\n👷 ${nm}\n🕐 ${st.inTime}\nSabab: ${label}`); } catch (e) {}
+        } else if (ctx === 'early' && st) {
+          await attSaveReason(c, st.staffId, st.date, 'out_reason', label);
+          const nm = (await staffByChat(c) || {}).name || '';
+          delete orderState[c];
+          await msg(c, '✅ Rahmat, sabab yozildi.');
+          try { await msg(ADMIN, `⚠️ *Erta ketish*\n👷 ${nm}\n🕐 ${st.outTime}\nSabab: ${label}`); } catch (e) {}
+        } else if ((ctx === 'lvpartial' || ctx === 'lvdayoff' || ctx === 'lvearly') && st) {
+          st.chosenReason = label;
+          await leaveFinalize(c, st);
+        }
+        return;
+      }
+      if (cd === 'att_table') { const s = await staffByChat(c); if (s) await showAttTable(c, s); return; }
       if (cd === 'leave_partial') { const s = await staffByChat(c); if (s) { orderState[c] = { step: 'leave_partial_hours', staffId: s.id }; await btn(c, '🕐 *Vaqtincha chiqish*\\n\\nNecha soatga chiqasiz? Raqam yozing. Masalan: 2 yoki 1.5', [[{ text: '❌ Bekor', callback_data: 'leave_menu' }]]); } return; }
       if (cd === 'leave_dayoff') { const s = await staffByChat(c); if (s) { orderState[c] = { step: 'leave_dayoff_when', staffId: s.id }; await btn(c, '📅 *Kelmaslik*\\n\\nQaysi kun kela olmaysiz?', [[{ text: 'Bugun', callback_data: 'lvday_today' }, { text: 'Ertaga', callback_data: 'lvday_tomorrow' }], [{ text: '❌ Bekor', callback_data: 'leave_menu' }]]); } return; }
       if (cd === 'leave_early') { const s = await staffByChat(c); if (s) { orderState[c] = { step: 'leave_early_time', staffId: s.id }; await btn(c, '🏃 *Erta ketish*\\n\\nBugun soat nechada ketmoqchisiz? HH:MM yozing. Masalan: 16:00', [[{ text: '❌ Bekor', callback_data: 'leave_menu' }]]); } return; }
@@ -2993,8 +3210,8 @@ async function handle(upd) {
         if (s) {
           const d = nowTZ(); if (cd === 'lvday_tomorrow') d.setDate(d.getDate() + 1);
           const ds = ('0'+d.getDate()).slice(-2)+'.'+('0'+(d.getMonth()+1)).slice(-2)+'.'+d.getFullYear();
-          orderState[c] = { step: 'leave_dayoff_reason', staffId: s.id, leaveDate: ds };
-          await btn(c, `📅 *${ds}* kela olmaysiz.\\n\\nSababini qisqa yozing:`, [[{ text: '❌ Bekor', callback_data: 'leave_menu' }]]);
+          orderState[c] = { step: 'leave_reason_cat', flow: 'dayoff', staffId: s.id, leaveDate: ds };
+          await askReasonCats(c, 'lvdayoff', `📅 *${ds}* kela olmaysiz.\n\nSababini tanlang:`);
         }
         return;
       }
@@ -3052,6 +3269,8 @@ async function handle(upd) {
         if (t === '🏁 Ketdim') { await attCheckOut(c, nowHHMM()); const s2 = await staffByChat(c); if (s2) await showWorkerPanel(c, s2); return; }
         if (t === '🙋 Javob so\'rash') { await showLeaveMenu(c, ws); return; }
         if (t === '💵 Hisobim') { await showWorkerAccount(c, ws); return; }
+        if (t === '📅 Jadval') { await showAttTable(c, ws); return; }
+        if (t === '🏠 Bosh menyu') { await showWorkerPanel(c, ws); return; }
       }
     }
 
@@ -3196,8 +3415,14 @@ async function handle(upd) {
       else if (st.step === 'leave_partial_hours') {
         const num = parseFloat(t.replace(/[^\d.,]/g, '').replace(/,/g, '.'));
         if (isNaN(num) || num <= 0 || num > 9) { await msg(c, '❗️ Soatni raqam bilan yozing. Masalan: 2 yoki 1.5'); return; }
-        st.leaveHours = num; st.step = 'leave_partial_reason';
-        await btn(c, `🕐 *${num} soat*ga chiqasiz.\n\nSababini qisqa yozing:`, [[{ text: '❌ Bekor', callback_data: 'leave_menu' }]]);
+        st.leaveHours = num; st.flow = 'partial'; st.step = 'leave_reason_cat';
+        await askReasonCats(c, 'lvpartial', `🕐 *${num} soat*ga chiqasiz.\n\nSababini tanlang:`);
+        return;
+      }
+      else if (st.step === 'leave_reason_cat' && st.awaitText) {
+        // "Boshqa" tanlangan — matn kiritildi
+        st.typedReason = t.trim(); st.awaitText = false;
+        await leaveFinalize(c, st);
         return;
       }
       else if (st.step === 'leave_partial_reason') {
@@ -3217,8 +3442,8 @@ async function handle(upd) {
       else if (st.step === 'leave_early_time') {
         const hm = hmToMin(t);
         if (hm == null) { await msg(c, '❗️ Soatni HH:MM ko\'rinishida yozing. Masalan: 16:00'); return; }
-        st.leaveTime = minToHm(hm); st.step = 'leave_early_reason';
-        await btn(c, `🏃 Bugun *${st.leaveTime}* da ketasiz.\n\nSababini qisqa yozing:`, [[{ text: '❌ Bekor', callback_data: 'leave_menu' }]]);
+        st.leaveTime = minToHm(hm); st.flow = 'early'; st.step = 'leave_reason_cat';
+        await askReasonCats(c, 'lvearly', `🏃 Bugun *${st.leaveTime}* da ketasiz.\n\nSababini tanlang:`);
         return;
       }
       else if (st.step === 'leave_early_reason') {
@@ -3226,6 +3451,20 @@ async function handle(upd) {
         const lv = { id: uid(), type: 'early', date: todayStr(), time, reason, status: 'pending', requested: todayStr() };
         const s2 = await saveLeaveRequest(c, id, lv);
         if (s2) { await msg(c, `⏳ So'rov yuborildi: bugun ${time} da ketish.\nIbrohim tasdiqlashini kuting.`); await sendLeaveToAdmin(s2, lv); }
+        return;
+      }
+      else if (st.step === 'late_reason') {
+        const reason = t.trim(); const { staffId, date, inTime } = st; delete orderState[c];
+        await attSaveReason(c, staffId, date, 'in_reason', reason);
+        await msg(c, '✅ Rahmat, sabab yozildi.');
+        try { await msg(ADMIN, `⚠️ *Kech kelish*\n👷 ${(await staffByChat(c) || {}).name || ''}\n🕐 ${inTime} (${date})\nSabab: ${reason}`); } catch (e) {}
+        return;
+      }
+      else if (st.step === 'early_reason') {
+        const reason = t.trim(); const { staffId, date, outTime } = st; delete orderState[c];
+        await attSaveReason(c, staffId, date, 'out_reason', reason);
+        await msg(c, '✅ Rahmat, sabab yozildi.');
+        try { await msg(ADMIN, `⚠️ *Erta ketish*\n👷 ${(await staffByChat(c) || {}).name || ''}\n🕐 ${outTime} (${date})\nSabab: ${reason}`); } catch (e) {}
         return;
       }
       else if (st.step === 'stf_sal_amount') {
@@ -3300,6 +3539,7 @@ async function handle(upd) {
             [{ text: '💳 Qarzlar', callback_data: 'menu_debts' }],
             [{ text: '📊 Umumiy hisobot', callback_data: 'menu_summary' }]
           ] } });
+        try { await msgKb(c, '👇 Tezkor menyu pastda:', adminKeyboard()); } catch (e) {}
         return;
       }
       // Xodimmi? (telegram ulangan)
@@ -3320,6 +3560,28 @@ async function handle(upd) {
     }
 
     if (isAdmin) {
+      // Reply-keyboard tugmalari (matn sifatida keladi)
+      if (t === '🏠 Bosh menyu') {
+        state[c] = {}; delete orderState[c];
+        await api('sendMessage', { chat_id: c, parse_mode: 'Markdown',
+          text: '🏠 *Bosh menyu*',
+          reply_markup: { inline_keyboard: [
+            [{ text: '🆕 Yangi buyurtma', callback_data: 'start_order' }],
+            [{ text: '📁 Buyurtmalar', callback_data: 'menu_orders' }],
+            [{ text: '✅ Tugatilganlar', callback_data: 'menu_done' }, { text: '🚫 Bekor qilinganlar', callback_data: 'menu_cancelled' }],
+            [{ text: '👷 Xodimlar', callback_data: 'menu_staff' }, { text: '💰 Kassa', callback_data: 'menu_cash' }],
+            [{ text: '🏭 Ishxona xarajatlari', callback_data: 'menu_office_exp' }],
+            [{ text: '👛 Shaxsiy xarajatlar', callback_data: 'menu_personal_exp' }],
+            [{ text: '💳 Qarzlar', callback_data: 'menu_debts' }],
+            [{ text: '📊 Umumiy hisobot', callback_data: 'menu_summary' }]
+          ] } });
+        return;
+      }
+      if (t === '📊 Hisobot') { await sendReport(c); return; }
+      if (t === '👷 Xodimlar') { await showStaffList(c); return; }
+      if (t === '👥 Davomat') { await showAllAttendance(c); return; }
+      if (t === '💰 Kassa') { await showCashbox(c); return; }
+      if (t === '📋 Bugun') { await sendDailyBriefing(c); return; }
       if (t === '/hisobot') { await sendReport(c); return; }
       if (t === '/bugun') { await sendDailyBriefing(c); return; }
       if (t === '/vazifalar') {
