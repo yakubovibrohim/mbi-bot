@@ -22,5 +22,13 @@
     "amount_uzs": 100000,
     "rate": 12000,
     "note": ""
+  },
+  {
+    "id": "mqtcp94ie5ly",
+    "date": "25.06.2026",
+    "name": "Damas remont",
+    "amount_uzs": 400000,
+    "rate": 12000,
+    "note": ""
   }
 ]
