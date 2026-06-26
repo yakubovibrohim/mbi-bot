@@ -3726,6 +3726,24 @@ FAQAT O'zbek yoki Rus tilida yoz. Mijoz qaysi tilda yozsa — shu tilda javob be
 - Bo'laklarni "|||" belgisi bilan ajrat. Tizim ularni alohida xabar qilib yuboradi.
   Masalan: "Zo'r, 3 metrli oshxona qulay chiqadi.|||Bunaqasi bizda 390$dan boshlanadi.|||Aniq narx uchun bir-ikki narsani aniqlasak bo'ldi."
 - Agar javob bitta qisqa jumla bo'lsa, "|||" shart emas.
+- HAR DOIM javobni "|||" bilan bo'llaklarga ajrat — bu eng muhim qoida. Bitta uzun blok HECH QACHON yuborma.
+
+═══ MISOLLAR (shu ohangda yoz) ═══
+
+❌ YOMON (sovuq, uzun, shablon, bo'linmagan):
+"Zakazga mebella ham qilamiz, albatta. Biz 200+ oilaga mebel o'rnatganmiz, Instagram profilimizda ishlarimizni ko'rishingiz mumkin. Sizga qanaqa mebel kerak — oshxona, shkaf yoki boshqa narsa?"
+
+✅ YAXSHI (iliq, qisqa, bo'lingan):
+Mijoz: "Mebel zakazga qilasilami"
+Sen: "Ha, albatta!|||Buyurtmaga qilamiz — o'lcham va dizayningizga moslab.|||Qanaqa mebel kerak edi, oshxonami yoki shkaf?"
+
+✅ YAXSHI:
+Mijoz: "Ofis mebel kerak edi"
+Sen: "Ofis mebelini ham qilamiz 👍|||Nechta xona, taxminan qancha stol-shkaf kerak?"
+
+✅ YAXSHI (narx so'raganda):
+Mijoz: "Narxi qancha?"
+Sen: "Narxi o'lchamga bog'liq, hozir aniqlab beraman.|||Oshxona bo'lsa 390$/metrdan boshlanadi — korpus LMDF, fasad akril.|||Necha metrli joy bor sizda?"
 
 ═══ ASOSIY QOIDA ═══
 🔴 Suhbat tarixini diqqat bilan o'qi. Mijoz ALLAQACHON javob bergan savolni HECH QACHON qayta so'rama. Xona va o'lcham ma'lum bo'lsa — to'g'ridan-to'g'ri narx/qiymat va keyingi qadamga o't.
@@ -3785,7 +3803,7 @@ Mijoz qiziqsa, raqamini ol va qo'ng'iroqqa o'tkaz:
     // Use GROQ API - fast, good Uzbek support
     const messages = [{ role: 'system', content: SYSTEM }, ...history];
     const body = JSON.stringify({
-      model: 'meta-llama/llama-4-scout-17b-16e-instruct',
+      model: 'openai/gpt-oss-120b',
       max_tokens: 280,
       messages: messages
     });
@@ -3958,7 +3976,7 @@ async function handleIGComment(c) {
 function aiCommentReply(commentText) {
   return new Promise((res) => {
     const body = JSON.stringify({
-      model: 'meta-llama/llama-4-scout-17b-16e-instruct',
+      model: 'openai/gpt-oss-120b',
       max_tokens: 60,
       messages: [
         { role: 'system', content: IG_COMMENT_SYSTEM },
@@ -4032,7 +4050,22 @@ async function igFlush(from) {
   }
 
   // Split reply into separate messages on "|||" and send with a small pause
-  const pieces = reply.split('|||').map(p => p.trim()).filter(Boolean);
+  let pieces = reply.split('|||').map(p => p.trim()).filter(Boolean);
+  // Fallback: agar model "|||" qo'ymagan bo'lsa, javob uzun bo'lsa qatorlar/jumlalar bo'yicha bo'lamiz
+  if (pieces.length === 1 && pieces[0].length > 90) {
+    let parts = pieces[0].split('\n').map(p => p.trim()).filter(Boolean);
+    if (parts.length === 1) {
+      // qatorlar yo'q — jumlalarga bo'l (. ? !)
+      parts = pieces[0].match(/[^.!?]+[.!?]*/g)?.map(p => p.trim()).filter(Boolean) || parts;
+    }
+    // 3 ta bo'lakdan oshmasin — qolganini birlashtir
+    if (parts.length > 3) {
+      const head = parts.slice(0, 2);
+      head.push(parts.slice(2).join(' '));
+      parts = head;
+    }
+    if (parts.length > 1) pieces = parts;
+  }
   for (let i = 0; i < pieces.length; i++) {
     try {
       const sendResult = await igSend(from, pieces[i]);
