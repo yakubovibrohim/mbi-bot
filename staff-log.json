@@ -387,7 +387,8 @@
         "in": "09:03",
         "out": "17:44",
         "late": false,
-        "early": true
+        "early": true,
+        "out_reason": "Kasal"
       }
     ],
     "tg_chat_id": "6586787202"
