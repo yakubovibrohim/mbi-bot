@@ -4129,17 +4129,6 @@ http.createServer((req, res) => {
     });
   } else if (req.method==='OPTIONS') {
     res.writeHead(200,{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'POST,OPTIONS','Access-Control-Allow-Headers':'Content-Type'});res.end();
-  } else if (req.method === 'GET' && req.url === '/acctype') {
-    const path = '/v21.0/me?fields=id,username,account_type,user_id&access_token=' + IG_TOKEN;
-    const r2 = https.request({ hostname: 'graph.instagram.com', path, method: 'GET' }, res2 => {
-      let d = ''; res2.on('data', c => d += c); res2.on('end', () => {
-        res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
-        res.end(d);
-      });
-    });
-    r2.on('error', e => { res.writeHead(200); res.end('err: ' + e.message); });
-    r2.end();
-    return;
   } else if (req.method === 'GET' && req.url === '/rawdump') {
     const token = IG_TOKEN;
     const hex = Buffer.from(token).toString('hex');
