@@ -144,5 +144,37 @@
     "finished_date": null,
     "cancelled_date": null,
     "cancel_reason": ""
+  },
+  {
+    "id": "mqv2a7hxs1de",
+    "date": "26.06.2026",
+    "ts": "2026-06-26T15:03:57.813Z",
+    "client": "Sevara opa Taqachi",
+    "phone": "+998712470315",
+    "types": [
+      "Oshxona mebeli"
+    ],
+    "contract_sum_usd": 4500,
+    "contract_sum_uzs": 54000000,
+    "rate": 12000,
+    "address": "Taqachi",
+    "deadline_days": 40,
+    "deadline_date": "12.08.2026",
+    "note": "",
+    "stage": "Yangi buyurtma",
+    "status": "active",
+    "payments": [
+      {
+        "id": "mqv2a7hxp3wx",
+        "date": "26.06.2026",
+        "amount_uzs": 24000000,
+        "rate": 12000,
+        "note": "Avans"
+      }
+    ],
+    "expenses": [],
+    "finished_date": null,
+    "cancelled_date": null,
+    "cancel_reason": ""
   }
 ]
