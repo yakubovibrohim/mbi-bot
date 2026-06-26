@@ -3062,8 +3062,20 @@ async function monCheckSelf() {
   if (!ig.ok && ig.err !== 'skip') {
     const e = ig.err.toLowerCase();
     if (e.includes('disabled access') || e.includes('code 200') || e.includes('(#200)')) {
+      // Avval avtomatik tuzatishga urinamiz — ba'zan toggle emas, obuna uzilgan bo'ladi (API tuzata oladi)
+      const fixed = await monFixIG();
+      if (fixed) {
+        // Qayta tekshiramiz — chindan tuzaldimi
+        const recheck = await monIG();
+        if (recheck.ok) {
+          msg(ADMIN, `🔧 Instagram DM obunasi uzilgan edi — avtomatik qayta yoqdim, hozir ishlayapti (${monTime()}).`).catch(() => {});
+          monClear('mbi_ig'); monClear('mbi_ig_toggle');
+          return;
+        }
+      }
+      // API tuzata olmadi — demak haqiqatan toggle qo'lda o'chirilgan
       monAlert('mbi_ig_toggle',
-        `⚠️ *Instagram DM yopilgan!*\n\nXato: \`${ig.err}\`\n\nYechim: Instagram ilovasi → Sozlamalar → «Сообщения» → «Подключенные инструменты» → «Разрешить доступ к сообщениям» yoqing.`);
+        `⚠️ *Instagram DM yopilgan!*\n\nXato: \`${ig.err}\`\n\nAvtomatik tuzatishga urindim, ammo bu sozlamani faqat qo'lda yoqish mumkin:\nInstagram ilovasi → Sozlamalar → «Сообщения» → «Подключенные инструменты» → «Разрешить доступ к сообщениям» yoqing.`);
     } else {
       if (await monFixIG())
         msg(ADMIN, `🔧 mbi-bot Instagram obunasini qayta yoqdim (${monTime()}).`).catch(() => {});
