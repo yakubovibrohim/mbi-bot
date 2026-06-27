@@ -278,6 +278,13 @@
         "date": "20.06.2026",
         "amount_usd": 400,
         "entered_by": "admin"
+      },
+      {
+        "id": "mqw081xonlkb",
+        "date": "27.06.2026",
+        "amount_usd": 100,
+        "entered_by": "admin",
+        "pending": true
       }
     ],
     "attendance": [
