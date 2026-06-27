@@ -389,6 +389,12 @@
         "late": false,
         "early": true,
         "out_reason": "Kasal"
+      },
+      {
+        "date": "27.06.2026",
+        "in": "08:53",
+        "out": null,
+        "late": false
       }
     ],
     "tg_chat_id": "6586787202"
