@@ -1907,7 +1907,7 @@ async function buildYearExcel(y) {
 function groqChat(system, userText, maxTokens) {
   return new Promise((resolve) => {
     const body = JSON.stringify({
-      model: 'llama-3.3-70b-versatile', max_tokens: maxTokens || 600,
+      model: 'openai/gpt-oss-120b', max_tokens: maxTokens || 600, reasoning_effort: 'low',
       messages: [{ role: 'system', content: system }, { role: 'user', content: userText }]
     });
     const req = https.request({
@@ -1931,7 +1931,7 @@ function groqChat(system, userText, maxTokens) {
 function groqText(system, userText, maxTokens) {
   return new Promise((resolve) => {
     const body = JSON.stringify({
-      model: 'llama-3.3-70b-versatile', max_tokens: maxTokens || 600,
+      model: 'openai/gpt-oss-120b', max_tokens: maxTokens || 600, reasoning_effort: 'low',
       messages: [{ role: 'system', content: system }, { role: 'user', content: userText }]
     });
     const req = https.request({
@@ -2622,7 +2622,7 @@ async function handleInvoicePhoto(chatId, photo) {
     const base64img = imgBuf.toString('base64');
 
     const body = JSON.stringify({
-      model: 'llama-3.2-90b-vision-preview', max_tokens: 1000,
+      model: 'meta-llama/llama-4-scout-17b-16e-instruct', max_tokens: 1000,
       messages: [{ role: 'user', content: [
         { type: 'image_url', image_url: { url: 'data:image/jpeg;base64,' + base64img } },
         { type: 'text', text: 'Bu nakładnoy rasmidan ma\'lumotlarni chiqar. FAQAT JSON (markdown yo\'q):\n{"supplier":"nom","invoice_no":"raqam","date":"DD.MM.YYYY","total":son,"currency":"USD","items":[{"name":"nom","qty":son,"price":son,"total":son}]}' }
@@ -3816,7 +3816,8 @@ Mijoz qiziqsa, raqamini ol va qo'ng'iroqqa o'tkaz:
     const messages = [{ role: 'system', content: SYSTEM }, ...history];
     const body = JSON.stringify({
       model: 'openai/gpt-oss-120b',
-      max_tokens: 280,
+      max_tokens: 400,
+      reasoning_effort: 'low',
       messages: messages
     });
     const req = https.request({
@@ -3989,7 +3990,8 @@ function aiCommentReply(commentText) {
   return new Promise((res) => {
     const body = JSON.stringify({
       model: 'openai/gpt-oss-120b',
-      max_tokens: 60,
+      max_tokens: 200,
+      reasoning_effort: 'low',
       messages: [
         { role: 'system', content: IG_COMMENT_SYSTEM },
         { role: 'user', content: commentText }
@@ -4266,6 +4268,7 @@ http.createServer((req, res) => {
     return;
   } else { res.writeHead(200);res.end('MBI Bot running!'); }
 }).listen(PORT, ()=>console.log('Bot running on port '+PORT));
+
 
 
 
