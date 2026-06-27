@@ -45,16 +45,16 @@
         "code": "01038",
         "qty": 10,
         "unit": "шт",
-        "price": 1.0,
-        "total": 10.0
+        "price": 1,
+        "total": 10
       },
       {
         "name": "Петля GTV Г08-3Д (без евро шурупа)",
         "code": "01033",
         "qty": 10,
         "unit": "шт",
-        "price": 1.0,
-        "total": 10.0
+        "price": 1,
+        "total": 10
       },
       {
         "name": "МС600 Направл. Модерн Слайд 3D 600мм",
@@ -62,7 +62,7 @@
         "qty": 6,
         "unit": "шт",
         "price": 12.5,
-        "total": 75.0
+        "total": 75
       },
       {
         "name": "БТ-06 Клей силикон Апел 310мл",
@@ -76,5 +76,18 @@
     "total": 112.6,
     "currency": "USD",
     "note": "Накладная №68798 от 06.06.2026"
+  },
+  {
+    "date": "27.06.2026",
+    "supplier": "noma'lum",
+    "deal": "noma'lum",
+    "currency": "UZS",
+    "total_override": 1120000,
+    "items": [
+      {
+        "name": "noma'lum",
+        "qty": 1
+      }
+    ]
   }
 ]
