@@ -4031,23 +4031,38 @@ function igReplyToComment(commentId, message) {
 // ─── Comment polling: webhook comment event'lari ishonchsiz, shuning uchun
 // API orqali har tick'da yangi komentlarni o'zimiz tekshiramiz va javob beramiz.
 let igPollStarted = 0;          // birinchi tick vaqti — eski komentlarni o'tkazib yuborish uchun
-const IG_POLL_MAX_AGE_MS = 48 * 3600 * 1000;  // faqat oxirgi 48 soatlik komentlarga javob
+const IG_POLL_MAX_AGE_MS = 24 * 3600 * 1000;  // faqat oxirgi 24 soatlik komentlarga javob
 async function pollIGComments() {
   if (!IG_TOKEN) return;
   if (!igPollStarted) igPollStarted = Date.now();
+  const tok = encodeURIComponent(IG_TOKEN);
   try {
-    // Oxirgi 5 ta media
-    const mRes = await monFetch(`https://graph.instagram.com/v21.0/${MON.igUserId}/media?fields=id&limit=5&access_token=${encodeURIComponent(IG_TOKEN)}`, {}, 20000);
-    const mData = await mRes.json();
-    if (!mData.data) return;
-    for (const media of mData.data) {
-      // Har media komentlari (eng yangi avval)
-      const cRes = await monFetch(`https://graph.instagram.com/v21.0/${media.id}/comments?fields=id,text,timestamp,username,from&limit=25&access_token=${encodeURIComponent(IG_TOKEN)}`, {}, 20000);
+    // BARCHA media (paginatsiya bilan) — eng eski postgacha
+    let mediaUrl = `https://graph.instagram.com/v21.0/${MON.igUserId}/media?fields=id&limit=50&access_token=${tok}`;
+    const allMedia = [];
+    let guard = 0;
+    while (mediaUrl && guard < 20) {
+      guard++;
+      const mRes = await monFetch(mediaUrl, {}, 20000);
+      const mData = await mRes.json();
+      if (!mData.data) break;
+      for (const m of mData.data) allMedia.push(m.id);
+      mediaUrl = mData.paging?.next || null;
+    }
+
+    for (const mediaId of allMedia) {
+      // Har media komentlari (eng yangi avval keladi)
+      const cRes = await monFetch(`https://graph.instagram.com/v21.0/${mediaId}/comments?fields=id,text,timestamp,username,from&limit=25&access_token=${tok}`, {}, 20000);
       const cData = await cRes.json();
-      if (!cData.data) continue;
+      if (!cData.data || cData.data.length === 0) continue;
+
+      // Optimizatsiya: eng yangi koment 24 soatdan eski bo'lsa, bu postni butunlay o'tkazamiz
+      const newestTs = cData.data[0].timestamp ? Date.parse(cData.data[0].timestamp) : 0;
+      if (newestTs && (Date.now() - newestTs) > IG_POLL_MAX_AGE_MS) continue;
+
       for (const cm of cData.data) {
         if (!cm.id || igRepliedComments.has(cm.id)) continue;
-        // Vaqt filtri — eski komentlarga javob bermaymiz
+        // Vaqt filtri — faqat oxirgi 24 soatlik komentlar
         const ts = cm.timestamp ? Date.parse(cm.timestamp) : 0;
         if (ts && (Date.now() - ts) > IG_POLL_MAX_AGE_MS) continue;
         // O'z komentimizni o'tkazib yuboramiz
