@@ -3937,15 +3937,8 @@ async function handleIGComment(c) {
   if (commenterId && commenterId === IG_USER_ID) return;
   if (igRepliedComments.has(commentId)) return; // already handled
 
-  // Keyword filter — only react to sales/info intent
-  const low = text.toLowerCase();
-  const hit = IG_COMMENT_KEYWORDS.some(k => low.includes(k));
-  if (!hit) {
-    console.log('IG comment: no keyword, skipping:', text.slice(0, 40));
-    return;
-  }
-
-  console.log('IG comment MATCH from', commenterName, '| text:', text);
+  // No keyword filter — reply to EVERY comment (AI reads it and picks the tone)
+  console.log('IG comment from', commenterName, '| text:', text);
   igRepliedComments.add(commentId);
   // Keep the set from growing forever
   if (igRepliedComments.size > 2000) {
