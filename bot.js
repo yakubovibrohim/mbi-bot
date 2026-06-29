@@ -4015,7 +4015,7 @@ function igReplyToComment(commentId, message) {
   return new Promise((res) => {
     const body = 'message=' + encodeURIComponent(message) + '&access_token=' + encodeURIComponent(IG_TOKEN);
     const req = https.request({
-      hostname: 'graph.facebook.com',
+      hostname: 'graph.instagram.com',
       path: '/v21.0/' + commentId + '/replies',
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': Buffer.byteLength(body) }
