@@ -142,5 +142,13 @@
     "rate": 12000,
     "type": "personal",
     "ts": "2026-06-29T12:27:47.455Z"
+  },
+  {
+    "date": "29.06.2026",
+    "note": "Musor uchun",
+    "amount_uzs": 150000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-29T12:28:47.022Z"
   }
 ]
