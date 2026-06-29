@@ -3088,6 +3088,7 @@ async function monCheckSelf() {
 async function monitorTick() {
   try { await monCheckTanNarx(); } catch (e) { console.error('mon tannarx:', e.message); }
   try { await monCheckSelf(); } catch (e) { console.error('mon self:', e.message); }
+  try { await pollIGComments(); } catch (e) { console.error('poll IG comments:', e.message); }
 }
 
 if (MON.renderKey || MON.tnToken || IG_TOKEN) {
@@ -4025,6 +4026,45 @@ function igReplyToComment(commentId, message) {
     req.on('error', (e) => { console.log('igReplyToComment err:', e.message); res({}); });
     req.write(body); req.end();
   });
+}
+
+// ─── Comment polling: webhook comment event'lari ishonchsiz, shuning uchun
+// API orqali har tick'da yangi komentlarni o'zimiz tekshiramiz va javob beramiz.
+let igPollStarted = 0;          // birinchi tick vaqti — eski komentlarni o'tkazib yuborish uchun
+const IG_POLL_MAX_AGE_MS = 48 * 3600 * 1000;  // faqat oxirgi 48 soatlik komentlarga javob
+async function pollIGComments() {
+  if (!IG_TOKEN) return;
+  if (!igPollStarted) igPollStarted = Date.now();
+  try {
+    // Oxirgi 5 ta media
+    const mRes = await monFetch(`https://graph.instagram.com/v21.0/${MON.igUserId}/media?fields=id&limit=5&access_token=${encodeURIComponent(IG_TOKEN)}`, {}, 20000);
+    const mData = await mRes.json();
+    if (!mData.data) return;
+    for (const media of mData.data) {
+      // Har media komentlari (eng yangi avval)
+      const cRes = await monFetch(`https://graph.instagram.com/v21.0/${media.id}/comments?fields=id,text,timestamp,username,from&limit=25&access_token=${encodeURIComponent(IG_TOKEN)}`, {}, 20000);
+      const cData = await cRes.json();
+      if (!cData.data) continue;
+      for (const cm of cData.data) {
+        if (!cm.id || igRepliedComments.has(cm.id)) continue;
+        // Vaqt filtri — eski komentlarga javob bermaymiz
+        const ts = cm.timestamp ? Date.parse(cm.timestamp) : 0;
+        if (ts && (Date.now() - ts) > IG_POLL_MAX_AGE_MS) continue;
+        // O'z komentimizni o'tkazib yuboramiz
+        const fromId = cm.from?.id;
+        if (fromId && fromId === MON.igUserId) continue;
+        // handleIGComment formatiga moslab uzatamiz
+        await handleIGComment({
+          id: cm.id,
+          text: cm.text || '',
+          from: { id: fromId, username: cm.username || cm.from?.username || '' }
+        });
+        await new Promise(r => setTimeout(r, 800));  // rate-limit ehtiyot
+      }
+    }
+  } catch (e) {
+    console.error('pollIGComments xato:', e.message);
+  }
 }
 
 // After debounce window: combine buffered parts, get AI reply, send split into pieces
