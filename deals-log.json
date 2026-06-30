@@ -200,6 +200,22 @@
         "rate": 12000,
         "note": "",
         "source": "manual"
+      },
+      {
+        "id": "mr06lg5hchfa",
+        "date": "30.06.2026",
+        "products": [
+          {
+            "name": "Присадка",
+            "qty": 1,
+            "price_uzs": 2196015,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 2196015,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
       }
     ],
     "finished_date": null,
