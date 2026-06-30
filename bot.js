@@ -4068,6 +4068,17 @@ async function pollIGComments() {
         // O'z komentimizni o'tkazib yuboramiz
         const fromId = cm.from?.id;
         if (fromId && fromId === MON.igUserId) continue;
+        // MUHIM: Instagram'dan tekshiramiz — bu komentга allaqachon javob berganmizmi?
+        // (RAM restart'da igRepliedComments o'chadi, shuning uchun haqiqiy holatni tekshiramiz)
+        try {
+          const repRes = await monFetch(`https://graph.instagram.com/v21.0/${cm.id}/replies?fields=from&access_token=${tok}`, {}, 15000);
+          const repData = await repRes.json();
+          const alreadyReplied = (repData.data || []).some(r => r.from?.id === MON.igUserId || r.from?.username === 'mbi_mebel');
+          if (alreadyReplied) {
+            igRepliedComments.add(cm.id);  // keyingi tick uchun belgilaymiz
+            continue;
+          }
+        } catch (e) { /* tekshira olmasa, davom etadi */ }
         // handleIGComment formatiga moslab uzatamiz
         await handleIGComment({
           id: cm.id,
