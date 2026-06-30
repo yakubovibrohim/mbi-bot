@@ -3687,7 +3687,40 @@ const IG_COMMENT_KEYWORDS = [
   'mashaalloh', 'masha alloh', 'maa sha alloh', 'chiqibti', 'chiqibdi'
 ];
 // Remember comment IDs we already answered (avoid double-replies)
+// Persisted to GitHub so it survives Render restarts/deploys.
+const IG_REPLIED_FILE = 'ig-replied-comments.json';
 const igRepliedComments = new Set();
+let igRepliedSaveTimer = null;
+let igRepliedDirty = false;
+
+// Load persisted comment IDs on startup
+(async function loadRepliedComments() {
+  try {
+    const arr = await ghReadAll(IG_REPLIED_FILE);
+    if (Array.isArray(arr)) {
+      for (const id of arr) igRepliedComments.add(id);
+      console.log('Loaded', igRepliedComments.size, 'replied comment IDs');
+    }
+  } catch (e) { console.error('loadRepliedComments:', e.message); }
+})();
+
+// Debounced save (avoid a commit on every single comment)
+function igRepliedSave() {
+  igRepliedDirty = true;
+  if (igRepliedSaveTimer) return;
+  igRepliedSaveTimer = setTimeout(async () => {
+    igRepliedSaveTimer = null;
+    if (!igRepliedDirty) return;
+    igRepliedDirty = false;
+    try {
+      // keep only the most recent ~2000 ids
+      let arr = Array.from(igRepliedComments);
+      if (arr.length > 2000) arr = arr.slice(arr.length - 2000);
+      const { sha } = await ghRead(IG_REPLIED_FILE);
+      await ghPut(IG_REPLIED_FILE, JSON.stringify(arr, null, 2), sha, 'update replied comments');
+    } catch (e) { console.error('igRepliedSave:', e.message); }
+  }, 5000);
+}
 
 // AI writes the public under-comment reply. Reads the comment, picks the right tone.
 const IG_COMMENT_SYSTEM = `Sen MBI Mebel Instagram menejerisan. Postlarga kelgan kommentga QISQA ochiq javob yozasan (komment ostiga, hamma ko'radi).
@@ -3941,11 +3974,7 @@ async function handleIGComment(c) {
   // No keyword filter — reply to EVERY comment (AI reads it and picks the tone)
   console.log('IG comment from', commenterName, '| text:', text);
   igRepliedComments.add(commentId);
-  // Keep the set from growing forever
-  if (igRepliedComments.size > 2000) {
-    const first = igRepliedComments.values().next().value;
-    igRepliedComments.delete(first);
-  }
+  igRepliedSave();
 
   // 1) Public reply under the comment (AI reads comment, picks right tone)
   let pub;
@@ -4076,6 +4105,7 @@ async function pollIGComments() {
           const alreadyReplied = (repData.data || []).some(r => r.from?.id === MON.igUserId || r.from?.username === 'mbi_mebel');
           if (alreadyReplied) {
             igRepliedComments.add(cm.id);  // keyingi tick uchun belgilaymiz
+            igRepliedSave();               // persistga ham yozamiz (restart'dan omon qolsin)
             continue;
           }
         } catch (e) { /* tekshira olmasa, davom etadi */ }
