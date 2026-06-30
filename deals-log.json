@@ -172,6 +172,34 @@
         "rate": 12000,
         "note": "",
         "source": "manual"
+      },
+      {
+        "id": "mr06jw69pzc8",
+        "date": "30.06.2026",
+        "products": [
+          {
+            "name": "Лдсп ултрадекор дуб ббарокко ристретто (2800х2070)",
+            "qty": 5,
+            "price_uzs": 590000,
+            "rate": 12000
+          },
+          {
+            "name": "Лмдф egger дуб кунео коричневый (2800х2070)",
+            "qty": 9,
+            "price_uzs": 1020000,
+            "rate": 12000
+          },
+          {
+            "name": "Лхдф (2800х2070)",
+            "qty": 2,
+            "price_uzs": 170000,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 12470000,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
       }
     ],
     "finished_date": null,
