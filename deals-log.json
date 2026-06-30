@@ -140,7 +140,24 @@
         "note": "Avans"
       }
     ],
-    "expenses": [],
+    "expenses": [
+      {
+        "id": "mr06bw6ijhyx",
+        "date": "30.06.2026",
+        "products": [
+          {
+            "name": "19/08 egger ДУБ КУНЕО КОРИЧНЕВЫЙ st28",
+            "qty": 108.9,
+            "price_uzs": 9500,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 1034550,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
+      }
+    ],
     "finished_date": null,
     "cancelled_date": null,
     "cancel_reason": ""
