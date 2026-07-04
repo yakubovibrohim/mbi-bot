@@ -65,6 +65,13 @@
         "date": "25.06.2026",
         "amount_usd": 100,
         "entered_by": "admin"
+      },
+      {
+        "id": "mr68i0gsxdja",
+        "date": "04.07.2026",
+        "amount_usd": 480,
+        "entered_by": "admin",
+        "pending": true
       }
     ],
     "attendance": [
