@@ -477,6 +477,16 @@
         "early": true
       }
     ],
-    "tg_chat_id": "6586787202"
+    "tg_chat_id": "6586787202",
+    "leaves": [
+      {
+        "id": "mr5wgt1mc20o",
+        "type": "dayoff",
+        "date": "04.07.2026",
+        "reason": "Oilaviy",
+        "status": "pending",
+        "requested": "04.07.2026"
+      }
+    ]
   }
 ]
