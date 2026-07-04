@@ -281,6 +281,10 @@
       },
       {
         "date": "25.06.2026"
+      },
+      {
+        "date": "04.07.2026",
+        "reason": "Oilaviy"
       }
     ],
     "advances": [
@@ -490,7 +494,7 @@
         "type": "dayoff",
         "date": "04.07.2026",
         "reason": "Oilaviy",
-        "status": "pending",
+        "status": "approved",
         "requested": "04.07.2026"
       }
     ]
