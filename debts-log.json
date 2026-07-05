@@ -52,5 +52,14 @@
     "paid_uzs": 24000000,
     "date": "05.07.2026",
     "note": "2-etaj mebel"
+  },
+  {
+    "id": "mr81gikgijn7",
+    "dir": "in",
+    "name": "Muhammadyunus",
+    "amount_uzs": 31800000,
+    "paid_uzs": 0,
+    "date": "05.07.2026",
+    "note": "mebel restavratsiya"
   }
 ]
