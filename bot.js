@@ -4046,7 +4046,19 @@ const IG_EXTRA = `
 Isming — Aziza, MBI Mebel menejeri. Mijoz isming so'rasagina ayt, o'zing tanishtirma.
 
 ## FOTO KO'RSATISH
-Mijoz oshxona/shkaf/yotoqxona haqida gapirsa va tayyor ishlarimizni ko'rsatish o'rinli bo'lsa (suhbatda BIRINCHI marta), javob oxiriga qo'sh: [[FOTO:oshxona]] yoki [[FOTO:shkaf]] yoki [[FOTO:yotoqxona]]. Bir suhbatda ko'pi bilan 1 marta. Belgini matn ichida emas, faqat oxirida yoz.`;
+Mijoz oshxona/shkaf/yotoqxona haqida gapirsa va tayyor ishlarimizni ko'rsatish o'rinli bo'lsa (suhbatda BIRINCHI marta), javob oxiriga qo'sh: [[FOTO:oshxona]] yoki [[FOTO:shkaf]] yoki [[FOTO:yotoqxona]]. Bir suhbatda ko'pi bilan 1 marta. Belgini matn ichida emas, faqat oxirida yoz.
+
+## VIDEO KONTEKSTI
+Xabar ichida [Mijoz ... videoni ulashdi. Video tavsifi: "..."] yoki [... komment yozdi. Post tavsifi: "..."] ko'rinsa — mijoz AYNAN O'SHA videodagi mebel haqida so'rayapti. Javobni shu mebelga bog'la (tavsifdan material/tur/ko'rinishini ol: "bu videodagi qora akril oshxona..."), umumiy javob berma. Tavsif yetarli bo'lmasa, aynan o'sha mebel bo'yicha aniqlashtiruvchi savol ber (o'lchami, xonasi). Tavsifda narx bo'lsa ham ANIQ narx sifatida aytma — taxminiy qoidalar o'z kuchida.`;
+
+// ─── Post/reel tavsifini olish (mijoz qaysi mebel haqida so'rayotganini bilish) ───
+async function igMediaCaption(mediaId) {
+  if (!mediaId) return '';
+  try {
+    const j = await httpsGetJson(`https://graph.instagram.com/${mediaId}?fields=caption&access_token=${IG_TOKEN}`);
+    return (j && j.caption) ? String(j.caption).replace(/\s+/g, ' ').slice(0, 400) : '';
+  } catch (e) { return ''; }
+}
 
 // ─── Leadlar bazasi (mini-CRM) ───
 const LEADS_FILE = 'leads.json';
@@ -4237,7 +4249,21 @@ async function handleIG(body) {
     for (const entry of (body.entry || [])) {
       for (const m of (entry.messaging || [])) {
         const from = m.sender?.id;
-        const text = m.message?.text;
+        let text = m.message?.text || '';
+        // Ulashilgan reel/post — qaysi mebel haqida so'ralayotganini aniqlaymiz
+        try {
+          for (const a of (m.message?.attachments || [])) {
+            const p = a.payload || {};
+            if (a.type === 'ig_reel' || a.type === 'share' || a.type === 'story_mention') {
+              let cap = (p.title || '').replace(/\s+/g, ' ').slice(0, 400);
+              if (!cap && p.reel_video_id) cap = await igMediaCaption(p.reel_video_id);
+              if (!cap && p.id) cap = await igMediaCaption(p.id);
+              text += (text ? '\n' : '') + `[Mijoz bizning postni/videoni ulashdi${cap ? '. Video tavsifi: "' + cap + '"' : ' (tavsifi topilmadi — qaysi mebel qiziqtirganini so\'ra)'}]`;
+            } else if (a.type === 'image' || a.type === 'video' || a.type === 'audio') {
+              text += (text ? '\n' : '') + '[Mijoz ' + (a.type === 'image' ? 'rasm' : a.type === 'audio' ? 'ovozli xabar' : 'video') + ' yubordi]';
+            }
+          }
+        } catch (e) { console.error('IG attachment:', e.message); }
         if (!from || !text) continue;
 
         // Skip echo messages (our own sent messages coming back)
@@ -4300,10 +4326,14 @@ async function handleIGComment(c) {
   igRepliedComments.add(commentId);
   igRepliedSave();
 
+  // Qaysi post/video ostiga yozilgan — tavsifini olamiz
+  let mediaCap = '';
+  try { mediaCap = await igMediaCaption(c.media && c.media.id); } catch (e) {}
+
   // 1) Public reply under the comment (AI reads comment, picks right tone)
   let pub;
   try {
-    pub = await aiCommentReply(text);
+    pub = await aiCommentReply(text, mediaCap);
   } catch(e) {
     console.log('aiCommentReply xato, fallback:', e.message);
   }
@@ -4313,7 +4343,7 @@ async function handleIGComment(c) {
   // 2) Private DM with full sales conversation (seed via aiReply)
   if (commenterId) {
     try {
-      const seed = `[Mijoz "${text}" deb postga komment yozdi]`;
+      const seed = `[Mijoz "${text}" deb postga komment yozdi${mediaCap ? '. Post tavsifi: "' + mediaCap + '"' : ''}]`;
       const reply = await aiReply(seed, commenterId);
       const pieces = reply.split('|||').map(p => p.trim()).filter(Boolean);
       for (let i = 0; i < pieces.length; i++) {
@@ -4333,14 +4363,14 @@ async function handleIGComment(c) {
 
 // Post a public reply under a specific comment
 // Generate a short public comment reply via GROQ
-function aiCommentReply(commentText) {
+function aiCommentReply(commentText, mediaCap) {
   return new Promise((res) => {
     const body = JSON.stringify({
       model: 'openai/gpt-oss-120b',
       max_tokens: 200,
       reasoning_effort: 'low',
       messages: [
-        { role: 'system', content: IG_COMMENT_SYSTEM },
+        { role: 'system', content: IG_COMMENT_SYSTEM + (mediaCap ? "\n\nKOMMENT SHU POST OSTIGA YOZILGAN, post tavsifi: \"" + mediaCap + "\" — javobda shu mebelga mos ohang tanla (lekin narx baribir aytilmaydi)." : '') },
         { role: 'user', content: commentText }
       ]
     });
