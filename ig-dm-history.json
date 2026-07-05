@@ -84,6 +84,14 @@
    {
     "role": "assistant",
     "content": "Va Alaykum Assalom, yaxshimisiz tuzumisiz 👍🏻\n\nIsmingiz nima?"
+   },
+   {
+    "role": "user",
+    "content": "Gazi tagini qlasilami maniki oq de"
+   },
+   {
+    "role": "assistant",
+    "content": "Ha, gazni tagini yopib qilamiz 👍🏻\n\nOshxona necha metr, 2 etajmi 3 etaj?"
    }
   ]
  },
@@ -113,7 +121,7 @@
    "followedUp": false
   },
   "1534839131449022": {
-   "lastClientAt": 1783275771923,
+   "lastClientAt": 1783275898834,
    "followedUp": false
   }
  }
