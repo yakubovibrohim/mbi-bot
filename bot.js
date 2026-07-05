@@ -6,6 +6,18 @@ let BOT = process.env.BOT_TOKEN || '';  // secrets'dan yuklanadi
 const ADMIN    = '1487569442';
 const GROQ_KEY = process.env.GROQ_API_KEY;
 const GH_TOKEN = process.env.GITHUB_TOKEN;
+
+// Tizim xatolari jurnali (Botir o'qiydi) — oxirgi 100 ta
+const sysErrors = [];
+const __origConsoleError = console.error.bind(console);
+console.error = (...a) => {
+  try {
+    const m = a.map(x => (x && x.message) ? x.message : (typeof x === 'string' ? x : JSON.stringify(x))).join(' ').slice(0, 200);
+    sysErrors.push({ ts: new Date().toISOString(), msg: m });
+    if (sysErrors.length > 100) sysErrors.shift();
+  } catch (e) {}
+  __origConsoleError(...a);
+};
 const GH_REPO  = 'yakubovibrohim/mbi-bot';
 const TZ       = 'Asia/Tashkent';
 
@@ -2202,8 +2214,9 @@ const BIZ_INFO = `MBI Mebel (Mebel by Ibrohim) — Toshkentda buyurtma asosida m
 
 const AGENTS = {
   botir: { name: 'Botir', role: 'Bosh yordamchi', emoji: '🤖', token: '',
-    sys: `Sen Botir — MBI Mebel xo'jayini Ibrohimning bosh AI yordamchisisan. ${BIZ_INFO}
-Vazifang: umumiy savollarga javob berish va ishlarni muvofiqlashtirish. Qisqa, aniq, samimiy o'zbek tilida (lotin alifbosi) gapir. Agar savol pul/hisob/xarajat haqida bo'lsa, javobing oxiriga [[sardor]] deb qo'sh; mijoz/sotuv/Instagram haqida bo'lsa [[aziza]] deb qo'sh — o'sha hamkasbing davom etadi.` },
+    sys: `Sen Botir — MBI Mebel xo'jayini Ibrohimning bosh AI yordamchisi va TIZIM NAZORATCHISISAN. ${BIZ_INFO}
+Vazifang: (1) umumiy savollar va ishlarni muvofiqlashtirish; (2) butun tizimni nazorat qilish — botlar salomatligi, xatolar, reklama natijalari, buyurtma muddatlari, oxirgi o'zgarishlar. Bularning REAL holati senga REAL TIZIM MA'LUMOTLARI bo'limida beriladi — faqat shunga asoslan, o'zingdan hech narsa to'qima. Tahlil so'ralsa: muammolarni muhimlik tartibida ayt, har biriga qisqa yechim taklif qil.
+Qisqa, aniq, samimiy o'zbek tilida (lotin alifbosi) gapir. Savol pul/hisob haqida bo'lsa javob oxiriga [[sardor]], mijoz/sotuv/Instagram bo'lsa [[aziza]] qo'sh.` },
   aziza: { name: 'Aziza', role: 'Sotuv menejeri', emoji: '👩‍💼', token: '',
     sys: `Sen Aziza — MBI Mebel sotuv menejerisan. ${BIZ_INFO}
 Sen ayni vaqtda Instagram DM'da mijozlar bilan O'ZING yozishasan (avtomatik) — bu suhbatlar va leadlar senga REAL IG MA'LUMOTLAR bo'limida beriladi. Guruhda Ibrohimga suhbatlar holati, leadlar va tahlil bo'yicha javob berasan.
@@ -2652,6 +2665,7 @@ async function handleOffice(upd) {
   let extra = '';
   if (key === 'sardor') extra = '\n\nREAL MA\'LUMOTLAR:\n' + await financeContext();
   if (key === 'aziza') { try { extra = '\n\nREAL IG MA\'LUMOTLAR:\n' + await igContext(); } catch (e) {} }
+  if (key === 'botir') { try { extra = '\n\nREAL TIZIM MA\'LUMOTLARI:\n' + await botirContext(); } catch (e) {} }
   if (hist) extra += `\n\nSO'NGGI SUHBAT:\n${hist}`;
 
   const reply = await aiText(AGENTS[key].sys + extra, t, 900, true);
@@ -3014,6 +3028,101 @@ async function checkReminders() {
 setInterval(checkReminders, 60000);
 
 // ═══════════════════════════════════════════════════════════════
+// ─── Windsor.ai — Meta Ads ma'lumotlari ───
+const WINDSOR_KEY = process.env.WINDSOR_KEY || '';
+async function windsorAds(preset) {
+  if (!WINDSOR_KEY) return [];
+  const j = await httpsGetJson(`https://connectors.windsor.ai/facebook?api_key=${WINDSOR_KEY}&date_preset=${preset || 'last_7d'}&fields=date,campaign,spend,clicks,actions_onsite_conversion_messaging_conversation_started_7d`);
+  return (j && j.data) || [];
+}
+
+// ─── Oxirgi o'zgarishlar (GitHub commitlar) ───
+function ghCommits(n) {
+  return new Promise((res) => {
+    https.get({ hostname: 'api.github.com', path: `/repos/${GH_REPO}/commits?per_page=${n || 5}`,
+      headers: { 'Authorization': 'token ' + GH_TOKEN, 'User-Agent': 'mbi-bot' } }, r => {
+      let d = ''; r.on('data', c => d += c);
+      r.on('end', () => { try { res(JSON.parse(d).map(c => ({ date: c.commit.author.date.slice(0, 10), msg: (c.commit.message || '').split('\n')[0].slice(0, 70) }))); } catch (e) { res([]); } });
+    }).on('error', () => res([]));
+  });
+}
+
+// ─── Botir uchun tizim konteksti ───
+async function botirContext() {
+  const parts = [];
+  // Botlar holati (MON)
+  const st = MON.status || {};
+  const bad = Object.entries(st).filter(([, v]) => !v.ok);
+  parts.push('BOTLAR HOLATI: ' + (bad.length ? bad.map(([k, v]) => `❌ ${k}: ${v.msg}`).join('; ') : "✅ hammasi ishlayapti (oxirgi tekshiruvlarda muammo yo'q)"));
+  // Oxirgi xatolar
+  const errs = sysErrors.slice(-12).map(e => `• ${e.ts.slice(5, 16).replace('T', ' ')} ${e.msg}`).join('\n');
+  parts.push('OXIRGI TIZIM XATOLARI (jurnal):\n' + (errs || '—'));
+  // Muddatlar
+  try {
+    const { data: deals } = await ghRead('deals-log.json');
+    const now = nowTZ(); const dl = [];
+    for (const o of deals) {
+      if ((o.status || 'active') !== 'active' || !o.deadline_date) continue;
+      const due = parseDmy(o.deadline_date);
+      const left = workdaysBetween(now, due);
+      if (due < now) dl.push(`⚠️ ${o.client} — muddat O'TGAN (${o.deadline_date})`);
+      else if (left <= 5) dl.push(`⏳ ${o.client} — ${left} ish kuni qoldi (${o.deadline_date})`);
+    }
+    parts.push('BUYURTMA MUDDATLARI:\n' + (dl.join('\n') || "✅ yaqin muddat xavfi yo'q"));
+  } catch (e) {}
+  // Reklama (Windsor, oxirgi 7 kun)
+  try {
+    const rows = await windsorAds('last_7d');
+    const main = rows.filter(r => (r.campaign || '').includes('Xabarlar'));
+    const lines = main.map(r => {
+      const conv = Number(r.actions_onsite_conversion_messaging_conversation_started_7d) || 0;
+      const cpc = conv ? (Number(r.spend) / conv).toFixed(2) : '—';
+      return `• ${r.date}: sarf $${Number(r.spend).toFixed(2)} | klik ${Math.round(r.clicks)} | suhbat ${conv} | 1 suhbat $${cpc}`;
+    }).join('\n');
+    const tSpend = main.reduce((s, r) => s + Number(r.spend || 0), 0);
+    const tConv = main.reduce((s, r) => s + (Number(r.actions_onsite_conversion_messaging_conversation_started_7d) || 0), 0);
+    parts.push(`REKLAMA (Meta, oxirgi 7 kun, "MBI – Xabarlar – Toshkent"): jami sarf $${tSpend.toFixed(2)}, suhbatlar ${tConv}, o'rtacha 1 suhbat $${tConv ? (tSpend / tConv).toFixed(2) : '—'}\n${lines || '—'}`);
+  } catch (e) {}
+  // Oxirgi o'zgarishlar
+  try {
+    const cm = await ghCommits(5);
+    parts.push("OXIRGI O'ZGARISHLAR (deploy/kod):\n" + cm.map(c => `• ${c.date} — ${c.msg}`).join('\n'));
+  } catch (e) {}
+  // IG qisqa
+  try {
+    const now = Date.now();
+    const active = Object.values(igActivity).filter(a => now - (a.lastClientAt || 0) < 24 * 3600 * 1000).length;
+    const { list } = await leadsRead();
+    parts.push(`IG DM: 24 soatda faol suhbat ${active} ta | jami leadlar ${list.length} ta (yangi: ${list.filter(l => l.status === 'new').length})`);
+  } catch (e) {}
+  return parts.join('\n\n');
+}
+
+// ─── Reklama nazorati: kunlik tekshiruv 12:00 (Botir ogohlantiradi) ───
+let lastAdsCheckDay = '';
+setInterval(async () => {
+  try {
+    const d = nowTZ();
+    if (d.getHours() !== 12 || d.getMinutes() >= 2) return;
+    const today = todayStr();
+    if (lastAdsCheckDay === today || !WINDSOR_KEY) return;
+    lastAdsCheckDay = today;
+    const rows = (await windsorAds('last_7d')).filter(r => (r.campaign || '').includes('Xabarlar'));
+    if (rows.length < 3) return;
+    rows.sort((a, b) => (a.date < b.date ? -1 : 1));
+    const last = rows[rows.length - 1];
+    const prev = rows.slice(0, -1);
+    const cpc = (r) => { const c = Number(r.actions_onsite_conversion_messaging_conversation_started_7d) || 0; return c ? Number(r.spend) / c : null; };
+    const lastCpc = cpc(last);
+    const avgArr = prev.map(cpc).filter(x => x != null);
+    const avg = avgArr.length ? avgArr.reduce((s, x) => s + x, 0) / avgArr.length : null;
+    let warn = '';
+    if (Number(last.spend) > 3 && !Number(last.actions_onsite_conversion_messaging_conversation_started_7d)) warn = `kecha $${Number(last.spend).toFixed(2)} sarflandi, lekin 0 suhbat!`;
+    else if (lastCpc && avg && lastCpc > avg * 2) warn = `kecha 1 suhbat narxi $${lastCpc.toFixed(2)} — o'rtachadan ($${avg.toFixed(2)}) 2 barobar qimmat.`;
+    if (warn) await agentMsg(officeChat || ADMIN, 'botir', `📉 *Reklama ogohlantirishi:* ${warn}\nTavsiya: kreativ/auditoriyani ko'rib chiqish kerak. "Botir, reklama tahlili" deb so'rasangiz batafsil beraman.`);
+  } catch (e) { console.error('ads check:', e.message); }
+}, 55 * 1000);
+
 // MBI MONITOR — botlarni nazorat qiluvchi ichki agent (1-bosqich)
 // Kuzatadi: tan narx bot, Instagram DM, webhook. Xavfsiz auto-fix + ogohlantirish.
 // HECH QACHON tegmaydi: kod/deploy, cashbox/staff/deals ma'lumotlari, tokenlar.
@@ -3036,9 +3145,11 @@ function monAlert(key, text) {
   const last = MON.lastAlert[key] || 0;
   if (Date.now() - last < MON.cooldown) return;
   MON.lastAlert[key] = Date.now();
+  MON.status = MON.status || {}; MON.status[key] = { ok: false, msg: text.slice(0, 120), ts: new Date().toISOString() };
   msg(ADMIN, text).catch(() => {});
+  try { if (officeChat && String(officeChat) !== String(ADMIN)) agentMsg(officeChat, 'botir', text).catch(() => {}); } catch (e) {}
 }
-function monClear(key) { delete MON.lastAlert[key]; }
+function monClear(key) { delete MON.lastAlert[key]; MON.status = MON.status || {}; MON.status[key] = { ok: true, ts: new Date().toISOString() }; }
 function monTime() {
   const d = nowTZ();
   return ('0'+d.getDate()).slice(-2)+'.'+('0'+(d.getMonth()+1)).slice(-2)+' '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
