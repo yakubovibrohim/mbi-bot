@@ -75,6 +75,16 @@
     "role": "assistant",
     "content": "Здравствуйте! Дизайн интерьера мы не делаем — только мебель на заказ: кухни, шкафы, спальни 👍🏻\n\nЧто планируете?"
    }
+  ],
+  "1534839131449022": [
+   {
+    "role": "user",
+    "content": "Assalomu alekum"
+   },
+   {
+    "role": "assistant",
+    "content": "Va Alaykum Assalom, yaxshimisiz tuzumisiz 👍🏻\n\nIsmingiz nima?"
+   }
   ]
  },
  "activity": {
@@ -100,6 +110,10 @@
   },
   "1559847842412400": {
    "lastClientAt": 1783275713807,
+   "followedUp": false
+  },
+  "1534839131449022": {
+   "lastClientAt": 1783275771923,
    "followedUp": false
   }
  }
