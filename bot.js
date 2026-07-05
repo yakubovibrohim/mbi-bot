@@ -1981,7 +1981,45 @@ function downloadBuffer(url) {
     }).on('error', reject);
   });
 }
-function transcribeAudio(buf) {
+const GEMINI_KEY = process.env.GEMINI_API_KEY || '';
+function geminiTranscribe(buf) {
+  return new Promise((resolve, reject) => {
+    const body = JSON.stringify({
+      contents: [{ parts: [
+        { inline_data: { mime_type: 'audio/ogg', data: buf.toString('base64') } },
+        { text: "Bu ovozli xabarni aynan aytilganidek matnga ko'chir. O'zbek tilida, lotin alifbosida yoz. Kontekst: MBI Mebel biznesi — buyurtma, mijoz, avans, kassa, xarajat, qarz, hisobot. Xodimlar: Diyor, Sherzod. Mijozlar: Boxodir aka, Nodira opa. FAQAT transkripsiya matnini qaytar, izoh yozma." }
+      ]}],
+      generationConfig: { temperature: 0 }
+    });
+    const req = https.request({
+      hostname: 'generativelanguage.googleapis.com',
+      path: '/v1beta/models/gemini-2.5-flash:generateContent?key=' + GEMINI_KEY,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) },
+      timeout: 60000
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => {
+        try {
+          const j = JSON.parse(d);
+          const t = ((j.candidates || [{}])[0].content || {}).parts;
+          const text = (t || []).map(p => p.text || '').join('').trim();
+          if (text) resolve(text); else reject(new Error('gemini empty: ' + d.slice(0, 200)));
+        } catch (e) { reject(new Error('gemini parse: ' + d.slice(0, 200))); }
+      });
+    });
+    req.on('timeout', () => { req.destroy(new Error('gemini timeout')); });
+    req.on('error', reject); req.write(body); req.end();
+  });
+}
+async function transcribeAudio(buf) {
+  if (GEMINI_KEY) {
+    try { return await geminiTranscribe(buf); }
+    catch (e) { console.error('Gemini transcribe xato, Whisper zaxiraga o\'tildi:', e.message); }
+  }
+  return whisperTranscribe(buf);
+}
+function whisperTranscribe(buf) {
   return new Promise((resolve, reject) => {
     const form = new FormData();
     form.append('file', buf, { filename: 'voice.ogg', contentType: 'audio/ogg' });
@@ -4381,6 +4419,7 @@ http.createServer((req, res) => {
   } else { res.writeHead(200);res.end('MBI Bot running!'); }
 }).listen(PORT, ()=>console.log('Bot running on port '+PORT));
 loadIgHistory();
+
 
 
 
