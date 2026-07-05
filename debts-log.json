@@ -43,5 +43,14 @@
     "paid_uzs": 0,
     "date": "17.06.2026",
     "note": "may svet va arenda qoldiq summa"
+  },
+  {
+    "id": "mr81ag2s6k35",
+    "dir": "in",
+    "name": "Kale gallery",
+    "amount_uzs": 30000000,
+    "paid_uzs": 0,
+    "date": "05.07.2026",
+    "note": "2-etaj mebel"
   }
 ]
