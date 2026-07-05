@@ -56,6 +56,14 @@
    {
     "role": "assistant",
     "content": "👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Agar kerek bõlsa yozing"
+   },
+   {
+    "role": "assistant",
+    "content": "Хоп, ёзамиз 👍🏻"
    }
   ]
  },
@@ -77,7 +85,7 @@
    "followedUp": false
   },
   "27192969760396047": {
-   "lastClientAt": 1783272777478,
+   "lastClientAt": 1783272821604,
    "followedUp": false
   }
  }
