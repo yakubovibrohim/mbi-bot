@@ -93,6 +93,16 @@
     "role": "assistant",
     "content": "Ha, gazni tagini yopib qilamiz 👍🏻\n\nOshxona necha metr, 2 etajmi 3 etaj?"
    }
+  ],
+  "2392288251257443": [
+   {
+    "role": "user",
+    "content": "Сколько стоит дизайн интерьера?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Дизайном интерьера мы не занимаемся — только мебель на заказ: кухни, шкафы, спальни 👍🏻\n\nЕсли мебель нужна — помогу подобрать. Что планируете?"
+   }
   ]
  },
  "activity": {
@@ -122,6 +132,10 @@
   },
   "1534839131449022": {
    "lastClientAt": 1783275898834,
+   "followedUp": false
+  },
+  "2392288251257443": {
+   "lastClientAt": 1783280996114,
    "followedUp": false
   }
  }
