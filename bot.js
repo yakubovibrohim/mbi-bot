@@ -2317,9 +2317,34 @@ async function financeContext() {
       return `• ${s.name}: oylik $${s.salary_usd || 0}, shu oy avans $${advThis.toFixed(2)}`;
     }).join('\n');
 
+    // Kassa (tayyor hisob)
+    let cashLines = '';
+    try {
+      const cb = await computeCashbox();
+      cashLines = cb.hasOpening
+        ? `qoldiq ${f(cb.balance)} so'm (boshlang'ich ${f(cb.opening)} + kirimlar ${f(cb.income)} − buyurtma xarajatlari ${f(cb.dealExp)} − ofis ${f(cb.officeExp)} − shaxsiy ${f(cb.pers)} − xodim avanslari ${f(cb.staffAdv)} − qarz to'lovlari ${f(cb.debtPaid)})`
+        : "boshlang'ich qoldiq kiritilmagan";
+    } catch (e) { cashLines = "hisoblab bo'lmadi"; }
+
+    // Ofis va shaxsiy xarajatlar (shu oy)
+    const monthOf = (dt) => { const p = dmyParts(dt); return p && p.y === now.getFullYear() && p.m === now.getMonth(); };
+    let officeLines = '', persTotal = 0;
+    try {
+      const [officeExp, persExp] = await Promise.all([
+        ghReadAll('office-expenses-log.json'), ghReadAll('expenses-personal-log.json')
+      ]);
+      const om = (officeExp || []).filter(x => monthOf(x.date));
+      const oSum = om.reduce((s, x) => s + (Number(x.amount_uzs) || 0), 0);
+      officeLines = `shu oy jami ${f(oSum)} so'm\n` + om.slice(-5).map(x => `• ${x.date} | ${f(x.amount_uzs)} so'm | ${(x.note || x.text || '-').slice(0, 60)}`).join('\n');
+      persTotal = (persExp || []).filter(x => monthOf(x.date)).reduce((s, x) => s + (Number(x.amount_uzs) || 0), 0);
+    } catch (e) {}
+
     return `TAYYOR HISOBLANGAN MA'LUMOTLAR (barcha arifmetika bajarilgan, kurs 1 USD = ${USD_RATE} so'm):\n\n` +
+      `KASSA: ${cashLines}\n\n` +
       `KELISHUVLAR:\n${dealLines || '—'}\n\n` +
       `OXIRGI XARAJATLAR:\n${expLines || '—'}\n\n` +
+      `OFIS XARAJATLARI: ${officeLines || '—'}\n\n` +
+      `SHAXSIY XARAJATLAR: shu oy jami ${f(persTotal)} so'm\n\n` +
       `QARZLAR: menga qarzdorlar jami ${f(debtIn)} so'm | men qarzdorman jami ${f(debtOut)} so'm\n\n` +
       `XODIMLAR:\n${staffLines || '—'}`;
   } catch (e) { return ''; }
