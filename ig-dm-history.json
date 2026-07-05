@@ -39,6 +39,24 @@
     "role": "assistant",
     "content": "Мы в Ташкенте, Яккасарай, ул. Кушбеги 6. Приезжайте, покажем материалы 👍🏻\n\nПо цене — подскажите, что планируете? Кухня, шкаф или спальня?"
    }
+  ],
+  "27192969760396047": [
+   {
+    "role": "user",
+    "content": "Assalomu alaykum men sizga ai orqali biznesingizni rivojlantiriah uchun ai reklama rolik tayorlab beraman sotuv ham oshadi instagramda ham kop prosmotr boladi"
+   },
+   {
+    "role": "assistant",
+    "content": "Ва Алейкум Ассалом 👍🏻\n\nРахмат таклиф учун, лекин бизга керак эмас ҳозирча."
+   },
+   {
+    "role": "user",
+    "content": "Hop"
+   },
+   {
+    "role": "assistant",
+    "content": "👍🏻"
+   }
   ]
  },
  "activity": {
@@ -56,6 +74,10 @@
   },
   "1535159174913252": {
    "lastClientAt": 1783270787993,
+   "followedUp": false
+  },
+  "27192969760396047": {
+   "lastClientAt": 1783272777478,
    "followedUp": false
   }
  }
