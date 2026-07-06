@@ -160,6 +160,10 @@
    {
     "role": "assistant",
     "content": "Video kelmadi menга, lekin tushundim — gaz tagiga tortmali shkafcha kerak 👍🏻\n\nEni necha sm bo'ladi o'sha qismning?"
+   },
+   {
+    "role": "assistant",
+    "content": "O'lchamini bilib olsak, tez hisob chiqarib beramiz 😊 Gaz tagidagi kenglik necha sm?"
    }
   ],
   "2392288251257443": [
@@ -738,6 +742,10 @@
    {
     "role": "assistant",
     "content": "Раҳмат! Иброхим ака тез орада боғланади 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому алайкум, Иброхим ака сиз билан боғлана олдими? 😊"
    }
   ],
   "3998330260300031": [
@@ -1005,6 +1013,16 @@
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%.\n\nКухни выходят примерно от $1000. Что планируете?"
    }
+  ],
+  "2382261248967617": [
+   {
+    "role": "user",
+    "content": "Сколько стоит дизайн интерьера?\nСколько стоит дизайн интерьера?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%.\n\nКухни примерно от 1000$. Что планируете?"
+   }
   ]
  },
  "activity": {
@@ -1035,7 +1053,7 @@
   "1534839131449022": {
    "lastClientAt": 1783354388741,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "2392288251257443": {
    "lastClientAt": 1783280996114,
@@ -1148,7 +1166,7 @@
   "1645341503220415": {
    "lastClientAt": 1783355205124,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "3998330260300031": {
    "lastClientAt": 1783338984425,
@@ -1231,6 +1249,11 @@
   },
   "993804773642305": {
    "lastClientAt": 1783365989176,
+   "followedUp": false,
+   "fu3": false
+  },
+  "2382261248967617": {
+   "lastClientAt": 1783367925815,
    "followedUp": false,
    "fu3": false
   }
