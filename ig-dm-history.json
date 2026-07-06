@@ -170,6 +170,10 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Дизайном интерьера мы не занимаемся — только мебель на заказ: кухни, шкафы, спальни 👍🏻\n\nЕсли мебель нужна — помогу подобрать. Что планируете?"
+   },
+   {
+    "role": "assistant",
+    "content": "Кстати, вы интересовались дизайном — если уже определились с мебелью, готов помочь с подбором и расчётом 🙂"
    }
   ],
   "2222390045827919": [
@@ -758,6 +762,10 @@
    {
     "role": "assistant",
     "content": "Oshxona uchun akril fasad, 2 etaj — taxminan 380–450$ pogonaj metrga, 3 etaj bo'lsa biroz yuqori.\n\nLekin aniq hisob uchun — oshxona necha metr va nechta etaj? Shundan keyin umumiy summani aytaman 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Hisob-kitob tayyor, faqat o'lchamlarni kuting 😊 Oshxonangiz necha metr edi?"
    }
   ],
   "2271444390287794": [
@@ -792,6 +800,10 @@
    {
     "role": "assistant",
     "content": "Tushunарли. Furnitura bo'yicha — GTV, Hettich yoki Blum?"
+   },
+   {
+    "role": "assistant",
+    "content": "Qiziqishdansizmi, hali ham maslahat bera olaman 😊 4,5 metr akril oshxona narxini hisoblashtirib qo'yay — telefon raqamingizni yuborsangiz, to'liq ma'lumot beraman."
    }
   ],
   "1377909584219016": [
@@ -961,7 +973,7 @@
   },
   "2392288251257443": {
    "lastClientAt": 1783280996114,
-   "followedUp": false
+   "followedUp": true
   },
   "2222390045827919": {
    "lastClientAt": 1783291636262,
@@ -1079,12 +1091,12 @@
   "1518313619771727": {
    "lastClientAt": 1783342498085,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "2271444390287794": {
    "lastClientAt": 1783343003348,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "1377909584219016": {
    "lastClientAt": 1783344615543,
