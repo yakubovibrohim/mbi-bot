@@ -120,6 +120,22 @@
    {
     "role": "assistant",
     "content": "Gazingiz uchun hali ham yordamlasha olamiz, o'lchamingizni yuborsangiz narx aytib beramiz 🙂"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz rasm yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ko'rdim 👍🏻\n\nBu oshxonaning pastki qismini qilmoqchimisiz, yoki to'liq oshxona — yuqori qism ham bilan?"
+   },
+   {
+    "role": "user",
+    "content": "Wu gazi õrniga tagi yõq gaz oloqchiman"
+   },
+   {
+    "role": "assistant",
+    "content": "Tushundim! Gaz o'rni ochiq qoladi, tagiga shkafcha qo'yilmaydi.\n\nOshxonaning umumiy uzunligi necha metr? Yuqori qism ham bormi?"
    }
   ],
   "2392288251257443": [
@@ -835,8 +851,9 @@
    "followedUp": true
   },
   "1534839131449022": {
-   "lastClientAt": 1783275898834,
-   "followedUp": true
+   "lastClientAt": 1783350715715,
+   "followedUp": false,
+   "fu3": false
   },
   "2392288251257443": {
    "lastClientAt": 1783280996114,
