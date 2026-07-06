@@ -343,12 +343,6 @@
         "date": "27.06.2026",
         "amount_usd": 100,
         "entered_by": "admin"
-      },
-      {
-        "id": "mr9ca15xqlz8",
-        "date": "06.07.2026",
-        "amount_usd": 306.16,
-        "entered_by": "admin"
       }
     ],
     "attendance": [
@@ -543,9 +537,9 @@
       {
         "y": 2026,
         "m": 5,
-        "paid_usd": 0,
+        "paid_usd": 306.16,
         "date": "06.07.2026",
-        "note": "Apr-Iyun yakuniy hisob-kitob"
+        "note": "Apr-Iyun yakuniy hisob (06.07 to'lov $306.16)"
       }
     ]
   }
