@@ -714,6 +714,22 @@
    {
     "role": "assistant",
     "content": "Ҳисоб-китоб тайёр, шуни тасдиқлаб юборайми? 😊"
+   },
+   {
+    "role": "user",
+    "content": "Майли кўричи"
+   },
+   {
+    "role": "assistant",
+    "content": "Рақамингизни шу ерга ёзиб қолдиринг 😊\n\nИброхим аканинг рақами ҳам: +998 91 135 44 66"
+   },
+   {
+    "role": "user",
+    "content": "99 850 06 00"
+   },
+   {
+    "role": "assistant",
+    "content": "Раҳмат! Иброхим ака тез орада боғланади 👍🏻"
    }
   ],
   "3998330260300031": [
@@ -776,14 +792,6 @@
    {
     "role": "assistant",
     "content": "Tushunарли. Furnitura bo'yicha — GTV, Hettich yoki Blum?"
-   },
-   {
-    "role": "user",
-    "content": "Hettich\nMana shu mebelizni narxi aytsayiz xam boʻluvradi"
-   },
-   {
-    "role": "assistant",
-    "content": "Akril fasad + Hettich furnitura, 4.5 metr, 2 etaj:\n\nTaxminan 2000–2500$ atrofida chiqadi.\n\nKorpus LMDF, stoleshnitsa DSP narxga kiradi. Texnika (plita, dukhovka, vitяжka) sizning hisobingizdan.\n\nAniq hisobni Ibrohim aka o'zi qilib beradi. Telefon raqamingizni qoldirsangiz, tez orada bog'lanadi 👍🏻"
    }
   ],
   "1377909584219016": [
@@ -996,9 +1004,9 @@
    "followedUp": false
   },
   "1645341503220415": {
-   "lastClientAt": 1783337730520,
+   "lastClientAt": 1783355205124,
    "followedUp": false,
-   "fu3": true
+   "fu3": false
   },
   "3998330260300031": {
    "lastClientAt": 1783338984425,
@@ -1010,7 +1018,7 @@
    "fu3": false
   },
   "2271444390287794": {
-   "lastClientAt": 1783354809170,
+   "lastClientAt": 1783343003348,
    "followedUp": false,
    "fu3": false
   },
