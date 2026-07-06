@@ -689,6 +689,16 @@
     "role": "assistant",
     "content": "Tushunарли. Furnitura bo'yicha — GTV, Hettich yoki Blum?"
    }
+  ],
+  "1377909584219016": [
+   {
+    "role": "user",
+    "content": "Можно ли заказать мебель на сайте?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Заказ оформляем напрямую — через переписку или по телефону, не через сайт.\n\nРасскажите, что планируете — кухню, шкаф, спальню?"
+   }
   ]
  },
  "activity": {
@@ -839,6 +849,11 @@
   },
   "2271444390287794": {
    "lastClientAt": 1783343003348,
+   "followedUp": false,
+   "fu3": false
+  },
+  "1377909584219016": {
+   "lastClientAt": 1783344615543,
    "followedUp": false,
    "fu3": false
   }
