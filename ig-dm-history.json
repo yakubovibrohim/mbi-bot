@@ -235,6 +235,16 @@
     "role": "assistant",
     "content": "Albatta! Qaysi mahsulot — oshxona, shkaf yoki yotoqxona?"
    }
+  ],
+  "3549438611874745": [
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"hammaga omad #mebel #reels\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум, яхшимисз 👍🏻\n\nНима керак эди — ошхона, шкаф ёки ётоқхонами?"
+   }
   ]
  },
  "activity": {
@@ -308,6 +318,10 @@
   },
   "1535084918156319": {
    "lastClientAt": 1783317524189,
+   "followedUp": false
+  },
+  "3549438611874745": {
+   "lastClientAt": 1783318255683,
    "followedUp": false
   }
  }
