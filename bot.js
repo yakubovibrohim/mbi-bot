@@ -3965,12 +3965,12 @@ async function handle(upd) {
           ] } });
         return;
       }
-      if (t === '📊 Hisobot') { await sendReport(c); return; }
+      if (t === '📊 Hisobot') { await showSummary(c); return; }
       if (t === '👷 Xodimlar') { await showStaffList(c); return; }
       if (t === '👥 Davomat') { await showAllAttendance(c); return; }
       if (t === '💰 Kassa') { await showCashbox(c); return; }
       if (t === '📋 Bugun') { await sendDailyBriefing(c); return; }
-      if (t === '/hisobot') { await sendReport(c); return; }
+      if (t === '/hisobot') { await showSummary(c); return; }
       if (t === '/bugun') { await sendDailyBriefing(c); return; }
       if (t === '/vazifalar') {
         const tasks = await ghReadAll('tasks-log.json');

@@ -335,8 +335,7 @@ async function start(dependencies, cfg) {
     const last = await tgUser.getMessages('CardXabarBot', { limit: 1 });
     if (last && last.length) lastMsgId = last[0].id;
     setInterval(poll, 30000); // har 30 soniya
-    await deps.msg(deps.ADMIN, `💳 Karta monitoringi yoqildi (${me.firstName || ''}).\nEndi har karta operatsiyasi kelganda so'rayman.`);
-    console.log('card-monitor: started, lastMsgId=', lastMsgId);
+    console.log('card-monitor: started, lastMsgId=', lastMsgId, 'user:', me.firstName || '');
     return true;
   } catch (e) {
     console.error('card-monitor start error:', e.message);
