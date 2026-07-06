@@ -940,6 +940,10 @@
    {
     "role": "user",
     "content": "2 этаж"
+   },
+   {
+    "role": "assistant",
+    "content": "Тушунарли. 5 метр, акрил фасад, 2 этаж:\n\n- GTV фурнитура билан — тахминан 1900–2250$ атрофида\n- Hettich фурнитура билан — тахминан 2250–2750$ атрофида\n\nАниқ нархни Иброхим ака ўзи ҳисоблаб беради. Телефон рақамингизни қолдиринг, у киши қўнғироқ қилади 😊"
    }
   ],
   "1341247278114001": [
@@ -968,6 +972,24 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%.\n\nКухни выходят примерно от $1000. Что планируете?"
+   }
+  ],
+  "2018998308822163": [
+   {
+    "role": "user",
+    "content": "Mahsulot narxini tekshira olasizmi?"
+   },
+   {
+    "role": "assistant",
+    "content": "Narx haqida yordam bera olaman. Qaysi mahsulot — oshxona, shkaf yoki yotoqxona? O'lcham va material bo'lsa, taxminiy hisoblab beraman 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Xarid qilsam boʻladimi?"
+   },
+   {
+    "role": "assistant",
+    "content": "Albatta! Nima kerak — oshxona, shkaf yoki yotoqxona? O'lcham va material bo'lsa, taxminiy narxni aytib, Ibrohim aka bilan ulab qo'yaman 👍🏻"
    }
   ]
  },
@@ -1174,7 +1196,7 @@
    "fu3": false
   },
   "1584424629939234": {
-   "lastClientAt": 1783360975127,
+   "lastClientAt": 1783361009296,
    "followedUp": false,
    "fu3": false
   },
@@ -1185,6 +1207,11 @@
   },
   "1942569243058430": {
    "lastClientAt": 1783359301987,
+   "followedUp": false,
+   "fu3": false
+  },
+  "2018998308822163": {
+   "lastClientAt": 1783363928033,
    "followedUp": false,
    "fu3": false
   }
