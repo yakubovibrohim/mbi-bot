@@ -776,6 +776,14 @@
    {
     "role": "assistant",
     "content": "Tushunарли. Furnitura bo'yicha — GTV, Hettich yoki Blum?"
+   },
+   {
+    "role": "user",
+    "content": "Hettich\nMana shu mebelizni narxi aytsayiz xam boʻluvradi"
+   },
+   {
+    "role": "assistant",
+    "content": "Akril fasad + Hettich furnitura, 4.5 metr, 2 etaj:\n\nTaxminan 2000–2500$ atrofida chiqadi.\n\nKorpus LMDF, stoleshnitsa DSP narxga kiradi. Texnika (plita, dukhovka, vitяжka) sizning hisobingizdan.\n\nAniq hisobni Ibrohim aka o'zi qilib beradi. Telefon raqamingizni qoldirsangiz, tez orada bog'lanadi 👍🏻"
    }
   ],
   "1377909584219016": [
@@ -1002,7 +1010,7 @@
    "fu3": false
   },
   "2271444390287794": {
-   "lastClientAt": 1783343003348,
+   "lastClientAt": 1783354809170,
    "followedUp": false,
    "fu3": false
   },
