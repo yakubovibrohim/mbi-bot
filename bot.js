@@ -821,92 +821,6 @@ async function showStaffList(c) {
   rows.push([{ text: '◀️ Ortga', callback_data: 'menu_home' }]);
   await btn(c, '👷 *Xodimlar*' + (active.length ? '' : '\n\n_Hozircha xodim yo\'q. «Yangi xodim» qo\'shing._'), rows);
 }
-// ═══ OYLIK DAVOMAT KO'RISH (xodim → oy → to'liq kunlar) ═══
-// 1) Xodim tanlash
-async function attMonthPickStaff(c) {
-  const list = (await readStaff()).filter(s => s.active !== false);
-  if (!list.length) { await msg(c, '_Xodim yo\'q._'); return; }
-  const rows = list.map(s => [{ text: '👷 ' + s.name, callback_data: 'attm_s_' + s.id }]);
-  rows.push([{ text: '◀️ Ortga', callback_data: 'all_att' }]);
-  await btn(c, '📆 *Oylik davomat*\n\nQaysi xodim?', rows);
-}
-// 2) Oy tanlash (ishga kirgan oydan joriygacha)
-async function attMonthPickMonth(c, id) {
-  const { staff: s } = await findStaff(id);
-  if (!s) { await msg(c, '⚠️ Topilmadi.'); return; }
-  const now = nowTZ();
-  const cy = now.getFullYear(), cm = now.getMonth();
-  const hp = dmyParts(s.hire_date);
-  let sy = hp ? hp.y : cy, sm = hp ? hp.m : cm;
-  const rows = [];
-  let y = sy, m = sm, guard = 0;
-  const items = [];
-  while ((y < cy || (y === cy && m <= cm)) && guard < 120) {
-    items.push({ y, m });
-    m++; if (m > 11) { m = 0; y++; }
-    guard++;
-  }
-  // eng yangi oy tepada
-  items.reverse();
-  for (const it of items) {
-    const closed = (s.closed_months || []).some(cm2 => cm2.y === it.y && cm2.m === it.m);
-    const cur = (it.y === cy && it.m === cm);
-    rows.push([{ text: `${UZ_MONTHS[it.m]} ${it.y}${cur ? ' (joriy)' : ''}${closed ? ' 🔒' : ''}`, callback_data: `attm_m_${id}_${it.y}_${it.m}` }]);
-  }
-  rows.push([{ text: '◀️ Ortga', callback_data: 'attm_pick' }]);
-  await btn(c, `📆 *${s.name} — oy tanlang:*`, rows);
-}
-// 3) Tanlangan oyning BARCHA kunlari (kel/ket, soat, holat, sabab)
-async function attMonthShow(c, id, y, m) {
-  const { staff: s } = await findStaff(id);
-  if (!s) { await msg(c, '⚠️ Topilmadi.'); return; }
-  const closed = (s.closed_months || []).some(cm => cm.y === y && cm.m === m);
-  const att = (s.attendance || []).filter(a => { const p = dmyParts(a.date); return p && p.y === y && p.m === m; });
-  const absList = (s.absences || []).filter(a => { const p = dmyParts(a.date); return p && p.y === y && p.m === m; });
-  const leaves = (s.leaves || []).filter(l => { const p = dmyParts(l.date); return p && p.y === y && p.m === m && l.status === 'approved'; });
-  const attByDay = {}; att.forEach(a => { const p = dmyParts(a.date); if (p) attByDay[p.d] = a; });
-  const absByDay = {}; absList.forEach(a => { const p = dmyParts(a.date); if (p) absByDay[p.d] = a; });
-  const leaveByDay = {}; leaves.forEach(l => { const p = dmyParts(l.date); if (p) leaveByDay[p.d] = l; });
-
-  const WD = ['Ya', 'Du', 'Se', 'Ch', 'Pa', 'Ju', 'Sh'];
-  const daysInMonth = new Date(y, m + 1, 0).getDate();
-  let txt = `📆 *${s.name} — ${UZ_MONTHS[m]} ${y}*${closed ? ' 🔒 _(yopilgan)_' : ''}\n\n`;
-  let workedDays = 0, totalNormal = 0, totalExtra = 0, absCnt = 0;
-
-  for (let d = 1; d <= daysInMonth; d++) {
-    const dow = new Date(y, m, d).getDay();
-    const wd = WD[dow];
-    const dd = ('0' + d).slice(-2);
-    const a = attByDay[d], ab = absByDay[d], lv = leaveByDay[d];
-    if (a && a.in) {
-      const dh = computeDayHours(a.in, a.out, a.leave_min);
-      const nh = (a.normalH != null ? a.normalH : dh.normalH);
-      const eh = (a.extraH != null ? a.extraH : dh.extraH);
-      workedDays++; totalNormal += nh; totalExtra += eh;
-      const marks = [];
-      if (a.late) marks.push('⚠️kech');
-      if (a.early) marks.push('🏃erta');
-      if (!a.late && !a.early && a.out) marks.push('✅');
-      txt += `${dd} ${wd}: ${a.in}–${a.out || '...'} · ${nh.toFixed(1)}s${eh ? ` +${eh.toFixed(1)}` : ''} ${marks.join(' ')}\n`;
-      if (a.in_reason) txt += `   └ kech: _${a.in_reason}_\n`;
-      if (a.out_reason) txt += `   └ erta: _${a.out_reason}_\n`;
-    } else if (ab) {
-      absCnt++;
-      txt += `${dd} ${wd}: ❌ kelmagan${ab.reason ? ` (_${ab.reason}_)` : ''}\n`;
-    } else if (lv) {
-      txt += `${dd} ${wd}: 🙋 javob${lv.reason ? ` (_${lv.reason}_)` : ''}\n`;
-    } else if (dow === 0) {
-      txt += `${dd} ${wd}: _dam_\n`;
-    } else {
-      txt += `${dd} ${wd}: —\n`;
-    }
-  }
-  txt += `\n📊 Ishlagan: *${workedDays} kun*, *${totalNormal.toFixed(1)} soat*`;
-  if (totalExtra > 0.05) txt += ` (+${totalExtra.toFixed(1)} qo'sh.)`;
-  if (absCnt) txt += `, kelmagan: ${absCnt}`;
-  await btn(c, txt, [[{ text: '◀️ Oylar', callback_data: 'attm_s_' + id }], [{ text: '👥 Bugun', callback_data: 'all_att' }]]);
-}
-
 // Admin: bugungi hammaning davomati (real vaqt)
 async function showAllAttendance(c) {
   const list = (await readStaff()).filter(s => s.active !== false);
@@ -928,7 +842,7 @@ async function showAllAttendance(c) {
     if (rec && rec.out_reason) txt += `   └ erta: _${rec.out_reason}_\n`;
     if (todayLeave) txt += `   └ 🙋 javob: ${todayLeave.type === 'partial' ? todayLeave.hours + ' soat' : todayLeave.type === 'early' ? 'erta ' + todayLeave.time : 'kelmaslik'}\n`;
   }
-  await btn(c, txt, [[{ text: '🔄 Yangilash', callback_data: 'all_att' }], [{ text: '📆 Oylik davomat', callback_data: 'attm_pick' }], [{ text: '📋 Intizom hisoboti', callback_data: 'disc_report' }]]);
+  await btn(c, txt, [[{ text: '🔄 Yangilash', callback_data: 'all_att' }], [{ text: '📋 Intizom hisoboti', callback_data: 'disc_report' }]]);
 }
 // Admin: oylik intizom hisoboti (kech/erta/kelmagan/javob)
 async function showDisciplineReport(c) {
@@ -1156,41 +1070,22 @@ async function staffSaveBonus(c, id, amountUsd, reason) {
 
 // Oyni qo'lda yopish
 async function staffCloseMonthStart(c, id) {
+  orderState[c] = { step: 'stf_close_amount', staffId: id };
   const { staff: s } = await findStaff(id);
-  if (!s) { await msg(c, '⚠️ Topilmadi.'); return; }
-  const { history } = staffPayrollHistory(s);
-  const open = history.filter(h => !h.closed);
-  if (!open.length) { await btn(c, `🔒 *${s.name}* — barcha oylar yopilgan.`, [[{ text: '◀️ Ortga', callback_data: 'stf_open_' + id }]]); return; }
-  const rows = open.slice().reverse().map(h => [{ text: `${UZ_MONTHS[h.m]} ${h.y} — ${fmtSigned(h.balance)}`, callback_data: `stf_clm_${id}_${h.y}_${h.m}` }]);
-  rows.push([{ text: '❌ Bekor', callback_data: 'stf_open_' + id }]);
-  await btn(c, `🔒 *Oyni yopish — ${s.name}*\n\nQaysi oyni yopamiz? _(balans bilan)_`, rows);
+  const { currentBalance } = staffPayrollHistory(s);
+  await btn(c, `🔒 *Oyni yopish — ${s.name}*\n\nJoriy balans: ${fmtSigned(currentBalance)}\n\n_Xodimga shu oy uchun jami qancha to'ladingiz? ($ yoki so'm). Yozsangiz, balans 0 bo'ladi va keyingi oyga o'tmaydi._`, [[{ text: '❌ Bekor', callback_data: 'stf_open_' + id }]]);
 }
-// Oy tanlandi — summa so'raladi
-async function staffCloseMonthAsk(c, id, y, m) {
-  const { staff: s } = await findStaff(id);
-  if (!s) { await msg(c, '⚠️ Topilmadi.'); return; }
-  const { history } = staffPayrollHistory(s);
-  const h = history.find(x => x.y === y && x.m === m);
-  const bal = h ? h.balance : 0;
-  orderState[c] = { step: 'stf_close_amount', staffId: id, closeY: y, closeM: m };
-  await btn(c, `🔒 *${UZ_MONTHS[m]} ${y} — ${s.name}*\n\nShu oy balansi: ${fmtSigned(bal)}\n\n_Xodimga bu oy uchun jami qancha to'ladingiz? ($ yoki so'm). Yozsangiz oy yopiladi, balans 0 bo'ladi._`, [[{ text: '❌ Bekor', callback_data: 'stf_open_' + id }]]);
-}
-async function staffCloseMonth(c, id, paidUsd, y, m) {
+async function staffCloseMonth(c, id, paidUsd) {
   const { data, sha, idx } = await findStaff(id);
   if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return; }
   const now = nowTZ();
-  const yy = (y != null ? y : now.getFullYear());
-  const mm = (m != null ? m : now.getMonth());
   const s = data[idx];
   s.closed_months = s.closed_months || [];
-  const ex = s.closed_months.find(cm => cm.y === yy && cm.m === mm);
-  if (ex) { ex.paid_usd = paidUsd; ex.date = todayStr(); }
-  else s.closed_months.push({ y: yy, m: mm, paid_usd: paidUsd, date: todayStr() });
-  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, `staff close month ${UZ_MONTHS[mm]} ${yy}: ` + s.name);
-  // Oy yopish to'lovi closed_months.paid_usd da saqlanadi va kassaga
-  // salaryPay orqali avtomatik chiqim bo'ladi (alohida "Oylik to'lovi" qatori).
-  const paidUzs = Math.round(paidUsd * USD_UZS);
-  await msg(c, `🔒 ${s.name} — ${UZ_MONTHS[mm]} ${yy} oyi yopildi.\n💸 To'langan: $${paidUsd.toFixed(2)} (${fmtUzs(paidUzs)} so'm) — kassadan chiqim.\nBalans 0.`);
+  if (!s.closed_months.some(cm => cm.y === now.getFullYear() && cm.m === now.getMonth()))
+    s.closed_months.push({ y: now.getFullYear(), m: now.getMonth(), paid_usd: paidUsd, date: todayStr() });
+  // to'langan summani to'lov sifatida yozamiz (avans emas — yopilgan oy uchun)
+  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'staff close month: ' + s.name);
+  await msg(c, `🔒 ${s.name} — ${UZ_MONTHS[now.getMonth()]} oyi yopildi. To'langan: $${paidUsd.toFixed(2)}. Balans 0.`);
   await showStaffCard(c, id);
 }
 
@@ -1680,83 +1575,51 @@ async function readCashbox() {
   try { const { data } = await ghRead('cashbox.json'); return (data && !Array.isArray(data)) ? data : { opening_uzs: null, opening_date: null }; }
   catch (e) { return { opening_uzs: null, opening_date: null }; }
 }
-// Kassa qoldig'i — OY bo'yicha.
-// computeCashbox(y, m):
-//   monthStart = boshlang'ich + boshlang'ich sanadan shu oy BOSHIGACHA barcha kirim−chiqim
-//   shu oy kirim/chiqim = faqat [y,m] oyidagi yozuvlar
-//   balance = monthStart + shuOyKirim − shuOyChiqim
-// y,m berilmasa — joriy oy.
-async function computeCashbox(qy, qm) {
+// Kassa qoldig'i = boshlang'ich + barcha kirim − barcha chiqim
+async function computeCashbox() {
   const cfg = await readCashbox();
   const opening = cfg.opening_uzs || 0;
-  const now = nowTZ();
-  const y = (qy != null ? qy : now.getFullYear());
-  const m = (qm != null ? qm : now.getMonth());
+  // Boshlang'ich sana: undan OLDINGI harakatlar allaqachon boshlang'ich qoldiqqa
+  // kirgan, shuning uchun ular kassa hisobida QAYTA hisoblanmaydi.
   const op = dmyParts(cfg.opening_date);
   const opNum = op ? (op.y * 10000 + op.m * 100 + op.d) : 0;
-  const dNum = (dateStr) => { const p = dmyParts(dateStr); return p ? (p.y * 10000 + p.m * 100 + p.d) : null; };
-  const monStartNum = y * 10000 + m * 100 + 1;          // shu oy 1-kuni
-  // "boshlang'ichdan keyin VA shu oy boshidan oldin" — oldingi oylar (qoldiqqa yig'iladi)
-  const beforeMonth = (dateStr) => { const n = dNum(dateStr); if (n == null) return false; return (opNum ? n >= opNum : true) && n < monStartNum; };
-  // "aynan shu oyda" (y,m)
-  const inThisMonth = (dateStr) => { const p = dmyParts(dateStr); return p && p.y === y && p.m === m; };
-  // umumiy afterOpen (ba'zi joyларда kerak bo'lsa)
-  const afterOpen = (dateStr) => { if (!opNum) return true; const n = dNum(dateStr); return n != null && n >= opNum; };
-  // shaxsiy summa hisoblash (valyuta bilan)
-  const persAmt = (e) => {
+  const afterOpen = (dateStr) => {
+    if (!opNum) return true; // sana yo'q bo'lsa hammasi hisoblanadi
+    const p = dmyParts(dateStr);
+    if (!p) return false;
+    return (p.y * 10000 + p.m * 100 + p.d) >= opNum;
+  };
+  const { data: deals } = await ghRead('deals-log.json');
+  let income = 0, dealExp = 0;
+  for (const o of deals) {
+    income += (o.payments || []).filter(p => afterOpen(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0);
+    dealExp += (o.expenses || []).filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.total_uzs || 0), 0);
+  }
+  const officeExp = (await ghReadAll('office-expenses-log.json')).filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
+  // shaxsiy
+  const pers = (await ghReadAll('expenses-personal-log.json')).filter(e => afterOpen(e.date)).reduce((s, e) => {
     const p = e.parsed || {};
     let a = e.amount_uzs || 0;
     if (!a && p.amount) a = (String(p.currency).toUpperCase() === 'USD') ? p.amount * USD_UZS : p.amount;
     else if (!a && e.amount) a = (String(e.currency).toUpperCase() === 'USD') ? e.amount * USD_UZS : e.amount;
-    return a;
-  };
-
-  const deals = (await ghRead('deals-log.json')).data;
-  const officeAll = await ghReadAll('office-expenses-log.json');
-  const persAll = await ghReadAll('expenses-personal-log.json');
+    return s + a;
+  }, 0);
+  // xodim avanslari (chiqim) — faqat boshlang'ich sanadan keyingilari
   const staff = await ghReadAll('staff-log.json');
+  const staffAdv = staff.reduce((s, w) => s + (w.advances || []).filter(x => afterOpen(x.date)).reduce((a, x) => a + (x.amount_usd || 0) * USD_UZS, 0), 0);
+  // qarz to'lovlari: paid summani sanasi bo'yicha hisoblash (payments massivi bo'lsa aniq, bo'lmasa pay_date/date)
   const debtsAll = await ghReadAll('debts-log.json');
-  const cardAll = await ghReadAll('card-income-log.json');
-  const debtPaidSum = (d, flt) => Array.isArray(d.payments)
-    ? d.payments.filter(p => flt(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0)
-    : (flt(d.pay_date || d.date) ? (d.paid_uzs || 0) : 0);
-
-  // ── umumiy yig'uvchi (berilgan filtr bo'yicha) ──
-  function collect(flt) {
-    let income = 0, dealExp = 0;
-    for (const o of deals) {
-      income += (o.payments || []).filter(p => flt(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0);
-      dealExp += (o.expenses || []).filter(e => flt(e.date)).reduce((s, e) => s + (e.total_uzs || 0), 0);
-    }
-    const officeExp = officeAll.filter(e => flt(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
-    const pers = persAll.filter(e => flt(e.date)).reduce((s, e) => s + persAmt(e), 0);
-    const staffAdv = staff.reduce((s, w) => s + (w.advances || []).filter(x => flt(x.date)).reduce((a, x) => a + (x.amount_usd || 0) * USD_UZS, 0), 0);
-    // oy yopish (oylik) to'lovlari — salaryPay
-    const salaryPay = staff.reduce((s, w) => s + (w.closed_months || []).filter(cm => cm.date && flt(cm.date) && cm.paid_usd).reduce((a, cm) => a + (cm.paid_usd || 0) * USD_UZS, 0), 0);
-    const debtPaid = debtsAll.filter(d => d.dir === 'out').reduce((s, d) => s + debtPaidSum(d, flt), 0);
-    const debtIn = debtsAll.filter(d => d.dir === 'in').reduce((s, d) => s + debtPaidSum(d, flt), 0);
-    const cardIncome = cardAll.filter(e => flt(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
-    const inSum = income + debtIn + cardIncome;
-    const outSum = dealExp + officeExp + pers + staffAdv + salaryPay + debtPaid;
-    return { income, debtIn, cardIncome, dealExp, officeExp, pers, staffAdv, salaryPay, debtPaid, inSum, outSum };
-  }
-
-  // oldingi oylar → oy boshiga qoldiqqa yig'iladi
-  const prev = collect(beforeMonth);
-  const monthStart = opening + prev.inSum - prev.outSum;
-  // shu oy harakati
-  const cur = collect(inThisMonth);
-  const balance = monthStart + cur.inSum - cur.outSum;
-
-  return {
-    y, m, monthStart, balance,
-    opening, // asl boshlang'ich (ma'lumot uchun)
-    income: cur.income, debtIn: cur.debtIn, cardIncome: cur.cardIncome,
-    dealExp: cur.dealExp, officeExp: cur.officeExp, pers: cur.pers,
-    staffAdv: cur.staffAdv, salaryPay: cur.salaryPay, debtPaid: cur.debtPaid,
-    inSum: cur.inSum, outSum: cur.outSum,
-    hasOpening: cfg.opening_uzs != null
-  };
+  const debtPaidSum = (d) => Array.isArray(d.payments)
+    ? d.payments.filter(p => afterOpen(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0)
+    : (afterOpen(d.pay_date || d.date) ? (d.paid_uzs || 0) : 0);
+  // men to'laganim (out) — kassadan chiqadi
+  const debtPaid = debtsAll.filter(d => d.dir === 'out').reduce((s, d) => s + debtPaidSum(d), 0);
+  // qarzdorlar menga to'lagani (in) — kassaga KIRIM
+  const debtIn = debtsAll.filter(d => d.dir === 'in').reduce((s, d) => s + debtPaidSum(d), 0);
+  // karta orqali "boshqa kirim" (buyurtma/qarz bilan bog'lanmagan) — kassaga KIRIM
+  const cardIncome = (await ghReadAll('card-income-log.json')).filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
+  const balance = opening + income + debtIn + cardIncome - dealExp - officeExp - pers - staffAdv - debtPaid;
+  return { opening, income, debtIn, cardIncome, dealExp, officeExp, pers, staffAdv, debtPaid, balance, hasOpening: cfg.opening_uzs != null };
 }
 async function showCashbox(c) {
   const k = await computeCashbox();
@@ -1767,21 +1630,18 @@ async function showCashbox(c) {
     ]);
     return;
   }
-  const salLine = k.salaryPay ? `💵 Oylik to'lovi: −${fmtUzs(k.salaryPay)}\n` : '';
-  await btn(c, `💰 *Kassa — ${UZ_MONTHS[k.m]} ${k.y}*\n_(faqat shu oy)_\n\n` +
-    `🏦 Oy boshiga qoldiq: ${fmtUzs(k.monthStart)} so'm\n` +
-    `━━━━━━━━━━━━\n` +
+  await btn(c, `💰 *Kassa*\n\n` +
+    `🏦 Boshlang'ich: ${fmtUzs(k.opening)} so'm\n` +
     `📥 Kirim (to'lovlar): +${fmtUzs(k.income)}\n` +
     `📥 Qarzdor to'lovi: +${fmtUzs(k.debtIn)}\n` +
     `💳 Boshqa kirim (karta): +${fmtUzs(k.cardIncome)}\n` +
     `📤 Buyurtma xarajat: −${fmtUzs(k.dealExp)}\n` +
     `🏭 Ishxona: −${fmtUzs(k.officeExp)}\n` +
     `👷 Xodim avans: −${fmtUzs(k.staffAdv)}\n` +
-    salLine +
     `🔴 Qarz to'lovi: −${fmtUzs(k.debtPaid)}\n` +
     `👛 Shaxsiy: −${fmtUzs(k.pers)}\n` +
     `━━━━━━━━━━━━\n` +
-    `💵 *Oy oxiri qoldiq: ${fmtUzs(k.balance)} so'm*`, [
+    `💵 *Hozirgi qoldiq: ${fmtUzs(k.balance)} so'm*`, [
     [{ text: '✏️ Boshlang\'ich qoldiqni o\'zgartirish', callback_data: 'cash_set' }],
     [{ text: '◀️ Ortga', callback_data: 'menu_home' }]
   ]);
@@ -1843,36 +1703,24 @@ async function gatherMonth(y, m) {
     if (!p) return false;
     return (p.y * 10000 + p.m * 100 + p.d) >= opNum;
   };
-  // OY BOSHIGA QOLDIQ: boshlang'ich + [boshlang'ich..shu oy boshigacha] kirim−chiqim
-  const monStartNum = y * 10000 + m * 100 + 1;
-  const beforeMonth = (dateStr) => { const p = dmyParts(dateStr); if (!p) return false; const n = p.y*10000+p.m*100+p.d; return (opNum ? n >= opNum : true) && n < monStartNum; };
+  let cashIn = 0, cashDealExp = 0, cashOffice = 0, cashPers = 0, cashAdv = 0;
+  for (const o of deals) {
+    cashIn += (o.payments || []).filter(p => afterOpen(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0);
+    cashDealExp += (o.expenses || []).filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.total_uzs || 0), 0);
+  }
+  cashOffice = officeAll.filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
+  cashPers = persAll.filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.amtUzs || 0), 0);
+  for (const w of staff) for (const a of (w.advances || [])) if (afterOpen(a.date)) cashAdv += (a.amount_usd || 0) * USD_UZS;
   const debtsAll = await ghReadAll('debts-log.json');
   const debtOut = debtsAll.filter(d => d.dir === 'out');
+  const debtPaidSum = (d) => Array.isArray(d.payments)
+    ? d.payments.filter(p => afterOpen(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0)
+    : (afterOpen(d.pay_date || d.date) ? (d.paid_uzs || 0) : 0);
+  const cashDebtPaid = debtOut.reduce((s, d) => s + debtPaidSum(d), 0);
+  const cashDebtIn = debtsAll.filter(d => d.dir === 'in').reduce((s, d) => s + debtPaidSum(d), 0);
+  // karta "boshqa kirim"
   const cardIncomeAll = await ghReadAll('card-income-log.json');
-  const dPaid = (d, flt) => Array.isArray(d.payments)
-    ? d.payments.filter(p => flt(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0)
-    : (flt(d.pay_date || d.date) ? (d.paid_uzs || 0) : 0);
-  const salPaid = (flt) => staff.reduce((s, w) => s + (w.closed_months || []).filter(cm => cm.date && flt(cm.date) && cm.paid_usd).reduce((a, cm) => a + (cm.paid_usd || 0) * USD_UZS, 0), 0);
-  function cashCollect(flt) {
-    let cin = 0, cde = 0;
-    for (const o of deals) {
-      cin += (o.payments || []).filter(p => flt(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0);
-      cde += (o.expenses || []).filter(e => flt(e.date)).reduce((s, e) => s + (e.total_uzs || 0), 0);
-    }
-    const cof = officeAll.filter(e => flt(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
-    const cpe = persAll.filter(e => flt(e.date)).reduce((s, e) => s + (e.amtUzs || 0), 0);
-    let cad = 0; for (const w of staff) for (const a of (w.advances || [])) if (flt(a.date)) cad += (a.amount_usd || 0) * USD_UZS;
-    const csa = salPaid(flt);
-    const cdp = debtOut.reduce((s, d) => s + dPaid(d, flt), 0);
-    const cdi = debtsAll.filter(d => d.dir === 'in').reduce((s, d) => s + dPaid(d, flt), 0);
-    const cci = cardIncomeAll.filter(e => flt(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
-    return { cin, cde, cof, cpe, cad, csa, cdp, cdi, cci, inS: cin+cdi+cci, outS: cde+cof+cpe+cad+csa+cdp };
-  }
-  const prevC = cashCollect(beforeMonth);
-  const monthStart = opening + prevC.inS - prevC.outS;
-  const curC = cashCollect(inMon);
-  const cashIn = curC.cin, cashDealExp = curC.cde, cashOffice = curC.cof, cashPers = curC.cpe, cashAdv = curC.cad;
-  const cashSalary = curC.csa, cashDebtPaid = curC.cdp, cashDebtIn = curC.cdi, cashCardIncome = curC.cci;
+  const cashCardIncome = cardIncomeAll.filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
   // mijoz qarzlari (menga qarzdor)
   const clientDebts = [];
   for (const o of deals) {
@@ -1882,7 +1730,7 @@ async function gatherMonth(y, m) {
       if (debt > 0) clientDebts.push({ client: o.client, contract: o.contract_sum_uzs || 0, paid, debt });
     }
   }
-  const cashBalance = monthStart + cashIn + cashDebtIn + cashCardIncome - cashDealExp - cashOffice - cashPers - cashAdv - cashSalary - cashDebtPaid;
+  const cashBalance = opening + cashIn + cashDebtIn + cashCardIncome - cashDealExp - cashOffice - cashPers - cashAdv - cashDebtPaid;
   // ── Oy ichidagi detallar (to'liq hisobot uchun) ──
   const officeMonRows = officeRows.map(e => ({ date: e.date, name: e.name || '', amt: e.amount_uzs || 0, card: e.pay_method === 'card' }));
   const advMonRows = [];
@@ -1897,7 +1745,7 @@ async function gatherMonth(y, m) {
   const cardIncomeMon = cardIncomeMonRows.reduce((s, e) => s + e.amt, 0);
   const debtInMon = debtInMonRows.reduce((s, e) => s + e.amt, 0);
   const debtPaidMon = debtPaidMonRows.reduce((s, e) => s + e.amt, 0);
-  return { monthDeals, income, dealExp, officeRows, officeExp, persRows, pers, staff, staffAdv, allExpenses, allPayments, bizProfit, realRemain, opening, openingDate: cfg.opening_date, debtOut, cashIn, cashDebtIn, cashCardIncome, cashDealExp, cashOffice, cashPers, cashAdv, cashDebtPaid, cashSalary, monthStart, cashBalance, clientDebts,
+  return { monthDeals, income, dealExp, officeRows, officeExp, persRows, pers, staff, staffAdv, allExpenses, allPayments, bizProfit, realRemain, opening, openingDate: cfg.opening_date, debtOut, cashIn, cashDebtIn, cashCardIncome, cashDealExp, cashOffice, cashPers, cashAdv, cashDebtPaid, cashBalance, clientDebts,
     officeMonRows, advMonRows, debtPaidMonRows, debtInMonRows, cardIncomeMonRows, persMonDetailed, dealExpMonRows, cardIncomeMon, debtInMon, debtPaidMon };
 }
 
@@ -1970,21 +1818,19 @@ async function sendFullReport(c, y, m) {
   }
 
   s += `━━━━━━━━━━━━\n`;
-  s += `💵 *KASSA — ${UZ_MONTHS[g.m != null ? g.m : 0] || ''} oyi (naqd + karta)*\n`;
-  s += `_Faqat shu oy harakati_\n`;
-  s += `  🏦 Oy boshiga qoldiq: ${f(g.monthStart)}\n`;
-  s += `  ━━━━━\n`;
+  s += `💵 *KASSA — hozirgi real pul (naqd + karta)*\n`;
+  s += `_Boshlang'ich (${g.openingDate || ''}) sanadan beri jami hisob_\n`;
+  s += `  🏦 Boshlang'ich: ${f(g.opening)}\n`;
   s += `  (+) Kirim: ${f(g.cashIn)}\n`;
   s += `  (+) Qarzdor to'lovi: ${f(g.cashDebtIn)}\n`;
   if (g.cashCardIncome) s += `  (+) Boshqa kirim (karta): ${f(g.cashCardIncome)}\n`;
   s += `  (−) Buyurtma: ${f(g.cashDealExp)}\n`;
   s += `  (−) Ishxona: ${f(g.cashOffice)}\n`;
   s += `  (−) Avans: ${f(g.cashAdv)}\n`;
-  if (g.cashSalary) s += `  (−) Oylik to'lovi: ${f(g.cashSalary)}\n`;
   s += `  (−) Qarz to'lovim: ${f(g.cashDebtPaid)}\n`;
   s += `  (−) Shaxsiy: ${f(g.cashPers)}\n`;
   s += `  ━━━━━\n`;
-  s += `  💰 *Oy oxiri real pul: ${f(g.cashBalance)} so'm*\n`;
+  s += `  💰 *Hozirgi real pul: ${f(g.cashBalance)} so'm*\n`;
   s += `     (${Math.round(g.cashBalance / USD_UZS * 10) / 10} $)`;
 
   const kb = [
@@ -2116,14 +1962,12 @@ async function buildMonthExcel(y, m) {
   // 7. KASSA — CHO'NTAGIMDAGI REAL PUL
   sectionRow('💵 KASSA — CHO\'NTAGIMDAGI REAL PUL');
   const cashLine = (label, val) => { const ri = R(); push([label, '', '', val, '']); merges.push({ s: { r: ri, c: 0 }, e: { r: ri, c: 2 } }); moneyAt(ri, 3); };
-  cashLine(`🏦 Oy boshiga qoldiq`, g.monthStart);
+  cashLine(`🏦 Boshlang'ich qoldiq (${g.openingDate || ''})`, g.opening);
   cashLine('(+) Kirim (to\'lovlar)', g.cashIn);
   cashLine('(+) Qarzdorlar to\'lovi', g.cashDebtIn);
-  if (g.cashCardIncome) cashLine('(+) Boshqa kirim (karta)', g.cashCardIncome);
   cashLine('(−) Buyurtma xarajati', -g.cashDealExp);
   cashLine('(−) Ishxona rasxodi', -g.cashOffice);
-  cashLine('(−) Ishchilar avansi', -g.cashAdv);
-  if (g.cashSalary) cashLine('(−) Oylik to\'lovi', -g.cashSalary);
+  cashLine('(−) Ishchilar avansi/oyligi', -g.cashAdv);
   cashLine('(−) Shaxsiy harajat', -g.cashPers);
   cashLine('(−) Qarzlarga to\'langan', -g.cashDebtPaid);
   { const ri = R(); push(['💰 CHO\'NTAGIMDAGI REAL PUL', '', '', g.cashBalance, '']); merges.push({ s: { r: ri, c: 0 }, e: { r: ri, c: 2 } }); moneyAt(ri, 3); }
@@ -2629,7 +2473,7 @@ async function financeContext() {
     try {
       const cb = await computeCashbox();
       cashLines = cb.hasOpening
-        ? `${UZ_MONTHS[cb.m]} oyi: oy oxiri qoldiq ${f(cb.balance)} so'm (oy boshi ${f(cb.monthStart)} + kirimlar ${f(cb.income)} + qarzdor to'lovlari ${f(cb.debtIn)} − buyurtma ${f(cb.dealExp)} − ofis ${f(cb.officeExp)} − avans ${f(cb.staffAdv)}${cb.salaryPay ? ' − oylik ' + f(cb.salaryPay) : ''} − shaxsiy ${f(cb.pers)} − qarz to'lovlari ${f(cb.debtPaid)})`
+        ? `qoldiq ${f(cb.balance)} so'm (boshlang'ich ${f(cb.opening)} + kirimlar ${f(cb.income)} + qarzdor to'lovlari ${f(cb.debtIn)} − buyurtma xarajatlari ${f(cb.dealExp)} − ofis ${f(cb.officeExp)} − shaxsiy ${f(cb.pers)} − xodim avanslari ${f(cb.staffAdv)} − qarz to'lovlari ${f(cb.debtPaid)})`
         : "boshlang'ich qoldiq kiritilmagan";
     } catch (e) { cashLines = "hisoblab bo'lmadi"; }
 
@@ -3670,9 +3514,6 @@ async function handle(upd) {
       if (cd === 'menu_cancelled') { await showOrdersList(c, 'cancelled'); return; }
       if (cd === 'menu_staff') { await showStaffList(c); return; }
       if (cd === 'all_att') { await showAllAttendance(c); return; }
-      if (cd === 'attm_pick') { await attMonthPickStaff(c); return; }
-      if (cd.startsWith('attm_s_')) { await attMonthPickMonth(c, cd.slice(7)); return; }
-      if (cd.startsWith('attm_m_')) { const p = cd.slice(7).split('_'); const yy=+p[p.length-2], mm=+p[p.length-1]; const id=p.slice(0,p.length-2).join('_'); await attMonthShow(c, id, yy, mm); return; }
       if (cd === 'disc_report') { await showDisciplineReport(c); return; }
       if (cd === 'menu_home') { await showHomeMenu(c); return; }
       // ── 3-bosqich: kassa, ishxona, shaxsiy, qarzlar ──
@@ -3702,7 +3543,6 @@ async function handle(upd) {
       if (cd.startsWith('stf_hist_')) { await showStaffHistory(c, cd.slice(9)); return; }
       if (cd.startsWith('stf_att_')) { await showAttendance(c, cd.slice(8)); return; }
       if (cd.startsWith('stf_bonus_')) { await staffBonusStart(c, cd.slice(10)); return; }
-      if (cd.startsWith('stf_clm_')) { const p = cd.slice(8).split('_'); const yy=+p[p.length-2], mm=+p[p.length-1]; const id=p.slice(0,p.length-2).join('_'); await staffCloseMonthAsk(c, id, yy, mm); return; }
       if (cd.startsWith('stf_close_')) { await staffCloseMonthStart(c, cd.slice(10)); return; }
       if (cd.startsWith('stf_tg_')) { await staffTgToggle(c, cd.slice(7)); return; }
       if (cd.startsWith('stf_bindpick_')) { await staffBindPick(c, cd.slice(13)); return; }
@@ -3933,8 +3773,8 @@ async function handle(upd) {
         const num = parseFloat(t.replace(/[^\d.,]/g, '').replace(/,/g, '.'));
         if (isNaN(num) || num < 0) { await msg(c, '❗️ Summani raqam bilan yozing.'); return; }
         const usd = Math.round((hasUsd ? num : num / USD_UZS) * 100) / 100;
-        const id = st.staffId, cy2 = st.closeY, cm2 = st.closeM; delete orderState[c];
-        await staffCloseMonth(c, id, usd, cy2, cm2);
+        const id = st.staffId; delete orderState[c];
+        await staffCloseMonth(c, id, usd);
         return;
       }
       else if (st.step === 'att_in_time') {
