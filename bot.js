@@ -1156,22 +1156,38 @@ async function staffSaveBonus(c, id, amountUsd, reason) {
 
 // Oyni qo'lda yopish
 async function staffCloseMonthStart(c, id) {
-  orderState[c] = { step: 'stf_close_amount', staffId: id };
   const { staff: s } = await findStaff(id);
-  const { currentBalance } = staffPayrollHistory(s);
-  await btn(c, `🔒 *Oyni yopish — ${s.name}*\n\nJoriy balans: ${fmtSigned(currentBalance)}\n\n_Xodimga shu oy uchun jami qancha to'ladingiz? ($ yoki so'm). Yozsangiz, balans 0 bo'ladi va keyingi oyga o'tmaydi._`, [[{ text: '❌ Bekor', callback_data: 'stf_open_' + id }]]);
+  if (!s) { await msg(c, '⚠️ Topilmadi.'); return; }
+  const { history } = staffPayrollHistory(s);
+  const open = history.filter(h => !h.closed);
+  if (!open.length) { await btn(c, `🔒 *${s.name}* — barcha oylar yopilgan.`, [[{ text: '◀️ Ortga', callback_data: 'stf_open_' + id }]]); return; }
+  const rows = open.slice().reverse().map(h => [{ text: `${UZ_MONTHS[h.m]} ${h.y} — ${fmtSigned(h.balance)}`, callback_data: `stf_clm_${id}_${h.y}_${h.m}` }]);
+  rows.push([{ text: '❌ Bekor', callback_data: 'stf_open_' + id }]);
+  await btn(c, `🔒 *Oyni yopish — ${s.name}*\n\nQaysi oyni yopamiz? _(balans bilan)_`, rows);
 }
-async function staffCloseMonth(c, id, paidUsd) {
+// Oy tanlandi — summa so'raladi
+async function staffCloseMonthAsk(c, id, y, m) {
+  const { staff: s } = await findStaff(id);
+  if (!s) { await msg(c, '⚠️ Topilmadi.'); return; }
+  const { history } = staffPayrollHistory(s);
+  const h = history.find(x => x.y === y && x.m === m);
+  const bal = h ? h.balance : 0;
+  orderState[c] = { step: 'stf_close_amount', staffId: id, closeY: y, closeM: m };
+  await btn(c, `🔒 *${UZ_MONTHS[m]} ${y} — ${s.name}*\n\nShu oy balansi: ${fmtSigned(bal)}\n\n_Xodimga bu oy uchun jami qancha to'ladingiz? ($ yoki so'm). Yozsangiz oy yopiladi, balans 0 bo'ladi._`, [[{ text: '❌ Bekor', callback_data: 'stf_open_' + id }]]);
+}
+async function staffCloseMonth(c, id, paidUsd, y, m) {
   const { data, sha, idx } = await findStaff(id);
   if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return; }
   const now = nowTZ();
+  const yy = (y != null ? y : now.getFullYear());
+  const mm = (m != null ? m : now.getMonth());
   const s = data[idx];
   s.closed_months = s.closed_months || [];
-  if (!s.closed_months.some(cm => cm.y === now.getFullYear() && cm.m === now.getMonth()))
-    s.closed_months.push({ y: now.getFullYear(), m: now.getMonth(), paid_usd: paidUsd, date: todayStr() });
-  // to'langan summani to'lov sifatida yozamiz (avans emas — yopilgan oy uchun)
-  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'staff close month: ' + s.name);
-  await msg(c, `🔒 ${s.name} — ${UZ_MONTHS[now.getMonth()]} oyi yopildi. To'langan: $${paidUsd.toFixed(2)}. Balans 0.`);
+  const ex = s.closed_months.find(cm => cm.y === yy && cm.m === mm);
+  if (ex) { ex.paid_usd = paidUsd; ex.date = todayStr(); }
+  else s.closed_months.push({ y: yy, m: mm, paid_usd: paidUsd, date: todayStr() });
+  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, `staff close month ${UZ_MONTHS[mm]} ${yy}: ` + s.name);
+  await msg(c, `🔒 ${s.name} — ${UZ_MONTHS[mm]} ${yy} oyi yopildi. To'langan: $${paidUsd.toFixed(2)}. Balans 0.`);
   await showStaffCard(c, id);
 }
 
@@ -3632,6 +3648,7 @@ async function handle(upd) {
       if (cd.startsWith('stf_hist_')) { await showStaffHistory(c, cd.slice(9)); return; }
       if (cd.startsWith('stf_att_')) { await showAttendance(c, cd.slice(8)); return; }
       if (cd.startsWith('stf_bonus_')) { await staffBonusStart(c, cd.slice(10)); return; }
+      if (cd.startsWith('stf_clm_')) { const p = cd.slice(8).split('_'); const yy=+p[p.length-2], mm=+p[p.length-1]; const id=p.slice(0,p.length-2).join('_'); await staffCloseMonthAsk(c, id, yy, mm); return; }
       if (cd.startsWith('stf_close_')) { await staffCloseMonthStart(c, cd.slice(10)); return; }
       if (cd.startsWith('stf_tg_')) { await staffTgToggle(c, cd.slice(7)); return; }
       if (cd.startsWith('stf_bindpick_')) { await staffBindPick(c, cd.slice(13)); return; }
@@ -3862,8 +3879,8 @@ async function handle(upd) {
         const num = parseFloat(t.replace(/[^\d.,]/g, '').replace(/,/g, '.'));
         if (isNaN(num) || num < 0) { await msg(c, '❗️ Summani raqam bilan yozing.'); return; }
         const usd = Math.round((hasUsd ? num : num / USD_UZS) * 100) / 100;
-        const id = st.staffId; delete orderState[c];
-        await staffCloseMonth(c, id, usd);
+        const id = st.staffId, cy2 = st.closeY, cm2 = st.closeM; delete orderState[c];
+        await staffCloseMonth(c, id, usd, cy2, cm2);
         return;
       }
       else if (st.step === 'att_in_time') {
