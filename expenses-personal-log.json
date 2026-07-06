@@ -166,5 +166,13 @@
     "rate": 12000,
     "type": "personal",
     "ts": "2026-07-06T03:57:42.146Z"
+  },
+  {
+    "date": "06.07.2026",
+    "note": "zapchastlar",
+    "amount_uzs": 1200000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-06T03:59:15.286Z"
   }
 ]
