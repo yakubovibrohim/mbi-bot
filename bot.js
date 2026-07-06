@@ -1,6 +1,7 @@
 const https = require('https');
 const http = require('http');
 const FormData = require('form-data');
+let cardMon = null; try { cardMon = require('./card-monitor'); } catch (e) { console.error('card-monitor yuklanmadi:', e.message); }
 
 let BOT = process.env.BOT_TOKEN || '';  // secrets'dan yuklanadi
 const ADMIN    = '1487569442';
@@ -1615,8 +1616,10 @@ async function computeCashbox() {
   const debtPaid = debtsAll.filter(d => d.dir === 'out').reduce((s, d) => s + debtPaidSum(d), 0);
   // qarzdorlar menga to'lagani (in) — kassaga KIRIM
   const debtIn = debtsAll.filter(d => d.dir === 'in').reduce((s, d) => s + debtPaidSum(d), 0);
-  const balance = opening + income + debtIn - dealExp - officeExp - pers - staffAdv - debtPaid;
-  return { opening, income, debtIn, dealExp, officeExp, pers, staffAdv, debtPaid, balance, hasOpening: cfg.opening_uzs != null };
+  // karta orqali "boshqa kirim" (buyurtma/qarz bilan bog'lanmagan) — kassaga KIRIM
+  const cardIncome = (await ghReadAll('card-income-log.json')).filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
+  const balance = opening + income + debtIn + cardIncome - dealExp - officeExp - pers - staffAdv - debtPaid;
+  return { opening, income, debtIn, cardIncome, dealExp, officeExp, pers, staffAdv, debtPaid, balance, hasOpening: cfg.opening_uzs != null };
 }
 async function showCashbox(c) {
   const k = await computeCashbox();
@@ -1631,6 +1634,7 @@ async function showCashbox(c) {
     `🏦 Boshlang'ich: ${fmtUzs(k.opening)} so'm\n` +
     `📥 Kirim (to'lovlar): +${fmtUzs(k.income)}\n` +
     `📥 Qarzdor to'lovi: +${fmtUzs(k.debtIn)}\n` +
+    `💳 Boshqa kirim (karta): +${fmtUzs(k.cardIncome)}\n` +
     `📤 Buyurtma xarajat: −${fmtUzs(k.dealExp)}\n` +
     `🏭 Ishxona: −${fmtUzs(k.officeExp)}\n` +
     `👷 Xodim avans: −${fmtUzs(k.staffAdv)}\n` +
@@ -2265,6 +2269,17 @@ let secretsReady = (async function loadSecrets() {
     if (bo) AGENTS.botir.token = bo;
     if (di) AGENTS.dilshod.token = di;
     console.log('Secrets loaded. BOT:', BOT ? 'ok' : 'MISSING');
+    try {
+      if (cardMon) {
+        const sess = await getSecretKey('telegram_user_session');
+        if (sess && sess.session) {
+          await cardMon.start(
+            { ADMIN, msg, btn, api, ghReadAll, ghWrite, ghRead, ghPut, todayStr, fmtUzs, USD_UZS },
+            { session: sess.session, api_id: sess.api_id, api_hash: sess.api_hash }
+          );
+        } else { console.log('card-monitor: sessiya topilmadi'); }
+      }
+    } catch (e) { console.error('card-monitor init:', e.message); }
   } catch (e) { console.error('Secrets load error:', e.message); }
 })();
 
@@ -3348,6 +3363,10 @@ async function handle(upd) {
     if (upd.callback_query) {
       const cq = upd.callback_query; const c = cq.message.chat.id; await acb(cq.id);
       const cd = cq.data || '';
+      // Karta monitoring tugmalari
+      if (cd.startsWith('cm_') && cardMon) {
+        try { const done = await cardMon.handleCallback(cd, c); if (done) return; } catch (e) { console.error('card cb:', e.message); }
+      }
       // ── Guruhda davomat/avans tasdiqlash ──
       if (cd.startsWith('ofc_ok_') || cd.startsWith('ofc_no_')) {
         const ok = cd.startsWith('ofc_ok_');
