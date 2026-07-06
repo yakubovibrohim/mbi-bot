@@ -1014,6 +1014,10 @@
    {
     "role": "assistant",
     "content": "Albatta! Nima kerak — oshxona, shkaf yoki yotoqxona? O'lcham va material bo'lsa, taxminiy narxni aytib, Ibrohim aka bilan ulab qo'yaman 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Salom deb yozmaslik kerak edi, lekin bu yerda suhbat davomi sifatida:\n\nHali ham yordam bera olaman, savol bo'lsa yozing 😊 Qaysi mahsulot qiziqtirgan edi?"
    }
   ],
   "993804773642305": [
@@ -1291,7 +1295,7 @@
   "2018998308822163": {
    "lastClientAt": 1783363928033,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "993804773642305": {
    "lastClientAt": 1783365989176,
