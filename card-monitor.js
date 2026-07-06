@@ -91,6 +91,16 @@ async function askClassify(tx) {
 async function handleCallback(cd, chatId) {
   if (!cd.startsWith('cm_')) return false;
 
+  // izohsiz saqlash
+  if (cd.startsWith('cm_nn_')) {
+    const id = cd.slice(6);
+    const p = cardPending[id];
+    if (!p) { await deps.msg(chatId, '⚠️ Eskirgan.'); return true; }
+    awaitingNote = null;
+    await saveCardExpense(id, p.kind);
+    return true;
+  }
+
   // 1-bosqich: tur tanlash
   if (cd.startsWith('cm_t_')) {
     const rest = cd.slice(5);
@@ -110,8 +120,8 @@ async function handleCallback(cd, chatId) {
       await deps.msg(chatId, '💵 O\'z pulingizni kartaga tushirdingiz — bu ichki ko\'chirish, kassa jami o\'zgarmaydi (yozilmadi).');
       return true;
     }
-    if (type === 'pers') { await saveCardExpense(id, 'personal'); return true; }
-    if (type === 'office') { await saveCardExpense(id, 'office'); return true; }
+    if (type === 'pers') { await askNote(id, 'personal', chatId); return true; }
+    if (type === 'office') { await askNote(id, 'office', chatId); return true; }
     if (type === 'other') { await saveCardIncome(id, 'other'); return true; }
 
     if (type === 'deal') { // buyurtma → mijozlar ro'yxati
@@ -183,18 +193,40 @@ async function handleCallback(cd, chatId) {
   return false;
 }
 
-// ── Saqlash funksiyalari ──
+// ── Izoh so'rash (chiqim turini tanlagach) ──
+async function askNote(id, kind, chatId) {
+  const p = cardPending[id];
+  if (!p) { await deps.msg(chatId, '⚠️ Eskirgan.'); return; }
+  p.kind = kind;
+  p.step = 'note';
+  awaitingNote = id; // admin keyingi matni shu izoh bo'ladi
+  const kb = [[{ text: '⏭ Izohsiz saqlash', callback_data: `cm_nn_${id}` }]];
+  await deps.btn(chatId, `✍️ *${kind === 'office' ? '🏭 Ishxona' : '👛 Shaxsiy'}* — nima uchun sarfladingiz?\n(${deps.fmtUzs(p.amtUzs)} so'm)\n\nYozib yuboring yoki izohsiz saqlang:`, kb);
+}
+
+// admin matn yozganda chaqiriladi (bot.js msg handleridan) — izoh kutayotgan bo'lsa true qaytaradi
+async function tryTakeNote(text, chatId) {
+  if (!awaitingNote) return false;
+  const id = awaitingNote;
+  const p = cardPending[id];
+  if (!p || p.step !== 'note') { awaitingNote = null; return false; }
+  awaitingNote = null;
+  p.userNote = (text || '').trim();
+  await saveCardExpense(id, p.kind);
+  return true;
+}
+let awaitingNote = null;
 async function saveCardExpense(id, kind) {
   const p = cardPending[id]; if (!p) return;
   const file = kind === 'office' ? 'office-expenses-log.json' : 'expenses-personal-log.json';
-  const note = `💳 ${p.place || p.title || 'karta'}`;
+  // izoh: foydalanuvchi yozgani birinchi, bo'lmasa joy nomi
+  const note = p.userNote ? `💳 ${p.userNote}` : `💳 ${p.place || p.title || 'karta'}`;
   const entry = kind === 'office'
-    ? { id: shortId(), date: p.date, name: note, amount_uzs: p.amtUzs, rate: deps.USD_UZS, note: 'karta', pay_method: 'card' }
-    : { date: p.date, note, amount_uzs: p.amtUzs, rate: deps.USD_UZS, type: 'personal', pay_method: 'card', ts: new Date().toISOString() };
+    ? { id: shortId(), date: p.date, name: note, amount_uzs: p.amtUzs, rate: deps.USD_UZS, note: p.place || 'karta', pay_method: 'card' }
+    : { date: p.date, note, amount_uzs: p.amtUzs, rate: deps.USD_UZS, type: 'personal', pay_method: 'card', place: p.place || '', ts: new Date().toISOString() };
   await deps.ghWrite(file, entry, `card expense: ${note} ${p.amtUzs}`);
   delete cardPending[id];
-  await deps.msg(deps.ADMIN, `✅ ${kind === 'office' ? '🏭 Ishxona' : '👛 Shaxsiy'} chiqim yozildi: ${deps.fmtUzs(p.amtUzs)} so'm (💳 karta)`);
-  await checkBalance(p);
+  await deps.msg(deps.ADMIN, `✅ ${kind === 'office' ? '🏭 Ishxona' : '👛 Shaxsiy'} chiqim yozildi: ${deps.fmtUzs(p.amtUzs)} so'm (💳 karta)\n📝 ${note.replace('💳 ', '')}`);
 }
 
 async function saveCardIncome(id) {
@@ -313,4 +345,4 @@ async function start(dependencies, cfg) {
   }
 }
 
-module.exports = { start, handleCallback, cardPending };
+module.exports = { start, handleCallback, tryTakeNote, cardPending };

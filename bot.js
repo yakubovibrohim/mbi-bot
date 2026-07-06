@@ -1718,6 +1718,9 @@ async function gatherMonth(y, m) {
     : (afterOpen(d.pay_date || d.date) ? (d.paid_uzs || 0) : 0);
   const cashDebtPaid = debtOut.reduce((s, d) => s + debtPaidSum(d), 0);
   const cashDebtIn = debtsAll.filter(d => d.dir === 'in').reduce((s, d) => s + debtPaidSum(d), 0);
+  // karta "boshqa kirim"
+  const cardIncomeAll = await ghReadAll('card-income-log.json');
+  const cashCardIncome = cardIncomeAll.filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
   // mijoz qarzlari (menga qarzdor)
   const clientDebts = [];
   for (const o of deals) {
@@ -1727,29 +1730,120 @@ async function gatherMonth(y, m) {
       if (debt > 0) clientDebts.push({ client: o.client, contract: o.contract_sum_uzs || 0, paid, debt });
     }
   }
-  const cashBalance = opening + cashIn + cashDebtIn - cashDealExp - cashOffice - cashPers - cashAdv - cashDebtPaid;
-  return { monthDeals, income, dealExp, officeRows, officeExp, persRows, pers, staff, staffAdv, allExpenses, allPayments, bizProfit, realRemain, opening, openingDate: cfg.opening_date, debtOut, cashIn, cashDebtIn, cashDealExp, cashOffice, cashPers, cashAdv, cashDebtPaid, cashBalance, clientDebts };
+  const cashBalance = opening + cashIn + cashDebtIn + cashCardIncome - cashDealExp - cashOffice - cashPers - cashAdv - cashDebtPaid;
+  // ── Oy ichidagi detallar (to'liq hisobot uchun) ──
+  const officeMonRows = officeRows.map(e => ({ date: e.date, name: e.name || '', amt: e.amount_uzs || 0, card: e.pay_method === 'card' }));
+  const advMonRows = [];
+  for (const w of staff) for (const a of (w.advances || [])) if (inMon(a.date)) advMonRows.push({ date: a.date, name: w.name, usd: a.amount_usd || 0, amt: Math.round((a.amount_usd || 0) * USD_UZS) });
+  const debtPaidMonRows = [];
+  for (const d of debtOut) for (const p of (d.payments || [])) if (inMon(p.date)) debtPaidMonRows.push({ date: p.date, name: d.name, amt: p.amount_uzs || 0, card: p.pay_method === 'card' });
+  const debtInMonRows = [];
+  for (const d of debtsAll.filter(x => x.dir === 'in')) for (const p of (d.payments || [])) if (inMon(p.date)) debtInMonRows.push({ date: p.date, name: d.name, amt: p.amount_uzs || 0, card: p.pay_method === 'card' });
+  const cardIncomeMonRows = cardIncomeAll.filter(e => inMon(e.date)).map(e => ({ date: e.date, name: e.name || '', amt: e.amount_uzs || 0 }));
+  const persMonDetailed = persRows.map(e => ({ date: e.date, note: e.note || '', amt: e.amtUzs || 0, card: /💳/.test(e.note || '') }));
+  const dealExpMonRows = allExpenses.map(e => ({ date: e.date, client: e.client, name: e.name || 'xarajat', amt: e.total_uzs || 0, card: e.pay_method === 'card' }));
+  const cardIncomeMon = cardIncomeMonRows.reduce((s, e) => s + e.amt, 0);
+  const debtInMon = debtInMonRows.reduce((s, e) => s + e.amt, 0);
+  const debtPaidMon = debtPaidMonRows.reduce((s, e) => s + e.amt, 0);
+  return { monthDeals, income, dealExp, officeRows, officeExp, persRows, pers, staff, staffAdv, allExpenses, allPayments, bizProfit, realRemain, opening, openingDate: cfg.opening_date, debtOut, cashIn, cashDebtIn, cashCardIncome, cashDealExp, cashOffice, cashPers, cashAdv, cashDebtPaid, cashBalance, clientDebts,
+    officeMonRows, advMonRows, debtPaidMonRows, debtInMonRows, cardIncomeMonRows, persMonDetailed, dealExpMonRows, cardIncomeMon, debtInMon, debtPaidMon };
 }
 
 async function showSummary(c) {
   const now = nowTZ();
-  const g = await gatherMonth(now.getFullYear(), now.getMonth());
-  const monthName = UZ_MONTHS[now.getMonth()];
-  await btn(c, `📊 *Umumiy hisobot — ${monthName} ${now.getFullYear()}*\n\n` +
-    `🆕 Yangi buyurtmalar: ${g.monthDeals.length} ta\n` +
-    `📥 Kirim (to'lovlar): ${fmtUzs(g.income)} so'm\n` +
-    `📤 Buyurtma xarajati: ${fmtUzs(g.dealExp)} so'm\n` +
-    `🏭 Ishxona xarajati: ${fmtUzs(g.officeExp)} so'm\n` +
-    `👷 Xodim avanslari: ${fmtUzs(g.staffAdv)} so'm\n` +
-    `━━━━━━━━━━━━\n` +
-    `📈 Biznes sof foyda: *${fmtUzs(g.bizProfit)} so'm*\n` +
-    `👛 Shaxsiy chiqim: ${fmtUzs(g.pers)} so'm\n` +
-    `━━━━━━━━━━━━\n` +
-    `💰 *Cho'ntakdagi real pul: ${fmtUzs(g.cashBalance)} so'm*`, [
+  await sendFullReport(c, now.getFullYear(), now.getMonth());
+}
+
+// To'liq matnli hisobot — har bir operatsiya ochilgan holda
+async function sendFullReport(c, y, m) {
+  const g = await gatherMonth(y, m);
+  const monthName = UZ_MONTHS[m];
+  const f = fmtUzs;
+  const cardMark = (isCard) => isCard ? ' 💳' : '';
+  let s = `📊 *${monthName} ${y} — TO'LIQ HISOBOT*\n`;
+  s += `🆕 Yangi buyurtmalar: ${g.monthDeals.length} ta\n`;
+  s += `━━━━━━━━━━━━\n\n`;
+
+  s += `💰 *KIRIM (mijoz to'lovlari)*\n`;
+  if (g.allPayments.length) g.allPayments.forEach(p => { s += `  ${p.date}  ${p.client}: +${f(p.amount_uzs || 0)}${cardMark(p.pay_method === 'card')}\n`; });
+  else s += `  _yo'q_\n`;
+  s += `  Jami: *${f(g.income)}*\n\n`;
+
+  if (g.debtInMonRows.length) {
+    s += `📥 *QARZDOR TO'LOVLARI*\n`;
+    g.debtInMonRows.forEach(d => { s += `  ${d.date}  ${d.name}: +${f(d.amt)}${cardMark(d.card)}\n`; });
+    s += `  Jami: *${f(g.debtInMon)}*\n\n`;
+  }
+  if (g.cardIncomeMonRows.length) {
+    s += `💳 *BOSHQA KIRIM (karta)*\n`;
+    g.cardIncomeMonRows.forEach(d => { s += `  ${d.date}  ${d.name.replace('💳 ', '')}: +${f(d.amt)}\n`; });
+    s += `  Jami: *${f(g.cardIncomeMon)}*\n\n`;
+  }
+
+  s += `📤 *BUYURTMA XARAJATLARI*\n`;
+  if (g.dealExpMonRows.length) g.dealExpMonRows.forEach(e => { s += `  ${e.date}  ${e.client} — ${e.name}: −${f(e.amt)}${cardMark(e.card)}\n`; });
+  else s += `  _yo'q_\n`;
+  s += `  Jami: *${f(g.dealExp)}*\n\n`;
+
+  s += `🏭 *ISHXONA XARAJATLARI*\n`;
+  if (g.officeMonRows.length) g.officeMonRows.forEach(e => { s += `  ${e.date}  ${(e.name || '').replace('💳 ', '')}: −${f(e.amt)}${cardMark(e.card)}\n`; });
+  else s += `  _yo'q_\n`;
+  s += `  Jami: *${f(g.officeExp)}*\n\n`;
+
+  s += `👷 *XODIM AVANS/OYLIK*\n`;
+  if (g.advMonRows.length) g.advMonRows.forEach(a => { s += `  ${a.date}  ${a.name}: −${f(a.amt)} ($${a.usd})\n`; });
+  else s += `  _yo'q_\n`;
+  s += `  Jami: *${f(g.staffAdv)}*\n\n`;
+
+  if (g.debtPaidMonRows.length) {
+    s += `🔴 *QARZ TO'LOVLARIM*\n`;
+    g.debtPaidMonRows.forEach(d => { s += `  ${d.date}  ${d.name}: −${f(d.amt)}${cardMark(d.card)}\n`; });
+    s += `  Jami: *${f(g.debtPaidMon)}*\n\n`;
+  }
+
+  s += `👛 *SHAXSIY XARAJATLAR*\n`;
+  if (g.persMonDetailed.length) g.persMonDetailed.forEach(e => { s += `  ${e.date}  ${(e.note || '').replace('💳 ', '')}: −${f(e.amt)}${cardMark(e.card)}\n`; });
+  else s += `  _yo'q_\n`;
+  s += `  Jami: *${f(g.pers)}*\n\n`;
+
+  s += `━━━━━━━━━━━━\n`;
+  s += `📈 Biznes sof foyda: *${f(g.bizProfit)}*\n`;
+  s += `   (kirim − buyurtma − ishxona − avans)\n\n`;
+
+  if (g.clientDebts.length) {
+    s += `🟢 *MENGA QARZDOR (mijozlar)*\n`;
+    g.clientDebts.forEach(d => { s += `  ${d.client}: ${f(d.debt)} (shartnoma ${f(d.contract)}, to'landi ${f(d.paid)})\n`; });
+    s += `\n`;
+  }
+
+  s += `━━━━━━━━━━━━\n`;
+  s += `💵 *KASSA (naqd + karta)*\n`;
+  s += `  🏦 Boshlang'ich (${g.openingDate || ''}): ${f(g.opening)}\n`;
+  s += `  (+) Kirim: ${f(g.cashIn)}\n`;
+  s += `  (+) Qarzdor to'lovi: ${f(g.cashDebtIn)}\n`;
+  if (g.cashCardIncome) s += `  (+) Boshqa kirim (karta): ${f(g.cashCardIncome)}\n`;
+  s += `  (−) Buyurtma: ${f(g.cashDealExp)}\n`;
+  s += `  (−) Ishxona: ${f(g.cashOffice)}\n`;
+  s += `  (−) Avans: ${f(g.cashAdv)}\n`;
+  s += `  (−) Qarz to'lovim: ${f(g.cashDebtPaid)}\n`;
+  s += `  (−) Shaxsiy: ${f(g.cashPers)}\n`;
+  s += `  ━━━━━\n`;
+  s += `  💰 *Hozirgi real pul: ${f(g.cashBalance)} so'm*\n`;
+  s += `     (${Math.round(g.cashBalance / USD_UZS * 10) / 10} $)`;
+
+  const kb = [
     [{ text: '📥 Excel yuklash (shu oy)', callback_data: 'xls_now' }],
     [{ text: '📅 Oylik hisobotlar', callback_data: 'xls_list' }],
     [{ text: '◀️ Ortga', callback_data: 'menu_home' }]
-  ]);
+  ];
+  const kbMarkup = { inline_keyboard: kb };
+  if (s.length <= 4000) {
+    await msgKb(c, s, kbMarkup);
+  } else {
+    const cut = s.lastIndexOf('\n\n', 3800);
+    await msg(c, s.slice(0, cut));
+    await msgKb(c, s.slice(cut), kbMarkup);
+  }
 }
 
 // Telegramga fayl (buffer) yuborish
@@ -1796,6 +1890,16 @@ async function buildMonthExcel(y, m) {
   g.allPayments.forEach(p => { const ri = R(); push([p.date, p.client, p.note || 'To\'lov', p.amount_uzs || 0, '']); moneyAt(ri, 3); });
   { const ri = R(); push(['JAMI KIRIM:', '', '', g.income, '']); moneyAt(ri, 3); }
   push(['', '', '', '', '']);
+
+  // 1b. QARZDOR TO'LOVLARI + KARTA BOSHQA KIRIM
+  if ((g.debtInMonRows && g.debtInMonRows.length) || (g.cardIncomeMonRows && g.cardIncomeMonRows.length)) {
+    sectionRow('📥 QARZDOR TO\'LOVLARI VA BOSHQA KIRIM');
+    push(['Sana', 'Kimdan / Nima', 'Turi', 'Summa (so\'m)', '']);
+    (g.debtInMonRows || []).forEach(d => { const ri = R(); push([d.date, d.name, d.card ? 'qarzdor 💳' : 'qarzdor', d.amt, '']); moneyAt(ri, 3); });
+    (g.cardIncomeMonRows || []).forEach(d => { const ri = R(); push([d.date, (d.name || '').replace('💳 ', ''), 'karta kirim', d.amt, '']); moneyAt(ri, 3); });
+    { const ri = R(); push(['JAMI:', '', '', (g.debtInMon || 0) + (g.cardIncomeMon || 0), '']); moneyAt(ri, 3); }
+    push(['', '', '', '', '']);
+  }
 
   // 2. ISHXONA RASXODLARI
   sectionRow('🏭 ISHXONA RASXODLARI');
@@ -2639,6 +2743,11 @@ async function handleOffice(upd) {
     return;
   }
   if (!fromAdmin) return;
+
+  // Karta chiqimi izohini kutayotgan bo'lsa — bu matn o'sha izoh
+  if (cardMon && cardMon.tryTakeNote) {
+    try { if (await cardMon.tryTakeNote(t, c)) return; } catch (e) { console.error('card note:', e.message); }
+  }
 
   if (t === '/dashboard' || t === '/dashboard@mbi_mebel_bot') {
     await api('sendMessage', { chat_id: c, text: '🖥 *MBI AI Office — boshqaruv paneli*', parse_mode: 'Markdown',
