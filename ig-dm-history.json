@@ -136,6 +136,22 @@
    {
     "role": "assistant",
     "content": "Tushundim! Gaz o'rni ochiq qoladi, tagiga shkafcha qo'yilmaydi.\n\nOshxonaning umumiy uzunligi necha metr? Yuqori qism ham bormi?"
+   },
+   {
+    "role": "user",
+    "content": "Tortmaliy qanchaga tuwadi wunaqa rangi bõliw kerak"
+   },
+   {
+    "role": "assistant",
+    "content": "Tortmali shkaf — LMDF korpus, GTV furnitura bilan taxminan 110-140$/m² atrofida.\n\nOshxonaning umumiy o'lchami bormi? Uzunligi necha metr — aniq hisob chiqarib beramiz 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Faqat gazi tagni tortmaliy bõladi"
+   },
+   {
+    "role": "assistant",
+    "content": "Tushundim 👍🏻\n\nGaz tagidagi qismning eni necha sm yoki metr? Shuga qarab taxminiy narx aytib beramiz."
    }
   ],
   "2392288251257443": [
@@ -851,7 +867,7 @@
    "followedUp": true
   },
   "1534839131449022": {
-   "lastClientAt": 1783350715715,
+   "lastClientAt": 1783350864714,
    "followedUp": false,
    "fu3": false
   },
