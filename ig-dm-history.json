@@ -680,6 +680,14 @@
    {
     "role": "assistant",
     "content": "Yaxshi. Qaysi material yoqadi — LMDF, akril yoki krashenniy fasad?"
+   },
+   {
+    "role": "user",
+    "content": "Akril"
+   },
+   {
+    "role": "assistant",
+    "content": "Tushunарли. Furnitura bo'yicha — GTV, Hettich yoki Blum?"
    }
   ]
  },
@@ -830,7 +838,7 @@
    "fu3": false
   },
   "2271444390287794": {
-   "lastClientAt": 1783342960655,
+   "lastClientAt": 1783343003348,
    "followedUp": false,
    "fu3": false
   }
