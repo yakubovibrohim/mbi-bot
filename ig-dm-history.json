@@ -672,6 +672,14 @@
    {
     "role": "assistant",
     "content": "Tushunарли. Bir nechta savol:\n\nOshxona neча metr va neча etaj — 2 yoki 3?"
+   },
+   {
+    "role": "user",
+    "content": "4,5 metr 2etaj"
+   },
+   {
+    "role": "assistant",
+    "content": "Yaxshi. Qaysi material yoqadi — LMDF, akril yoki krashenniy fasad?"
    }
   ]
  },
@@ -822,7 +830,7 @@
    "fu3": false
   },
   "2271444390287794": {
-   "lastClientAt": 1783342888391,
+   "lastClientAt": 1783342960655,
    "followedUp": false,
    "fu3": false
   }
