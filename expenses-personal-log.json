@@ -174,5 +174,13 @@
     "rate": 12000,
     "type": "personal",
     "ts": "2026-07-06T03:59:15.286Z"
+  },
+  {
+    "date": "06.07.2026",
+    "note": "dacha+uyga rozgo'or",
+    "amount_uzs": 3810155,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-06T05:07:01.291Z"
   }
 ]
