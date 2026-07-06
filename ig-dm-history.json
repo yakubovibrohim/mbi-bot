@@ -226,6 +226,14 @@
    {
     "role": "assistant",
     "content": "Toshkent, Yakkasaroy, Qushbegi 6 — kelib materiallarga qarashingiz mumkin 👍🏻\n\nQaysi mahsulot narxini so'rayapsiz — oshxona, shkaf yoki yotoqxonami?"
+   },
+   {
+    "role": "user",
+    "content": "Mahsulot narxini tekshira olasizmi?"
+   },
+   {
+    "role": "assistant",
+    "content": "Albatta! Qaysi mahsulot — oshxona, shkaf yoki yotoqxona?"
    }
   ]
  },
@@ -299,7 +307,7 @@
    "followedUp": false
   },
   "1535084918156319": {
-   "lastClientAt": 1783317433076,
+   "lastClientAt": 1783317524189,
    "followedUp": false
   }
  }
