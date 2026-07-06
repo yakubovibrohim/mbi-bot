@@ -637,6 +637,16 @@
     "role": "assistant",
     "content": "Здравствуйте! Да, поможем разобраться 👍🏻\n\nУточните, пожалуйста — что именно вас интересует? Кухня, шкаф или спальный гарнитур?"
    }
+  ],
+  "1518313619771727": [
+   {
+    "role": "user",
+    "content": "Mahsulot narxini tekshira olasizmi?"
+   },
+   {
+    "role": "assistant",
+    "content": "Albatta! Qaysi mahsulot haqida so'rayapsiz — oshxona, shkaf yoki yotoqxona? O'lcham va material aytsa, taxminiy narxni aytaman 👍🏻"
+   }
   ]
  },
  "activity": {
@@ -779,6 +789,11 @@
   "3998330260300031": {
    "lastClientAt": 1783338984425,
    "followedUp": false
+  },
+  "1518313619771727": {
+   "lastClientAt": 1783342334206,
+   "followedUp": false,
+   "fu3": false
   }
  }
 }
