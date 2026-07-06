@@ -152,6 +152,14 @@
    {
     "role": "assistant",
     "content": "Tushundim 👍🏻\n\nGaz tagidagi qismning eni necha sm yoki metr? Shuga qarab taxminiy narx aytib beramiz."
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz video yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Video kelmadi menга, lekin tushundim — gaz tagiga tortmali shkafcha kerak 👍🏻\n\nEni necha sm bo'ladi o'sha qismning?"
    }
   ],
   "2392288251257443": [
@@ -867,7 +875,7 @@
    "followedUp": true
   },
   "1534839131449022": {
-   "lastClientAt": 1783350864714,
+   "lastClientAt": 1783354388741,
    "followedUp": false,
    "fu3": false
   },
