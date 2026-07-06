@@ -995,6 +995,16 @@
     "role": "assistant",
     "content": "Albatta! Nima kerak — oshxona, shkaf yoki yotoqxona? O'lcham va material bo'lsa, taxminiy narxni aytib, Ibrohim aka bilan ulab qo'yaman 👍🏻"
    }
+  ],
+  "993804773642305": [
+   {
+    "role": "user",
+    "content": "Сколько стоит дизайн интерьера?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%.\n\nКухни выходят примерно от $1000. Что планируете?"
+   }
   ]
  },
  "activity": {
@@ -1216,6 +1226,11 @@
   },
   "2018998308822163": {
    "lastClientAt": 1783363928033,
+   "followedUp": false,
+   "fu3": false
+  },
+  "993804773642305": {
+   "lastClientAt": 1783365989176,
    "followedUp": false,
    "fu3": false
   }
