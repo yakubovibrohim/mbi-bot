@@ -524,6 +524,29 @@
         "status": "approved",
         "requested": "04.07.2026"
       }
+    ],
+    "closed_months": [
+      {
+        "y": 2026,
+        "m": 3,
+        "paid_usd": 0,
+        "date": "06.07.2026",
+        "note": "Apr-Iyun yakuniy hisob-kitob"
+      },
+      {
+        "y": 2026,
+        "m": 4,
+        "paid_usd": 0,
+        "date": "06.07.2026",
+        "note": "Apr-Iyun yakuniy hisob-kitob"
+      },
+      {
+        "y": 2026,
+        "m": 5,
+        "paid_usd": 0,
+        "date": "06.07.2026",
+        "note": "Apr-Iyun yakuniy hisob-kitob"
+      }
     ]
   }
 ]
