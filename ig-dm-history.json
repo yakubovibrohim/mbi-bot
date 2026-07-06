@@ -379,6 +379,24 @@
     "role": "assistant",
     "content": "Дизайном интерьера мы не занимаемся — только изготовление мебели на заказ: кухни, шкафы, спальни 👍🏻\n\nЕсли нужна мебель — подскажу по цене и срокам."
    }
+  ],
+  "1339635578332434": [
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"#interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум, яхшимисз 👍🏻\n\nОшхона ёқди шекилли 😀 Исмингиз нима ока?"
+   },
+   {
+    "role": "user",
+    "content": "Assalomu aleykum shuni qanchaga yasagansla bzayam oshxonaga mebel yasatirmoqchidik\nPrimerno narxini etvorolismi"
+   },
+   {
+    "role": "assistant",
+    "content": "Ва Алейкум Ассалом 👍🏻\n\nАйтаман, аввал бир-икки нарсани аниқлаб олсам:\n\nОшхона неча метр ва неча этаж — 2 ми, 3 ми?"
+   }
   ]
  },
  "activity": {
@@ -484,6 +502,10 @@
   },
   "1551898396331872": {
    "lastClientAt": 1783326837137,
+   "followedUp": false
+  },
+  "1339635578332434": {
+   "lastClientAt": 1783327386764,
    "followedUp": false
   }
  }
