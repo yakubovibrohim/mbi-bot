@@ -1762,6 +1762,7 @@ async function sendFullReport(c, y, m) {
   const cardMark = (isCard) => isCard ? ' 💳' : '';
   let s = `📊 *${monthName} ${y} — TO'LIQ HISOBOT*\n`;
   s += `🆕 Yangi buyurtmalar: ${g.monthDeals.length} ta\n`;
+  s += `🗓 _Quyidagilar faqat ${monthName} oyidagi operatsiyalar_\n`;
   s += `━━━━━━━━━━━━\n\n`;
 
   s += `💰 *KIRIM (mijoz to'lovlari)*\n`;
@@ -1817,8 +1818,9 @@ async function sendFullReport(c, y, m) {
   }
 
   s += `━━━━━━━━━━━━\n`;
-  s += `💵 *KASSA (naqd + karta)*\n`;
-  s += `  🏦 Boshlang'ich (${g.openingDate || ''}): ${f(g.opening)}\n`;
+  s += `💵 *KASSA — hozirgi real pul (naqd + karta)*\n`;
+  s += `_Boshlang'ich (${g.openingDate || ''}) sanadan beri jami hisob_\n`;
+  s += `  🏦 Boshlang'ich: ${f(g.opening)}\n`;
   s += `  (+) Kirim: ${f(g.cashIn)}\n`;
   s += `  (+) Qarzdor to'lovi: ${f(g.cashDebtIn)}\n`;
   if (g.cashCardIncome) s += `  (+) Boshqa kirim (karta): ${f(g.cashCardIncome)}\n`;
