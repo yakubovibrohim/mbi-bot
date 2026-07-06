@@ -1187,7 +1187,20 @@ async function staffCloseMonth(c, id, paidUsd, y, m) {
   if (ex) { ex.paid_usd = paidUsd; ex.date = todayStr(); }
   else s.closed_months.push({ y: yy, m: mm, paid_usd: paidUsd, date: todayStr() });
   await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, `staff close month ${UZ_MONTHS[mm]} ${yy}: ` + s.name);
-  await msg(c, `🔒 ${s.name} — ${UZ_MONTHS[mm]} ${yy} oyi yopildi. To'langan: $${paidUsd.toFixed(2)}. Balans 0.`);
+  // — KASSA CHIQIMI: to'langan summa ishxona xarajati sifatida yoziladi (dublikatsiz) —
+  const paidUzs = Math.round(paidUsd * USD_UZS);
+  if (paidUzs > 0) {
+    try {
+      const closeRef = `stfclose_${s.id}_${yy}_${mm}`;
+      const { data: ox, sha: oxSha } = await ghRead('office-expenses-log.json');
+      const oExist = ox.find(e => e.close_ref === closeRef);
+      const label = `${s.name} — ${UZ_MONTHS[mm]} ${yy} oyligi`;
+      if (oExist) { oExist.amount_uzs = paidUzs; oExist.rate = USD_UZS; oExist.date = todayStr(); oExist.name = label; }
+      else ox.push({ id: uid(), date: todayStr(), name: label, amount_uzs: paidUzs, rate: USD_UZS, note: 'Oy yopish to\'lovi', close_ref: closeRef });
+      await ghPut('office-expenses-log.json', JSON.stringify(ox, null, 2), oxSha, `cashbox out (oy yopish): ${label}`);
+    } catch (e) { console.error('close-month cashbox out error', e); }
+  }
+  await msg(c, `🔒 ${s.name} — ${UZ_MONTHS[mm]} ${yy} oyi yopildi.\n💸 To'langan: $${paidUsd.toFixed(2)} (${fmtUzs(paidUzs)} so'm) — kassadan chiqim.\nBalans 0.`);
   await showStaffCard(c, id);
 }
 
