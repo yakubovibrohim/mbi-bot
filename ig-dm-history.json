@@ -116,6 +116,10 @@
    {
     "role": "assistant",
     "content": "Ha, gazni tagini yopib qilamiz 👍🏻\n\nOshxona necha metr, 2 etajmi 3 etaj?"
+   },
+   {
+    "role": "assistant",
+    "content": "Gazingiz uchun hali ham yordamlasha olamiz, o'lchamingizni yuborsangiz narx aytib beramiz 🙂"
    }
   ],
   "2392288251257443": [
@@ -666,6 +670,10 @@
    {
     "role": "assistant",
     "content": "Яхши танлов! Премиум вариант 👍🏻\n\n5 метр, 3 этаж, крашенный + Blum — тахминан **3250–3750$** атрофида чиқади.\n\nАниқ нархни ва лойиҳани Иброхим ака берadi. Телефон рақамингизни қолдиринг, ўзи ҳисоблаб қўнғироқ қилади 📞"
+   },
+   {
+    "role": "assistant",
+    "content": "Ҳисоб-китоб тайёр, шуни тасдиқлаб юборайми? 😊"
    }
   ],
   "3998330260300031": [
@@ -828,7 +836,7 @@
   },
   "1534839131449022": {
    "lastClientAt": 1783275898834,
-   "followedUp": false
+   "followedUp": true
   },
   "2392288251257443": {
    "lastClientAt": 1783280996114,
@@ -940,7 +948,8 @@
   },
   "1645341503220415": {
    "lastClientAt": 1783337730520,
-   "followedUp": false
+   "followedUp": false,
+   "fu3": true
   },
   "3998330260300031": {
    "lastClientAt": 1783338984425,
