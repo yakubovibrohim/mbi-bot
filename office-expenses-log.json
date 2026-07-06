@@ -30,5 +30,14 @@
     "amount_uzs": 400000,
     "rate": 12000,
     "note": ""
+  },
+  {
+    "id": "nir6d4mciivb",
+    "date": "06.07.2026",
+    "name": "Sherzod — Iyun 2026 oyligi",
+    "amount_uzs": 3673920,
+    "rate": 12000,
+    "note": "Oy yopish to'lovi",
+    "close_ref": "stfclose_19ed11f3c1djihj_2026_5"
   }
 ]
