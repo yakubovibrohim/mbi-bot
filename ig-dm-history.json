@@ -217,6 +217,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкум 🙌 Нархлар меблга қараб фарқ қилади — шахсийга (DM) ёзинг, барча маълумот берамиз 👍🏻"
    }
+  ],
+  "1535084918156319": [
+   {
+    "role": "user",
+    "content": "Qayerda joylashgansiz?\nMahsulot narxini tekshira olasizmi?\nQayerda joylashgansiz?"
+   },
+   {
+    "role": "assistant",
+    "content": "Toshkent, Yakkasaroy, Qushbegi 6 — kelib materiallarga qarashingiz mumkin 👍🏻\n\nQaysi mahsulot narxini so'rayapsiz — oshxona, shkaf yoki yotoqxonami?"
+   }
   ]
  },
  "activity": {
@@ -286,6 +296,10 @@
   },
   "882718974888779": {
    "lastClientAt": 1783314826692,
+   "followedUp": false
+  },
+  "1535084918156319": {
+   "lastClientAt": 1783317433076,
    "followedUp": false
   }
  }
