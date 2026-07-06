@@ -158,5 +158,13 @@
     "rate": 12000,
     "type": "personal",
     "ts": "2026-06-30T05:07:01.668Z"
+  },
+  {
+    "date": "06.07.2026",
+    "note": "bog'cha puli",
+    "amount_uzs": 2100000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-06T03:57:42.146Z"
   }
 ]
