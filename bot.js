@@ -821,6 +821,77 @@ async function showStaffList(c) {
   rows.push([{ text: '◀️ Ortga', callback_data: 'menu_home' }]);
   await btn(c, '👷 *Xodimlar*' + (active.length ? '' : '\n\n_Hozircha xodim yo\'q. «Yangi xodim» qo\'shing._'), rows);
 }
+// ═══ OYLIK DAVOMAT KO'RISH (xodim → oy → to'liq kunlar) — faqat ko'rish ═══
+async function attMonthPickStaff(c) {
+  const list = (await readStaff()).filter(s => s.active !== false);
+  if (!list.length) { await msg(c, '_Xodim yo\'q._'); return; }
+  const rows = list.map(s => [{ text: '👷 ' + s.name, callback_data: 'attm_s_' + s.id }]);
+  rows.push([{ text: '◀️ Ortga', callback_data: 'all_att' }]);
+  await btn(c, '📆 *Oylik davomat*\n\nQaysi xodim?', rows);
+}
+async function attMonthPickMonth(c, id) {
+  const { staff: s } = await findStaff(id);
+  if (!s) { await msg(c, '⚠️ Topilmadi.'); return; }
+  const now = nowTZ();
+  const cy = now.getFullYear(), cm = now.getMonth();
+  const hp = dmyParts(s.hire_date);
+  let sy = hp ? hp.y : cy, sm = hp ? hp.m : cm;
+  const items = [];
+  let y = sy, m = sm, guard = 0;
+  while ((y < cy || (y === cy && m <= cm)) && guard < 120) { items.push({ y, m }); m++; if (m > 11) { m = 0; y++; } guard++; }
+  items.reverse();
+  const rows = items.map(it => {
+    const closed = (s.closed_months || []).some(cm2 => cm2.y === it.y && cm2.m === it.m);
+    const cur = (it.y === cy && it.m === cm);
+    return [{ text: `${UZ_MONTHS[it.m]} ${it.y}${cur ? ' (joriy)' : ''}${closed ? ' 🔒' : ''}`, callback_data: `attm_m_${id}_${it.y}_${it.m}` }];
+  });
+  rows.push([{ text: '◀️ Ortga', callback_data: 'attm_pick' }]);
+  await btn(c, `📆 *${s.name} — oy tanlang:*`, rows);
+}
+async function attMonthShow(c, id, y, m) {
+  const { staff: s } = await findStaff(id);
+  if (!s) { await msg(c, '⚠️ Topilmadi.'); return; }
+  const closed = (s.closed_months || []).some(cm => cm.y === y && cm.m === m);
+  const attByDay = {}; (s.attendance || []).forEach(a => { const p = dmyParts(a.date); if (p && p.y === y && p.m === m) attByDay[p.d] = a; });
+  const absByDay = {}; (s.absences || []).forEach(a => { const p = dmyParts(a.date); if (p && p.y === y && p.m === m) absByDay[p.d] = a; });
+  const leaveByDay = {}; (s.leaves || []).forEach(l => { const p = dmyParts(l.date); if (p && p.y === y && p.m === m && l.status === 'approved') leaveByDay[p.d] = l; });
+  const WD = ['Ya', 'Du', 'Se', 'Ch', 'Pa', 'Ju', 'Sh'];
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+  let txt = `📆 *${s.name} — ${UZ_MONTHS[m]} ${y}*${closed ? ' 🔒 _(yopilgan)_' : ''}\n\n`;
+  let workedDays = 0, totalNormal = 0, totalExtra = 0, absCnt = 0;
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dow = new Date(y, m, d).getDay();
+    const wd = WD[dow], dd = ('0' + d).slice(-2);
+    const a = attByDay[d], ab = absByDay[d], lv = leaveByDay[d];
+    if (a && a.in) {
+      const dh = computeDayHours(a.in, a.out, a.leave_min);
+      const nh = (a.normalH != null ? a.normalH : dh.normalH);
+      const eh = (a.extraH != null ? a.extraH : dh.extraH);
+      workedDays++; totalNormal += nh; totalExtra += eh;
+      const marks = [];
+      if (a.late) marks.push('⚠️kech');
+      if (a.early) marks.push('🏃erta');
+      if (!a.late && !a.early && a.out) marks.push('✅');
+      txt += `${dd} ${wd}: ${a.in}–${a.out || '...'} · ${nh.toFixed(1)}s${eh ? ` +${eh.toFixed(1)}` : ''} ${marks.join(' ')}\n`;
+      if (a.in_reason) txt += `   └ kech: _${a.in_reason}_\n`;
+      if (a.out_reason) txt += `   └ erta: _${a.out_reason}_\n`;
+    } else if (ab) {
+      absCnt++;
+      txt += `${dd} ${wd}: ❌ kelmagan${ab.reason ? ` (_${ab.reason}_)` : ''}\n`;
+    } else if (lv) {
+      txt += `${dd} ${wd}: 🙋 javob${lv.reason ? ` (_${lv.reason}_)` : ''}\n`;
+    } else if (dow === 0) {
+      txt += `${dd} ${wd}: _dam_\n`;
+    } else {
+      txt += `${dd} ${wd}: —\n`;
+    }
+  }
+  txt += `\n📊 Ishlagan: *${workedDays} kun*, *${totalNormal.toFixed(1)} soat*`;
+  if (totalExtra > 0.05) txt += ` (+${totalExtra.toFixed(1)} qo'sh.)`;
+  if (absCnt) txt += `, kelmagan: ${absCnt}`;
+  await btn(c, txt, [[{ text: '◀️ Oylar', callback_data: 'attm_s_' + id }], [{ text: '👥 Bugun', callback_data: 'all_att' }]]);
+}
+
 // Admin: bugungi hammaning davomati (real vaqt)
 async function showAllAttendance(c) {
   const list = (await readStaff()).filter(s => s.active !== false);
@@ -842,7 +913,7 @@ async function showAllAttendance(c) {
     if (rec && rec.out_reason) txt += `   └ erta: _${rec.out_reason}_\n`;
     if (todayLeave) txt += `   └ 🙋 javob: ${todayLeave.type === 'partial' ? todayLeave.hours + ' soat' : todayLeave.type === 'early' ? 'erta ' + todayLeave.time : 'kelmaslik'}\n`;
   }
-  await btn(c, txt, [[{ text: '🔄 Yangilash', callback_data: 'all_att' }], [{ text: '📋 Intizom hisoboti', callback_data: 'disc_report' }]]);
+  await btn(c, txt, [[{ text: '🔄 Yangilash', callback_data: 'all_att' }], [{ text: '📆 Oylik davomat', callback_data: 'attm_pick' }], [{ text: '📋 Intizom hisoboti', callback_data: 'disc_report' }]]);
 }
 // Admin: oylik intizom hisoboti (kech/erta/kelmagan/javob)
 async function showDisciplineReport(c) {
@@ -1070,22 +1141,65 @@ async function staffSaveBonus(c, id, amountUsd, reason) {
 
 // Oyni qo'lda yopish
 async function staffCloseMonthStart(c, id) {
-  orderState[c] = { step: 'stf_close_amount', staffId: id };
   const { staff: s } = await findStaff(id);
-  const { currentBalance } = staffPayrollHistory(s);
-  await btn(c, `🔒 *Oyni yopish — ${s.name}*\n\nJoriy balans: ${fmtSigned(currentBalance)}\n\n_Xodimga shu oy uchun jami qancha to'ladingiz? ($ yoki so'm). Yozsangiz, balans 0 bo'ladi va keyingi oyga o'tmaydi._`, [[{ text: '❌ Bekor', callback_data: 'stf_open_' + id }]]);
+  if (!s) { await msg(c, '⚠️ Topilmadi.'); return; }
+  const { history } = staffPayrollHistory(s);
+  const open = history.filter(h => !h.closed);
+  if (!open.length) { await btn(c, `🔒 *${s.name}* — barcha oylar yopilgan.`, [[{ text: '◀️ Ortga', callback_data: 'stf_open_' + id }]]); return; }
+  const rows = open.slice().reverse().map(h => [{ text: `${UZ_MONTHS[h.m]} ${h.y} — ${fmtSigned(h.balance)}`, callback_data: `stf_clm_${id}_${h.y}_${h.m}` }]);
+  rows.push([{ text: '❌ Bekor', callback_data: 'stf_open_' + id }]);
+  await btn(c, `🔒 *Oyni yopish — ${s.name}*\n\nQaysi oyni yopamiz? _(balans bilan)_`, rows);
 }
-async function staffCloseMonth(c, id, paidUsd) {
+// Oy tanlandi — summa so'raladi
+async function staffCloseMonthAsk(c, id, y, m) {
+  const { staff: s } = await findStaff(id);
+  if (!s) { await msg(c, '⚠️ Topilmadi.'); return; }
+  const { history } = staffPayrollHistory(s);
+  const h = history.find(x => x.y === y && x.m === m);
+  const bal = h ? h.balance : 0;
+  orderState[c] = { step: 'stf_close_amount', staffId: id, closeY: y, closeM: m };
+  await btn(c, `🔒 *${UZ_MONTHS[m]} ${y} — ${s.name}*\n\nShu oy balansi: ${fmtSigned(bal)}\n\n_Xodimga bu oy uchun jami qancha to'ladingiz? ($ yoki so'm). Yozsangiz oy yopiladi, balans 0 bo'ladi._`, [[{ text: '❌ Bekor', callback_data: 'stf_open_' + id }]]);
+}
+async function staffCloseMonth(c, id, paidUsd, y, m) {
   const { data, sha, idx } = await findStaff(id);
   if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return; }
   const now = nowTZ();
+  const yy = (y != null ? y : now.getFullYear());
+  const mm = (m != null ? m : now.getMonth());
   const s = data[idx];
+  // shu oyda berilgan avanslar (kassada allaqachon chiqim bo'lgan) — dublikatdan qochish uchun
+  const advThisMonth = (s.advances || []).filter(a => { const p = dmyParts(a.date); return p && p.y === yy && p.m === mm && !a.pending; }).reduce((sm, a) => sm + (a.amount_usd || 0), 0);
   s.closed_months = s.closed_months || [];
-  if (!s.closed_months.some(cm => cm.y === now.getFullYear() && cm.m === now.getMonth()))
-    s.closed_months.push({ y: now.getFullYear(), m: now.getMonth(), paid_usd: paidUsd, date: todayStr() });
-  // to'langan summani to'lov sifatida yozamiz (avans emas — yopilgan oy uchun)
-  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'staff close month: ' + s.name);
-  await msg(c, `🔒 ${s.name} — ${UZ_MONTHS[now.getMonth()]} oyi yopildi. To'langan: $${paidUsd.toFixed(2)}. Balans 0.`);
+  const ex = s.closed_months.find(cm => cm.y === yy && cm.m === mm);
+  if (ex) { ex.paid_usd = paidUsd; ex.date = todayStr(); }
+  else s.closed_months.push({ y: yy, m: mm, paid_usd: paidUsd, date: todayStr() });
+  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, `staff close month ${UZ_MONTHS[mm]} ${yy}: ` + s.name);
+
+  // KASSA CHIQIMI: faqat AVANSDAN ORTIQ to'langan qism (avanslar kassada allaqachon chiqim).
+  // extraPay = paidUsd − advThisMonth (musbat bo'lsa). Dublikatsiz, close_ref bilan.
+  const extraPayUsd = Math.max(0, paidUsd - advThisMonth);
+  const extraUzs = Math.round(extraPayUsd * USD_UZS);
+  const closeRef = `stfclose_${s.id}_${yy}_${mm}`;
+  try {
+    const { data: ox, sha: oxSha } = await ghRead('office-expenses-log.json');
+    const oIdx = ox.findIndex(e => e.close_ref === closeRef);
+    const label = `${s.name} — ${UZ_MONTHS[mm]} ${yy} oyligi`;
+    if (extraUzs > 0) {
+      if (oIdx >= 0) { ox[oIdx].amount_uzs = extraUzs; ox[oIdx].rate = USD_UZS; ox[oIdx].date = todayStr(); ox[oIdx].name = label; }
+      else ox.push({ id: uid(), date: todayStr(), name: label, amount_uzs: extraUzs, rate: USD_UZS, note: 'Oy yopish (avansdan ortiq)', close_ref: closeRef, is_salary: true });
+      await ghPut('office-expenses-log.json', JSON.stringify(ox, null, 2), oxSha, `cashbox out (oy yopish): ${label}`);
+    } else if (oIdx >= 0) {
+      // avvalgi chiqim bor edi, endi ortiq yo'q — o'chiramiz (dublikat bo'lmasin)
+      ox.splice(oIdx, 1);
+      await ghPut('office-expenses-log.json', JSON.stringify(ox, null, 2), oxSha, `cashbox out removed (oy yopish): ${label}`);
+    }
+  } catch (e) { console.error('close-month cashbox out error', e); }
+
+  const paidUzs = Math.round(paidUsd * USD_UZS);
+  let extraLine = '';
+  if (extraUzs > 0) extraLine = `\n💸 Kassadan chiqim (avansdan ortiq): ${fmtUzs(extraUzs)} so'm`;
+  else if (advThisMonth > 0) extraLine = `\n_(To'lov shu oy avanslari bilan qoplangan — kassaga qo'shimcha chiqim yo'q.)_`;
+  await msg(c, `🔒 ${s.name} — ${UZ_MONTHS[mm]} ${yy} oyi yopildi.\nTo'langan: $${paidUsd.toFixed(2)} (${fmtUzs(paidUzs)} so'm). Balans 0.${extraLine}`);
   await showStaffCard(c, id);
 }
 
@@ -3514,6 +3628,9 @@ async function handle(upd) {
       if (cd === 'menu_cancelled') { await showOrdersList(c, 'cancelled'); return; }
       if (cd === 'menu_staff') { await showStaffList(c); return; }
       if (cd === 'all_att') { await showAllAttendance(c); return; }
+      if (cd === 'attm_pick') { await attMonthPickStaff(c); return; }
+      if (cd.startsWith('attm_s_')) { await attMonthPickMonth(c, cd.slice(7)); return; }
+      if (cd.startsWith('attm_m_')) { const q = cd.slice(7).split('_'); const yy=+q[q.length-2], mm=+q[q.length-1]; const iid=q.slice(0,q.length-2).join('_'); await attMonthShow(c, iid, yy, mm); return; }
       if (cd === 'disc_report') { await showDisciplineReport(c); return; }
       if (cd === 'menu_home') { await showHomeMenu(c); return; }
       // ── 3-bosqich: kassa, ishxona, shaxsiy, qarzlar ──
@@ -3543,6 +3660,7 @@ async function handle(upd) {
       if (cd.startsWith('stf_hist_')) { await showStaffHistory(c, cd.slice(9)); return; }
       if (cd.startsWith('stf_att_')) { await showAttendance(c, cd.slice(8)); return; }
       if (cd.startsWith('stf_bonus_')) { await staffBonusStart(c, cd.slice(10)); return; }
+      if (cd.startsWith('stf_clm_')) { const q = cd.slice(8).split('_'); const yy=+q[q.length-2], mm=+q[q.length-1]; const iid=q.slice(0,q.length-2).join('_'); await staffCloseMonthAsk(c, iid, yy, mm); return; }
       if (cd.startsWith('stf_close_')) { await staffCloseMonthStart(c, cd.slice(10)); return; }
       if (cd.startsWith('stf_tg_')) { await staffTgToggle(c, cd.slice(7)); return; }
       if (cd.startsWith('stf_bindpick_')) { await staffBindPick(c, cd.slice(13)); return; }
@@ -3773,8 +3891,8 @@ async function handle(upd) {
         const num = parseFloat(t.replace(/[^\d.,]/g, '').replace(/,/g, '.'));
         if (isNaN(num) || num < 0) { await msg(c, '❗️ Summani raqam bilan yozing.'); return; }
         const usd = Math.round((hasUsd ? num : num / USD_UZS) * 100) / 100;
-        const id = st.staffId; delete orderState[c];
-        await staffCloseMonth(c, id, usd);
+        const id = st.staffId, cy2 = st.closeY, cm2 = st.closeM; delete orderState[c];
+        await staffCloseMonth(c, id, usd, cy2, cm2);
         return;
       }
       else if (st.step === 'att_in_time') {
