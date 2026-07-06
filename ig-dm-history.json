@@ -751,6 +751,16 @@
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%.\n\nКухни выходят примерно от $1000. Что планируете?"
    }
+  ],
+  "992229480443190": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Нархи неч пул булади\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHeFaGxA47W] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум! Шахсийга ёзинг, аниқ маълумот берамиз 👍🏻"
+   }
   ]
  },
  "activity": {
@@ -919,6 +929,11 @@
   },
   "1546629226996443": {
    "lastClientAt": 1783345087278,
+   "followedUp": false,
+   "fu3": false
+  },
+  "992229480443190": {
+   "lastClientAt": 1783345360213,
    "followedUp": false,
    "fu3": false
   }
