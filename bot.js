@@ -1560,6 +1560,9 @@ async function debtPaySave(c, id, amountUzs) {
   const idx = data.findIndex(d => d.id === id);
   if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return; }
   data[idx].paid_uzs = (data[idx].paid_uzs || 0) + amountUzs;
+  if (!Array.isArray(data[idx].payments)) data[idx].payments = [];
+  data[idx].payments.push({ date: todayStr(), amount_uzs: amountUzs });
+  data[idx].pay_date = todayStr();
   const remain = (data[idx].amount_uzs || 0) - data[idx].paid_uzs;
   await ghPut('debts-log.json', JSON.stringify(data, null, 2), sha, 'debt pay: ' + data[idx].name);
   await msg(c, `✅ To'lov yozildi: ${fmtUzs(amountUzs)} so'm\n${remain > 0 ? '📉 Qoldi: ' + fmtUzs(remain) + ' so\'m' : '✔️ To\'liq yopildi!'}`);
@@ -1603,11 +1606,17 @@ async function computeCashbox() {
   // xodim avanslari (chiqim) — faqat boshlang'ich sanadan keyingilari
   const staff = await ghReadAll('staff-log.json');
   const staffAdv = staff.reduce((s, w) => s + (w.advances || []).filter(x => afterOpen(x.date)).reduce((a, x) => a + (x.amount_usd || 0) * USD_UZS, 0), 0);
-  // qarz to'lovlari (men ustalarga to'laganim) — kassadan chiqadi
+  // qarz to'lovlari: paid summani sanasi bo'yicha hisoblash (payments massivi bo'lsa aniq, bo'lmasa pay_date/date)
   const debtsAll = await ghReadAll('debts-log.json');
-  const debtPaid = debtsAll.filter(d => d.dir === 'out').reduce((s, d) => s + (afterOpen(d.pay_date || d.date) ? (d.paid_uzs || 0) : 0), 0);
-  const balance = opening + income - dealExp - officeExp - pers - staffAdv - debtPaid;
-  return { opening, income, dealExp, officeExp, pers, staffAdv, debtPaid, balance, hasOpening: cfg.opening_uzs != null };
+  const debtPaidSum = (d) => Array.isArray(d.payments)
+    ? d.payments.filter(p => afterOpen(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0)
+    : (afterOpen(d.pay_date || d.date) ? (d.paid_uzs || 0) : 0);
+  // men to'laganim (out) — kassadan chiqadi
+  const debtPaid = debtsAll.filter(d => d.dir === 'out').reduce((s, d) => s + debtPaidSum(d), 0);
+  // qarzdorlar menga to'lagani (in) — kassaga KIRIM
+  const debtIn = debtsAll.filter(d => d.dir === 'in').reduce((s, d) => s + debtPaidSum(d), 0);
+  const balance = opening + income + debtIn - dealExp - officeExp - pers - staffAdv - debtPaid;
+  return { opening, income, debtIn, dealExp, officeExp, pers, staffAdv, debtPaid, balance, hasOpening: cfg.opening_uzs != null };
 }
 async function showCashbox(c) {
   const k = await computeCashbox();
@@ -1621,6 +1630,7 @@ async function showCashbox(c) {
   await btn(c, `💰 *Kassa*\n\n` +
     `🏦 Boshlang'ich: ${fmtUzs(k.opening)} so'm\n` +
     `📥 Kirim (to'lovlar): +${fmtUzs(k.income)}\n` +
+    `📥 Qarzdor to'lovi: +${fmtUzs(k.debtIn)}\n` +
     `📤 Buyurtma xarajat: −${fmtUzs(k.dealExp)}\n` +
     `🏭 Ishxona: −${fmtUzs(k.officeExp)}\n` +
     `👷 Xodim avans: −${fmtUzs(k.staffAdv)}\n` +
@@ -1662,14 +1672,16 @@ async function gatherMonth(y, m) {
     for (const p of (o.payments || [])) if (inMon(p.date)) { income += p.amount_uzs || 0; allPayments.push({ client: o.client, ...p }); }
     for (const e of (o.expenses || [])) if (inMon(e.date)) { dealExp += e.total_uzs || 0; allExpenses.push({ client: o.client, ...e }); }
   }
-  const officeRows = (await ghReadAll('office-expenses-log.json')).filter(e => inMon(e.date));
+  const officeAll = await ghReadAll('office-expenses-log.json');
+  const officeRows = officeAll.filter(e => inMon(e.date));
   const officeExp = officeRows.reduce((s, e) => s + (e.amount_uzs || 0), 0);
-  const persRows = (await ghReadAll('expenses-personal-log.json')).map(e => {
+  const persAll = (await ghReadAll('expenses-personal-log.json')).map(e => {
     const p = e.parsed || {}; let a = e.amount_uzs || 0;
     if (!a && p.amount) a = (String(p.currency).toUpperCase() === 'USD') ? p.amount * USD_UZS : p.amount;
     else if (!a && e.amount) a = (String(e.currency).toUpperCase() === 'USD') ? e.amount * USD_UZS : e.amount;
     return { date: e.date, note: e.note || p.text || e.text || '', amtUzs: a };
-  }).filter(e => inMon(e.date));
+  });
+  const persRows = persAll.filter(e => inMon(e.date));
   const pers = persRows.reduce((s, e) => s + (e.amtUzs || 0), 0);
   const staff = await ghReadAll('staff-log.json');
   let staffAdv = 0;
@@ -1692,12 +1704,16 @@ async function gatherMonth(y, m) {
     cashIn += (o.payments || []).filter(p => afterOpen(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0);
     cashDealExp += (o.expenses || []).filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.total_uzs || 0), 0);
   }
-  cashOffice = officeRows.filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
-  cashPers = persRows.filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.amtUzs || 0), 0);
-  for (const w of staff) for (const a of (w.advances || [])) if (inMon(a.date) && afterOpen(a.date)) cashAdv += (a.amount_usd || 0) * USD_UZS;
+  cashOffice = officeAll.filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
+  cashPers = persAll.filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.amtUzs || 0), 0);
+  for (const w of staff) for (const a of (w.advances || [])) if (afterOpen(a.date)) cashAdv += (a.amount_usd || 0) * USD_UZS;
   const debtsAll = await ghReadAll('debts-log.json');
   const debtOut = debtsAll.filter(d => d.dir === 'out');
-  const cashDebtPaid = debtOut.reduce((s, d) => s + (afterOpen(d.pay_date || d.date) ? (d.paid_uzs || 0) : 0), 0);
+  const debtPaidSum = (d) => Array.isArray(d.payments)
+    ? d.payments.filter(p => afterOpen(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0)
+    : (afterOpen(d.pay_date || d.date) ? (d.paid_uzs || 0) : 0);
+  const cashDebtPaid = debtOut.reduce((s, d) => s + debtPaidSum(d), 0);
+  const cashDebtIn = debtsAll.filter(d => d.dir === 'in').reduce((s, d) => s + debtPaidSum(d), 0);
   // mijoz qarzlari (menga qarzdor)
   const clientDebts = [];
   for (const o of deals) {
@@ -1707,8 +1723,8 @@ async function gatherMonth(y, m) {
       if (debt > 0) clientDebts.push({ client: o.client, contract: o.contract_sum_uzs || 0, paid, debt });
     }
   }
-  const cashBalance = opening + cashIn - cashDealExp - cashOffice - cashPers - cashAdv - cashDebtPaid;
-  return { monthDeals, income, dealExp, officeRows, officeExp, persRows, pers, staff, staffAdv, allExpenses, allPayments, bizProfit, realRemain, opening, openingDate: cfg.opening_date, debtOut, cashIn, cashDealExp, cashOffice, cashPers, cashAdv, cashDebtPaid, cashBalance, clientDebts };
+  const cashBalance = opening + cashIn + cashDebtIn - cashDealExp - cashOffice - cashPers - cashAdv - cashDebtPaid;
+  return { monthDeals, income, dealExp, officeRows, officeExp, persRows, pers, staff, staffAdv, allExpenses, allPayments, bizProfit, realRemain, opening, openingDate: cfg.opening_date, debtOut, cashIn, cashDebtIn, cashDealExp, cashOffice, cashPers, cashAdv, cashDebtPaid, cashBalance, clientDebts };
 }
 
 async function showSummary(c) {
@@ -1838,6 +1854,7 @@ async function buildMonthExcel(y, m) {
   const cashLine = (label, val) => { const ri = R(); push([label, '', '', val, '']); merges.push({ s: { r: ri, c: 0 }, e: { r: ri, c: 2 } }); moneyAt(ri, 3); };
   cashLine(`🏦 Boshlang'ich qoldiq (${g.openingDate || ''})`, g.opening);
   cashLine('(+) Kirim (to\'lovlar)', g.cashIn);
+  cashLine('(+) Qarzdorlar to\'lovi', g.cashDebtIn);
   cashLine('(−) Buyurtma xarajati', -g.cashDealExp);
   cashLine('(−) Ishxona rasxodi', -g.cashOffice);
   cashLine('(−) Ishchilar avansi/oyligi', -g.cashAdv);
@@ -2335,7 +2352,7 @@ async function financeContext() {
     try {
       const cb = await computeCashbox();
       cashLines = cb.hasOpening
-        ? `qoldiq ${f(cb.balance)} so'm (boshlang'ich ${f(cb.opening)} + kirimlar ${f(cb.income)} − buyurtma xarajatlari ${f(cb.dealExp)} − ofis ${f(cb.officeExp)} − shaxsiy ${f(cb.pers)} − xodim avanslari ${f(cb.staffAdv)} − qarz to'lovlari ${f(cb.debtPaid)})`
+        ? `qoldiq ${f(cb.balance)} so'm (boshlang'ich ${f(cb.opening)} + kirimlar ${f(cb.income)} + qarzdor to'lovlari ${f(cb.debtIn)} − buyurtma xarajatlari ${f(cb.dealExp)} − ofis ${f(cb.officeExp)} − shaxsiy ${f(cb.pers)} − xodim avanslari ${f(cb.staffAdv)} − qarz to'lovlari ${f(cb.debtPaid)})`
         : "boshlang'ich qoldiq kiritilmagan";
     } catch (e) { cashLines = "hisoblab bo'lmadi"; }
 

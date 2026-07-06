@@ -182,5 +182,29 @@
     "rate": 12000,
     "type": "personal",
     "ts": "2026-07-06T05:07:01.291Z"
+  },
+  {
+    "date": "30.06.2026",
+    "note": "Karta xarajatlari 25–30.06 (bank vypiska boyicha)",
+    "amount_uzs": 2262354,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-06T06:00:00.000Z"
+  },
+  {
+    "date": "06.07.2026",
+    "note": "Karta xarajatlari 01–06.07 (bank vypiska boyicha)",
+    "amount_uzs": 2299340,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-06T06:00:01.000Z"
+  },
+  {
+    "date": "06.07.2026",
+    "note": "Yozilmagan mayda naqd chiqimlar 24.06–06.07 (tekshiruv farqi)",
+    "amount_uzs": 3095564,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-06T06:00:02.000Z"
   }
 ]

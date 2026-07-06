@@ -51,7 +51,14 @@
     "amount_uzs": 30000000,
     "paid_uzs": 24000000,
     "date": "05.07.2026",
-    "note": "2-etaj mebel"
+    "note": "2-etaj mebel",
+    "payments": [
+      {
+        "date": "05.07.2026",
+        "amount_uzs": 24000000
+      }
+    ],
+    "pay_date": "05.07.2026"
   },
   {
     "id": "mr81gikgijn7",
