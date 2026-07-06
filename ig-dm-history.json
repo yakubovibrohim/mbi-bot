@@ -396,6 +396,22 @@
    {
     "role": "assistant",
     "content": "Ва Алейкум Ассалом 👍🏻\n\nАйтаман, аввал бир-икки нарсани аниқлаб олсам:\n\nОшхона неча метр ва неча этаж — 2 ми, 3 ми?"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz rasm yubordi]\n[Mijoz rasm yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Яхши кўриниш 👍🏻\n\nОшхона неча метр ва 2 этажми, 3 этажми? Шундан кейин тахминий нарх айтаман."
+   },
+   {
+    "role": "user",
+    "content": "Qurlvotti uje santexnikla tushgande"
+   },
+   {
+    "role": "assistant",
+    "content": "Тушунарли 😀\n\nРасмдан кўриниб турибди — ошхона тахминан неча метр чиқади? Ва 2 этажми, 3 этажми?"
    }
   ]
  },
@@ -505,7 +521,7 @@
    "followedUp": false
   },
   "1339635578332434": {
-   "lastClientAt": 1783327386764,
+   "lastClientAt": 1783327619744,
    "followedUp": false
   }
  }
