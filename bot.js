@@ -821,6 +821,92 @@ async function showStaffList(c) {
   rows.push([{ text: '◀️ Ortga', callback_data: 'menu_home' }]);
   await btn(c, '👷 *Xodimlar*' + (active.length ? '' : '\n\n_Hozircha xodim yo\'q. «Yangi xodim» qo\'shing._'), rows);
 }
+// ═══ OYLIK DAVOMAT KO'RISH (xodim → oy → to'liq kunlar) ═══
+// 1) Xodim tanlash
+async function attMonthPickStaff(c) {
+  const list = (await readStaff()).filter(s => s.active !== false);
+  if (!list.length) { await msg(c, '_Xodim yo\'q._'); return; }
+  const rows = list.map(s => [{ text: '👷 ' + s.name, callback_data: 'attm_s_' + s.id }]);
+  rows.push([{ text: '◀️ Ortga', callback_data: 'all_att' }]);
+  await btn(c, '📆 *Oylik davomat*\n\nQaysi xodim?', rows);
+}
+// 2) Oy tanlash (ishga kirgan oydan joriygacha)
+async function attMonthPickMonth(c, id) {
+  const { staff: s } = await findStaff(id);
+  if (!s) { await msg(c, '⚠️ Topilmadi.'); return; }
+  const now = nowTZ();
+  const cy = now.getFullYear(), cm = now.getMonth();
+  const hp = dmyParts(s.hire_date);
+  let sy = hp ? hp.y : cy, sm = hp ? hp.m : cm;
+  const rows = [];
+  let y = sy, m = sm, guard = 0;
+  const items = [];
+  while ((y < cy || (y === cy && m <= cm)) && guard < 120) {
+    items.push({ y, m });
+    m++; if (m > 11) { m = 0; y++; }
+    guard++;
+  }
+  // eng yangi oy tepada
+  items.reverse();
+  for (const it of items) {
+    const closed = (s.closed_months || []).some(cm2 => cm2.y === it.y && cm2.m === it.m);
+    const cur = (it.y === cy && it.m === cm);
+    rows.push([{ text: `${UZ_MONTHS[it.m]} ${it.y}${cur ? ' (joriy)' : ''}${closed ? ' 🔒' : ''}`, callback_data: `attm_m_${id}_${it.y}_${it.m}` }]);
+  }
+  rows.push([{ text: '◀️ Ortga', callback_data: 'attm_pick' }]);
+  await btn(c, `📆 *${s.name} — oy tanlang:*`, rows);
+}
+// 3) Tanlangan oyning BARCHA kunlari (kel/ket, soat, holat, sabab)
+async function attMonthShow(c, id, y, m) {
+  const { staff: s } = await findStaff(id);
+  if (!s) { await msg(c, '⚠️ Topilmadi.'); return; }
+  const closed = (s.closed_months || []).some(cm => cm.y === y && cm.m === m);
+  const att = (s.attendance || []).filter(a => { const p = dmyParts(a.date); return p && p.y === y && p.m === m; });
+  const absList = (s.absences || []).filter(a => { const p = dmyParts(a.date); return p && p.y === y && p.m === m; });
+  const leaves = (s.leaves || []).filter(l => { const p = dmyParts(l.date); return p && p.y === y && p.m === m && l.status === 'approved'; });
+  const attByDay = {}; att.forEach(a => { const p = dmyParts(a.date); if (p) attByDay[p.d] = a; });
+  const absByDay = {}; absList.forEach(a => { const p = dmyParts(a.date); if (p) absByDay[p.d] = a; });
+  const leaveByDay = {}; leaves.forEach(l => { const p = dmyParts(l.date); if (p) leaveByDay[p.d] = l; });
+
+  const WD = ['Ya', 'Du', 'Se', 'Ch', 'Pa', 'Ju', 'Sh'];
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+  let txt = `📆 *${s.name} — ${UZ_MONTHS[m]} ${y}*${closed ? ' 🔒 _(yopilgan)_' : ''}\n\n`;
+  let workedDays = 0, totalNormal = 0, totalExtra = 0, absCnt = 0;
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dow = new Date(y, m, d).getDay();
+    const wd = WD[dow];
+    const dd = ('0' + d).slice(-2);
+    const a = attByDay[d], ab = absByDay[d], lv = leaveByDay[d];
+    if (a && a.in) {
+      const dh = computeDayHours(a.in, a.out, a.leave_min);
+      const nh = (a.normalH != null ? a.normalH : dh.normalH);
+      const eh = (a.extraH != null ? a.extraH : dh.extraH);
+      workedDays++; totalNormal += nh; totalExtra += eh;
+      const marks = [];
+      if (a.late) marks.push('⚠️kech');
+      if (a.early) marks.push('🏃erta');
+      if (!a.late && !a.early && a.out) marks.push('✅');
+      txt += `${dd} ${wd}: ${a.in}–${a.out || '...'} · ${nh.toFixed(1)}s${eh ? ` +${eh.toFixed(1)}` : ''} ${marks.join(' ')}\n`;
+      if (a.in_reason) txt += `   └ kech: _${a.in_reason}_\n`;
+      if (a.out_reason) txt += `   └ erta: _${a.out_reason}_\n`;
+    } else if (ab) {
+      absCnt++;
+      txt += `${dd} ${wd}: ❌ kelmagan${ab.reason ? ` (_${ab.reason}_)` : ''}\n`;
+    } else if (lv) {
+      txt += `${dd} ${wd}: 🙋 javob${lv.reason ? ` (_${lv.reason}_)` : ''}\n`;
+    } else if (dow === 0) {
+      txt += `${dd} ${wd}: _dam_\n`;
+    } else {
+      txt += `${dd} ${wd}: —\n`;
+    }
+  }
+  txt += `\n📊 Ishlagan: *${workedDays} kun*, *${totalNormal.toFixed(1)} soat*`;
+  if (totalExtra > 0.05) txt += ` (+${totalExtra.toFixed(1)} qo'sh.)`;
+  if (absCnt) txt += `, kelmagan: ${absCnt}`;
+  await btn(c, txt, [[{ text: '◀️ Oylar', callback_data: 'attm_s_' + id }], [{ text: '👥 Bugun', callback_data: 'all_att' }]]);
+}
+
 // Admin: bugungi hammaning davomati (real vaqt)
 async function showAllAttendance(c) {
   const list = (await readStaff()).filter(s => s.active !== false);
@@ -842,7 +928,7 @@ async function showAllAttendance(c) {
     if (rec && rec.out_reason) txt += `   └ erta: _${rec.out_reason}_\n`;
     if (todayLeave) txt += `   └ 🙋 javob: ${todayLeave.type === 'partial' ? todayLeave.hours + ' soat' : todayLeave.type === 'early' ? 'erta ' + todayLeave.time : 'kelmaslik'}\n`;
   }
-  await btn(c, txt, [[{ text: '🔄 Yangilash', callback_data: 'all_att' }], [{ text: '📋 Intizom hisoboti', callback_data: 'disc_report' }]]);
+  await btn(c, txt, [[{ text: '🔄 Yangilash', callback_data: 'all_att' }], [{ text: '📆 Oylik davomat', callback_data: 'attm_pick' }], [{ text: '📋 Intizom hisoboti', callback_data: 'disc_report' }]]);
 }
 // Admin: oylik intizom hisoboti (kech/erta/kelmagan/javob)
 async function showDisciplineReport(c) {
@@ -3514,6 +3600,9 @@ async function handle(upd) {
       if (cd === 'menu_cancelled') { await showOrdersList(c, 'cancelled'); return; }
       if (cd === 'menu_staff') { await showStaffList(c); return; }
       if (cd === 'all_att') { await showAllAttendance(c); return; }
+      if (cd === 'attm_pick') { await attMonthPickStaff(c); return; }
+      if (cd.startsWith('attm_s_')) { await attMonthPickMonth(c, cd.slice(7)); return; }
+      if (cd.startsWith('attm_m_')) { const p = cd.slice(7).split('_'); const yy=+p[p.length-2], mm=+p[p.length-1]; const id=p.slice(0,p.length-2).join('_'); await attMonthShow(c, id, yy, mm); return; }
       if (cd === 'disc_report') { await showDisciplineReport(c); return; }
       if (cd === 'menu_home') { await showHomeMenu(c); return; }
       // ── 3-bosqich: kassa, ishxona, shaxsiy, qarzlar ──
