@@ -1404,6 +1404,22 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%.\n\nКухни примерно от 1000$. Что планируете?"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz rasm yubordi]\nshu nechpulga tushdi."
+   },
+   {
+    "role": "assistant",
+    "content": "Rasm ko'rinmadi, lekin ayting — nima kerak: oshxona, shkaf yoki yotoqxona? O'lcham ham bo'lsa, taxminiy narx aytib beraman 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "oshhona. 4 metrga"
+   },
+   {
+    "role": "assistant",
+    "content": "Tushundim. 2 etajmi, 3 etajmi? Va material — oddiy, akril yoki boshqa variant?"
    }
   ]
  },
@@ -1690,7 +1706,7 @@
    "fu3": false
   },
   "1742340130531294": {
-   "lastClientAt": 1783415160587,
+   "lastClientAt": 1783415387430,
    "followedUp": false,
    "fu3": false
   }
