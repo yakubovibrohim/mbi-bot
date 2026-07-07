@@ -1841,6 +1841,26 @@
     "role": "assistant",
     "content": "Здравствуйте! Напишите нам в личку — подскажем примерную стоимость и всё расскажем 👍🏻"
    }
+  ],
+  "1680784449637303": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Narhi qancha shulani\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHeFaGxA47W] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu Alaykum! Oshxona yoki shkafmi, nima qiziqtiradi? O'lcham va material bo'yicha aniqlashtirsakmi, taxminiy narx aytaman 👍🏻"
+   }
+  ],
+  "2918433505175218": [
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"[REEL:DHeFaGxA47W] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu Alaykum, yaxshimisiz 👍🏻\n\nBu loyihamizdan yoqdimi? Nima kerak — oshxona, shkaf?"
+   }
   ]
  },
  "activity": {
@@ -2197,6 +2217,16 @@
   },
   "1429930878893970": {
    "lastClientAt": 1783442963074,
+   "followedUp": false,
+   "fu3": false
+  },
+  "1680784449637303": {
+   "lastClientAt": 1783444312899,
+   "followedUp": false,
+   "fu3": false
+  },
+  "2918433505175218": {
+   "lastClientAt": 1783445853992,
    "followedUp": false,
    "fu3": false
   }
