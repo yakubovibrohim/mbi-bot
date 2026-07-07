@@ -89,7 +89,14 @@ function ghGet(path) {
     req.on('error', rej); req.end();
   });
 }
-function ghPut(path, content, sha, commitMsg) {
+// Moliyaviy fayllar — bulardan biri o'zgarsa ledger.json avtomatik qayta quriladi
+const FIN_FILES = ['deals-log.json', 'office-expenses-log.json', 'expenses-personal-log.json', 'staff-log.json', 'debts-log.json', 'card-income-log.json', 'cashbox.json'];
+async function ghPut(path, content, sha, commitMsg) {
+  const r = await ghPutRaw(path, content, sha, commitMsg);
+  if (FIN_FILES.includes(path)) scheduleLedgerRebuild();
+  return r;
+}
+function ghPutRaw(path, content, sha, commitMsg) {
   return new Promise((res, rej) => {
     const body = JSON.stringify({ message: commitMsg, content: Buffer.from(content).toString('base64'), sha: sha });
     const req = https.request({
@@ -553,7 +560,7 @@ async function paySave(c, id, amountUzs) {
   const { data, sha, idx } = await findDeal(id);
   if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return; }
   data[idx].payments = data[idx].payments || [];
-  data[idx].payments.push({ id: uid(), date: todayStr(), amount_uzs: amountUzs, rate: USD_UZS, note: '' });
+  data[idx].payments.push({ id: uid(), date: todayStr(), ts: new Date().toISOString(), amount_uzs: amountUzs, rate: USD_UZS, note: '' });
   await ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, 'payment: ' + data[idx].client);
   await msg(c, `✅ To'lov qo'shildi: ${fmtUzs(amountUzs)} so'm\n📉 Qolgan qarz: *${fmtUzs(dealDebtUzs(data[idx]))} so'm*`);
   await showClientPayments(c, id);
@@ -580,7 +587,7 @@ async function expSave(c) {
   const { data, sha, idx } = await findDeal(id);
   if (idx < 0) { delete orderState[c]; await msg(c, '⚠️ Topilmadi.'); return; }
   data[idx].expenses = data[idx].expenses || [];
-  data[idx].expenses.push({ id: uid(), date: todayStr(), products: st.expProducts, total_uzs: total, rate: USD_UZS, note: '', source: 'manual' });
+  data[idx].expenses.push({ id: uid(), date: todayStr(), ts: new Date().toISOString(), products: st.expProducts, total_uzs: total, rate: USD_UZS, note: '', source: 'manual' });
   await ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, 'expense: ' + data[idx].client);
   delete orderState[c];
   await msg(c, `✅ Xarajat saqlandi: ${fmtUzs(total)} so'm`);
@@ -1039,7 +1046,7 @@ async function staffAddAdvance(c, id, amountUsd, dateStr) {
   const { data, sha, idx } = await findStaff(id);
   if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return false; }
   data[idx].advances = data[idx].advances || [];
-  data[idx].advances.push({ id: uid(), date: dateStr || todayStr(), amount_usd: amountUsd });
+  data[idx].advances.push({ id: uid(), date: dateStr || todayStr(), ts: new Date().toISOString(), amount_usd: amountUsd });
   await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'staff advance: ' + data[idx].name);
   return data[idx].name;
 }
@@ -1186,7 +1193,7 @@ async function staffCloseMonth(c, id, paidUsd, y, m) {
     const label = `${s.name} — ${UZ_MONTHS[mm]} ${yy} oyligi`;
     if (extraUzs > 0) {
       if (oIdx >= 0) { ox[oIdx].amount_uzs = extraUzs; ox[oIdx].rate = USD_UZS; ox[oIdx].date = todayStr(); ox[oIdx].name = label; }
-      else ox.push({ id: uid(), date: todayStr(), name: label, amount_uzs: extraUzs, rate: USD_UZS, note: 'Oy yopish (avansdan ortiq)', close_ref: closeRef, is_salary: true });
+      else ox.push({ id: uid(), date: todayStr(), ts: new Date().toISOString(), name: label, amount_uzs: extraUzs, rate: USD_UZS, note: 'Oy yopish (avansdan ortiq)', close_ref: closeRef, is_salary: true });
       await ghPut('office-expenses-log.json', JSON.stringify(ox, null, 2), oxSha, `cashbox out (oy yopish): ${label}`);
     } else if (oIdx >= 0) {
       // avvalgi chiqim bor edi, endi ortiq yo'q — o'chiramiz (dublikat bo'lmasin)
@@ -1575,7 +1582,7 @@ async function officeExpAddStart(c) {
 }
 async function officeExpSave(c, name, amountUzs) {
   const { data, sha } = await ghRead('office-expenses-log.json');
-  data.push({ id: uid(), date: todayStr(), name: name.trim(), amount_uzs: amountUzs, rate: USD_UZS, note: '' });
+  data.push({ id: uid(), date: todayStr(), ts: new Date().toISOString(), name: name.trim(), amount_uzs: amountUzs, rate: USD_UZS, note: '' });
   await ghPut('office-expenses-log.json', JSON.stringify(data, null, 2), sha, 'office expense: ' + name);
   await msg(c, `✅ Ishxona xarajati saqlandi:\n🏭 ${name} — ${fmtUzs(amountUzs)} so'm`);
   await showOfficeExp(c);
@@ -1676,7 +1683,7 @@ async function debtPaySave(c, id, amountUzs) {
   if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return; }
   data[idx].paid_uzs = (data[idx].paid_uzs || 0) + amountUzs;
   if (!Array.isArray(data[idx].payments)) data[idx].payments = [];
-  data[idx].payments.push({ date: todayStr(), amount_uzs: amountUzs });
+  data[idx].payments.push({ date: todayStr(), ts: new Date().toISOString(), amount_uzs: amountUzs });
   data[idx].pay_date = todayStr();
   const remain = (data[idx].amount_uzs || 0) - data[idx].paid_uzs;
   await ghPut('debts-log.json', JSON.stringify(data, null, 2), sha, 'debt pay: ' + data[idx].name);
@@ -1689,51 +1696,115 @@ async function readCashbox() {
   try { const { data } = await ghRead('cashbox.json'); return (data && !Array.isArray(data)) ? data : { opening_uzs: null, opening_date: null }; }
   catch (e) { return { opening_uzs: null, opening_date: null }; }
 }
-// Kassa qoldig'i = boshlang'ich + barcha kirim − barcha chiqim
-async function computeCashbox() {
-  const cfg = await readCashbox();
-  const opening = cfg.opening_uzs || 0;
-  // Boshlang'ich sana: undan OLDINGI harakatlar allaqachon boshlang'ich qoldiqqa
-  // kirgan, shuning uchun ular kassa hisobida QAYTA hisoblanmaydi.
-  const op = dmyParts(cfg.opening_date);
-  const opNum = op ? (op.y * 10000 + op.m * 100 + op.d) : 0;
-  const afterOpen = (dateStr) => {
-    if (!opNum) return true; // sana yo'q bo'lsa hammasi hisoblanadi
-    const p = dmyParts(dateStr);
-    if (!p) return false;
-    return (p.y * 10000 + p.m * 100 + p.d) >= opNum;
+// ══════════════════════════════════════════════════════════════
+// YAGONA MOLIYA YADROSI — barcha kirim-chiqim BIR manbadan
+// Kassa, Umumiy hisobot, Excel, Sardor — hammasi shu yerdan oladi.
+// ══════════════════════════════════════════════════════════════
+function dNum(s) { const p = dmyParts(s); return p ? p.y * 10000 + p.m * 100 + p.d : 0; }
+function tsTime(ts) {
+  try { if (!ts) return ''; return new Date(ts).toLocaleTimeString('ru-RU', { timeZone: TZ, hour: '2-digit', minute: '2-digit' }); }
+  catch (e) { return ''; }
+}
+const LEDGER_CAT_UZ = {
+  deal_payment: "Mijoz to'lovi", deal_expense: 'Buyurtma xarajati', office: 'Ishxona',
+  personal: 'Shaxsiy', staff_advance: 'Xodim avansi', debt_in: "Qarzdor to'lovi",
+  debt_paid: "Qarz to'lovim", card_income: 'Boshqa kirim (karta)'
+};
+// Har bir harakat: {date, time, dnum, dir:'in'|'out', cat, amount_uzs, name, card, src}
+async function allMovements() {
+  const mv = [];
+  const push = (date, ts, dir, cat, amt, name, card, src) => {
+    amt = Math.round(Number(amt) || 0);
+    if (!amt) return;
+    mv.push({ date: date || '', time: tsTime(ts), dnum: dNum(date), dir, cat, amount_uzs: amt, name: (name || '').slice(0, 120), card: !!card, src });
   };
-  const { data: deals } = await ghRead('deals-log.json');
-  let income = 0, dealExp = 0;
+  const [dealsR, office, persAll, staff, debts, cardInc] = await Promise.all([
+    ghRead('deals-log.json'), ghReadAll('office-expenses-log.json'), ghReadAll('expenses-personal-log.json'),
+    ghReadAll('staff-log.json'), ghReadAll('debts-log.json'), ghReadAll('card-income-log.json')
+  ]);
+  const deals = dealsR.data || [];
+  // 1) Buyurtmalar: to'lov (kirim) + xarajat (chiqim)
   for (const o of deals) {
-    income += (o.payments || []).filter(p => afterOpen(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0);
-    dealExp += (o.expenses || []).filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.total_uzs || 0), 0);
+    for (const p of (o.payments || [])) push(p.date, p.ts, 'in', 'deal_payment', p.amount_uzs, o.client, p.pay_method === 'card', 'deals');
+    for (const e of (o.expenses || [])) push(e.date, e.ts, 'out', 'deal_expense', e.total_uzs, `${o.client}: ${e.name || 'xarajat'}`, e.pay_method === 'card', 'deals');
   }
-  const officeExp = (await ghReadAll('office-expenses-log.json')).filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
-  // shaxsiy
-  const pers = (await ghReadAll('expenses-personal-log.json')).filter(e => afterOpen(e.date)).reduce((s, e) => {
+  // 2) Ishxona
+  for (const e of (office || [])) push(e.date, e.ts, 'out', 'office', e.amount_uzs, e.name || e.note || '', e.pay_method === 'card', 'office');
+  // 3) Shaxsiy
+  for (const e of (persAll || [])) {
     const p = e.parsed || {};
     let a = e.amount_uzs || 0;
     if (!a && p.amount) a = (String(p.currency).toUpperCase() === 'USD') ? p.amount * USD_UZS : p.amount;
     else if (!a && e.amount) a = (String(e.currency).toUpperCase() === 'USD') ? e.amount * USD_UZS : e.amount;
-    return s + a;
-  }, 0);
-  // xodim avanslari (chiqim) — faqat boshlang'ich sanadan keyingilari
-  const staff = await ghReadAll('staff-log.json');
-  const staffAdv = staff.reduce((s, w) => s + (w.advances || []).filter(x => afterOpen(x.date)).reduce((a, x) => a + (x.amount_usd || 0) * USD_UZS, 0), 0);
-  // qarz to'lovlari: paid summani sanasi bo'yicha hisoblash (payments massivi bo'lsa aniq, bo'lmasa pay_date/date)
-  const debtsAll = await ghReadAll('debts-log.json');
-  const debtPaidSum = (d) => Array.isArray(d.payments)
-    ? d.payments.filter(p => afterOpen(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0)
-    : (afterOpen(d.pay_date || d.date) ? (d.paid_uzs || 0) : 0);
-  // men to'laganim (out) — kassadan chiqadi
-  const debtPaid = debtsAll.filter(d => d.dir === 'out').reduce((s, d) => s + debtPaidSum(d), 0);
-  // qarzdorlar menga to'lagani (in) — kassaga KIRIM
-  const debtIn = debtsAll.filter(d => d.dir === 'in').reduce((s, d) => s + debtPaidSum(d), 0);
-  // karta orqali "boshqa kirim" (buyurtma/qarz bilan bog'lanmagan) — kassaga KIRIM
-  const cardIncome = (await ghReadAll('card-income-log.json')).filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
-  const balance = opening + income + debtIn + cardIncome - dealExp - officeExp - pers - staffAdv - debtPaid;
-  return { opening, income, debtIn, cardIncome, dealExp, officeExp, pers, staffAdv, debtPaid, balance, hasOpening: cfg.opening_uzs != null };
+    const note = e.note || p.text || e.text || '';
+    push(e.date, e.ts, 'out', 'personal', a, note, e.pay_method === 'card' || /💳/.test(note), 'personal');
+  }
+  // 4) Xodim avanslari
+  for (const w of (staff || []))
+    for (const a of (w.advances || [])) { if (a.pending) continue; push(a.date, a.ts, 'out', 'staff_advance', (a.amount_usd || 0) * USD_UZS, w.name, false, 'staff'); }
+  // 5) Qarzlar: men to'laganim (out) / menga to'langani (in)
+  for (const d of (debts || [])) {
+    const dir = d.dir === 'in' ? 'in' : 'out';
+    const cat = dir === 'in' ? 'debt_in' : 'debt_paid';
+    if (Array.isArray(d.payments)) for (const p of d.payments) push(p.date, p.ts, dir, cat, p.amount_uzs, d.name, p.pay_method === 'card', 'debts');
+    else if (d.paid_uzs) push(d.pay_date || d.date, d.ts, dir, cat, d.paid_uzs, d.name, false, 'debts');
+  }
+  // 6) Karta boshqa kirim
+  for (const e of (cardInc || [])) push(e.date, e.ts, 'in', 'card_income', e.amount_uzs, e.name || '', true, 'card');
+  mv.sort((a, b) => a.dnum - b.dnum);
+  return mv;
+}
+function sumMovements(mv, filter) {
+  let inn = 0, out = 0; const byCat = {};
+  for (const m of mv) {
+    if (filter && !filter(m)) continue;
+    byCat[m.cat] = (byCat[m.cat] || 0) + m.amount_uzs;
+    if (m.dir === 'in') inn += m.amount_uzs; else out += m.amount_uzs;
+  }
+  return { inn, out, net: inn - out, byCat };
+}
+// ledger.json — yagona kassa daftari (avtomatik quriladi, qo'lda tahrir qilinmaydi)
+let ledgerTimer = null;
+function scheduleLedgerRebuild() {
+  clearTimeout(ledgerTimer);
+  ledgerTimer = setTimeout(() => rebuildLedger().catch(e => console.error('ledger rebuild:', e.message)), 8000);
+}
+async function rebuildLedger() {
+  const cfg = await readCashbox();
+  const mv = await allMovements();
+  const opN = dNum(cfg.opening_date);
+  const k = sumMovements(mv, m => !opN || m.dnum >= opN);
+  const out = {
+    updated: new Date().toISOString(),
+    rate_usd_uzs: USD_UZS,
+    opening: { amount_uzs: cfg.opening_uzs || 0, date: cfg.opening_date || null },
+    balance_uzs: (cfg.opening_uzs || 0) + k.net,
+    totals_after_opening: { kirim: k.inn, chiqim: k.out, by_category: k.byCat },
+    movements: mv.map(m => ({ date: m.date, time: m.time || null, dir: m.dir, category: m.cat, category_uz: LEDGER_CAT_UZ[m.cat] || m.cat, amount_uzs: m.amount_uzs, name: m.name, pay: m.card ? 'karta' : 'naqd', src: m.src }))
+  };
+  let sha = null;
+  try { const g = await ghGet('ledger.json'); sha = g.sha || null; } catch (e) {}
+  await ghPutRaw('ledger.json', JSON.stringify(out, null, 2), sha, 'ledger rebuild');
+  console.log(`ledger.json yangilandi: ${mv.length} harakat, qoldiq ${out.balance_uzs}`);
+}
+
+// Kassa qoldig'i = boshlang'ich + barcha kirim − barcha chiqim (YADRODAN)
+async function computeCashbox() {
+  const cfg = await readCashbox();
+  const opening = cfg.opening_uzs || 0;
+  // Boshlang'ich sanadan OLDINGI harakatlar boshlang'ich qoldiqqa kirgan — qayta hisoblanmaydi.
+  const opN = dNum(cfg.opening_date);
+  const mv = await allMovements();
+  const k = sumMovements(mv, m => !opN || m.dnum >= opN);
+  const c = k.byCat;
+  const balance = opening + k.net;
+  return {
+    opening,
+    income: c.deal_payment || 0, debtIn: c.debt_in || 0, cardIncome: c.card_income || 0,
+    dealExp: c.deal_expense || 0, officeExp: c.office || 0, pers: c.personal || 0,
+    staffAdv: c.staff_advance || 0, debtPaid: c.debt_paid || 0,
+    balance, hasOpening: cfg.opening_uzs != null
+  };
 }
 async function showCashbox(c) {
   const k = await computeCashbox();
@@ -2586,6 +2657,8 @@ let secretsReady = (async function loadSecrets() {
         } else { console.log('card-monitor: sessiya topilmadi'); }
       }
     } catch (e) { console.error('card-monitor init:', e.message); }
+    // Ishga tushganda ledger.json bir marta quriladi
+    scheduleLedgerRebuild();
   } catch (e) { console.error('Secrets load error:', e.message); }
 })();
 
@@ -2677,27 +2750,25 @@ async function financeContext() {
         : "boshlang'ich qoldiq kiritilmagan";
     } catch (e) { cashLines = "hisoblab bo'lmadi"; }
 
-    // Ofis va shaxsiy xarajatlar (shu oy)
-    const monthOf = (dt) => { const p = dmyParts(dt); return p && p.y === now.getFullYear() && p.m === now.getMonth(); };
-    let officeLines = '', persTotal = 0;
+    // Shu oy summalari + TO'LIQ kassa daftari — YAGONA YADRODAN (allMovements)
+    let monthLines = '', ledgerLines = '';
     try {
-      const [officeExp, persExp] = await Promise.all([
-        ghReadAll('office-expenses-log.json'), ghReadAll('expenses-personal-log.json')
-      ]);
-      const om = (officeExp || []).filter(x => monthOf(x.date));
-      const oSum = om.reduce((s, x) => s + (Number(x.amount_uzs) || 0), 0);
-      officeLines = `shu oy jami ${f(oSum)} so'm\n` + om.slice(-5).map(x => `• ${x.date} | ${f(x.amount_uzs)} so'm | ${(x.note || x.text || '-').slice(0, 60)}`).join('\n');
-      persTotal = (persExp || []).filter(x => monthOf(x.date)).reduce((s, x) => s + (Number(x.amount_uzs) || 0), 0);
+      const mv = await allMovements();
+      const mSum = sumMovements(mv, x => { const p = dmyParts(x.date); return p && p.y === now.getFullYear() && p.m === now.getMonth(); });
+      const catL = Object.entries(mSum.byCat).map(([k, v]) => `  • ${LEDGER_CAT_UZ[k] || k}: ${f(v)} so'm`).join('\n');
+      monthLines = `kirim ${f(mSum.inn)} so'm | chiqim ${f(mSum.out)} so'm | sof ${f(mSum.net)} so'm\n${catL}`;
+      ledgerLines = mv.slice(-250).map(m =>
+        `${m.date}${m.time ? ' ' + m.time : ''} | ${m.dir === 'in' ? 'KIRIM' : 'CHIQIM'} | ${LEDGER_CAT_UZ[m.cat] || m.cat} | ${f(m.amount_uzs)} so'm | ${m.name || '-'} | ${m.card ? 'karta' : 'naqd'}`
+      ).join('\n');
     } catch (e) {}
 
     return `TAYYOR HISOBLANGAN MA'LUMOTLAR (barcha arifmetika bajarilgan, kurs 1 USD = ${USD_RATE} so'm):\n\n` +
       `KASSA: ${cashLines}\n\n` +
+      `SHU OY (${UZ_MONTHS[now.getMonth()]}): ${monthLines || '—'}\n\n` +
       `KELISHUVLAR:\n${dealLines || '—'}\n\n` +
-      `OXIRGI XARAJATLAR:\n${expLines || '—'}\n\n` +
-      `OFIS XARAJATLARI: ${officeLines || '—'}\n\n` +
-      `SHAXSIY XARAJATLAR: shu oy jami ${f(persTotal)} so'm\n\n` +
       `QARZLAR: menga qarzdorlar jami ${f(debtIn)} so'm | men qarzdorman jami ${f(debtOut)} so'm\n\n` +
-      `XODIMLAR:\n${staffLines || '—'}`;
+      `XODIMLAR:\n${staffLines || '—'}\n\n` +
+      `TO'LIQ KASSA DAFTARI (ledger — barcha harakatlar, sana vaqt | tur | kategoriya | summa | izoh | to'lov usuli):\n${ledgerLines || '—'}`;
   } catch (e) { return ''; }
 }
 
@@ -2779,8 +2850,8 @@ async function officeApplyData(c, p) {
     const q = (p.deal || '').toLowerCase();
     const d = data.find(x => (x.client || '').toLowerCase().includes(q) || q.includes((x.client || '').toLowerCase().split(' ')[0]));
     if (!d) { await agentMsg(c, 'sardor', `"${p.deal}" nomli kelishuv logda topilmadi. "Yangi buyurtma: ${p.deal}, shartnoma ..., avans ..." deb kiritsangiz ochaman.`); return true; }
-    d.advance_uzs = (Number(d.advance_uzs) || 0) + (Number(p.amount) || 0);
-    d.debt_uzs = (Number(d.contract_sum_uzs) || 0) - d.advance_uzs;
+    if (!Array.isArray(d.payments)) d.payments = [];
+    d.payments.push({ id: uid(), date: todayStr(), ts: new Date().toISOString(), amount_uzs: Number(p.amount) || 0, rate: USD_UZS, note: 'Avans (Sardor orqali)' });
     await ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, 'office: advance');
     await agentMsg(c, 'sardor', `Yozib qo'ydim ✅\n💰 ${d.client}: avans +${(Number(p.amount) || 0).toLocaleString()} so'm\nJami avans: ${d.advance_uzs.toLocaleString()} so'm\nQarz qoldi: ${d.debt_uzs.toLocaleString()} so'm`);
     return true;
@@ -3947,7 +4018,7 @@ async function handle(upd) {
         const advId = uid();
         s2.advances = s2.advances || [];
         const needConfirm = !!s2.tg_chat_id; // telegram ulangan bo'lsa tasdiq kerak
-        s2.advances.push({ id: advId, date: todayStr(), amount_usd: usd, entered_by: 'admin', pending: needConfirm });
+        s2.advances.push({ id: advId, date: todayStr(), ts: new Date().toISOString(), amount_usd: usd, entered_by: 'admin', pending: needConfirm });
         await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'advance by admin: ' + s2.name);
         if (needConfirm) {
           await msg(c, `⏳ Avans yuborildi: *${s2.name}* — $${usd.toFixed(2)}\nXodim tasdiqlashini kutmoqda.`);
@@ -3999,7 +4070,7 @@ async function handle(upd) {
         const s2 = data[idx];
         const advId = uid();
         s2.advances = s2.advances || [];
-        s2.advances.push({ id: advId, date: todayStr(), amount_usd: usd, entered_by: 'worker', pending: true });
+        s2.advances.push({ id: advId, date: todayStr(), ts: new Date().toISOString(), amount_usd: usd, entered_by: 'worker', pending: true });
         await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'advance by worker: ' + s2.name);
         await msg(c, `⏳ Avans yuborildi: $${usd.toFixed(2)}\nIbrohim tasdiqlashini kuting.`);
         // adminga tasdiq uchun
