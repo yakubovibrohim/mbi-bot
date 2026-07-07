@@ -1125,6 +1125,24 @@
     "role": "assistant",
     "content": "Кстати, вы про шкаф под лестницу спрашивали — если пришлёте размеры, сразу посчитаем стоимость 🙂"
    }
+  ],
+  "1877393679906083": [
+   {
+    "role": "user",
+    "content": "Assalomu alaykum yaxshimisizlar,"
+   },
+   {
+    "role": "assistant",
+    "content": "Vaalaykum assalom, yaxshi alhamdulillah 👍🏻\n\nSizga qanday yordam bera olamiz? Nima kerak edi — oshxona, shkaf, yotoqxonami?"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz video yubordi]\nShunaqa mebel yasab bera olasizlarmi?"
+   },
+   {
+    "role": "assistant",
+    "content": "Ha, albatta yasaymiz 👍🏻\n\nQaysi qism ko'proq yoqdi — oshxonami yoki boshqa qismi? O'lcham bormi taxminan?"
+   }
   ]
  },
  "activity": {
@@ -1363,6 +1381,11 @@
    "lastClientAt": 1783370784664,
    "followedUp": false,
    "fu3": true
+  },
+  "1877393679906083": {
+   "lastClientAt": 1783393185373,
+   "followedUp": false,
+   "fu3": false
   }
  }
 }
