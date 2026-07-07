@@ -1166,6 +1166,14 @@
    {
     "role": "assistant",
     "content": "Rasm ham bizga ko'rinmayapti, afsuski 😊\n\nXona o'lchami qancha? Uzunlik × kenglik × balandlik bo'lsa — Ibrohim aka aynan shu xonaga mos loyiha va aniq narx hisoblаb beradi.\n\nTelefon raqamingizni qoldiring, o'zi qo'ng'iroq qiladi 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Xona 2 m ga 3.5 m faqat kichik shkaf va ham divan ham krovat boʻladigan mebel yasatishimiz kerak"
+   },
+   {
+    "role": "assistant",
+    "content": "Tushunарли, aniq o'lcham bor 👍🏻\n\n2×3.5m xona uchun — kichik shkaf + divan-kravat (transformer) kombinatsiyasi. Bu yerda korpus LMDF, furnitura GTV yoki Hettich.\n\nTaxminan 1200-1800$ atrofida chiqadi, materialga qarab.\n\nAniq loyiha va narxni Ibrohim aka hisoblаb beradi. Telefon raqamingizni shu yerga yozib qoldiring 😊"
    }
   ]
  },
@@ -1407,7 +1415,7 @@
    "fu3": true
   },
   "1877393679906083": {
-   "lastClientAt": 1783393449126,
+   "lastClientAt": 1783393572814,
    "followedUp": false,
    "fu3": false
   }
