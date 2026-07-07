@@ -1866,6 +1866,22 @@
    {
     "role": "assistant",
     "content": "Xop 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "👍👍"
+   },
+   {
+    "role": "assistant",
+    "content": "😊"
+   },
+   {
+    "role": "user",
+    "content": "🤝\n😉"
+   },
+   {
+    "role": "assistant",
+    "content": "😊👍🏻"
    }
   ],
   "1429930878893970": [
@@ -2321,7 +2337,7 @@
    "fu3": false
   },
   "1621837499277650": {
-   "lastClientAt": 1783454859801,
+   "lastClientAt": 1783454954106,
    "followedUp": false,
    "fu3": false
   },
