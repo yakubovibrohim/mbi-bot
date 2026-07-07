@@ -1736,6 +1736,14 @@
    {
     "role": "assistant",
     "content": "Ва Алейкум Ассалом! 👍🏻\n\nШахсийга ёзинг, барча маълумот берамиз 🙌"
+   },
+   {
+    "role": "user",
+    "content": "Шу мебилни напиши билмокчидим"
+   },
+   {
+    "role": "assistant",
+    "content": "Тушунарли! Бу ошхонами ё шкафми?"
    }
   ],
   "4340627729523428": [
@@ -1746,6 +1754,16 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%.\n\nКухни примерно от 1000$. Что планируете?"
+   }
+  ],
+  "1018538037242931": [
+   {
+    "role": "user",
+    "content": "Assalomu alaykum Sizning mebellaringizni ko‘rib chiqdim\nSizga internet orqali ko‘proq mijoz va buyurtma olib keladigan veb-sayt tayyorlab qo‘ydim Agar xohlasangiz ko‘rsatish uchun link beraman"
+   },
+   {
+    "role": "assistant",
+    "content": "Ва Алейкум Ассалом 👍🏻\n\nРаҳмат, лекин бизга шу хизмат керак эмас."
    }
   ]
  },
@@ -2082,12 +2100,17 @@
    "fu3": false
   },
   "1572144184326217": {
-   "lastClientAt": 1783441849753,
+   "lastClientAt": 1783442013441,
    "followedUp": false,
    "fu3": false
   },
   "4340627729523428": {
    "lastClientAt": 1783441888733,
+   "followedUp": false,
+   "fu3": false
+  },
+  "1018538037242931": {
+   "lastClientAt": 1783442013164,
    "followedUp": false,
    "fu3": false
   }
