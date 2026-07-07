@@ -356,6 +356,10 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкум! Кечирасиз, ёзамиз ҳозир 🙌 Шахсийга ёзинг, ёрдам берамиз 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Саломи олинг 🙋‍♂️ Саволларингиз бўлса ёрдам беришга тайёрмиз, ёзинг иккиламчи ўйламай 😊"
    }
   ],
   "1535084918156319": [
@@ -374,6 +378,10 @@
    {
     "role": "assistant",
     "content": "Albatta! Qaysi mahsulot — oshxona, shkaf yoki yotoqxona?"
+   },
+   {
+    "role": "assistant",
+    "content": "Salom bilan boshlama deb aytilgan, lekin suhbat davomi sifatida:\n\nHali ham qiziqasizmi, narxni tekshirib beray 😊"
    }
   ],
   "3549438611874745": [
@@ -384,6 +392,10 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкум, яхшимисз 👍🏻\n\nНима керак эди — ошхона, шкаф ёки ётоқхонами?"
+   },
+   {
+    "role": "assistant",
+    "content": "Hali ham qiziqish bor deb o'ylaymiz 😊 Qaysi mebel haqida ma'lumot olmoqchi edingiz?"
    }
   ],
   "1535274278331697": [
@@ -394,6 +406,10 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Дизайном интерьера мы не занимаемся — только мебель на заказ: кухни, шкафы, спальни 👍🏻\n\nЕсли нужна мебель — подскажу по ценам и вариантам. Что планируете?"
+   },
+   {
+    "role": "assistant",
+    "content": "Кстати, если ещё остались вопросы по мебели — всегда готов помочь 🙂 Что вас интересует?"
    }
   ],
   "1869836947306138": [
@@ -1180,19 +1196,19 @@
   },
   "882718974888779": {
    "lastClientAt": 1783318386636,
-   "followedUp": false
+   "followedUp": true
   },
   "1535084918156319": {
    "lastClientAt": 1783317524189,
-   "followedUp": false
+   "followedUp": true
   },
   "3549438611874745": {
    "lastClientAt": 1783318255683,
-   "followedUp": false
+   "followedUp": true
   },
   "1535274278331697": {
    "lastClientAt": 1783318750918,
-   "followedUp": false
+   "followedUp": true
   },
   "1869836947306138": {
    "lastClientAt": 1783320621117,
