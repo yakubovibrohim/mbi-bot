@@ -1,5 +1,6 @@
 const https = require('https');
 const http = require('http');
+const crypto = require('crypto');
 const FormData = require('form-data');
 let cardMon = null; try { cardMon = require('./card-monitor'); } catch (e) { console.error('card-monitor yuklanmadi:', e.message); }
 
@@ -1845,7 +1846,7 @@ async function computeCashbox() {
     balance, hasOpening: cfg.opening_uzs != null
   };
 }
-async function showCashbox(c) {
+async function showCashboxFull(c) {
   const k = await computeCashbox();
   if (!k.hasOpening) {
     await btn(c, '💰 *Kassa*\n\n_Boshlang\'ich qoldiq hali kiritilmagan._\nHozir qo\'lingizda/kassada qancha pul borligini kiriting.', [
@@ -1854,7 +1855,7 @@ async function showCashbox(c) {
     ]);
     return;
   }
-  await btn(c, `💰 *Kassa*\n\n` +
+  const r = await msgKb(c, `💰 *Kassa*\n\n` +
     `🏦 Boshlang'ich: ${fmtUzs(k.opening)} so'm\n` +
     `📥 Kirim (to'lovlar): +${fmtUzs(k.income)}\n` +
     `📥 Qarzdor to'lovi: +${fmtUzs(k.debtIn)}\n` +
@@ -1865,15 +1866,111 @@ async function showCashbox(c) {
     `🔴 Qarz to'lovi: −${fmtUzs(k.debtPaid)}\n` +
     `👛 Shaxsiy: −${fmtUzs(k.pers)}\n` +
     `━━━━━━━━━━━━\n` +
-    `💵 *Hozirgi qoldiq: ${fmtUzs(k.balance)} so'm*`, [
-    [{ text: '✏️ Boshlang\'ich qoldiqni o\'zgartirish', callback_data: 'cash_set' }],
+    `💵 *Hozirgi qoldiq: ${fmtUzs(k.balance)} so'm*\n\n` +
+    `_Bu xabar 10 daqiqadan keyin o'chiriladi._`, { inline_keyboard: [
+    [{ text: "✏️ Boshlang'ich qoldiqni o'zgartirish", callback_data: 'cash_set' }],
     [{ text: '◀️ Ortga', callback_data: 'menu_home' }]
-  ]);
+  ] });
+  if (r && r.result) await scheduleAutoDelete(c, r.result.message_id);
 }
 async function cashSetStart(c) {
   orderState[c] = { step: 'cash_amount' };
   await btn(c, '💰 *Boshlang\'ich qoldiq:*\n\n_Hozir qancha pulingiz bor? So\'mda yoki $ bilan._', [[{ text: '❌ Bekor', callback_data: 'menu_cash' }]]);
 }
+// ══════════════════════════════════════════════════════════════
+// KASSA/HISOBOT PAROLI + AVTO-O'CHIRISH
+// ══════════════════════════════════════════════════════════════
+const pHash = s => crypto.createHash('sha256').update(String(s)).digest('hex');
+const kassaUnlocked = {}; // chat -> timestamp (10 daqiqa amal qiladi)
+const KASSA_UNLOCK_MS = 10 * 60 * 1000;
+function kassaIsUnlocked(c) { return kassaUnlocked[c] && (Date.now() - kassaUnlocked[c] < KASSA_UNLOCK_MS); }
+
+async function getKassaParol() {
+  const { data } = await ghRead('cashbox.json');
+  return (data && !Array.isArray(data)) ? (data.parol_hash || null) : null;
+}
+async function setKassaParol(hash) {
+  const { data, sha } = await ghRead('cashbox.json');
+  const cfg = (data && !Array.isArray(data)) ? data : {};
+  cfg.parol_hash = hash;
+  await ghPut('cashbox.json', JSON.stringify(cfg, null, 2), sha, 'kassa parol');
+}
+async function askKassaParol(c, target) {
+  const h = await getKassaParol();
+  if (!h) {
+    if (String(c) === ADMIN) {
+      orderState[c] = { step: 'kassa_parol_new', target };
+      await msg(c, "🔑 *Kassa paroli hali o'rnatilmagan.*\n\nYangi parolni yozib yuboring (kamida 3 belgi):");
+    } else await msg(c, "🚫 Ruxsat yo'q.");
+    return;
+  }
+  orderState[c] = { step: 'kassa_parol_check', target };
+  await msg(c, '🔑 Parolni kiriting:');
+}
+async function kassaOpenTarget(c, target) {
+  if (target === 'summary') { await showSummary(c); return; }
+  if (target === 'cash_full') { await showCashboxFull(c); return; }
+  if (target === 'cash_set') { await cashSetStart(c); return; }
+  await showCashboxShort(c);
+}
+
+// ── Maxfiy xabarlarni avto-o'chirish (restartga chidamli navbat) ──
+const AUTO_DEL_MS = 10 * 60 * 1000;
+async function scheduleAutoDelete(c, mid, ms = AUTO_DEL_MS) {
+  if (!mid) return;
+  for (let i = 0; i < 2; i++) {
+    try {
+      const { data, sha } = await ghRead('pending-deletes.json');
+      const list = Array.isArray(data) ? data : [];
+      list.push({ c: String(c), mid, at: Date.now() + ms });
+      await ghPut('pending-deletes.json', JSON.stringify(list), sha, 'auto-delete queue');
+      return;
+    } catch (e) { if (i === 1) console.error('scheduleAutoDelete:', e.message); }
+  }
+}
+async function processAutoDeletes() {
+  try {
+    const { data, sha } = await ghRead('pending-deletes.json');
+    const list = Array.isArray(data) ? data : [];
+    if (!list.length) return;
+    const now = Date.now();
+    const due = list.filter(x => x.at <= now);
+    if (!due.length) return;
+    for (const x of due) {
+      try { await api('deleteMessage', { chat_id: x.c, message_id: x.mid }); } catch (e) {}
+    }
+    const rest = list.filter(x => x.at > now);
+    await ghPut('pending-deletes.json', JSON.stringify(rest), sha, 'auto-delete done');
+  } catch (e) { console.error('processAutoDeletes:', e.message); }
+}
+setInterval(processAutoDeletes, 60 * 1000);
+
+// Qisqa Kassa ko'rinishi — shu oy kirim/chiqim + qoldiq
+async function showCashboxShort(c) {
+  const now = nowTZ();
+  const [k, g] = await Promise.all([computeCashbox(), gatherMonth(now.getFullYear(), now.getMonth())]);
+  if (!k.hasOpening) {
+    await btn(c, '💰 *Kassa*\n\n_Boshlang\'ich qoldiq hali kiritilmagan._\nHozir qo\'lingizda/kassada qancha pul borligini kiriting.', [
+      [{ text: '➕ Boshlang\'ich qoldiqni kiritish', callback_data: 'cash_set' }],
+      [{ text: '◀️ Ortga', callback_data: 'menu_home' }]
+    ]);
+    return;
+  }
+  const monthName = UZ_MONTHS[now.getMonth()];
+  const rows = [
+    [{ text: '📄 Batafsil', callback_data: 'cash_full' }],
+    [{ text: '◀️ Ortga', callback_data: 'menu_home' }]
+  ];
+  if (String(c) === ADMIN) rows.splice(1, 0, [{ text: "✏️ Boshlang'ich qoldiq", callback_data: 'cash_set' }, { text: '🔑 Parolni o\'zgartirish', callback_data: 'cash_parol' }]);
+  const r = await msgKb(c, `💰 *Kassa — ${monthName}*\n\n` +
+    `📥 Shu oy kirim: +${fmtUzs(g.kMonIn)}\n` +
+    `📤 Shu oy chiqim: −${fmtUzs(g.kMonOut)}\n` +
+    `━━━━━━━━━━━━\n` +
+    `💵 *Hozirgi qoldiq: ${fmtUzs(k.balance)} so'm*\n\n` +
+    `_Bu xabar 10 daqiqadan keyin o'chiriladi._`, { inline_keyboard: rows });
+  if (r && r.result) await scheduleAutoDelete(c, r.result.message_id);
+}
+
 async function cashSetSave(c, amountUzs) {
   const { data, sha } = await ghRead('cashbox.json');
   const cfg = (data && !Array.isArray(data)) ? data : {};
@@ -1881,7 +1978,7 @@ async function cashSetSave(c, amountUzs) {
   cfg.opening_date = todayStr();
   await ghPut('cashbox.json', JSON.stringify(cfg, null, 2), sha, 'cashbox opening');
   await msg(c, `✅ Boshlang'ich qoldiq o'rnatildi: ${fmtUzs(amountUzs)} so'm`);
-  await showCashbox(c);
+  await showCashboxShort(c);
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -2036,12 +2133,16 @@ async function sendFullReport(c, y, m) {
     [{ text: '◀️ Ortga', callback_data: 'menu_home' }]
   ];
   const kbMarkup = { inline_keyboard: kb };
+  s += `\n\n_Bu xabar 10 daqiqadan keyin o'chiriladi._`;
   if (s.length <= 4000) {
-    await msgKb(c, s, kbMarkup);
+    const r = await msgKb(c, s, kbMarkup);
+    if (r && r.result) await scheduleAutoDelete(c, r.result.message_id);
   } else {
     const cut = s.lastIndexOf('\n\n', 3800);
-    await msg(c, s.slice(0, cut));
-    await msgKb(c, s.slice(cut), kbMarkup);
+    const r1 = await msg(c, s.slice(0, cut));
+    const r2 = await msgKb(c, s.slice(cut), kbMarkup);
+    if (r1 && r1.result) await scheduleAutoDelete(c, r1.result.message_id);
+    if (r2 && r2.result) await scheduleAutoDelete(c, r2.result.message_id);
   }
 }
 
@@ -3738,15 +3839,22 @@ async function handle(upd) {
       if (cd === 'disc_report') { await showDisciplineReport(c); return; }
       if (cd === 'menu_home') { await showHomeMenu(c); return; }
       // ── 3-bosqich: kassa, ishxona, shaxsiy, qarzlar ──
-      if (cd === 'menu_cash') { await showCashbox(c); return; }
-      if (cd === 'cash_set') { await cashSetStart(c); return; }
+      if (cd === 'menu_cash') { await askKassaParol(c, 'cash'); return; }
+      if (cd === 'cash_set') { if (kassaIsUnlocked(c)) await cashSetStart(c); else await askKassaParol(c, 'cash_set'); return; }
+      if (cd === 'cash_full') { if (kassaIsUnlocked(c)) await showCashboxFull(c); else await askKassaParol(c, 'cash_full'); return; }
+      if (cd === 'cash_parol') {
+        if (String(c) !== ADMIN) { await msg(c, "🚫 Ruxsat yo'q."); return; }
+        orderState[c] = { step: 'kassa_parol_old' };
+        await msg(c, '🔑 Eski parolni kiriting:');
+        return;
+      }
       if (cd === 'menu_office_exp') { await showOfficeExp(c); return; }
       if (cd === 'ofx_add') { await officeExpAddStart(c); return; }
       if (cd === 'menu_personal_exp') { await showPersonalExp(c); return; }
       if (cd === 'psx_add') { await personalExpAddStart(c); return; }
       if (cd === 'menu_debts') { await showDebts(c); return; }
       // ── 4-bosqich: hisobot, Excel ──
-      if (cd === 'menu_summary') { await showSummary(c); return; }
+      if (cd === 'menu_summary') { await askKassaParol(c, 'summary'); return; }
       if (cd === 'xls_now') { await msg(c, '⏳ Excel tayyorlanyapti...'); const n = nowTZ(); await generateAndSendMonth(n.getFullYear(), n.getMonth(), c); return; }
       if (cd === 'xls_list') { await showReportsList(c); return; }
       if (cd.startsWith('xls_get_')) { await sendSavedReport(c, cd.slice(8)); return; }
@@ -4117,6 +4225,35 @@ async function handle(upd) {
         if (uzs == null || uzs <= 0) { await msg(c, '❗️ Summani to\'g\'ri yozing.'); return; }
         const id = st.debtId; delete orderState[c]; await debtPaySave(c, id, uzs); return;
       }
+      // ── Kassa/Hisobot paroli ──
+      else if (st.step === 'kassa_parol_new') {
+        const target = st.target; delete orderState[c];
+        api('deleteMessage', { chat_id: c, message_id: upd.message.message_id }).catch(() => {});
+        const p = t.trim();
+        if (p.length < 3) { orderState[c] = { step: 'kassa_parol_new', target }; await msg(c, "❗️ Parol kamida 3 belgi bo'lsin. Qaytadan yozing:"); return; }
+        await setKassaParol(pHash(p));
+        kassaUnlocked[c] = Date.now();
+        if (target === 'changed') { await msg(c, '✅ Parol yangilandi.'); return; }
+        await msg(c, "✅ Parol o'rnatildi.");
+        await kassaOpenTarget(c, target);
+        return;
+      }
+      else if (st.step === 'kassa_parol_check') {
+        const target = st.target; delete orderState[c];
+        api('deleteMessage', { chat_id: c, message_id: upd.message.message_id }).catch(() => {});
+        const h = await getKassaParol();
+        if (h && pHash(t.trim()) === h) { kassaUnlocked[c] = Date.now(); await kassaOpenTarget(c, target); }
+        else await msg(c, "❌ Parol noto'g'ri.");
+        return;
+      }
+      else if (st.step === 'kassa_parol_old') {
+        delete orderState[c];
+        api('deleteMessage', { chat_id: c, message_id: upd.message.message_id }).catch(() => {});
+        const h = await getKassaParol();
+        if (h && pHash(t.trim()) === h) { orderState[c] = { step: 'kassa_parol_new', target: 'changed' }; await msg(c, '🔑 Yangi parolni yozing:'); }
+        else await msg(c, "❌ Eski parol noto'g'ri.");
+        return;
+      }
       // ── Kassa boshlang'ich qoldiq ──
       else if (st.step === 'cash_amount') {
         const uzs = parseMoneyToUzs(t);
@@ -4191,12 +4328,12 @@ async function handle(upd) {
           ] } });
         return;
       }
-      if (t === '📊 Hisobot') { await showSummary(c); return; }
+      if (t === '📊 Hisobot') { await askKassaParol(c, 'summary'); return; }
       if (t === '👷 Xodimlar') { await showStaffList(c); return; }
       if (t === '👥 Davomat') { await showAllAttendance(c); return; }
-      if (t === '💰 Kassa') { await showCashbox(c); return; }
+      if (t === '💰 Kassa') { await askKassaParol(c, 'cash'); return; }
       if (t === '📋 Bugun') { await sendDailyBriefing(c); return; }
-      if (t === '/hisobot') { await showSummary(c); return; }
+      if (t === '/hisobot') { await askKassaParol(c, 'summary'); return; }
       if (t === '/bugun') { await sendDailyBriefing(c); return; }
       if (t === '/vazifalar') {
         const tasks = await ghReadAll('tasks-log.json');
