@@ -1744,6 +1744,14 @@
    {
     "role": "assistant",
     "content": "Тушунарли! Бу ошхонами ё шкафми?"
+   },
+   {
+    "role": "user",
+    "content": "Ошхона мебили"
+   },
+   {
+    "role": "assistant",
+    "content": "Ошхона неча метр, 2 этажми 3 этажми?"
    }
   ],
   "4340627729523428": [
@@ -2100,7 +2108,7 @@
    "fu3": false
   },
   "1572144184326217": {
-   "lastClientAt": 1783442013441,
+   "lastClientAt": 1783442081470,
    "followedUp": false,
    "fu3": false
   },
