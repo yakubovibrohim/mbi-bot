@@ -294,6 +294,10 @@
    {
     "role": "assistant",
     "content": "Кстати, для кухни 5 метров в 2 яруса — у нас сейчас хорошие варианты есть. Могу посчитать примерную стоимость, если напишете какой фасад нравится 😊"
+   },
+   {
+    "role": "assistant",
+    "content": "Кстати, вы выбирали фасад для кухни 5 метров — посчитать примерную стоимость? 😊"
    }
   ],
   "1002734885933953": [
@@ -698,6 +702,10 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкум 🙌 Шахсийга (DM) ёзинг, нарх ва барча маълумотни берамиз 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Нарх билан қизиқдингиз, ҳали ҳам актуалми? 😊"
    }
   ],
   "1526120775644827": [
@@ -1270,6 +1278,10 @@
    {
     "role": "assistant",
     "content": "Tushunарли, aniq o'lcham bor 👍🏻\n\n2×3.5m xona uchun — kichik shkaf + divan-kravat (transformer) kombinatsiyasi. Bu yerda korpus LMDF, furnitura GTV yoki Hettich.\n\nTaxminan 1200-1800$ atrofida chiqadi, materialga qarab.\n\nAniq loyiha va narxni Ibrohim aka hisoblаb beradi. Telefon raqamingizni shu yerga yozib qoldiring 😊"
+   },
+   {
+    "role": "assistant",
+    "content": "Shu xona o'lchami bilan juda chiroyli yechim chiqadi aslida 😊 Aniq narx va eskizni tez tayyorlab bera olamiz — telefon raqamingizni qoldirsangiz, Ibrohim aka bog'lanadi 👍🏻"
    }
   ],
   "1678358953390962": [
@@ -1349,7 +1361,7 @@
   },
   "1559933245738422": {
    "lastClientAt": 1783331565191,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": true
   },
   "1002734885933953": {
@@ -1416,7 +1428,7 @@
   },
   "1015477357505053": {
    "lastClientAt": 1783331838663,
-   "followedUp": false
+   "followedUp": true
   },
   "1526120775644827": {
    "lastClientAt": 1783335687774,
@@ -1533,7 +1545,7 @@
   "1877393679906083": {
    "lastClientAt": 1783393572814,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "1678358953390962": {
    "lastClientAt": 1783395383942,
