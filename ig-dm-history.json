@@ -1563,6 +1563,26 @@
     "role": "assistant",
     "content": "Ассалому Алейкум! 5 метр, 2 этаж бўлса — тахминан 1650-1900$ атрофида чиқади (материалга қараб). 3 этаж бўлса — бироз юқорироқ.\n\nАниқ нархни Иброхим ака ҳисоблаб беради — телефон рақамингизни қолдиринг 👍🏻"
    }
+  ],
+  "1401964665076691": [
+   {
+    "role": "user",
+    "content": "Қанчага тушди бу кухонный"
+   },
+   {
+    "role": "assistant",
+    "content": "Qaysi loyiha haqida so'rayapsiz? Rasm yoki video yuboring, aniqroq aytaman 👍🏻"
+   }
+  ],
+  "2391760691316465": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Manzil\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHeFaGxA47W] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Тошкент, Яккасарой, Қушбеги 6 📍\n\nКелинг, материалларни жонли кўрсатамиз 👍🏻 Ошхонами режалаштираётгансиз?"
+   }
   ]
  },
  "activity": {
@@ -1864,6 +1884,16 @@
   },
   "1960032048029788": {
    "lastClientAt": 1783425435376,
+   "followedUp": false,
+   "fu3": false
+  },
+  "1401964665076691": {
+   "lastClientAt": 1783429228233,
+   "followedUp": false,
+   "fu3": false
+  },
+  "2391760691316465": {
+   "lastClientAt": 1783429471002,
    "followedUp": false,
    "fu3": false
   }
