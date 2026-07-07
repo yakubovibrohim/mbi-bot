@@ -1631,6 +1631,16 @@
     "role": "assistant",
     "content": "Рақамингизни олдик! Иброхим ака тез орада боғланади 👍🏻"
    }
+  ],
+  "1298409299040968": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Ассалому алайкум адирес каерда\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHeFaGxA47W] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ва Алейкум Ассалом! Биз Тошкентда, Яккасарой, Кушбеги 6. Келинг, материалларни кўрсатамиз 👍🏻\n\nНима режалаштиряпсиз — ошхона, шкафми?"
+   }
   ]
  },
  "activity": {
@@ -1952,6 +1962,11 @@
   },
   "1543177867279892": {
    "lastClientAt": 1783432307626,
+   "followedUp": false,
+   "fu3": false
+  },
+  "1298409299040968": {
+   "lastClientAt": 1783433820036,
    "followedUp": false,
    "fu3": false
   }
