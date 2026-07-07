@@ -3005,6 +3005,68 @@ function ghPutRepo(repo, path, buf, label) {
   });
 }
 
+// ─── iCloud Kalendar eslatma (CalDAV) ─────────────────────────
+let icloudCfg = null;
+async function getIcloudCfg() {
+  if (!icloudCfg) icloudCfg = await getSecretKey('icloud');
+  return icloudCfg;
+}
+
+function tashNowStr() {
+  // "YYYY-MM-DD HH:MM" Toshkent vaqti
+  return new Date().toLocaleString('sv-SE', { timeZone: TZ }).slice(0, 16);
+}
+
+async function icloudAddReminder(title, dateStr, timeStr) {
+  const cfg = await getIcloudCfg();
+  if (!cfg || !cfg.email) return false;
+  const uid = 'mbi-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+  const dt = (dateStr || '').replace(/-/g, '') + 'T' + (timeStr || '09:00').replace(':', '') + '00';
+  const endH = String((parseInt((timeStr || '09:00').slice(0, 2), 10) + 1) % 24).padStart(2, '0');
+  const dtEnd = (dateStr || '').replace(/-/g, '') + 'T' + endH + (timeStr || '09:00').slice(3).replace(':', '') + '00';
+  const safe = String(title || 'Eslatma').replace(/[\r\n]+/g, ' ').slice(0, 120);
+  const nowUtc = new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z';
+  const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//MBI Bot//UZ',
+    'BEGIN:VTIMEZONE', 'TZID:' + TZ, 'BEGIN:STANDARD', 'DTSTART:19700101T000000',
+    'TZOFFSETFROM:+0500', 'TZOFFSETTO:+0500', 'END:STANDARD', 'END:VTIMEZONE',
+    'BEGIN:VEVENT', 'UID:' + uid, 'DTSTAMP:' + nowUtc,
+    'DTSTART;TZID=' + TZ + ':' + dt, 'DTEND;TZID=' + TZ + ':' + dtEnd,
+    'SUMMARY:' + safe,
+    'BEGIN:VALARM', 'TRIGGER:PT0S', 'ACTION:DISPLAY', 'DESCRIPTION:' + safe, 'END:VALARM',
+    'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+  const auth = Buffer.from(cfg.email + ':' + cfg.app_password).toString('base64');
+  const u = new URL(cfg.caldav_base + cfg.calendar_id + '/' + uid + '.ics');
+  return new Promise((resolve) => {
+    const req = https.request({
+      hostname: u.hostname, port: u.port || 443, path: u.pathname, method: 'PUT',
+      headers: { 'Authorization': 'Basic ' + auth, 'Content-Type': 'text/calendar; charset=utf-8', 'Content-Length': Buffer.byteLength(ics) }
+    }, res => { res.resume(); resolve(res.statusCode === 201 || res.statusCode === 204); });
+    req.on('error', () => resolve(false));
+    req.setTimeout(15000, () => { req.destroy(); resolve(false); });
+    req.write(ics); req.end();
+  });
+}
+
+async function handleEslatma(c, t) {
+  const now = tashNowStr();
+  const wd = new Date().toLocaleDateString('uz-UZ', { timeZone: TZ, weekday: 'long' });
+  const sys = `Sen eslatma parserisan. Hozir Toshkent vaqti: ${now} (${wd}).
+Eslatma matnidan JSON chiqar: {"title":"...","date":"YYYY-MM-DD","time":"HH:MM"}
+Qoidalar: "ertaga"=+1 kun, "indinga"=+2 kun; hafta kuni aytilsa — keyingi eng yaqin o'sha kun; sana aytilmasa bugungi kun; vaqt aytilmasa "09:00". Title qisqa bo'lsin, sana/vaqt so'zlarini titlega kiritma. O'tib ketgan vaqt bo'lsa keyingi mos kunga sur. FAQAT JSON qaytar.`;
+  try {
+    const pr = await aiText(sys, t, 200, false);
+    const p = JSON.parse(String(pr || '').replace(/```json|```/g, '').trim());
+    if (!p || !p.title || !p.date) throw new Error('parse');
+    const ok = await icloudAddReminder(p.title, p.date, p.time || '09:00');
+    if (ok) await msg(c, `📅 *Kalendarga qo'shildi:*\n${p.title}\n🕐 ${p.date} ${p.time || '09:00'}`);
+    else await msg(c, '⚠️ iCloud Kalendarga yozib bo\'lmadi, birozdan keyin qayta urinib ko\'ring.');
+  } catch (e) {
+    console.error('eslatma:', e.message);
+    await msg(c, '⚠️ Eslatmani tushunmadim. Masalan: *eslatma: ertaga 14:00 Alisher aka bilan uchrashuv*');
+  }
+  return true;
+}
+
 async function handleOfficeRender(c, m) {
   try {
     await agentMsg(c, 'dilshod', 'Rasmni oldim, fotorealistik render qilyapman... ⏳ (~1 daqiqa)');
@@ -3068,6 +3130,12 @@ async function handleOffice(upd) {
   // Karta chiqimi izohini kutayotgan bo'lsa — bu matn o'sha izoh
   if (cardMon && cardMon.tryTakeNote) {
     try { if (await cardMon.tryTakeNote(t, c)) return; } catch (e) { console.error('card note:', e.message); }
+  }
+
+  // "eslatma: ..." → iPhone Kalendarga (iCloud CalDAV)
+  if (/^(eslatma|эслатма)\b/i.test(t.trim()) || /eslatib\s+qo'?y|эслатиб\s+қўй/i.test(t)) {
+    await handleEslatma(c, t.replace(/^(eslatma|эслатма)[\s:،,—-]*/i, '').trim() || t);
+    return;
   }
 
   if (t === '/dashboard' || t === '/dashboard@mbi_mebel_bot') {
