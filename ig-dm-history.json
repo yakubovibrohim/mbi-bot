@@ -1294,6 +1294,10 @@
    {
     "role": "assistant",
     "content": "Хорошо, ждём! Как будете готовы — пишите, поможем 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Как ремонт продвигается? 😊"
    }
   ],
   "2763984640634432": [
@@ -1800,6 +1804,10 @@
    {
     "role": "assistant",
     "content": "Яхши! Қандай материал — акрил, крашенный ё оддий ЛМДФ фасад?"
+   },
+   {
+    "role": "assistant",
+    "content": "Кечирасиз, ҳисоблаб кўрдикми? 😊"
    }
   ],
   "4340627729523428": [
@@ -1846,6 +1854,10 @@
    {
     "role": "assistant",
     "content": "Хоп, бемалол 👍🏻 Керак бўлса ёзинг 😊"
+   },
+   {
+    "role": "assistant",
+    "content": "Btw, agar qandaydir savol tug'ilsa yoki narxlar qiziqtirsa — bemalol yozing, doim yordam beramiz 😊"
    }
   ],
   "1429930878893970": [
@@ -2183,7 +2195,7 @@
   "2382261248967617": {
    "lastClientAt": 1783443751295,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "2763984640634432": {
    "lastClientAt": 1783370784664,
@@ -2288,7 +2300,7 @@
   "1572144184326217": {
    "lastClientAt": 1783442224057,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "4340627729523428": {
    "lastClientAt": 1783441888733,
@@ -2303,7 +2315,7 @@
   "1621837499277650": {
    "lastClientAt": 1783442342652,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "1429930878893970": {
    "lastClientAt": 1783442963074,
