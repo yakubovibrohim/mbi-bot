@@ -222,7 +222,7 @@ async function saveCardExpense(id, kind) {
   // izoh: foydalanuvchi yozgani birinchi, bo'lmasa joy nomi
   const note = p.userNote ? `💳 ${p.userNote}` : `💳 ${p.place || p.title || 'karta'}`;
   const entry = kind === 'office'
-    ? { id: shortId(), date: p.date, name: note, amount_uzs: p.amtUzs, rate: deps.USD_UZS, note: p.place || 'karta', pay_method: 'card' }
+    ? { id: shortId(), date: p.date, ts: new Date().toISOString(), name: note, amount_uzs: p.amtUzs, rate: deps.USD_UZS, note: p.place || 'karta', pay_method: 'card' }
     : { date: p.date, note, amount_uzs: p.amtUzs, rate: deps.USD_UZS, type: 'personal', pay_method: 'card', place: p.place || '', ts: new Date().toISOString() };
   await deps.ghWrite(file, entry, `card expense: ${note} ${p.amtUzs}`);
   delete cardPending[id];
@@ -246,7 +246,7 @@ async function saveDealExpense(id, dealId) {
   const o = data.find(x => x.id === dealId);
   if (!o) { await deps.msg(deps.ADMIN, '⚠️ Buyurtma topilmadi.'); delete cardPending[id]; return; }
   if (!Array.isArray(o.expenses)) o.expenses = [];
-  o.expenses.push({ date: p.date, name: `💳 ${p.place || p.title || 'karta'}`, total_uzs: p.amtUzs, rate: deps.USD_UZS, pay_method: 'card' });
+  o.expenses.push({ date: p.date, ts: new Date().toISOString(), name: `💳 ${p.place || p.title || 'karta'}`, total_uzs: p.amtUzs, rate: deps.USD_UZS, pay_method: 'card' });
   await deps.ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, `card deal-expense: ${o.client} ${p.amtUzs}`);
   delete cardPending[id];
   await deps.msg(deps.ADMIN, `✅ 📦 Buyurtma xarajati (${o.client}): ${deps.fmtUzs(p.amtUzs)} so'm (💳 karta)`);
@@ -259,7 +259,7 @@ async function saveDealPayment(id, dealId) {
   const o = data.find(x => x.id === dealId);
   if (!o) { await deps.msg(deps.ADMIN, '⚠️ Buyurtma topilmadi.'); delete cardPending[id]; return; }
   if (!Array.isArray(o.payments)) o.payments = [];
-  o.payments.push({ date: p.date, amount_uzs: p.amtUzs, note: '💳 karta', pay_method: 'card' });
+  o.payments.push({ date: p.date, ts: new Date().toISOString(), amount_uzs: p.amtUzs, note: '💳 karta', pay_method: 'card' });
   await deps.ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, `card deal-payment: ${o.client} ${p.amtUzs}`);
   delete cardPending[id];
   await deps.msg(deps.ADMIN, `✅ 📦 Mijoz to'lovi (${o.client}): ${deps.fmtUzs(p.amtUzs)} so'm (💳 karta)`);
@@ -273,7 +273,7 @@ async function saveDebtPayment(id, debtId, dir) {
   if (!d) { await deps.msg(deps.ADMIN, '⚠️ Qarz topilmadi.'); delete cardPending[id]; return; }
   d.paid_uzs = (d.paid_uzs || 0) + p.amtUzs;
   if (!Array.isArray(d.payments)) d.payments = [];
-  d.payments.push({ date: p.date, amount_uzs: p.amtUzs, pay_method: 'card' });
+  d.payments.push({ date: p.date, ts: new Date().toISOString(), amount_uzs: p.amtUzs, pay_method: 'card' });
   d.pay_date = p.date;
   await deps.ghPut('debts-log.json', JSON.stringify(data, null, 2), sha, `card debt-${dir}: ${d.name} ${p.amtUzs}`);
   delete cardPending[id];
