@@ -164,6 +164,10 @@
    {
     "role": "assistant",
     "content": "O'lchamini bilib olsak, tez hisob chiqarib beramiz 😊 Gaz tagidagi kenglik necha sm?"
+   },
+   {
+    "role": "assistant",
+    "content": "O'lchamlarni ko'rib chiqdingizmi? 😊"
    }
   ],
   "2392288251257443": [
@@ -862,6 +866,10 @@
    {
     "role": "assistant",
     "content": "Ассалому алайкум, Иброхим ака сиз билан боғлана олдими? 😊"
+   },
+   {
+    "role": "assistant",
+    "content": "Иброхим ака сиз билан боғланди ми? 😊"
    }
   ],
   "3998330260300031": [
@@ -1432,6 +1440,10 @@
    {
     "role": "assistant",
     "content": "Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в 3D, точность 100%.\n\nКухни примерно от 1000$. Что планируете?"
+   },
+   {
+    "role": "assistant",
+    "content": "Кстати, если вопросы ещё остались — готов помочь. Или могу сразу посчитать примерную стоимость под ваш размер 😊"
    }
   ],
   "2023808738228558": [
@@ -1484,6 +1496,10 @@
    {
     "role": "assistant",
     "content": "Tushundim. To'q kulrang — ko'pincha krashenniy yoki akril bo'ladi.\n\n4 metr, 2 etaj, krashenniy fasad — taxminan 1800–2200$ atrofida chiqadi. Akril bo'lsa — 1500–1800$ atrofida.\n\nAniq narx va loyihani Ibrohim aka beradi. Telefon raqamingizni qoldiring, o'zi hisoblab qo'ng'iroq qiladi 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Narx bo'yicha savollaringiz bo'lsa yordamlashishga tayyormiz 😊 Raqamingizni qoldirsangiz, aniq loyiha va narxni tayyorlab qo'ng'iroq qilamiz!"
    }
   ],
   "2151802285606521": [
@@ -1537,6 +1553,16 @@
     "role": "assistant",
     "content": "Рахмат 😊 Савол бўлса ёзинг. Рақамингизни қолдиринг — Иброхим ака аниқ вариант топиб қўнғироқ қилади 👍🏻"
    }
+  ],
+  "1960032048029788": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Нархини хам айтинг эни 5метр баландлиги 2.80\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHeFaGxA47W] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум! 5 метр, 2 этаж бўлса — тахминан 1650-1900$ атрофида чиқади (материалга қараб). 3 этаж бўлса — бироз юқорироқ.\n\nАниқ нархни Иброхим ака ҳисоблаб беради — телефон рақамингизни қолдиринг 👍🏻"
+   }
   ]
  },
  "activity": {
@@ -1566,7 +1592,7 @@
   },
   "1534839131449022": {
    "lastClientAt": 1783354388741,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": true
   },
   "2392288251257443": {
@@ -1679,7 +1705,7 @@
   },
   "1645341503220415": {
    "lastClientAt": 1783355205124,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": true
   },
   "3998330260300031": {
@@ -1814,7 +1840,7 @@
   "1391111339537531": {
    "lastClientAt": 1783414856700,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "2023808738228558": {
    "lastClientAt": 1783414924054,
@@ -1824,7 +1850,7 @@
   "1742340130531294": {
    "lastClientAt": 1783415478958,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "2151802285606521": {
    "lastClientAt": 1783417858498,
@@ -1833,6 +1859,11 @@
   },
   "1070415588888387": {
    "lastClientAt": 1783420015232,
+   "followedUp": false,
+   "fu3": false
+  },
+  "1960032048029788": {
+   "lastClientAt": 1783425435376,
    "followedUp": false,
    "fu3": false
   }
