@@ -1179,6 +1179,16 @@
     "role": "assistant",
     "content": "Tushunарли, aniq o'lcham bor 👍🏻\n\n2×3.5m xona uchun — kichik shkaf + divan-kravat (transformer) kombinatsiyasi. Bu yerda korpus LMDF, furnitura GTV yoki Hettich.\n\nTaxminan 1200-1800$ atrofida chiqadi, materialga qarab.\n\nAniq loyiha va narxni Ibrohim aka hisoblаb beradi. Telefon raqamingizni shu yerga yozib qoldiring 😊"
    }
+  ],
+  "1678358953390962": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Uyni egasiga nasib qilsin\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHeFaGxA47W] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Раҳмат! Бу лойиҳа ҳақида батафсил маълумот олмоқчимисиз? Ошхона, шкаф ёки бошқа мебел режалаштиряпсизми? 😊"
+   }
   ]
  },
  "activity": {
@@ -1420,6 +1430,11 @@
   },
   "1877393679906083": {
    "lastClientAt": 1783393572814,
+   "followedUp": false,
+   "fu3": false
+  },
+  "1678358953390962": {
+   "lastClientAt": 1783395383942,
    "followedUp": false,
    "fu3": false
   }
