@@ -855,7 +855,7 @@ async function attMonthPickMonth(c, id) {
   rows.push([{ text: '◀️ Ortga', callback_data: 'attm_pick' }]);
   await btn(c, `📆 *${s.name} — oy tanlang:*`, rows);
 }
-async function attMonthShow(c, id, y, m) {
+async function attMonthShow(c, id, y, m, isWorker) {
   const { staff: s } = await findStaff(id);
   if (!s) { await msg(c, '⚠️ Topilmadi.'); return; }
   const closed = (s.closed_months || []).some(cm => cm.y === y && cm.m === m);
@@ -896,7 +896,22 @@ async function attMonthShow(c, id, y, m) {
   txt += `\n📊 Ishlagan: *${workedDays} kun*, *${totalNormal.toFixed(1)} soat*`;
   if (totalExtra > 0.05) txt += ` (+${totalExtra.toFixed(1)} qo'sh.)`;
   if (absCnt) txt += `, kelmagan: ${absCnt}`;
-  await btn(c, txt, [[{ text: '◀️ Oylar', callback_data: 'attm_s_' + id }], [{ text: '👥 Bugun', callback_data: 'all_att' }]]);
+  // ── Shu oyda olingan avanslar ──
+  const advs = (s.advances || [])
+    .filter(a => { const p = dmyParts(a.date); return p && p.y === y && p.m === m && !a.pending; })
+    .sort((a, b) => { const pa = dmyParts(a.date), pb = dmyParts(b.date); return pa.d - pb.d; });
+  if (advs.length) {
+    let advTot = 0;
+    txt += `\n\n💸 *Avanslar (${UZ_MONTHS[m]}):*\n`;
+    advs.forEach(a => { const amt = a.amount_usd || 0; advTot += amt; txt += `${a.date} — $${amt.toFixed(2)}\n`; });
+    txt += `Jami olingan: *$${advTot.toFixed(2)}*`;
+  } else {
+    txt += `\n\n💸 _Bu oyda avans olinmagan._`;
+  }
+  const backRows = isWorker
+    ? [[{ text: '◀️ Oylar', callback_data: 'wattm_pick' }], [{ text: '👷 Panel', callback_data: 'worker_panel' }]]
+    : [[{ text: '◀️ Oylar', callback_data: 'attm_s_' + id }], [{ text: '👥 Bugun', callback_data: 'all_att' }]];
+  await btn(c, txt, backRows);
 }
 
 // Admin: bugungi hammaning davomati (real vaqt)
@@ -1338,6 +1353,23 @@ async function showAttTable(c, s) {
   await msg(c, txt);
 }
 
+// ─── Xodim: oylik davomat + avans (oy tanlash) ───
+async function workerAttMonthPick(c, s) {
+  const now = nowTZ();
+  const cy = now.getFullYear(), cm = now.getMonth();
+  const hp = dmyParts(s.hire_date);
+  let y = hp ? hp.y : cy, m = hp ? hp.m : cm, guard = 0;
+  const items = [];
+  while ((y < cy || (y === cy && m <= cm)) && guard < 120) { items.push({ y, m }); m++; if (m > 11) { m = 0; y++; } guard++; }
+  items.reverse();
+  const rows = items.map(it => {
+    const cur = (it.y === cy && it.m === cm);
+    return [{ text: `${UZ_MONTHS[it.m]} ${it.y}${cur ? ' (joriy)' : ''}`, callback_data: `wattm_m_${it.y}_${it.m}` }];
+  });
+  rows.push([{ text: '◀️ Ortga', callback_data: 'worker_panel' }]);
+  await btn(c, `📆 *Oylik davomat va avanslar*\n\nOy tanlang:`, rows);
+}
+
 // ─── Avans ikki tomonlama tasdiq ───
 async function advConfirm(c, advId, ok) {
   const list = await readStaff();
@@ -1377,6 +1409,7 @@ async function showWorkerPanel(c, s) {
   if (!rec || !rec.in) rows.push([{ text: '✅ Keldim', callback_data: 'att_in_09' }, { text: '🕐 Kechroq', callback_data: 'att_in_late' }, { text: '❌ Kelmayman', callback_data: 'att_absent' }]);
   else if (!rec.out) rows.push([{ text: '🏁 Ketdim', callback_data: 'att_out_18' }, { text: '⏰ Hali ishlayapman', callback_data: 'att_out_working' }]);
   rows.push([{ text: '💵 Mening hisobim', callback_data: 'worker_me' }, { text: '💸 Avans oldim', callback_data: 'worker_adv' }]);
+  rows.push([{ text: '📆 Oylik davomat', callback_data: 'wattm_pick' }]);
   rows.push([{ text: '⏱ Davomat (qo\'lda)', callback_data: 'att_manual' }]);
   rows.push([{ text: '🙋 Javob so\'rash', callback_data: 'leave_menu' }]);
   await btn(c, `👷 *${s.name}* — ish vaqti\n\n${statusLine}`, rows);
@@ -3729,7 +3762,7 @@ async function handle(upd) {
       if (cd.startsWith('stf_open_')) { await showStaffCard(c, cd.slice(9)); return; }
       if (cd.startsWith('stf_adv_')) { await staffAdvStart(c, cd.slice(8)); return; }
       if (cd.startsWith('stf_hist_')) { await showStaffHistory(c, cd.slice(9)); return; }
-      if (cd.startsWith('stf_att_')) { await showAttendance(c, cd.slice(8)); return; }
+      if (cd.startsWith('stf_att_')) { await attMonthPickMonth(c, cd.slice(8)); return; }
       if (cd.startsWith('stf_bonus_')) { await staffBonusStart(c, cd.slice(10)); return; }
       if (cd.startsWith('stf_clm_')) { const q = cd.slice(8).split('_'); const yy=+q[q.length-2], mm=+q[q.length-1]; const iid=q.slice(0,q.length-2).join('_'); await staffCloseMonthAsk(c, iid, yy, mm); return; }
       if (cd.startsWith('stf_close_')) { await staffCloseMonthStart(c, cd.slice(10)); return; }
@@ -3745,6 +3778,8 @@ async function handle(upd) {
       if (cd === 'att_out_18') { await attCheckOut(c, nowHHMM()); return; }
       if (cd.startsWith('att_out_') && cd !== 'att_out_working' && cd !== 'att_out_now') { await attCheckOut(c, null); return; }
       if (cd === 'worker_me') { const s = await staffByChat(c); if (s) await showWorkerAccount(c, s); return; }
+      if (cd === 'wattm_pick') { const s = await staffByChat(c); if (s) await workerAttMonthPick(c, s); return; }
+      if (cd.startsWith('wattm_m_')) { const s = await staffByChat(c); if (s) { const q = cd.slice(8).split('_'); await attMonthShow(c, s.id, parseInt(q[0]), parseInt(q[1]), true); } return; }
       if (cd === 'worker_panel') { const s = await staffByChat(c); if (s) await showWorkerPanel(c, s); return; }
       if (cd === 'worker_adv') { const s = await staffByChat(c); if (s) { orderState[c] = { step: 'worker_adv_amount', staffId: s.id }; await btn(c, '💸 *Qancha avans oldingiz?*\n\n_$ bo\'lsa dollar, bo\'lmasa so\'m. Masalan: 100$ yoki 500000_', [[{ text: '❌ Bekor', callback_data: 'worker_panel' }]]); } return; }
       if (cd === 'att_out_now') { const now = nowTZ(); await attCheckOut(c, ('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2)); return; }
