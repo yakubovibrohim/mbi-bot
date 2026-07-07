@@ -656,6 +656,10 @@
    {
     "role": "assistant",
     "content": "Ока, қарор қилдингизми? 😊 Саволлар бўлса ёрдам беришга тайёрмиз 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Ока, ошхонангиз лойиҳасини кўриб чиқдикми? 😊 Савол бўлса ёрдам беришга тайёрмиз 👍🏻"
    }
   ],
   "857487440460396": [
@@ -666,6 +670,10 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Дизайн интерьера мы не делаем — мы занимаемся только изготовлением мебели на заказ: кухни, шкафы, спальни 👍🏻\n\nЕсли нужна мебель — подскажу по стоимости. Что планируете?"
+   },
+   {
+    "role": "assistant",
+    "content": "Кстати, если ещё актуально — готов помочь подобрать мебель под ваш бюджет и размеры 🙂"
    }
   ],
   "1525726342688526": [
@@ -676,6 +684,10 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкум, яхшимисз 👍🏻\n\nАлбатта! Қайси маҳсулот — ошхона, шкаф ёки ётоқхонами? Ўлчами ва материал танлови борми?"
+   },
+   {
+    "role": "assistant",
+    "content": "Qiziqtirgan mahsulot haqida ma'lumot bersangiz, narxini tezda aniqlab beramiz 😊"
    }
   ],
   "1015477357505053": [
@@ -866,6 +878,10 @@
    {
     "role": "assistant",
     "content": "Tushundim. 3 metr uzunlik, 2 etajli oshxona, akril fasad:\n\nTaxminan 1150–1350$ atrofida chiqadi (GTV furnitura bilan arzonroq, Hettich bilan o'rta variant).\n\nAniq narx va loyihani Ibrohim aka beradi. Telefon raqamingizni qoldiring, u kishi o'zi hisoblab qo'ng'iroq qiladi 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Narx ma'qul keldimi? Savollar bo'lsa aytavering 😊"
    }
   ],
   "2271444390287794": [
@@ -1371,16 +1387,16 @@
   },
   "1339635578332434": {
    "lastClientAt": 1783328092081,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": true
   },
   "857487440460396": {
    "lastClientAt": 1783328376005,
-   "followedUp": false
+   "followedUp": true
   },
   "1525726342688526": {
    "lastClientAt": 1783329225349,
-   "followedUp": false
+   "followedUp": true
   },
   "1015477357505053": {
    "lastClientAt": 1783331838663,
@@ -1411,7 +1427,7 @@
   "1518313619771727": {
    "lastClientAt": 1783388503572,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "2271444390287794": {
    "lastClientAt": 1783343003348,
