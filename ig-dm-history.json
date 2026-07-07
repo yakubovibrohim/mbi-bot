@@ -872,6 +872,10 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Да, поможем разобраться 👍🏻\n\nУточните, пожалуйста — что именно вас интересует? Кухня, шкаф или спальный гарнитур?"
+   },
+   {
+    "role": "assistant",
+    "content": "Кстати, вы узнавали насчёт цены и покупки — всё ещё актуально? Готовы ответить на все вопросы 😊"
    }
   ],
   "1518313619771727": [
@@ -922,6 +926,10 @@
    {
     "role": "assistant",
     "content": "Rahmat! Ibrohim aka tez orada bog'lanadi 👍🏻\n\nManzilimiz: Toshkent, Yakkasaroy, Qushbegi 6 — xohlasangiz kelib materiallarni ham ko'rishingiz mumkin."
+   },
+   {
+    "role": "assistant",
+    "content": "Ibrohim aka siz bilan bog'landimi? 😊"
    }
   ],
   "2271444390287794": [
@@ -960,6 +968,10 @@
    {
     "role": "assistant",
     "content": "Qiziqishdansizmi, hali ham maslahat bera olaman 😊 4,5 metr akril oshxona narxini hisoblashtirib qo'yay — telefon raqamingizni yuborsangiz, to'liq ma'lumot beraman."
+   },
+   {
+    "role": "assistant",
+    "content": "Hali ham oshxona mebelini qidiryapsizmi? 4,5 metr akril uchun taxminiy hisob tayyorlab qo'ydim — raqamingizni yuborsangiz, yuborib qo'yay 😊"
    }
   ],
   "1377909584219016": [
@@ -970,6 +982,10 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Заказ оформляем напрямую — через переписку или по телефону, не через сайт.\n\nРасскажите, что планируете — кухню, шкаф, спальню?"
+   },
+   {
+    "role": "assistant",
+    "content": "Вы интересовались заказом мебели — если остались вопросы, с удовольствием помогу 🙂"
    }
   ],
   "3384291921742737": [
@@ -980,6 +996,10 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Напишите в личку — подскажем по цене и материалам 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Кстати, цена зависит от размеров и материала — если напишете параметры вашей кухни, сразу скажу точную стоимость 🙂"
    }
   ],
   "1546629226996443": [
@@ -990,6 +1010,10 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%.\n\nКухни выходят примерно от $1000. Что планируете?"
+   },
+   {
+    "role": "assistant",
+    "content": "Вы ещё думаете насчёт мебели? Если есть вопросы — готовы помочь 😊"
    }
   ],
   "992229480443190": [
@@ -1000,6 +1024,10 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкум! Шахсийга ёзинг, аниқ маълумот берамиз 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Narx bo'yicha savol bergandingiz, javob berishga ulgurмадикmi? 😊 Xabar yozing, aniq narxni aytamiz!"
    }
   ],
   "2121440145920778": [
@@ -1010,6 +1038,10 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%.\n\nКухни выходят примерно от $1000. Что планируете?"
+   },
+   {
+    "role": "assistant",
+    "content": "Вы пропали 😊 Всё ещё думаете над мебелью? Если есть вопросы — пишите, помогу разобраться!"
    }
   ],
   "1548143360234556": [
@@ -1186,6 +1218,10 @@
    {
     "role": "assistant",
     "content": "Rahmat! 2 etaj, 5 metr, premium:\n\n- Akril + Blum — taxminan 2750-3000$ atrofida\n- Krashenniy + Blum — taxminan 3250-3750$ atrofida\n\nAniq narx va loyihani Ibrohim aka beradi. Telefon raqamingizni shu yerga yozib qoldiring 😊"
+   },
+   {
+    "role": "assistant",
+    "content": "Hali ham oshxona mebelingiz bo'yicha yordam bera olamiz 😊 Telefon raqamingizni qoldiring, Ibrohim aka aniq narx va loyiha bilan bog'lanadi 👍🏻"
    }
   ],
   "993804773642305": [
@@ -1594,41 +1630,41 @@
   },
   "3998330260300031": {
    "lastClientAt": 1783338984425,
-   "followedUp": false
+   "followedUp": true
   },
   "1518313619771727": {
    "lastClientAt": 1783403674737,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "2271444390287794": {
    "lastClientAt": 1783343003348,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": true
   },
   "1377909584219016": {
    "lastClientAt": 1783344615543,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": false
   },
   "3384291921742737": {
    "lastClientAt": 1783345024807,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": false
   },
   "1546629226996443": {
    "lastClientAt": 1783345087278,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": false
   },
   "992229480443190": {
    "lastClientAt": 1783345360213,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": false
   },
   "2121440145920778": {
    "lastClientAt": 1783346199989,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": false
   },
   "1548143360234556": {
@@ -1669,7 +1705,7 @@
   "2018998308822163": {
    "lastClientAt": 1783401711517,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "993804773642305": {
    "lastClientAt": 1783365989176,
