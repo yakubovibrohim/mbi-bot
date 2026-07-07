@@ -1858,6 +1858,14 @@
    {
     "role": "assistant",
     "content": "Btw, agar qandaydir savol tug'ilsa yoki narxlar qiziqtirsa — bemalol yozing, doim yordam beramiz 😊"
+   },
+   {
+    "role": "user",
+    "content": "Rahmat"
+   },
+   {
+    "role": "assistant",
+    "content": "Xop 👍🏻"
    }
   ],
   "1429930878893970": [
@@ -2313,9 +2321,9 @@
    "fu3": false
   },
   "1621837499277650": {
-   "lastClientAt": 1783442342652,
+   "lastClientAt": 1783454859801,
    "followedUp": false,
-   "fu3": true
+   "fu3": false
   },
   "1429930878893970": {
    "lastClientAt": 1783442963074,
