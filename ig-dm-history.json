@@ -1158,6 +1158,14 @@
    {
     "role": "assistant",
     "content": "Tushunарли! Transformer yotoqxona — ajoyib tanlov kichik xona uchun 👍🏻\n\nVideo bizga ko'rinmadi, shuning uchun aynan qaysi model ekanini bilmaymiz. Lekin transformer yotoqxona komplekti (kravat + shkaf + stol) taxminan 1500-2500$ atrofida, materialga qarab.\n\nXona o'lchami qancha — uzunlik × kengligi? Shunda aniqroq taxmin bera olamiz. Aniq narx va loyihani Ibrohim aka o'zi hisoblаb beradi — telefon raqamingizni qoldiring, tez orada bog'lanadi 😊"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz rasm yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Rasm ham bizga ko'rinmayapti, afsuski 😊\n\nXona o'lchami qancha? Uzunlik × kenglik × balandlik bo'lsa — Ibrohim aka aynan shu xonaga mos loyiha va aniq narx hisoblаb beradi.\n\nTelefon raqamingizni qoldiring, o'zi qo'ng'iroq qiladi 👍🏻"
    }
   ]
  },
@@ -1399,7 +1407,7 @@
    "fu3": true
   },
   "1877393679906083": {
-   "lastClientAt": 1783393290632,
+   "lastClientAt": 1783393449126,
    "followedUp": false,
    "fu3": false
   }
