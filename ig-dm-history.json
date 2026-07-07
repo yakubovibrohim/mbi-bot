@@ -1877,6 +1877,16 @@
     "role": "assistant",
     "content": "Bu loyiha haqida aniq ma'lumot yo'q, lekin o'xshash premium krashenniy oshxonalar taxminan 650-900$ pogonaj metrdan boshlanadi.\n\nSizning xonangiz neча метр? Шундан аниқроқ айтаман 👍🏻"
    }
+  ],
+  "897802176044742": [
+   {
+    "role": "user",
+    "content": "Можете ли вы проверить цену товара?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Уточните, пожалуйста — что именно вас интересует: кухня, шкаф или спальня? И какие размеры?"
+   }
   ]
  },
  "activity": {
@@ -2243,6 +2253,11 @@
   },
   "2918433505175218": {
    "lastClientAt": 1783446009699,
+   "followedUp": false,
+   "fu3": false
+  },
+  "897802176044742": {
+   "lastClientAt": 1783446467983,
    "followedUp": false,
    "fu3": false
   }
