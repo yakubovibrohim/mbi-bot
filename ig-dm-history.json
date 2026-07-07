@@ -1357,6 +1357,16 @@
     "role": "assistant",
     "content": "Xop, yaxshi 👍🏻"
    }
+  ],
+  "2095005218061447": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Harxi manzil\" deb postga komment yozdi. Post tavsifi: \"[REEL:DZkwfDCIumh] +998 91 135 44 66 +998 95 190 44 66\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 🙌 Шахсийга ёзинг, нарх ва барча маълумотни берамиз 👍🏻"
+   }
   ]
  },
  "activity": {
@@ -1623,6 +1633,11 @@
   },
   "1045068831353548": {
    "lastClientAt": 1783412863164,
+   "followedUp": false,
+   "fu3": false
+  },
+  "2095005218061447": {
+   "lastClientAt": 1783414300122,
    "followedUp": false,
    "fu3": false
   }
