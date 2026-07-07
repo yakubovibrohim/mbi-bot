@@ -506,6 +506,14 @@
    {
     "role": "assistant",
     "content": "Хорошо, ждём! 👍🏻\n\nКак закончится ремонт — пишите, всё рассчитаем. Наш номер: +998 91 135 44 66"
+   },
+   {
+    "role": "user",
+    "content": "Хорошо"
+   },
+   {
+    "role": "assistant",
+    "content": "👍🏻"
    }
   ],
   "1498237568194909": [
@@ -1305,7 +1313,7 @@
    "followedUp": true
   },
   "4427561740849593": {
-   "lastClientAt": 1783396853071,
+   "lastClientAt": 1783396893673,
    "followedUp": false,
    "fu3": false
   },
