@@ -802,6 +802,14 @@
    {
     "role": "assistant",
     "content": "Hisob-kitob tayyor, faqat o'lchamlarni kuting 😊 Oshxonangiz necha metr edi?"
+   },
+   {
+    "role": "user",
+    "content": "3 metr eni balandligi 3 metr"
+   },
+   {
+    "role": "assistant",
+    "content": "Tushundim. 3 metr uzunlik, 2 etajli oshxona, akril fasad:\n\nTaxminan 1150–1350$ atrofida chiqadi (GTV furnitura bilan arzonroq, Hettich bilan o'rta variant).\n\nAniq narx va loyihani Ibrohim aka beradi. Telefon raqamingizni qoldiring, u kishi o'zi hisoblab qo'ng'iroq qiladi 👍🏻"
    }
   ],
   "2271444390287794": [
@@ -1251,9 +1259,9 @@
    "followedUp": false
   },
   "1518313619771727": {
-   "lastClientAt": 1783342498085,
+   "lastClientAt": 1783388503572,
    "followedUp": false,
-   "fu3": true
+   "fu3": false
   },
   "2271444390287794": {
    "lastClientAt": 1783343003348,
