@@ -1713,10 +1713,10 @@ const LEDGER_CAT_UZ = {
 // Har bir harakat: {date, time, dnum, dir:'in'|'out', cat, amount_uzs, name, card, src}
 async function allMovements() {
   const mv = [];
-  const push = (date, ts, dir, cat, amt, name, card, src) => {
+  const push = (date, ts, dir, cat, amt, name, card, src, extra) => {
     amt = Math.round(Number(amt) || 0);
     if (!amt) return;
-    mv.push({ date: date || '', time: tsTime(ts), dnum: dNum(date), dir, cat, amount_uzs: amt, name: (name || '').slice(0, 120), card: !!card, src });
+    mv.push(Object.assign({ date: date || '', time: tsTime(ts), dnum: dNum(date), dir, cat, amount_uzs: amt, name: (name || '').slice(0, 120), card: !!card, src }, extra || {}));
   };
   const [dealsR, office, persAll, staff, debts, cardInc] = await Promise.all([
     ghRead('deals-log.json'), ghReadAll('office-expenses-log.json'), ghReadAll('expenses-personal-log.json'),
@@ -1725,8 +1725,14 @@ async function allMovements() {
   const deals = dealsR.data || [];
   // 1) Buyurtmalar: to'lov (kirim) + xarajat (chiqim)
   for (const o of deals) {
-    for (const p of (o.payments || [])) push(p.date, p.ts, 'in', 'deal_payment', p.amount_uzs, o.client, p.pay_method === 'card', 'deals');
-    for (const e of (o.expenses || [])) push(e.date, e.ts, 'out', 'deal_expense', e.total_uzs, `${o.client}: ${e.name || 'xarajat'}`, e.pay_method === 'card', 'deals');
+    for (const p of (o.payments || [])) push(p.date, p.ts, 'in', 'deal_payment', p.amount_uzs, o.client, p.pay_method === 'card', 'deals', { client: o.client || '' });
+    for (const e of (o.expenses || [])) {
+      const prods = e.products || [];
+      const detail = prods.length
+        ? `${o.client}: ` + prods.map(pr => `${pr.name || ''} (${pr.qty || ''}x${(pr.price_uzs || 0).toLocaleString()})`).join('; ')
+        : '';
+      push(e.date, e.ts, 'out', 'deal_expense', e.total_uzs, `${o.client}: ${e.name || 'xarajat'}`, e.pay_method === 'card', 'deals', { client: o.client || '', label: e.name || 'xarajat', detail });
+    }
   }
   // 2) Ishxona
   for (const e of (office || [])) push(e.date, e.ts, 'out', 'office', e.amount_uzs, e.name || e.note || '', e.pay_method === 'card', 'office');
@@ -1741,7 +1747,7 @@ async function allMovements() {
   }
   // 4) Xodim avanslari
   for (const w of (staff || []))
-    for (const a of (w.advances || [])) { if (a.pending) continue; push(a.date, a.ts, 'out', 'staff_advance', (a.amount_usd || 0) * USD_UZS, w.name, false, 'staff'); }
+    for (const a of (w.advances || [])) { if (a.pending) continue; push(a.date, a.ts, 'out', 'staff_advance', (a.amount_usd || 0) * USD_UZS, w.name, false, 'staff', { usd: a.amount_usd || 0 }); }
   // 5) Qarzlar: men to'laganim (out) / menga to'langani (in)
   for (const d of (debts || [])) {
     const dir = d.dir === 'in' ? 'in' : 'out';
@@ -1849,64 +1855,36 @@ async function cashSetSave(c, amountUzs) {
 // 4-BOSQICH: Umumiy hisobot, Excel, avtomatik eslatma, backup
 // ══════════════════════════════════════════════════════════════
 
-// Berilgan oy uchun barcha ma'lumotni yig'adi (y, m: m=0-11)
+// Berilgan oy uchun barcha ma'lumot — YAGONA YADRODAN (allMovements). m=0-11
 async function gatherMonth(y, m) {
-  const inMon = (dateStr) => { const p = dmyParts(dateStr); return p && p.y === y && p.m === m; };
-  const { data: deals } = await ghRead('deals-log.json');
-  // shu oyda olingan buyurtmalar
-  const monthDeals = deals.filter(o => inMon(o.date));
-  let income = 0, dealExp = 0;
-  const allPayments = [], allExpenses = [];
-  for (const o of deals) {
-    for (const p of (o.payments || [])) if (inMon(p.date)) { income += p.amount_uzs || 0; allPayments.push({ client: o.client, ...p }); }
-    for (const e of (o.expenses || [])) if (inMon(e.date)) { dealExp += e.total_uzs || 0; allExpenses.push({ client: o.client, ...e }); }
-  }
-  const officeAll = await ghReadAll('office-expenses-log.json');
-  const officeRows = officeAll.filter(e => inMon(e.date));
-  const officeExp = officeRows.reduce((s, e) => s + (e.amount_uzs || 0), 0);
-  const persAll = (await ghReadAll('expenses-personal-log.json')).map(e => {
-    const p = e.parsed || {}; let a = e.amount_uzs || 0;
-    if (!a && p.amount) a = (String(p.currency).toUpperCase() === 'USD') ? p.amount * USD_UZS : p.amount;
-    else if (!a && e.amount) a = (String(e.currency).toUpperCase() === 'USD') ? e.amount * USD_UZS : e.amount;
-    return { date: e.date, note: e.note || p.text || e.text || '', amtUzs: a };
-  });
-  const persRows = persAll.filter(e => inMon(e.date));
-  const pers = persRows.reduce((s, e) => s + (e.amtUzs || 0), 0);
-  const staff = await ghReadAll('staff-log.json');
-  let staffAdv = 0;
-  for (const w of staff) for (const a of (w.advances || [])) if (inMon(a.date)) staffAdv += (a.amount_usd || 0) * USD_UZS;
+  const inMonD = (dateStr) => { const p = dmyParts(dateStr); return p && p.y === y && p.m === m; };
+  const [mvAll, dealsR, cfg] = await Promise.all([allMovements(), ghRead('deals-log.json'), readCashbox()]);
+  const deals = dealsR.data || [];
+  const monthDeals = deals.filter(o => inMonD(o.date));
+  const mon = mvAll.filter(x => inMonD(x.date));
+  const bc = sumMovements(mon).byCat;
+  const income = bc.deal_payment || 0, dealExp = bc.deal_expense || 0, officeExp = bc.office || 0,
+    pers = bc.personal || 0, staffAdv = bc.staff_advance || 0,
+    debtInMon = bc.debt_in || 0, debtPaidMon = bc.debt_paid || 0, cardIncomeMon = bc.card_income || 0;
   const bizProfit = income - dealExp - officeExp - staffAdv;
   const realRemain = bizProfit - pers;
-  // ── Kassa hisobi (boshlang'ich sanadan keyingi harakatlar) ──
-  const cfg = await readCashbox();
+  // ── Kassa (boshlang'ich sanadan keyingi barcha harakat) — xuddi computeCashbox kabi ──
   const opening = cfg.opening_uzs || 0;
   const op = dmyParts(cfg.opening_date);
-  const opNum = op ? (op.y * 10000 + op.m * 100 + op.d) : 0;
-  const afterOpen = (dateStr) => {
-    if (!opNum) return true;
-    const p = dmyParts(dateStr);
-    if (!p) return false;
-    return (p.y * 10000 + p.m * 100 + p.d) >= opNum;
-  };
-  let cashIn = 0, cashDealExp = 0, cashOffice = 0, cashPers = 0, cashAdv = 0;
-  for (const o of deals) {
-    cashIn += (o.payments || []).filter(p => afterOpen(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0);
-    cashDealExp += (o.expenses || []).filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.total_uzs || 0), 0);
+  const opN = dNum(cfg.opening_date);
+  const kSum = sumMovements(mvAll, x => !opN || x.dnum >= opN);
+  const kc = kSum.byCat;
+  const cashBalance = opening + kSum.net;
+  // ── Oy boshi qoldiq va oy ichidagi kassa harakati ──
+  const openDay = (op && op.y === y && op.m === m) ? op.d : null;
+  const monN = y * 10000 + m * 100 + 1;
+  let monthStart = null;
+  if (cfg.opening_uzs != null) {
+    if (openDay != null) monthStart = opening; // boshlang'ich shu oyda
+    else if (monN > opN) monthStart = opening + sumMovements(mvAll, x => x.dnum >= opN && x.dnum < monN).net;
   }
-  cashOffice = officeAll.filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
-  cashPers = persAll.filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.amtUzs || 0), 0);
-  for (const w of staff) for (const a of (w.advances || [])) if (afterOpen(a.date)) cashAdv += (a.amount_usd || 0) * USD_UZS;
-  const debtsAll = await ghReadAll('debts-log.json');
-  const debtOut = debtsAll.filter(d => d.dir === 'out');
-  const debtPaidSum = (d) => Array.isArray(d.payments)
-    ? d.payments.filter(p => afterOpen(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0)
-    : (afterOpen(d.pay_date || d.date) ? (d.paid_uzs || 0) : 0);
-  const cashDebtPaid = debtOut.reduce((s, d) => s + debtPaidSum(d), 0);
-  const cashDebtIn = debtsAll.filter(d => d.dir === 'in').reduce((s, d) => s + debtPaidSum(d), 0);
-  // karta "boshqa kirim"
-  const cardIncomeAll = await ghReadAll('card-income-log.json');
-  const cashCardIncome = cardIncomeAll.filter(e => afterOpen(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
-  // mijoz qarzlari (menga qarzdor)
+  const kMon = sumMovements(mvAll, x => inMonD(x.date) && (!opN || x.dnum >= opN));
+  // ── Mijoz qarzlari (faol buyurtmalar) ──
   const clientDebts = [];
   for (const o of deals) {
     if (o.status === 'active') {
@@ -1915,23 +1893,23 @@ async function gatherMonth(y, m) {
       if (debt > 0) clientDebts.push({ client: o.client, contract: o.contract_sum_uzs || 0, paid, debt });
     }
   }
-  const cashBalance = opening + cashIn + cashDebtIn + cashCardIncome - cashDealExp - cashOffice - cashPers - cashAdv - cashDebtPaid;
-  // ── Oy ichidagi detallar (to'liq hisobot uchun) ──
-  const officeMonRows = officeRows.map(e => ({ date: e.date, name: e.name || '', amt: e.amount_uzs || 0, card: e.pay_method === 'card' }));
-  const advMonRows = [];
-  for (const w of staff) for (const a of (w.advances || [])) if (inMon(a.date)) advMonRows.push({ date: a.date, name: w.name, usd: a.amount_usd || 0, amt: Math.round((a.amount_usd || 0) * USD_UZS) });
-  const debtPaidMonRows = [];
-  for (const d of debtOut) for (const p of (d.payments || [])) if (inMon(p.date)) debtPaidMonRows.push({ date: p.date, name: d.name, amt: p.amount_uzs || 0, card: p.pay_method === 'card' });
-  const debtInMonRows = [];
-  for (const d of debtsAll.filter(x => x.dir === 'in')) for (const p of (d.payments || [])) if (inMon(p.date)) debtInMonRows.push({ date: p.date, name: d.name, amt: p.amount_uzs || 0, card: p.pay_method === 'card' });
-  const cardIncomeMonRows = cardIncomeAll.filter(e => inMon(e.date)).map(e => ({ date: e.date, name: e.name || '', amt: e.amount_uzs || 0 }));
-  const persMonDetailed = persRows.map(e => ({ date: e.date, note: e.note || '', amt: e.amtUzs || 0, card: /💳/.test(e.note || '') }));
-  const dealExpMonRows = allExpenses.map(e => ({ date: e.date, client: e.client, name: e.name || 'xarajat', amt: e.total_uzs || 0, card: e.pay_method === 'card' }));
-  const cardIncomeMon = cardIncomeMonRows.reduce((s, e) => s + e.amt, 0);
-  const debtInMon = debtInMonRows.reduce((s, e) => s + e.amt, 0);
-  const debtPaidMon = debtPaidMonRows.reduce((s, e) => s + e.amt, 0);
-  return { monthDeals, income, dealExp, officeRows, officeExp, persRows, pers, staff, staffAdv, allExpenses, allPayments, bizProfit, realRemain, opening, openingDate: cfg.opening_date, debtOut, cashIn, cashDebtIn, cashCardIncome, cashDealExp, cashOffice, cashPers, cashAdv, cashDebtPaid, cashBalance, clientDebts,
-    officeMonRows, advMonRows, debtPaidMonRows, debtInMonRows, cardIncomeMonRows, persMonDetailed, dealExpMonRows, cardIncomeMon, debtInMon, debtPaidMon };
+  // ── Oy ichidagi detal qatorlar — hammasi harakatlardan ──
+  const pick = c => mon.filter(x => x.cat === c);
+  const allPayments = pick('deal_payment').map(x => ({ client: x.client || x.name, date: x.date, amount_uzs: x.amount_uzs, pay_method: x.card ? 'card' : 'cash' }));
+  const dealExpMonRows = pick('deal_expense').map(x => ({ date: x.date, client: x.client || '', name: x.label || 'xarajat', amt: x.amount_uzs, card: x.card }));
+  const officeMonRows = pick('office').map(x => ({ date: x.date, name: x.name, amt: x.amount_uzs, card: x.card }));
+  const advMonRows = pick('staff_advance').map(x => ({ date: x.date, name: x.name, usd: x.usd || 0, amt: x.amount_uzs }));
+  const debtPaidMonRows = pick('debt_paid').map(x => ({ date: x.date, name: x.name, amt: x.amount_uzs, card: x.card }));
+  const debtInMonRows = pick('debt_in').map(x => ({ date: x.date, name: x.name, amt: x.amount_uzs, card: x.card }));
+  const cardIncomeMonRows = pick('card_income').map(x => ({ date: x.date, name: x.name, amt: x.amount_uzs }));
+  const persMonDetailed = pick('personal').map(x => ({ date: x.date, note: x.name, amt: x.amount_uzs, card: x.card }));
+  return { monthDeals, income, dealExp, officeExp, pers, staffAdv, bizProfit, realRemain,
+    opening, openingDate: cfg.opening_date,
+    cashIn: kc.deal_payment || 0, cashDebtIn: kc.debt_in || 0, cashCardIncome: kc.card_income || 0,
+    cashDealExp: kc.deal_expense || 0, cashOffice: kc.office || 0, cashPers: kc.personal || 0,
+    cashAdv: kc.staff_advance || 0, cashDebtPaid: kc.debt_paid || 0, cashBalance, clientDebts,
+    monthStart, openDay, kMonIn: kMon.inn, kMonOut: kMon.out,
+    officeMonRows, advMonRows, debtPaidMonRows, debtInMonRows, cardIncomeMonRows, persMonDetailed, dealExpMonRows, allPayments, cardIncomeMon, debtInMon, debtPaidMon };
 }
 
 async function showSummary(c) {
@@ -2003,20 +1981,21 @@ async function sendFullReport(c, y, m) {
   }
 
   s += `━━━━━━━━━━━━\n`;
-  s += `💵 *KASSA — hozirgi real pul (naqd + karta)*\n`;
-  s += `_Boshlang'ich (${g.openingDate || ''}) sanadan beri jami hisob_\n`;
-  s += `  🏦 Boshlang'ich: ${f(g.opening)}\n`;
-  s += `  (+) Kirim: ${f(g.cashIn)}\n`;
-  s += `  (+) Qarzdor to'lovi: ${f(g.cashDebtIn)}\n`;
-  if (g.cashCardIncome) s += `  (+) Boshqa kirim (karta): ${f(g.cashCardIncome)}\n`;
-  s += `  (−) Buyurtma: ${f(g.cashDealExp)}\n`;
-  s += `  (−) Ishxona: ${f(g.cashOffice)}\n`;
-  s += `  (−) Avans: ${f(g.cashAdv)}\n`;
-  s += `  (−) Qarz to'lovim: ${f(g.cashDebtPaid)}\n`;
-  s += `  (−) Shaxsiy: ${f(g.cashPers)}\n`;
-  s += `  ━━━━━\n`;
-  s += `  💰 *Hozirgi real pul: ${f(g.cashBalance)} so'm*\n`;
-  s += `     (${Math.round(g.cashBalance / USD_UZS * 10) / 10} $)`;
+  s += `💵 *KASSA — naqd + karta*\n`;
+  if (g.monthStart == null) {
+    s += `_Bu oy kassa hisobi boshlanishidan (${g.openingDate || '—'}) oldin_`;
+  } else {
+    const endBal = g.monthStart + g.kMonIn - g.kMonOut;
+    const now2 = nowTZ();
+    const isCur = now2.getFullYear() === y && now2.getMonth() === m;
+    if (g.openDay != null) s += `  🏦 Boshlang'ich (${g.openingDate}): ${f(g.monthStart)}\n`;
+    else s += `  🏦 Oy boshida: ${f(g.monthStart)}\n`;
+    s += `  (+) ${monthName} kirim: ${f(g.kMonIn)}\n`;
+    s += `  (−) ${monthName} chiqim: ${f(g.kMonOut)}\n`;
+    s += `  ━━━━━\n`;
+    if (isCur) s += `  💰 *Hozirgi qoldiq: ${f(endBal)} so'm*\n     (${Math.round(endBal / USD_UZS * 10) / 10} $)`;
+    else s += `  💰 *Oy oxirida: ${f(endBal)} so'm*`;
+  }
 
   const kb = [
     [{ text: '📥 Excel yuklash (shu oy)', callback_data: 'xls_now' }],
@@ -2051,52 +2030,17 @@ function sendDocBuffer(chatId, buffer, filename, caption) {
 
 // ─── Oy uchun batafsil yozuvlarni yig'ish (Excel uchun) ───
 async function collectMonthRows(y, m) {
-  const rows = []; // {d, typ, tav, ki, ch}
-  const inMon = (ds) => { const p = dmyParts(ds); return p && p.y === y && p.m === m; };
-  const { data: deals } = await ghRead('deals-log.json');
-  for (const o of deals) {
-    const cl = o.client || '';
-    for (const p of (o.payments || [])) if (inMon(p.date))
-      rows.push({ d: dmyParts(p.date).d, typ: 'Kirim', tav: `${cl} — to'lov`, ki: p.amount_uzs || 0, ch: 0 });
-    for (const e of (o.expenses || [])) if (inMon(e.date)) {
-      const prods = e.products || [];
-      const det = prods.length
-        ? `${cl}: ` + prods.map(pr => `${pr.name || ''} (${pr.qty || ''}x${(pr.price_uzs || 0).toLocaleString()})`).join('; ')
-        : `${cl}: ${e.name || 'xarajat'}`;
-      rows.push({ d: dmyParts(e.date).d, typ: 'Buyurtma xarajat', tav: det.slice(0, 120), ki: 0, ch: e.total_uzs || 0 });
-    }
-  }
-  for (const e of await ghReadAll('office-expenses-log.json')) if (inMon(e.date))
-    rows.push({ d: dmyParts(e.date).d, typ: 'Ishxona', tav: e.name || '', ki: 0, ch: e.amount_uzs || 0 });
-  for (const e of await ghReadAll('expenses-personal-log.json')) if (inMon(e.date)) {
-    const p = e.parsed || {};
-    let a = e.amount_uzs || 0;
-    if (!a && p.amount) a = (String(p.currency).toUpperCase() === 'USD') ? p.amount * USD_UZS : p.amount;
-    const nm = e.name || p.item || e.note || '(nomsiz shaxsiy xarajat)';
-    rows.push({ d: dmyParts(e.date).d, typ: 'Shaxsiy', tav: String(nm).slice(0, 80), ki: 0, ch: a });
-  }
-  for (const w of await ghReadAll('staff-log.json'))
-    for (const a of (w.advances || [])) if (inMon(a.date))
-      rows.push({ d: dmyParts(a.date).d, typ: 'Avans', tav: `${w.name} — avans ($${a.amount_usd})`, ki: 0, ch: Math.round((a.amount_usd || 0) * USD_UZS) });
-  for (const d0 of await ghReadAll('debts-log.json')) {
-    const nm = d0.name || '';
-    const pays = Array.isArray(d0.payments) ? d0.payments : null;
-    if (pays) {
-      for (const p of pays) if (inMon(p.date)) {
-        if (d0.dir === 'in') rows.push({ d: dmyParts(p.date).d, typ: "Qarzdor to'lovi", tav: nm, ki: p.amount_uzs || 0, ch: 0 });
-        else rows.push({ d: dmyParts(p.date).d, typ: "Qarz to'lovim", tav: nm, ki: 0, ch: p.amount_uzs || 0 });
-      }
-    } else {
-      const dt = d0.pay_date || d0.date;
-      if (dt && inMon(dt) && d0.paid_uzs) {
-        if (d0.dir === 'in') rows.push({ d: dmyParts(dt).d, typ: "Qarzdor to'lovi", tav: nm, ki: d0.paid_uzs, ch: 0 });
-        else rows.push({ d: dmyParts(dt).d, typ: "Qarz to'lovim", tav: nm, ki: 0, ch: d0.paid_uzs });
-      }
-    }
-  }
-  for (const e of await ghReadAll('card-income-log.json')) if (inMon(e.date))
-    rows.push({ d: dmyParts(e.date).d, typ: 'Karta kirim', tav: e.name || '', ki: e.amount_uzs || 0, ch: 0 });
-  return rows;
+  // Excel qatorlari — YAGONA YADRODAN (allMovements)
+  const TYP = { deal_payment: 'Kirim', deal_expense: 'Buyurtma xarajat', office: 'Ishxona', personal: 'Shaxsiy', staff_advance: 'Avans', debt_in: "Qarzdor to'lovi", debt_paid: "Qarz to'lovim", card_income: 'Karta kirim' };
+  const mv = (await allMovements()).filter(x => { const p = dmyParts(x.date); return p && p.y === y && p.m === m; });
+  return mv.map(x => {
+    let tav;
+    if (x.cat === 'deal_payment') tav = `${x.client || x.name} — to'lov`;
+    else if (x.cat === 'deal_expense') tav = (x.detail || `${x.client}: ${x.label || 'xarajat'}`).slice(0, 120);
+    else if (x.cat === 'staff_advance') tav = `${x.name} — avans ($${x.usd})`;
+    else tav = (x.name || '').slice(0, 80);
+    return { d: dmyParts(x.date).d, typ: TYP[x.cat] || x.cat, tav, ki: x.dir === 'in' ? x.amount_uzs : 0, ch: x.dir === 'out' ? x.amount_uzs : 0 };
+  });
 }
 
 // Oy boshiga qoldiq: boshlang'ich + [openN .. oy boshi) harakat. Boshlang'ich oyining o'zi uchun: opening_uzs.
@@ -2105,34 +2049,14 @@ async function monthStartBalance(y, m) {
   const cfg = await readCashbox();
   if (cfg.opening_uzs == null) return { start: null, openDay: null, opening: null };
   const op = dmyParts(cfg.opening_date);
-  const opN = op ? (op.y * 10000 + op.m * 100 + op.d) : 0;
+  const opN = dNum(cfg.opening_date);
   const monN = y * 10000 + m * 100 + 1;
   if (op && op.y === y && op.m === m) return { start: cfg.opening_uzs, openDay: op.d, opening: cfg.opening_uzs }; // boshlang'ich oyi
   if (monN <= opN) return { start: null, openDay: null, opening: cfg.opening_uzs }; // boshlang'ichdan oldingi oy
-  // keyingi oylar: openN dan monN gacha hamma harakat
-  const between = (ds) => { const p = dmyParts(ds); if (!p) return false; const n = p.y * 10000 + p.m * 100 + p.d; return n >= opN && n < monN; };
-  let net = 0;
-  const { data: deals } = await ghRead('deals-log.json');
-  for (const o of deals) {
-    net += (o.payments || []).filter(p => between(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0);
-    net -= (o.expenses || []).filter(e => between(e.date)).reduce((s, e) => s + (e.total_uzs || 0), 0);
-  }
-  net -= (await ghReadAll('office-expenses-log.json')).filter(e => between(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
-  net -= (await ghReadAll('expenses-personal-log.json')).filter(e => between(e.date)).reduce((s, e) => {
-    const p = e.parsed || {}; let a = e.amount_uzs || 0;
-    if (!a && p.amount) a = (String(p.currency).toUpperCase() === 'USD') ? p.amount * USD_UZS : p.amount;
-    return s + a;
-  }, 0);
-  for (const w of await ghReadAll('staff-log.json'))
-    net -= (w.advances || []).filter(a => between(a.date)).reduce((s, a) => s + (a.amount_usd || 0) * USD_UZS, 0);
-  for (const d0 of await ghReadAll('debts-log.json')) {
-    const pays = Array.isArray(d0.payments) ? d0.payments : null;
-    const paid = pays ? pays.filter(p => between(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0)
-      : (between(d0.pay_date || d0.date) ? (d0.paid_uzs || 0) : 0);
-    if (d0.dir === 'in') net += paid; else net -= paid;
-  }
-  net += (await ghReadAll('card-income-log.json')).filter(e => between(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
-  return { start: cfg.opening_uzs + net, openDay: null, opening: cfg.opening_uzs };
+  // keyingi oylar: [boshlang'ich .. oy boshi) oralig'idagi harakatlar — YADRODAN
+  const mv = await allMovements();
+  const k = sumMovements(mv, x => x.dnum >= opN && x.dnum < monN);
+  return { start: cfg.opening_uzs + k.net, openDay: null, opening: cfg.opening_uzs };
 }
 
 // Oylik Excel — bo'limlarga ajratilgan batafsil hisobot (exceljs)
@@ -2714,16 +2638,6 @@ async function financeContext() {
       const st = statusUz[d.status || 'active'] || (d.stage || '-');
       return `• ${name} (${st}${d.stage ? ', ' + d.stage : ''}): shartnoma ${f(contract)} so'm | to'langan ${f(paid)} so'm | QARZ QOLDI ${f(debt)} so'm | xarajatlar jami ${f(expSum)} so'm | sof foyda ${f(profit)} so'm`;
     }).join('\n');
-
-    // Oxirgi xarajatlar — deal'lar ichidagi expenses
-    const allExp = [];
-    for (const d of deals) for (const e of (d.expenses || [])) {
-      const prods = (e.products || []).map(p => `${p.name} x${p.qty}`).join(', ');
-      allExp.push({ date: e.date || '', client: d.client, total: e.total_uzs || 0, prods });
-    }
-    const expLines = allExp.slice(-15).map(e =>
-      `• ${e.date} | ${e.client} | ${f(e.total)} so'm | ${e.prods.slice(0, 200)}`
-    ).join('\n');
 
     // Qarzlar (qo'lda + mijoz qarzlari)
     let debtIn = 0, debtOut = 0;
