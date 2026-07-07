@@ -1860,6 +1860,22 @@
    {
     "role": "assistant",
     "content": "Assalomu Alaykum, yaxshimisiz 👍🏻\n\nBu loyihamizdan yoqdimi? Nima kerak — oshxona, shkaf?"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz ovozli xabar yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ovozli xabarni eshita olmayapman, yozib yuboring 😊"
+   },
+   {
+    "role": "user",
+    "content": "Шу кухонный канчага тушади? Неччи метр жойга ишланган?"
+   },
+   {
+    "role": "assistant",
+    "content": "Bu loyiha haqida aniq ma'lumot yo'q, lekin o'xshash premium krashenniy oshxonalar taxminan 650-900$ pogonaj metrdan boshlanadi.\n\nSizning xonangiz neча метр? Шундан аниқроқ айтаман 👍🏻"
    }
   ]
  },
@@ -2226,7 +2242,7 @@
    "fu3": false
   },
   "2918433505175218": {
-   "lastClientAt": 1783445853992,
+   "lastClientAt": 1783446009699,
    "followedUp": false,
    "fu3": false
   }
