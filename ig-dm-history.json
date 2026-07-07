@@ -1815,6 +1815,16 @@
     "role": "assistant",
     "content": "Хоп, бемалол 👍🏻 Керак бўлса ёзинг 😊"
    }
+  ],
+  "1429930878893970": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"@mbi_mebel сколько обошлось можете подсказать пожалуйста\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHeFaGxA47W] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Напишите нам в личку — подскажем примерную стоимость и всё расскажем 👍🏻"
+   }
   ]
  },
  "activity": {
@@ -2166,6 +2176,11 @@
   },
   "1621837499277650": {
    "lastClientAt": 1783442342652,
+   "followedUp": false,
+   "fu3": false
+  },
+  "1429930878893970": {
+   "lastClientAt": 1783442963074,
    "followedUp": false,
    "fu3": false
   }
