@@ -1936,6 +1936,10 @@
    {
     "role": "assistant",
     "content": "Bu loyiha haqida aniq ma'lumot yo'q, lekin o'xshash premium krashenniy oshxonalar taxminan 650-900$ pogonaj metrdan boshlanadi.\n\nSizning xonangiz neча метр? Шундан аниқроқ айтаман 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Oshxona o'lchamini o'ylab ko'ryapsizmi? 😊 Aytсangиз, тахминий нархни айтиб юбораман 👍🏻"
    }
   ],
   "897802176044742": [
@@ -1994,6 +1998,16 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%.\n\nКухни примерно от 1000$. Что планируете?"
+   }
+  ],
+  "870397559043478": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Wu nechpul boladi\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 👍🏻 Бу ошхона погонаж метри taxminan 800$ atrofida.\n\nByudjetga qarab arzonroq ham qilamiz — akril yoki EGGER fasad bilan 450-550$ atrofida chiqadi, sifat baribir a'lo.\n\nOshxonangiz necha metr?"
    }
   ]
  },
@@ -2362,7 +2376,7 @@
   "2918433505175218": {
    "lastClientAt": 1783446009699,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "897802176044742": {
    "lastClientAt": 1783446467983,
@@ -2386,6 +2400,11 @@
   },
   "893100963259048": {
    "lastClientAt": 1783450874048,
+   "followedUp": false,
+   "fu3": false
+  },
+  "870397559043478": {
+   "lastClientAt": 1783455706152,
    "followedUp": false,
    "fu3": false
   }
