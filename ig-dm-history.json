@@ -1348,6 +1348,14 @@
    {
     "role": "assistant",
     "content": "Rahmat taklif uchun, hozircha kerak emas 🙏"
+   },
+   {
+    "role": "user",
+    "content": "Mayli, rahmat javobingiz uchun. 😊 Hozircha kerak boʻlmasa ham, keyinchalik logo, banner yoki dizayn xizmatlari kerak boʻlsa, istalgan vaqtda murojaat qilishingiz mumkin. Sizni kutaman."
+   },
+   {
+    "role": "assistant",
+    "content": "Xop, yaxshi 👍🏻"
    }
   ]
  },
@@ -1614,7 +1622,7 @@
    "fu3": false
   },
   "1045068831353548": {
-   "lastClientAt": 1783412809278,
+   "lastClientAt": 1783412863164,
    "followedUp": false,
    "fu3": false
   }
