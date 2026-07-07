@@ -1978,123 +1978,209 @@ function sendDocBuffer(chatId, buffer, filename, caption) {
   });
 }
 
-// Oylik Excel yaratadi (buffer qaytaradi) — BITTA VARAQ, to'liq hisobot
+// ─── Oy uchun batafsil yozuvlarni yig'ish (Excel uchun) ───
+async function collectMonthRows(y, m) {
+  const rows = []; // {d, typ, tav, ki, ch}
+  const inMon = (ds) => { const p = dmyParts(ds); return p && p.y === y && p.m === m; };
+  const { data: deals } = await ghRead('deals-log.json');
+  for (const o of deals) {
+    const cl = o.client || '';
+    for (const p of (o.payments || [])) if (inMon(p.date))
+      rows.push({ d: dmyParts(p.date).d, typ: 'Kirim', tav: `${cl} — to'lov`, ki: p.amount_uzs || 0, ch: 0 });
+    for (const e of (o.expenses || [])) if (inMon(e.date)) {
+      const prods = e.products || [];
+      const det = prods.length
+        ? `${cl}: ` + prods.map(pr => `${pr.name || ''} (${pr.qty || ''}x${(pr.price_uzs || 0).toLocaleString()})`).join('; ')
+        : `${cl}: ${e.name || 'xarajat'}`;
+      rows.push({ d: dmyParts(e.date).d, typ: 'Buyurtma xarajat', tav: det.slice(0, 120), ki: 0, ch: e.total_uzs || 0 });
+    }
+  }
+  for (const e of await ghReadAll('office-expenses-log.json')) if (inMon(e.date))
+    rows.push({ d: dmyParts(e.date).d, typ: 'Ishxona', tav: e.name || '', ki: 0, ch: e.amount_uzs || 0 });
+  for (const e of await ghReadAll('expenses-personal-log.json')) if (inMon(e.date)) {
+    const p = e.parsed || {};
+    let a = e.amount_uzs || 0;
+    if (!a && p.amount) a = (String(p.currency).toUpperCase() === 'USD') ? p.amount * USD_UZS : p.amount;
+    const nm = e.name || p.item || e.note || '(nomsiz shaxsiy xarajat)';
+    rows.push({ d: dmyParts(e.date).d, typ: 'Shaxsiy', tav: String(nm).slice(0, 80), ki: 0, ch: a });
+  }
+  for (const w of await ghReadAll('staff-log.json'))
+    for (const a of (w.advances || [])) if (inMon(a.date))
+      rows.push({ d: dmyParts(a.date).d, typ: 'Avans', tav: `${w.name} — avans ($${a.amount_usd})`, ki: 0, ch: Math.round((a.amount_usd || 0) * USD_UZS) });
+  for (const d0 of await ghReadAll('debts-log.json')) {
+    const nm = d0.name || '';
+    const pays = Array.isArray(d0.payments) ? d0.payments : null;
+    if (pays) {
+      for (const p of pays) if (inMon(p.date)) {
+        if (d0.dir === 'in') rows.push({ d: dmyParts(p.date).d, typ: "Qarzdor to'lovi", tav: nm, ki: p.amount_uzs || 0, ch: 0 });
+        else rows.push({ d: dmyParts(p.date).d, typ: "Qarz to'lovim", tav: nm, ki: 0, ch: p.amount_uzs || 0 });
+      }
+    } else {
+      const dt = d0.pay_date || d0.date;
+      if (dt && inMon(dt) && d0.paid_uzs) {
+        if (d0.dir === 'in') rows.push({ d: dmyParts(dt).d, typ: "Qarzdor to'lovi", tav: nm, ki: d0.paid_uzs, ch: 0 });
+        else rows.push({ d: dmyParts(dt).d, typ: "Qarz to'lovim", tav: nm, ki: 0, ch: d0.paid_uzs });
+      }
+    }
+  }
+  for (const e of await ghReadAll('card-income-log.json')) if (inMon(e.date))
+    rows.push({ d: dmyParts(e.date).d, typ: 'Karta kirim', tav: e.name || '', ki: e.amount_uzs || 0, ch: 0 });
+  return rows;
+}
+
+// Oy boshiga qoldiq: boshlang'ich + [openN .. oy boshi) harakat. Boshlang'ich oyining o'zi uchun: opening_uzs.
+// Boshlang'ichdan oldingi oylar uchun: null (kassa zanjiri yo'q).
+async function monthStartBalance(y, m) {
+  const cfg = await readCashbox();
+  if (cfg.opening_uzs == null) return { start: null, openDay: null, opening: null };
+  const op = dmyParts(cfg.opening_date);
+  const opN = op ? (op.y * 10000 + op.m * 100 + op.d) : 0;
+  const monN = y * 10000 + m * 100 + 1;
+  if (op && op.y === y && op.m === m) return { start: cfg.opening_uzs, openDay: op.d, opening: cfg.opening_uzs }; // boshlang'ich oyi
+  if (monN <= opN) return { start: null, openDay: null, opening: cfg.opening_uzs }; // boshlang'ichdan oldingi oy
+  // keyingi oylar: openN dan monN gacha hamma harakat
+  const between = (ds) => { const p = dmyParts(ds); if (!p) return false; const n = p.y * 10000 + p.m * 100 + p.d; return n >= opN && n < monN; };
+  let net = 0;
+  const { data: deals } = await ghRead('deals-log.json');
+  for (const o of deals) {
+    net += (o.payments || []).filter(p => between(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0);
+    net -= (o.expenses || []).filter(e => between(e.date)).reduce((s, e) => s + (e.total_uzs || 0), 0);
+  }
+  net -= (await ghReadAll('office-expenses-log.json')).filter(e => between(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
+  net -= (await ghReadAll('expenses-personal-log.json')).filter(e => between(e.date)).reduce((s, e) => {
+    const p = e.parsed || {}; let a = e.amount_uzs || 0;
+    if (!a && p.amount) a = (String(p.currency).toUpperCase() === 'USD') ? p.amount * USD_UZS : p.amount;
+    return s + a;
+  }, 0);
+  for (const w of await ghReadAll('staff-log.json'))
+    net -= (w.advances || []).filter(a => between(a.date)).reduce((s, a) => s + (a.amount_usd || 0) * USD_UZS, 0);
+  for (const d0 of await ghReadAll('debts-log.json')) {
+    const pays = Array.isArray(d0.payments) ? d0.payments : null;
+    const paid = pays ? pays.filter(p => between(p.date)).reduce((s, p) => s + (p.amount_uzs || 0), 0)
+      : (between(d0.pay_date || d0.date) ? (d0.paid_uzs || 0) : 0);
+    if (d0.dir === 'in') net += paid; else net -= paid;
+  }
+  net += (await ghReadAll('card-income-log.json')).filter(e => between(e.date)).reduce((s, e) => s + (e.amount_uzs || 0), 0);
+  return { start: cfg.opening_uzs + net, openDay: null, opening: cfg.opening_uzs };
+}
+
+// Oylik Excel — bo'limlarga ajratilgan batafsil hisobot (exceljs)
 async function buildMonthExcel(y, m) {
-  const XLSX = require('xlsx');
-  const g = await gatherMonth(y, m);
+  const ExcelJS = require('exceljs');
   const monthName = UZ_MONTHS[m];
-  const inMon = (dateStr) => { const p = dmyParts(dateStr); return p && p.y === y && p.m === m; };
+  const rows = await collectMonthRows(y, m);
+  const { start, openDay, opening } = await monthStartBalance(y, m);
+  const isOpenMonth = openDay != null; // boshlang'ich shu oyda (iyun 2026)
 
-  const rows = [];
-  const merges = [];
-  const fmtCells = {};
-  const R = () => rows.length;
-  const push = (arr) => rows.push(arr);
-  const moneyAt = (ri, ci) => { fmtCells[XLSX.utils.encode_cell({ r: ri, c: ci })] = 1; };
-  const sectionRow = (title) => { const i = R(); push([title, '', '', '', '']); merges.push({ s: { r: i, c: 0 }, e: { r: i, c: 4 } }); };
+  const wb = new ExcelJS.Workbook();
+  const ws = wb.addWorksheet(`${monthName} ${y}`);
+  ws.columns = [{ width: 11 }, { width: 70 }, { width: 3 }, { width: 17 }, { width: 3 }];
+  const money = '#,##0';
+  const B = (c, opts) => Object.assign(c, opts);
+  const thin = { style: 'thin', color: { argb: 'FFD9D9D9' } };
+  const brd = { top: thin, left: thin, bottom: thin, right: thin };
 
-  // Sarlavha
-  let i = R(); push([`MBI MEBEL — ${monthName} ${y} TO'LIQ HISOBOT`, '', '', '', '']);
-  merges.push({ s: { r: i, c: 0 }, e: { r: i, c: 4 } });
-  i = R(); push(['Kurs: 1$ = 12,000 so\'m', '', '', '', '']);
-  merges.push({ s: { r: i, c: 0 }, e: { r: i, c: 4 } });
-  push(['', '', '', '', '']);
+  let r = 1;
+  ws.mergeCells(r, 1, r, 5);
+  B(ws.getCell(r, 1), { value: `MBI MEBEL — KASSA HISOBOTI — ${monthName.toUpperCase()} ${y}${isOpenMonth ? " (to'liq oy)" : ''}` });
+  ws.getCell(r, 1).font = { name: 'Arial', bold: true, size: 14, color: { argb: 'FFFFFFFF' } };
+  ws.getCell(r, 1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1F4E78' } };
+  ws.getCell(r, 1).alignment = { horizontal: 'center' };
+  ws.getRow(r).height = 26; r++;
+  if (isOpenMonth) {
+    ws.mergeCells(r, 1, r, 5);
+    ws.getCell(r, 1).value = `① belgili yozuvlar ${String(openDay).padStart(2, '0')}.${String(m + 1).padStart(2, '0')} boshlang'ich qoldiq (${opening.toLocaleString()}) ichida hisobga olingan — kassa zanjiriga qayta qo'shilmaydi`;
+    ws.getCell(r, 1).font = { name: 'Arial', italic: true, size: 9, color: { argb: 'FF808080' } };
+    r++;
+  }
+  r++;
 
-  // 1. KIRIM
-  sectionRow('💰 KIRIM — kim qancha to\'ladi');
-  push(['Sana', 'Mijoz', 'Izoh', 'Summa (so\'m)', '']);
-  g.allPayments.forEach(p => { const ri = R(); push([p.date, p.client, p.note || 'To\'lov', p.amount_uzs || 0, '']); moneyAt(ri, 3); });
-  { const ri = R(); push(['JAMI KIRIM:', '', '', g.income, '']); moneyAt(ri, 3); }
-  push(['', '', '', '', '']);
-
-  // 1b. QARZDOR TO'LOVLARI + KARTA BOSHQA KIRIM
-  if ((g.debtInMonRows && g.debtInMonRows.length) || (g.cardIncomeMonRows && g.cardIncomeMonRows.length)) {
-    sectionRow('📥 QARZDOR TO\'LOVLARI VA BOSHQA KIRIM');
-    push(['Sana', 'Kimdan / Nima', 'Turi', 'Summa (so\'m)', '']);
-    (g.debtInMonRows || []).forEach(d => { const ri = R(); push([d.date, d.name, d.card ? 'qarzdor 💳' : 'qarzdor', d.amt, '']); moneyAt(ri, 3); });
-    (g.cardIncomeMonRows || []).forEach(d => { const ri = R(); push([d.date, (d.name || '').replace('💳 ', ''), 'karta kirim', d.amt, '']); moneyAt(ri, 3); });
-    { const ri = R(); push(['JAMI:', '', '', (g.debtInMon || 0) + (g.cardIncomeMon || 0), '']); moneyAt(ri, 3); }
-    push(['', '', '', '', '']);
+  const sections = [
+    ["📥 KIRIM (mijoz to'lovlari)", 'Kirim', true],
+    ["🤝 QARZDOR TO'LOVLARI", "Qarzdor to'lovi", true],
+    ["💳 KARTA KIRIMLARI", 'Karta kirim', true],
+    ["📦 BUYURTMA XARAJATLARI", 'Buyurtma xarajat', false],
+    ["🏭 ISHXONA XARAJATLARI", 'Ishxona', false],
+    ["👷 AVANSLAR", 'Avans', false],
+    ["👛 SHAXSIY XARAJATLAR", 'Shaxsiy', false],
+    ["🔴 QARZ TO'LOVLARIM", "Qarz to'lovim", false],
+  ];
+  const kassa = { in: [], out: [] };
+  for (const [title, typ, isIn] of sections) {
+    const items = rows.filter(x => x.typ === typ).sort((a, b) => a.d - b.d);
+    if (!items.length) continue;
+    ws.mergeCells(r, 1, r, 5);
+    B(ws.getCell(r, 1), { value: title });
+    ws.getCell(r, 1).font = { name: 'Arial', bold: true, size: 11, color: { argb: 'FFFFFFFF' } };
+    ws.getCell(r, 1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF2F5597' } };
+    ws.getRow(r).height = 20; r++;
+    const first = r;
+    const postCells = [];
+    for (const it of items) {
+      const pre = isOpenMonth && it.d < openDay;
+      ws.getCell(r, 1).value = `${String(it.d).padStart(2, '0')}.${String(m + 1).padStart(2, '0')}` + (pre ? ' ①' : '');
+      ws.getCell(r, 2).value = it.tav;
+      const amt = isIn ? it.ki : it.ch;
+      const c4 = ws.getCell(r, 4); c4.value = amt; c4.numFmt = money;
+      c4.font = { name: 'Arial', italic: pre, color: { argb: isIn ? 'FF006100' : 'FF9C0006' } };
+      if (pre) for (let col = 1; col <= 5; col++) ws.getCell(r, col).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF2F2F2' } };
+      else postCells.push(`D${r}`);
+      for (let col = 1; col <= 5; col++) ws.getCell(r, col).border = brd;
+      r++;
+    }
+    ws.getCell(r, 2).value = isOpenMonth ? "Bo'lim jami (butun oy):" : "Bo'lim jami:";
+    ws.getCell(r, 2).font = { name: 'Arial', bold: true };
+    const cT = ws.getCell(r, 4); cT.value = { formula: `SUM(D${first}:D${r - 1})` }; cT.numFmt = money;
+    cT.font = { name: 'Arial', bold: true };
+    for (let col = 1; col <= 5; col++) ws.getCell(r, col).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFF2CC' } };
+    r++;
+    if (isOpenMonth && postCells.length) {
+      ws.getCell(r, 2).value = `  shundan kassa hisobida (${String(openDay).padStart(2, '0')}.${String(m + 1).padStart(2, '0')} dan):`;
+      ws.getCell(r, 2).font = { name: 'Arial', italic: true, size: 9 };
+      const cK = ws.getCell(r, 4); cK.value = { formula: postCells.join('+') }; cK.numFmt = money;
+      cK.font = { name: 'Arial', italic: true, size: 9, color: { argb: isIn ? 'FF006100' : 'FF9C0006' } };
+      (isIn ? kassa.in : kassa.out).push(`D${r}`);
+      r++;
+    } else if (!isOpenMonth) {
+      (isIn ? kassa.in : kassa.out).push(`D${r - 1}`);
+    }
+    r++;
   }
 
-  // 2. ISHXONA RASXODLARI
-  sectionRow('🏭 ISHXONA RASXODLARI');
-  push(['Sana', 'Nima uchun', '', 'Summa (so\'m)', '']);
-  g.officeRows.forEach(e => { const ri = R(); push([e.date, e.name || '', '', e.amount_uzs || 0, '']); moneyAt(ri, 3); });
-  { const ri = R(); push(['JAMI ISHXONA:', '', '', g.officeExp, '']); moneyAt(ri, 3); }
-  push(['', '', '', '', '']);
-
-  // 3. ISHCHILARGA AVANS / OYLIK
-  sectionRow('👷 ISHCHILARGA BERILGAN AVANS / OYLIK');
-  push(['Sana', 'Ishchi', 'Izoh', '$', 'so\'m']);
-  const advByWorker = {};
-  g.staff.filter(s => s.active !== false).forEach(s => {
-    (s.advances || []).filter(a => inMon(a.date)).forEach(a => {
-      const usd = a.amount_usd || 0, uzs = Math.round(usd * USD_UZS);
-      const ri = R(); push([a.date, s.name, a.note || 'Avans/oylik', usd, uzs]); moneyAt(ri, 4);
-      advByWorker[s.name] = (advByWorker[s.name] || 0) + uzs;
-    });
-  });
-  { const ri = R(); push(['JAMI AVANS/OYLIK:', '', '', '', g.staffAdv]); moneyAt(ri, 4); }
-  push(['', '', '', '', '']);
-  // Ishchilar jami
-  sectionRow('   Ishchilar bo\'yicha jami');
-  push(['Ishchi', 'Oylik ($)', 'Ishlagan kun', 'Olgan avans (so\'m)', '']);
-  g.staff.filter(s => s.active !== false).forEach(s => {
-    const att = (s.attendance || []).filter(a => inMon(a.date)).length;
-    const ri = R(); push([s.name, s.salary_usd || 0, att, advByWorker[s.name] || 0, '']); moneyAt(ri, 3);
-  });
-  push(['', '', '', '', '']);
-
-  // 4. QARZLARGA TO'LANGAN
-  sectionRow('🔴 QARZLARGA TO\'LANGAN (men qarzdorman)');
-  push(['Kimga', 'Umumiy qarz', 'To\'langan', 'Qolgan', 'Izoh']);
-  let debtRemainTotal = 0, debtPaidTotal = 0;
-  g.debtOut.forEach(d => {
-    const paid = d.paid_uzs || 0, rem = (d.amount_uzs || 0) - paid; debtRemainTotal += rem; debtPaidTotal += paid;
-    const ri = R(); push([d.name, d.amount_uzs || 0, paid, rem, d.note || '']); moneyAt(ri, 1); moneyAt(ri, 2); moneyAt(ri, 3);
-  });
-  { const ri = R(); push(['JAMI TO\'LANGAN:', '', '', debtPaidTotal, '']); moneyAt(ri, 3); }
-  { const ri = R(); push(['JAMI QOLGAN QARZ:', '', '', debtRemainTotal, '']); moneyAt(ri, 3); }
-  push(['', '', '', '', '']);
-
-  // 5. SHAXSIY HARAJATLAR
-  sectionRow('👛 SHAXSIY HARAJATLAR');
-  push(['Sana', 'Nima uchun', '', 'Summa (so\'m)', '']);
-  g.persRows.forEach(e => { const ri = R(); push([e.date, e.note || '', '', e.amtUzs || 0, '']); moneyAt(ri, 3); });
-  { const ri = R(); push(['JAMI SHAXSIY:', '', '', g.pers, '']); moneyAt(ri, 3); }
-  push(['', '', '', '', '']);
-
-  // 6. MENGA QARZDOR
-  sectionRow('🟢 MENGA QARZDOR (mijozlar)');
-  push(['Mijoz', 'Shartnoma', 'To\'langan', 'Qarzi (so\'m)', '']);
-  let clientDebtTotal = 0;
-  g.clientDebts.forEach(d => { clientDebtTotal += d.debt; const ri = R(); push([d.client, d.contract, d.paid, d.debt, '']); moneyAt(ri, 1); moneyAt(ri, 2); moneyAt(ri, 3); });
-  { const ri = R(); push(['JAMI MENGA QARZ:', '', '', clientDebtTotal, '']); moneyAt(ri, 3); }
-  push(['', '', '', '', '']);
-
-  // 7. KASSA — CHO'NTAGIMDAGI REAL PUL
-  sectionRow('💵 KASSA — CHO\'NTAGIMDAGI REAL PUL');
-  const cashLine = (label, val) => { const ri = R(); push([label, '', '', val, '']); merges.push({ s: { r: ri, c: 0 }, e: { r: ri, c: 2 } }); moneyAt(ri, 3); };
-  cashLine(`🏦 Boshlang'ich qoldiq (${g.openingDate || ''})`, g.opening);
-  cashLine('(+) Kirim (to\'lovlar)', g.cashIn);
-  cashLine('(+) Qarzdorlar to\'lovi', g.cashDebtIn);
-  cashLine('(−) Buyurtma xarajati', -g.cashDealExp);
-  cashLine('(−) Ishxona rasxodi', -g.cashOffice);
-  cashLine('(−) Ishchilar avansi/oyligi', -g.cashAdv);
-  cashLine('(−) Shaxsiy harajat', -g.cashPers);
-  cashLine('(−) Qarzlarga to\'langan', -g.cashDebtPaid);
-  { const ri = R(); push(['💰 CHO\'NTAGIMDAGI REAL PUL', '', '', g.cashBalance, '']); merges.push({ s: { r: ri, c: 0 }, e: { r: ri, c: 2 } }); moneyAt(ri, 3); }
-  { const ri = R(); push(['   ($ hisobida)', '', '', Math.round(g.cashBalance / USD_UZS * 10) / 10 + ' $', '']); merges.push({ s: { r: ri, c: 0 }, e: { r: ri, c: 2 } }); }
-
-  const ws = XLSX.utils.aoa_to_sheet(rows);
-  ws['!merges'] = merges;
-  ws['!cols'] = [{ wch: 16 }, { wch: 30 }, { wch: 32 }, { wch: 18 }, { wch: 16 }];
-  for (const addr in fmtCells) { if (ws[addr] && typeof ws[addr].v === 'number') ws[addr].z = '#,##0'; }
-
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, `${monthName} ${y}`);
-  return XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
+  // KASSA bloki
+  ws.mergeCells(r, 1, r, 5);
+  ws.getCell(r, 1).value = isOpenMonth ? `━━━ KASSA HISOBI (${String(openDay).padStart(2, '0')}.${String(m + 1).padStart(2, '0')} dan) ━━━` : '━━━ KASSA HISOBI ━━━';
+  ws.getCell(r, 1).font = { name: 'Arial', bold: true, size: 11, color: { argb: 'FFFFFFFF' } };
+  ws.getCell(r, 1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1F4E78' } };
+  r++;
+  if (start == null) {
+    ws.getCell(r, 2).value = "Kassa boshlang'ichdan oldingi davr — qoldiq zanjiri hisoblanmaydi.";
+    ws.getCell(r, 2).font = { name: 'Arial', italic: true };
+    r++;
+  } else {
+    ws.getCell(r, 2).value = isOpenMonth
+      ? `🏦 Kassa boshlang'ich — ${String(openDay).padStart(2, '0')}.${String(m + 1).padStart(2, '0')}.${y} (naqd+karta):`
+      : `🏦 Oy boshiga qoldiq (01.${String(m + 1).padStart(2, '0')}.${y}):`;
+    ws.getCell(r, 2).font = { name: 'Arial', bold: true };
+    const c0 = ws.getCell(r, 4); c0.value = start; c0.numFmt = money; c0.font = { name: 'Arial', bold: true };
+    const openRow = r; r++;
+    ws.getCell(r, 2).value = '(+) Kassa kirimi:'; ws.getCell(r, 2).font = { name: 'Arial', bold: true };
+    const cI = ws.getCell(r, 4); cI.value = { formula: kassa.in.length ? kassa.in.join('+') : '0' }; cI.numFmt = money;
+    cI.font = { name: 'Arial', bold: true, color: { argb: 'FF006100' } };
+    const inRow = r; r++;
+    ws.getCell(r, 2).value = '(−) Kassa chiqimi:'; ws.getCell(r, 2).font = { name: 'Arial', bold: true };
+    const cO = ws.getCell(r, 4); cO.value = { formula: kassa.out.length ? kassa.out.join('+') : '0' }; cO.numFmt = money;
+    cO.font = { name: 'Arial', bold: true, color: { argb: 'FF9C0006' } };
+    const outRow = r; r++;
+    ws.getCell(r, 2).value = `${monthName.toUpperCase()} OXIRI QOLDIQ:`;
+    ws.getCell(r, 2).font = { name: 'Arial', bold: true, size: 13 };
+    const cB = ws.getCell(r, 4); cB.value = { formula: `D${openRow}+D${inRow}-D${outRow}` }; cB.numFmt = money;
+    cB.font = { name: 'Arial', bold: true, size: 13 };
+    for (let col = 1; col <= 5; col++) ws.getCell(r, col).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFC6EFCE' } };
+    ws.getRow(r).height = 22;
+  }
+  const ab = await wb.xlsx.writeBuffer();
+  return Buffer.from(ab);
 }
 
 // Oylik hisobotni yaratib: GitHub'ga saqlaydi + adminга yuboradi
