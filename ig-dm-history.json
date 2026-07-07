@@ -1437,6 +1437,16 @@
     "role": "assistant",
     "content": "Tushundim. To'q kulrang — ko'pincha krashenniy yoki akril bo'ladi.\n\n4 metr, 2 etaj, krashenniy fasad — taxminan 1800–2200$ atrofida chiqadi. Akril bo'lsa — 1500–1800$ atrofida.\n\nAniq narx va loyihani Ibrohim aka beradi. Telefon raqamingizni qoldiring, o'zi hisoblab qo'ng'iroq qiladi 👍🏻"
    }
+  ],
+  "2151802285606521": [
+   {
+    "role": "user",
+    "content": "Narxi"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu Alaykum! Qaysi mebel kerak — oshxona, shkaf yoki yotoqxona? Va o'lchami bormi?"
+   }
   ]
  },
  "activity": {
@@ -1723,6 +1733,11 @@
   },
   "1742340130531294": {
    "lastClientAt": 1783415478958,
+   "followedUp": false,
+   "fu3": false
+  },
+  "2151802285606521": {
+   "lastClientAt": 1783417858498,
    "followedUp": false,
    "fu3": false
   }
