@@ -1142,6 +1142,14 @@
    {
     "role": "assistant",
     "content": "Ha, albatta yasaymiz 👍🏻\n\nQaysi qism ko'proq yoqdi — oshxonami yoki boshqa qismi? O'lcham bormi taxminan?"
+   },
+   {
+    "role": "user",
+    "content": "?"
+   },
+   {
+    "role": "assistant",
+    "content": "Kechirasiz, video bizga ko'rinmadi 😊\n\nQanday mebel kerak edi — oshxona, shkaf, yotoqxona? O'lcham taxminan bormi?"
    }
   ]
  },
@@ -1383,7 +1391,7 @@
    "fu3": true
   },
   "1877393679906083": {
-   "lastClientAt": 1783393185373,
+   "lastClientAt": 1783393202839,
    "followedUp": false,
    "fu3": false
   }
