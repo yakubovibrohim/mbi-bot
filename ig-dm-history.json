@@ -1798,6 +1798,22 @@
    {
     "role": "assistant",
     "content": "Ва Алейкум Ассалом, яхшимисиз 👍🏻\n\nРаҳмат! Нима қилишни режалаштираяпсиз — ошхона, шкаф ёки бошқа нарсами? Исмингиз нима?"
+   },
+   {
+    "role": "user",
+    "content": "Rahmat yoqdi"
+   },
+   {
+    "role": "assistant",
+    "content": "Yaxshi! Qaysi xona uchun — oshxona, shkaf yoki yotoqxonami? 😊"
+   },
+   {
+    "role": "user",
+    "content": "Xozir keremas raxmat\n😉😉"
+   },
+   {
+    "role": "assistant",
+    "content": "Хоп, бемалол 👍🏻 Керак бўлса ёзинг 😊"
    }
   ]
  },
@@ -2149,7 +2165,7 @@
    "fu3": false
   },
   "1621837499277650": {
-   "lastClientAt": 1783442220359,
+   "lastClientAt": 1783442342652,
    "followedUp": false,
    "fu3": false
   }
