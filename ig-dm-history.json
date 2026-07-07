@@ -1882,6 +1882,14 @@
    {
     "role": "assistant",
     "content": "😊👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "🤓🤓"
+   },
+   {
+    "role": "assistant",
+    "content": "😄 Kerak bo'lsa yozing!"
    }
   ],
   "1429930878893970": [
@@ -2337,7 +2345,7 @@
    "fu3": false
   },
   "1621837499277650": {
-   "lastClientAt": 1783454954106,
+   "lastClientAt": 1783455000163,
    "followedUp": false,
    "fu3": false
   },
