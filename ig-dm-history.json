@@ -882,6 +882,14 @@
    {
     "role": "assistant",
     "content": "Narx ma'qul keldimi? Savollar bo'lsa aytavering 😊"
+   },
+   {
+    "role": "user",
+    "content": "Narxi qimmatlik qildi\n[Mijoz rasm yubordi]\n[Mijoz rasm yubordi]\nShunaqa boʻlsa nech puldan"
+   },
+   {
+    "role": "assistant",
+    "content": "Rasmlarni ko'rdim 👍🏻\n\nEng optimал narxda hisobladim — bu narxda korpus LMDF, furnitura GTV (Polsha), akril fasad. Arzonroq variant ham bor:\n\nLMDF fasad + GTV bilan taxminan 990–1050$ atrofida chiqadi. Ko'rinish oddiyroq, lekin sifat yaxshi.\n\nTexnika (plita, dukhovka, vытяжka) sizning hisobingizdan — biz faqat mebel qilamiz, shu narxga kirmaydi.\n\nAniq hisob uchun Ibrohim aka o'zi ko'rib beradi. Telefon raqamingizni qoldiring 😊"
    }
   ],
   "2271444390287794": [
@@ -1425,9 +1433,9 @@
    "followedUp": false
   },
   "1518313619771727": {
-   "lastClientAt": 1783388503572,
+   "lastClientAt": 1783402528735,
    "followedUp": false,
-   "fu3": true
+   "fu3": false
   },
   "2271444390287794": {
    "lastClientAt": 1783343003348,
