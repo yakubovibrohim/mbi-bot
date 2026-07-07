@@ -1428,6 +1428,14 @@
    {
     "role": "assistant",
     "content": "Qaysi video ekanini bilmasam aniq ayta olmayman 😊 Lekin aytingchi — ялтироқ fasad yoqdimi yoki bo'yalgan (krashenniy) ko'rinishmi?"
+   },
+   {
+    "role": "user",
+    "content": "tòq seriy rangdagi oshhona mebel"
+   },
+   {
+    "role": "assistant",
+    "content": "Tushundim. To'q kulrang — ko'pincha krashenniy yoki akril bo'ladi.\n\n4 metr, 2 etaj, krashenniy fasad — taxminan 1800–2200$ atrofida chiqadi. Akril bo'lsa — 1500–1800$ atrofida.\n\nAniq narx va loyihani Ibrohim aka beradi. Telefon raqamingizni qoldiring, o'zi hisoblab qo'ng'iroq qiladi 👍🏻"
    }
   ]
  },
@@ -1714,7 +1722,7 @@
    "fu3": false
   },
   "1742340130531294": {
-   "lastClientAt": 1783415441256,
+   "lastClientAt": 1783415478958,
    "followedUp": false,
    "fu3": false
   }
