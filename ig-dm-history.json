@@ -1684,6 +1684,30 @@
    {
     "role": "assistant",
     "content": "Тушунарли, Замира! Иброхим ака ўзи гаплашади — рақамингизни ёзинг 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "+998700472622"
+   },
+   {
+    "role": "assistant",
+    "content": "Раҳмат, Замира! Иброхим ака тез орада боғланади 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Хоп рахмат"
+   },
+   {
+    "role": "assistant",
+    "content": "Хоп, бемалол 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Ок"
+   },
+   {
+    "role": "assistant",
+    "content": "👍🏻"
    }
   ]
  },
@@ -2010,7 +2034,7 @@
    "fu3": false
   },
   "1298409299040968": {
-   "lastClientAt": 1783436971887,
+   "lastClientAt": 1783437088888,
    "followedUp": false,
    "fu3": false
   }
