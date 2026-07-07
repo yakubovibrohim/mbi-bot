@@ -1114,6 +1114,22 @@
    {
     "role": "assistant",
     "content": "5 metr oshxona — yaxshi tanlov! \n\n2 etajmi yoki 3 etaj? Va qaysi material yoqadi — LMDF, akril yoki krashenniy fasad?"
+   },
+   {
+    "role": "user",
+    "content": "Yahshisidan"
+   },
+   {
+    "role": "assistant",
+    "content": "Tushunарли! Premium variant — akril yoki krashenniy fasad, Blum furnitura.\n\nTaxminiy narx:\n- 5 metr, akril + Blum — taxminan 3000-3250$ atrofida\n- 5 metr, krashenniy + Blum — taxminan 3500-4000$ atrofida\n\n2 etajmi 3 etaj — shunga qarab farq qiladi.\n\nAniq hisob-kitobni Ibrohim aka qilib beradi. Telefon raqamingizni qoldiring, o'zi bog'lanadi 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "2etaj"
+   },
+   {
+    "role": "assistant",
+    "content": "Rahmat! 2 etaj, 5 metr, premium:\n\n- Akril + Blum — taxminan 2750-3000$ atrofida\n- Krashenniy + Blum — taxminan 3250-3750$ atrofida\n\nAniq narx va loyihani Ibrohim aka beradi. Telefon raqamingizni shu yerga yozib qoldiring 😊"
    }
   ],
   "993804773642305": [
@@ -1463,7 +1479,7 @@
    "fu3": false
   },
   "2018998308822163": {
-   "lastClientAt": 1783401570563,
+   "lastClientAt": 1783401711517,
    "followedUp": false,
    "fu3": false
   },
