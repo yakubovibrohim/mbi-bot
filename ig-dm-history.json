@@ -1592,6 +1592,10 @@
    {
     "role": "assistant",
     "content": "Narx bo'yicha savollaringiz bo'lsa yordamlashishga tayyormiz 😊 Raqamingizni qoldirsangiz, aniq loyiha va narxni tayyorlab qo'ng'iroq qilamiz!"
+   },
+   {
+    "role": "assistant",
+    "content": "To'q kulrang oshxona haqida gaplashayotgan edik — 4 metr 🙂 Loyiha va aniq narxni tayyorlashimiz mumkin, faqat telefon raqamingizni yuboring!"
    }
   ],
   "2151802285606521": [
@@ -2154,6 +2158,10 @@
    {
     "role": "assistant",
     "content": "Мы занимаемся корпусной мебелью — кухни, шкафы, спальни. Мягкую мебель и ремонт не делаем, к сожалению.\n\nЕсли кухня или шкаф понадобятся — обращайтесь 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Если возникнут вопросы — всегда на связи 😊"
    }
   ],
   "1002268709284619": [
@@ -2561,7 +2569,7 @@
   },
   "1742340130531294": {
    "lastClientAt": 1783415478958,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": true
   },
   "2151802285606521": {
@@ -2687,7 +2695,7 @@
   "1862669745101467": {
    "lastClientAt": 1783477955942,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "1002268709284619": {
    "lastClientAt": 1783479038917,
