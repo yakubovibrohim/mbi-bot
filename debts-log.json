@@ -86,5 +86,14 @@
       }
     ],
     "pay_date": "08.07.2026"
+  },
+  {
+    "id": "mrbyoq2andcf",
+    "dir": "in",
+    "name": "Fazliddin aka mdf",
+    "amount_uzs": 12000000,
+    "paid_uzs": 0,
+    "date": "08.07.2026",
+    "note": "Perechestleniyadan ostatka"
   }
 ]
