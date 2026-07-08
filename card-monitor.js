@@ -23,6 +23,37 @@ let deps = null;         // { ADMIN, msg, btn, api, ghReadAll, ghWrite, ghRead, 
 
 function shortId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 5); }
 
+// Barcha xabarlar guruhga (MBI AI Office); guruh sozlanmagan bo'lsa — adminga zaxira
+function target() { return (deps.getOfficeChat && deps.getOfficeChat()) || deps.ADMIN; }
+
+// ── Pending'ni restartga chidamli saqlash (card-pending.json) ──
+async function persist() {
+  try {
+    const { sha } = await deps.ghRead('card-pending.json');
+    await deps.ghPut('card-pending.json', JSON.stringify({ lastMsgId, pending: cardPending }, null, 2), sha, 'card pending');
+  } catch (e) { console.error('card persist:', e.message); }
+}
+async function restorePending() {
+  try {
+    const { data } = await deps.ghRead('card-pending.json');
+    if (data && !Array.isArray(data)) {
+      if (data.lastMsgId) lastMsgId = data.lastMsgId;
+      if (data.pending) Object.assign(cardPending, data.pending);
+    }
+  } catch (e) {}
+  // javobsiz qolgan so'rovlarni qayta yuborish
+  for (const [id, p] of Object.entries(cardPending)) {
+    try {
+      if (p.step === 'note') { await askNote(id, p.kind, target()); }
+      else { await reAsk(id); }
+    } catch (e) {}
+  }
+}
+async function reAsk(id) {
+  const p = cardPending[id]; if (!p) return;
+  await sendClassify(id, p);
+}
+
 // ── CardXabar xabarini parslash ──
 // Namuna:
 //  🔴 E-Com oplata / ➖ 1 000.00 UZS / 💳 ***5893 / 📍 PAYME OPLATA, UZ / 🕓 06.07.26 15:19 / 💵 1 259 641.74 UZS
@@ -55,6 +86,10 @@ function parseCardMsg(text) {
 async function askClassify(tx) {
   const id = shortId();
   cardPending[id] = { ...tx, step: 'type' };
+  await persist();
+  await sendClassify(id, cardPending[id]);
+}
+async function sendClassify(id, tx) {
   const arrow = tx.dir === 'out' ? '🔴 Chiqim' : '🟢 Kirim';
   const head = `💳 *Karta ${tx.dir === 'out' ? 'chiqim' : 'kirim'}*\n` +
     `${arrow}: *${deps.fmtUzs(tx.amtUzs)} so'm*\n` +
@@ -79,7 +114,7 @@ async function askClassify(tx) {
       [{ text: '⏭ Hisobga olinmasin', callback_data: `cm_t_${id}_skip` }],
     ];
   }
-  await deps.btn(deps.ADMIN, head, kb);
+  await deps.btn(target(), head, kb);
 }
 
 // ── Callback ishlovchisi (bot.js callback router'idan chaqiriladi) ──
@@ -111,12 +146,12 @@ async function handleCallback(cd, chatId) {
     if (!p) { await deps.msg(chatId, '⚠️ Bu so\'rov eskirgan.'); return true; }
 
     if (type === 'skip') {
-      delete cardPending[id];
+      delete cardPending[id]; await persist();
       await deps.msg(chatId, '⏭ Hisobga olinmadi.');
       return true;
     }
     if (type === 'self') {
-      delete cardPending[id];
+      delete cardPending[id]; await persist();
       await deps.msg(chatId, '💵 O\'z pulingizni kartaga tushirdingiz — bu ichki ko\'chirish, kassa jami o\'zgarmaydi (yozilmadi).');
       return true;
     }
@@ -127,7 +162,7 @@ async function handleCallback(cd, chatId) {
     if (type === 'deal') { // buyurtma → mijozlar ro'yxati
       p.subType = 'deal';
       const deals = (await deps.ghReadAll('deals-log.json')).filter(o => o.status === 'active');
-      if (!deals.length) { await deps.msg(chatId, '⚠️ Faol buyurtma yo\'q.'); delete cardPending[id]; return true; }
+      if (!deals.length) { await deps.msg(chatId, '⚠️ Faol buyurtma yo\'q.'); delete cardPending[id]; await persist(); return true; }
       const kb = deals.map(o => [{ text: o.client, callback_data: `cm_d_${id}_${o.id}` }]);
       kb.push([{ text: '↩️ Bekor', callback_data: `cm_t_${id}_skip` }]);
       await deps.btn(chatId, 'Qaysi buyurtma xarajati?', kb);
@@ -136,7 +171,7 @@ async function handleCallback(cd, chatId) {
     if (type === 'client') { // mijoz to'lovi → faol buyurtmalar
       p.subType = 'client';
       const deals = (await deps.ghReadAll('deals-log.json')).filter(o => o.status === 'active');
-      if (!deals.length) { await deps.msg(chatId, '⚠️ Faol buyurtma yo\'q.'); delete cardPending[id]; return true; }
+      if (!deals.length) { await deps.msg(chatId, '⚠️ Faol buyurtma yo\'q.'); delete cardPending[id]; await persist(); return true; }
       const kb = deals.map(o => [{ text: o.client, callback_data: `cm_d_${id}_${o.id}` }]);
       kb.push([{ text: '↩️ Bekor', callback_data: `cm_t_${id}_skip` }]);
       await deps.btn(chatId, 'Qaysi mijoz to\'lovi?', kb);
@@ -144,7 +179,7 @@ async function handleCallback(cd, chatId) {
     }
     if (type === 'debtin') { // qarzdor to'lovi → in-qarzlar
       const debts = (await deps.ghReadAll('debts-log.json')).filter(d => d.dir === 'in' && (d.amount_uzs || 0) - (d.paid_uzs || 0) > 0);
-      if (!debts.length) { await deps.msg(chatId, '⚠️ Ochiq qarzdor yo\'q.'); delete cardPending[id]; return true; }
+      if (!debts.length) { await deps.msg(chatId, '⚠️ Ochiq qarzdor yo\'q.'); delete cardPending[id]; await persist(); return true; }
       const kb = debts.map(d => [{ text: `${d.name} (qoldi ${deps.fmtUzs((d.amount_uzs || 0) - (d.paid_uzs || 0))})`, callback_data: `cm_din_${id}_${d.id}` }]);
       kb.push([{ text: '↩️ Bekor', callback_data: `cm_t_${id}_skip` }]);
       await deps.btn(chatId, 'Kim qarzini to\'ladi?', kb);
@@ -152,7 +187,7 @@ async function handleCallback(cd, chatId) {
     }
     if (type === 'debtout') { // men to'lagan qarz → out-qarzlar
       const debts = (await deps.ghReadAll('debts-log.json')).filter(d => d.dir === 'out' && (d.amount_uzs || 0) - (d.paid_uzs || 0) > 0);
-      if (!debts.length) { await deps.msg(chatId, '⚠️ Ochiq qarz yo\'q.'); delete cardPending[id]; return true; }
+      if (!debts.length) { await deps.msg(chatId, '⚠️ Ochiq qarz yo\'q.'); delete cardPending[id]; await persist(); return true; }
       const kb = debts.map(d => [{ text: `${d.name} (qoldi ${deps.fmtUzs((d.amount_uzs || 0) - (d.paid_uzs || 0))})`, callback_data: `cm_dout_${id}_${d.id}` }]);
       kb.push([{ text: '↩️ Bekor', callback_data: `cm_t_${id}_skip` }]);
       await deps.btn(chatId, 'Kimning qarzini to\'ladingiz?', kb);
@@ -199,6 +234,7 @@ async function askNote(id, kind, chatId) {
   if (!p) { await deps.msg(chatId, '⚠️ Eskirgan.'); return; }
   p.kind = kind;
   p.step = 'note';
+  await persist();
   awaitingNote = id; // admin keyingi matni shu izoh bo'ladi
   const kb = [[{ text: '⏭ Izohsiz saqlash', callback_data: `cm_nn_${id}` }]];
   await deps.btn(chatId, `✍️ *${kind === 'office' ? '🏭 Ishxona' : '👛 Shaxsiy'}* — nima uchun sarfladingiz?\n(${deps.fmtUzs(p.amtUzs)} so'm)\n\nYozib yuboring yoki izohsiz saqlang:`, kb);
@@ -225,8 +261,8 @@ async function saveCardExpense(id, kind) {
     ? { id: shortId(), date: p.date, ts: new Date().toISOString(), name: note, amount_uzs: p.amtUzs, rate: deps.USD_UZS, note: p.place || 'karta', pay_method: 'card' }
     : { date: p.date, note, amount_uzs: p.amtUzs, rate: deps.USD_UZS, type: 'personal', pay_method: 'card', place: p.place || '', ts: new Date().toISOString() };
   await deps.ghWrite(file, entry, `card expense: ${note} ${p.amtUzs}`);
-  delete cardPending[id];
-  await deps.msg(deps.ADMIN, `✅ ${kind === 'office' ? '🏭 Ishxona' : '👛 Shaxsiy'} chiqim yozildi: ${deps.fmtUzs(p.amtUzs)} so'm (💳 karta)\n📝 ${note.replace('💳 ', '')}`);
+  delete cardPending[id]; await persist();
+  await deps.msg(target(), `✅ ${kind === 'office' ? '🏭 Ishxona' : '👛 Shaxsiy'} chiqim yozildi: ${deps.fmtUzs(p.amtUzs)} so'm (💳 karta)\n📝 ${note.replace('💳 ', '')}`);
 }
 
 async function saveCardIncome(id) {
@@ -235,8 +271,8 @@ async function saveCardIncome(id) {
   // buni alohida income-log'ga yozamiz
   const entry = { id: shortId(), date: p.date, name: `💳 ${p.place || p.title || 'boshqa kirim'}`, amount_uzs: p.amtUzs, rate: deps.USD_UZS, note: 'karta', pay_method: 'card', ts: new Date().toISOString() };
   await deps.ghWrite('card-income-log.json', entry, `card income: ${p.amtUzs}`);
-  delete cardPending[id];
-  await deps.msg(deps.ADMIN, `✅ ➕ Boshqa kirim yozildi: ${deps.fmtUzs(p.amtUzs)} so'm (💳 karta)`);
+  delete cardPending[id]; await persist();
+  await deps.msg(target(), `✅ ➕ Boshqa kirim yozildi: ${deps.fmtUzs(p.amtUzs)} so'm (💳 karta)`);
   await checkBalance(p);
 }
 
@@ -244,12 +280,12 @@ async function saveDealExpense(id, dealId) {
   const p = cardPending[id]; if (!p) return;
   const { data, sha } = await deps.ghRead('deals-log.json');
   const o = data.find(x => x.id === dealId);
-  if (!o) { await deps.msg(deps.ADMIN, '⚠️ Buyurtma topilmadi.'); delete cardPending[id]; return; }
+  if (!o) { await deps.msg(target(), '⚠️ Buyurtma topilmadi.'); delete cardPending[id]; await persist(); return; }
   if (!Array.isArray(o.expenses)) o.expenses = [];
   o.expenses.push({ date: p.date, ts: new Date().toISOString(), name: `💳 ${p.place || p.title || 'karta'}`, total_uzs: p.amtUzs, rate: deps.USD_UZS, pay_method: 'card' });
   await deps.ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, `card deal-expense: ${o.client} ${p.amtUzs}`);
-  delete cardPending[id];
-  await deps.msg(deps.ADMIN, `✅ 📦 Buyurtma xarajati (${o.client}): ${deps.fmtUzs(p.amtUzs)} so'm (💳 karta)`);
+  delete cardPending[id]; await persist();
+  await deps.msg(target(), `✅ 📦 Buyurtma xarajati (${o.client}): ${deps.fmtUzs(p.amtUzs)} so'm (💳 karta)`);
   await checkBalance(p);
 }
 
@@ -257,12 +293,12 @@ async function saveDealPayment(id, dealId) {
   const p = cardPending[id]; if (!p) return;
   const { data, sha } = await deps.ghRead('deals-log.json');
   const o = data.find(x => x.id === dealId);
-  if (!o) { await deps.msg(deps.ADMIN, '⚠️ Buyurtma topilmadi.'); delete cardPending[id]; return; }
+  if (!o) { await deps.msg(target(), '⚠️ Buyurtma topilmadi.'); delete cardPending[id]; await persist(); return; }
   if (!Array.isArray(o.payments)) o.payments = [];
   o.payments.push({ date: p.date, ts: new Date().toISOString(), amount_uzs: p.amtUzs, note: '💳 karta', pay_method: 'card' });
   await deps.ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, `card deal-payment: ${o.client} ${p.amtUzs}`);
-  delete cardPending[id];
-  await deps.msg(deps.ADMIN, `✅ 📦 Mijoz to'lovi (${o.client}): ${deps.fmtUzs(p.amtUzs)} so'm (💳 karta)`);
+  delete cardPending[id]; await persist();
+  await deps.msg(target(), `✅ 📦 Mijoz to'lovi (${o.client}): ${deps.fmtUzs(p.amtUzs)} so'm (💳 karta)`);
   await checkBalance(p);
 }
 
@@ -270,15 +306,15 @@ async function saveDebtPayment(id, debtId, dir) {
   const p = cardPending[id]; if (!p) return;
   const { data, sha } = await deps.ghRead('debts-log.json');
   const d = data.find(x => x.id === debtId);
-  if (!d) { await deps.msg(deps.ADMIN, '⚠️ Qarz topilmadi.'); delete cardPending[id]; return; }
+  if (!d) { await deps.msg(target(), '⚠️ Qarz topilmadi.'); delete cardPending[id]; await persist(); return; }
   d.paid_uzs = (d.paid_uzs || 0) + p.amtUzs;
   if (!Array.isArray(d.payments)) d.payments = [];
   d.payments.push({ date: p.date, ts: new Date().toISOString(), amount_uzs: p.amtUzs, pay_method: 'card' });
   d.pay_date = p.date;
   await deps.ghPut('debts-log.json', JSON.stringify(data, null, 2), sha, `card debt-${dir}: ${d.name} ${p.amtUzs}`);
-  delete cardPending[id];
+  delete cardPending[id]; await persist();
   const remain = (d.amount_uzs || 0) - d.paid_uzs;
-  await deps.msg(deps.ADMIN, `✅ ${dir === 'in' ? '📥 Qarzdor to\'lovi' : '🔴 Qarz to\'lovi'} (${d.name}): ${deps.fmtUzs(p.amtUzs)} so'm (💳 karta)\nQolgan qarz: ${deps.fmtUzs(remain > 0 ? remain : 0)} so'm`);
+  await deps.msg(target(), `✅ ${dir === 'in' ? '📥 Qarzdor to\'lovi' : '🔴 Qarz to\'lovi'} (${d.name}): ${deps.fmtUzs(p.amtUzs)} so'm (💳 karta)\nQolgan qarz: ${deps.fmtUzs(remain > 0 ? remain : 0)} so'm`);
   await checkBalance(p);
 }
 
@@ -331,9 +367,13 @@ async function start(dependencies, cfg) {
   cardCfg = cfg;
   try {
     const me = await connect();
-    // boshlang'ich lastMsgId — hozirgi oxirgi xabar (eski tranzaksiyalarni qayta so'ramaslik uchun)
-    const last = await tgUser.getMessages('CardXabarBot', { limit: 1 });
-    if (last && last.length) lastMsgId = last[0].id;
+    await restorePending(); // saqlangan pending + lastMsgId tiklanadi
+    if (!lastMsgId) {
+      // birinchi ishga tushish: hozirgi oxirgi xabardan boshlaymiz
+      const last = await tgUser.getMessages('CardXabarBot', { limit: 1 });
+      if (last && last.length) lastMsgId = last[0].id;
+      await persist();
+    }
     setInterval(poll, 30000); // har 30 soniya
     console.log('card-monitor: started, lastMsgId=', lastMsgId, 'user:', me.firstName || '');
     return true;
