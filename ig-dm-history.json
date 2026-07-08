@@ -240,64 +240,6 @@
     "content": "Ну что, ремонт заканчивается? 😊"
    }
   ],
-  "1877393679906083": [
-   {
-    "role": "user",
-    "content": "Assalomu alaykum yaxshimisizlar,"
-   },
-   {
-    "role": "assistant",
-    "content": "Vaalaykum assalom, yaxshi alhamdulillah 👍🏻\n\nSizga qanday yordam bera olamiz? Nima kerak edi — oshxona, shkaf, yotoqxonami?"
-   },
-   {
-    "role": "user",
-    "content": "[Mijoz video yubordi]\nShunaqa mebel yasab bera olasizlarmi?"
-   },
-   {
-    "role": "assistant",
-    "content": "Ha, albatta yasaymiz 👍🏻\n\nQaysi qism ko'proq yoqdi — oshxonami yoki boshqa qismi? O'lcham bormi taxminan?"
-   },
-   {
-    "role": "user",
-    "content": "?"
-   },
-   {
-    "role": "assistant",
-    "content": "Kechirasiz, video bizga ko'rinmadi 😊\n\nQanday mebel kerak edi — oshxona, shkaf, yotoqxona? O'lcham taxminan bormi?"
-   },
-   {
-    "role": "user",
-    "content": "Yotoqxona kichikligini hisobga olib transformer mebel yasatmoqchedik. Aynan vediodagi mebel qanchaga aylanadi va qancha vaqtda tayyor boʻladi"
-   },
-   {
-    "role": "assistant",
-    "content": "Tushunарли! Transformer yotoqxona — ajoyib tanlov kichik xona uchun 👍🏻\n\nVideo bizga ko'rinmadi, shuning uchun aynan qaysi model ekanini bilmaymiz. Lekin transformer yotoqxona komplekti (kravat + shkaf + stol) taxminan 1500-2500$ atrofida, materialga qarab.\n\nXona o'lchami qancha — uzunlik × kengligi? Shunda aniqroq taxmin bera olamiz. Aniq narx va loyihani Ibrohim aka o'zi hisoblаb beradi — telefon raqamingizni qoldiring, tez orada bog'lanadi 😊"
-   },
-   {
-    "role": "user",
-    "content": "[Mijoz rasm yubordi]"
-   },
-   {
-    "role": "assistant",
-    "content": "Rasm ham bizga ko'rinmayapti, afsuski 😊\n\nXona o'lchami qancha? Uzunlik × kenglik × balandlik bo'lsa — Ibrohim aka aynan shu xonaga mos loyiha va aniq narx hisoblаb beradi.\n\nTelefon raqamingizni qoldiring, o'zi qo'ng'iroq qiladi 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Xona 2 m ga 3.5 m faqat kichik shkaf va ham divan ham krovat boʻladigan mebel yasatishimiz kerak"
-   },
-   {
-    "role": "assistant",
-    "content": "Tushunарли, aniq o'lcham bor 👍🏻\n\n2×3.5m xona uchun — kichik shkaf + divan-kravat (transformer) kombinatsiyasi. Bu yerda korpus LMDF, furnitura GTV yoki Hettich.\n\nTaxminan 1200-1800$ atrofida chiqadi, materialga qarab.\n\nAniq loyiha va narxni Ibrohim aka hisoblаb beradi. Telefon raqamingizni shu yerga yozib qoldiring 😊"
-   },
-   {
-    "role": "assistant",
-    "content": "Shu xona o'lchami bilan juda chiroyli yechim chiqadi aslida 😊 Aniq narx va eskizni tez tayyorlab bera olamiz — telefon raqamingizni qoldirsangiz, Ibrohim aka bog'lanadi 👍🏻"
-   },
-   {
-    "role": "assistant",
-    "content": "Transformer yotoqxona bo'yicha savolaringiz bormi? 2×3.5m xona uchun eskiz tayyor qilsak bo'ladi — telefon raqamingizni qoldiring, Ibrohim aka bog'lanadi 😊"
-   }
-  ],
   "1678358953390962": [
    {
     "role": "user",
@@ -762,6 +704,10 @@
    {
     "role": "assistant",
     "content": "Замира, Иброхим ака боғлана олдими? 😊"
+   },
+   {
+    "role": "assistant",
+    "content": "Замира, нима бўлди, давом этамизми? 😊"
    }
   ],
   "1046538874728091": [
@@ -1268,6 +1214,10 @@
    {
     "role": "assistant",
     "content": "Рахмат, дуоингиз учун жуда миннатдормиз 🙏 Машааллох!\n\nСизга ҳам шундай ошхона ясаб берсак — шахсийга ёзинг 😊"
+   },
+   {
+    "role": "assistant",
+    "content": "Oshxona loyihangiz haqida gaplashishda davom etamizmi? 🙂"
    }
   ],
   "1337030381317830": [
@@ -1278,6 +1228,10 @@
    {
     "role": "assistant",
     "content": "Зависит от фасада:\n\nЛМДФ или акрил — 14 рабочих дней, крашеный или шпон — 30 дней. Стараемся закончить раньше, за каждый день опоздания платим штраф.\n\nЧто планируете сделать?"
+   },
+   {
+    "role": "assistant",
+    "content": "Ну что, определились с проектом? 😊"
    }
   ],
   "1542434217665440": [
@@ -1672,11 +1626,6 @@
    "followedUp": true,
    "fu3": true
   },
-  "1877393679906083": {
-   "lastClientAt": 1783393572814,
-   "followedUp": true,
-   "fu3": true
-  },
   "1678358953390962": {
    "lastClientAt": 1783395383942,
    "followedUp": true,
@@ -1759,7 +1708,7 @@
   },
   "1298409299040968": {
    "lastClientAt": 1783480032792,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": true
   },
   "1046538874728091": {
@@ -1854,12 +1803,12 @@
   },
   "963612633396565": {
    "lastClientAt": 1783479603590,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": false
   },
   "1337030381317830": {
    "lastClientAt": 1783479835639,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": false
   },
   "1542434217665440": {
