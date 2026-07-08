@@ -259,5 +259,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-07-08T08:43:00.000Z"
+  },
+  {
+    "date": "08.07.2026",
+    "note": "💳 Bogcha taxi",
+    "amount_uzs": 25000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-07-08T11:46:58.175Z"
   }
 ]
