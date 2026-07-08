@@ -1488,6 +1488,10 @@
    {
     "role": "assistant",
     "content": "Aytgancha, bizda hozir yangi mebel kolleksiyalarimiz bor — agar qiziqsangiz, ko'rsatib yuborishim mumkin 😊"
+   },
+   {
+    "role": "assistant",
+    "content": "Salom demayman deb aytgandingiz, shu sababli to'g'ri savol bilan boshlayapman 😊 Mebel borasida qandaydir ehtiyoj bor bo'lsa, yordam berishga tayyormiz — qiziqtirgan narsa bo'lsa aytavering!"
    }
   ],
   "2095005218061447": [
@@ -1498,6 +1502,10 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкум 🙌 Шахсийга ёзинг, нарх ва барча маълумотни берамиз 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Sizga qulay bo'lsa, raqamingizni yuboring, o'zimiz bog'lanamiz 😊"
    }
   ],
   "1391111339537531": [
@@ -1520,6 +1528,10 @@
    {
     "role": "assistant",
     "content": "Кстати, если вопросы ещё остались — готов помочь. Или могу сразу посчитать примерную стоимость под ваш размер 😊"
+   },
+   {
+    "role": "assistant",
+    "content": "Вы ещё думаете насчёт мебели? Если остались вопросы — всегда готов помочь 😊"
    }
   ],
   "2023808738228558": [
@@ -1530,6 +1542,10 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкум! Нархи ҳақида батафсил ёзамиз — шахсийга ёзинг 😊"
+   },
+   {
+    "role": "assistant",
+    "content": "Narxlar bo'yicha savollaringiz bo'lsa, yozing — yordam beramiz 😊"
    }
   ],
   "1742340130531294": [
@@ -2515,22 +2531,22 @@
   },
   "1045068831353548": {
    "lastClientAt": 1783412863164,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": true
   },
   "2095005218061447": {
    "lastClientAt": 1783414300122,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": false
   },
   "1391111339537531": {
    "lastClientAt": 1783414856700,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": true
   },
   "2023808738228558": {
    "lastClientAt": 1783414924054,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": false
   },
   "1742340130531294": {
