@@ -1,16 +1,16 @@
 {
-  "updated": "2026-07-08T07:03:15.210Z",
+  "updated": "2026-07-08T08:34:40.291Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 166824065,
+  "balance_uzs": 166798065,
   "totals_after_opening": {
     "kirim": 48300000,
-    "chiqim": 56643193,
+    "chiqim": 56669193,
     "by_category": {
-      "office": 500000,
+      "office": 526000,
       "personal": 27817428,
       "staff_advance": 11833920,
       "deal_payment": 24000000,
@@ -690,6 +690,17 @@
       "name": "xotinga harajat",
       "pay": "naqd",
       "src": "personal"
+    },
+    {
+      "date": "08.07.2026",
+      "time": "13:34",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 26000,
+      "name": "💳 Shaxsiy xarajat, taksi 42000.",
+      "pay": "karta",
+      "src": "office"
     },
     {
       "date": "08.07.2026",
