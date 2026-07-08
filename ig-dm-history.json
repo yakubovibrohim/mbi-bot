@@ -1598,6 +1598,14 @@
    {
     "role": "assistant",
     "content": "Va Alaykum Assalom, yaxshimisiz 👍🏻\n\nBiz Toshkentda, Yakkasaroy tumani, Qushbegi ko'chasi 6-uy. Kelib ko'rishingiz mumkin, materiallarni jonli ko'rsatamiz.\n\nNima rejalashtirmoqdasiz — oshxona, shkaf yoki yotoqxonami?"
+   },
+   {
+    "role": "user",
+    "content": "Oshxona mebeli"
+   },
+   {
+    "role": "assistant",
+    "content": "Qancha metr va nechta etaj — 2 etajmi, 3 etaj?"
    }
   ]
  },
@@ -1903,7 +1911,7 @@
    "followedUp": false
   },
   "1644982046586736": {
-   "lastClientAt": 1783534469730,
+   "lastClientAt": 1783534529606,
    "followedUp": false
   }
  }
