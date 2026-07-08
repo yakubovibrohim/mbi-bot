@@ -2298,6 +2298,22 @@
    {
     "role": "assistant",
     "content": "Tushunарли. Neча metr va 2 etajmi, 3 etajmi?"
+   },
+   {
+    "role": "user",
+    "content": "3 etaj boyi 2 70 eni 3 yarim xaladenlik qoyilib ketiladi"
+   },
+   {
+    "role": "assistant",
+    "content": "Tushundim. Qanday material yoqadi — oddiy LMDF, akril yoki krashenniy fasad?"
+   },
+   {
+    "role": "user",
+    "content": "Akril"
+   },
+   {
+    "role": "assistant",
+    "content": "Yaxshi. 3,5 metr, 3 etaj, akril fasad:\n\nArzon variant (akril + GTV): taxminan 1570–1600$ atrofida\nO'rta variant (akril + Hettich): taxminan 1900–2000$ atrofida\n\nAniq hisob-kitobni Ibrohim aka qilib beradi. Telefon raqamingizni qoldiring, u kishi o'zi bog'lanadi 👍🏻"
    }
   ],
   "1545034443688324": [
@@ -2759,7 +2775,7 @@
    "fu3": false
   },
   "1541164491070842": {
-   "lastClientAt": 1783490786273,
+   "lastClientAt": 1783491064869,
    "followedUp": false,
    "fu3": false
   },
