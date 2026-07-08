@@ -1623,6 +1623,24 @@
     "role": "assistant",
     "content": "Telefon raqamingizni qoldirsangiz, Ibrohim aka o'zi qo'ng'iroq qilib, qulay vaqtni kelishib oladi 😊"
    }
+  ],
+  "1336706401980821": [
+   {
+    "role": "user",
+    "content": "Сколько стоит дизайн интерьера?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%.\n\nКухни примерно от $1000. Что планируете?"
+   },
+   {
+    "role": "user",
+    "content": "нархи"
+   },
+   {
+    "role": "assistant",
+    "content": "Зависит от размера и материала. Какая длина кухни и сколько ярусов — 2 или 3?"
+   }
   ]
  },
  "activity": {
@@ -1928,6 +1946,10 @@
   },
   "1644982046586736": {
    "lastClientAt": 1783534583331,
+   "followedUp": false
+  },
+  "1336706401980821": {
+   "lastClientAt": 1783535428882,
    "followedUp": false
   }
  }
