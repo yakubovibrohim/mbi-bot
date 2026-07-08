@@ -17,6 +17,9 @@ const WSS_HOST = { 1:'pluto.web.telegram.org',2:'venus.web.telegram.org',3:'auro
 const cardPending = {};
 // oxirgi ko'rilgan CardXabar xabar id — takror bo'lmasligi uchun
 let lastMsgId = 0;
+let resolved = [];        // yakunlangan tranzaksiyalar: {date, dir, amt} — kunlik solishtiruv uchun
+let lastBalances = {};    // karta oxirgi 4 raqami -> CardXabar'dagi oxirgi balans
+let lastReconcileDate = ''; // kunlik solishtiruv qaysi kunda bajarilgani
 let tgUser = null;
 let cardCfg = null;      // { session, api_id, api_hash }
 let deps = null;         // { ADMIN, msg, btn, api, ghReadAll, ghWrite, ghRead, ghPut, todayStr, fmtUzs, USD_UZS }
@@ -26,11 +29,18 @@ function shortId() { return Date.now().toString(36) + Math.random().toString(36)
 // Barcha xabarlar guruhga (MBI AI Office); guruh sozlanmagan bo'lsa — adminga zaxira
 function target() { return (deps.getOfficeChat && deps.getOfficeChat()) || deps.ADMIN; }
 
+// Tranzaksiya yakunlandi (saqlandi/skip/self) — kunlik solishtiruv ro'yxatiga
+function markResolved(p) {
+  resolved.push({ date: p.date, dir: p.dir, amt: p.amtUzs });
+  // faqat oxirgi 14 kunlik yozuvlar saqlanadi
+  if (resolved.length > 400) resolved = resolved.slice(-400);
+}
+
 // ── Pending'ni restartga chidamli saqlash (card-pending.json) ──
 async function persist() {
   try {
     const { sha } = await deps.ghRead('card-pending.json');
-    await deps.ghPut('card-pending.json', JSON.stringify({ lastMsgId, pending: cardPending }, null, 2), sha, 'card pending');
+    await deps.ghPut('card-pending.json', JSON.stringify({ lastMsgId, pending: cardPending, resolved, lastBalances, lastReconcileDate }, null, 2), sha, 'card pending');
   } catch (e) { console.error('card persist:', e.message); }
 }
 async function restorePending() {
@@ -39,6 +49,9 @@ async function restorePending() {
     if (data && !Array.isArray(data)) {
       if (data.lastMsgId) lastMsgId = data.lastMsgId;
       if (data.pending) Object.assign(cardPending, data.pending);
+      if (Array.isArray(data.resolved)) resolved = data.resolved;
+      if (data.lastBalances) lastBalances = data.lastBalances;
+      if (data.lastReconcileDate) lastReconcileDate = data.lastReconcileDate;
     }
   } catch (e) {}
   // javobsiz qolgan so'rovlarni qayta yuborish
@@ -79,13 +92,16 @@ function parseCardMsg(text) {
   const date = dtM ? `${dtM[1]}.${dtM[2]}.20${dtM[3]}` : deps.todayStr();
   // tavsif (birinchi qator, emoji'siz)
   const firstLine = (text.split('\n')[0] || '').replace(/[🔴🟢💳➖➕📍🕓💵💰]/g, '').trim();
-  return { dir: isOut ? 'out' : 'in', amtUzs, place, rawBalance, date, title: firstLine };
+  // karta (💳 ***5893)
+  const cardM = text.match(/💳\s*\*+(\d{2,4})/);
+  const card4 = cardM ? cardM[1] : '0';
+  return { dir: isOut ? 'out' : 'in', amtUzs, place, rawBalance, date, title: firstLine, card4 };
 }
 
 // ── Tranzaksiya kelganda admin'ga tugmali savol ──
 async function askClassify(tx) {
   const id = shortId();
-  cardPending[id] = { ...tx, step: 'type' };
+  cardPending[id] = { ...tx, step: 'type', askedAt: Date.now() };
   await persist();
   await sendClassify(id, cardPending[id]);
 }
@@ -146,11 +162,13 @@ async function handleCallback(cd, chatId) {
     if (!p) { await deps.msg(chatId, '⚠️ Bu so\'rov eskirgan.'); return true; }
 
     if (type === 'skip') {
+      markResolved(p);
       delete cardPending[id]; await persist();
       await deps.msg(chatId, '⏭ Hisobga olinmadi.');
       return true;
     }
     if (type === 'self') {
+      markResolved(p);
       delete cardPending[id]; await persist();
       await deps.msg(chatId, '💵 O\'z pulingizni kartaga tushirdingiz — bu ichki ko\'chirish, kassa jami o\'zgarmaydi (yozilmadi).');
       return true;
@@ -261,6 +279,7 @@ async function saveCardExpense(id, kind) {
     ? { id: shortId(), date: p.date, ts: new Date().toISOString(), name: note, amount_uzs: p.amtUzs, rate: deps.USD_UZS, note: p.place || 'karta', pay_method: 'card' }
     : { date: p.date, note, amount_uzs: p.amtUzs, rate: deps.USD_UZS, type: 'personal', pay_method: 'card', place: p.place || '', ts: new Date().toISOString() };
   await deps.ghWrite(file, entry, `card expense: ${note} ${p.amtUzs}`);
+  markResolved(p);
   delete cardPending[id]; await persist();
   await deps.msg(target(), `✅ ${kind === 'office' ? '🏭 Ishxona' : '👛 Shaxsiy'} chiqim yozildi: ${deps.fmtUzs(p.amtUzs)} so'm (💳 karta)\n📝 ${note.replace('💳 ', '')}`);
 }
@@ -271,6 +290,7 @@ async function saveCardIncome(id) {
   // buni alohida income-log'ga yozamiz
   const entry = { id: shortId(), date: p.date, name: `💳 ${p.place || p.title || 'boshqa kirim'}`, amount_uzs: p.amtUzs, rate: deps.USD_UZS, note: 'karta', pay_method: 'card', ts: new Date().toISOString() };
   await deps.ghWrite('card-income-log.json', entry, `card income: ${p.amtUzs}`);
+  markResolved(p);
   delete cardPending[id]; await persist();
   await deps.msg(target(), `✅ ➕ Boshqa kirim yozildi: ${deps.fmtUzs(p.amtUzs)} so'm (💳 karta)`);
   await checkBalance(p);
@@ -284,6 +304,7 @@ async function saveDealExpense(id, dealId) {
   if (!Array.isArray(o.expenses)) o.expenses = [];
   o.expenses.push({ date: p.date, ts: new Date().toISOString(), name: `💳 ${p.place || p.title || 'karta'}`, total_uzs: p.amtUzs, rate: deps.USD_UZS, pay_method: 'card' });
   await deps.ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, `card deal-expense: ${o.client} ${p.amtUzs}`);
+  markResolved(p);
   delete cardPending[id]; await persist();
   await deps.msg(target(), `✅ 📦 Buyurtma xarajati (${o.client}): ${deps.fmtUzs(p.amtUzs)} so'm (💳 karta)`);
   await checkBalance(p);
@@ -297,6 +318,7 @@ async function saveDealPayment(id, dealId) {
   if (!Array.isArray(o.payments)) o.payments = [];
   o.payments.push({ date: p.date, ts: new Date().toISOString(), amount_uzs: p.amtUzs, note: '💳 karta', pay_method: 'card' });
   await deps.ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, `card deal-payment: ${o.client} ${p.amtUzs}`);
+  markResolved(p);
   delete cardPending[id]; await persist();
   await deps.msg(target(), `✅ 📦 Mijoz to'lovi (${o.client}): ${deps.fmtUzs(p.amtUzs)} so'm (💳 karta)`);
   await checkBalance(p);
@@ -318,11 +340,86 @@ async function saveDebtPayment(id, debtId, dir) {
   await checkBalance(p);
 }
 
-// ── CardXabar balansini bot hisobi bilan solishtirish (ogohlantirish) ──
-async function checkBalance(p) {
-  if (p.rawBalance == null) return;
-  // bu yerda faqat CardXabar bergan raw balansni ko'rsatamiz; to'liq karta hisobi bot ichida
-  // (kelajakda: bot karta-qoldig'ini hisoblab, farq bo'lsa ogohlantiradi)
+// ── Balans nazorati: CardXabar balansi sakragan bo'lsa — orada tranzaksiya yo'qolgan ──
+async function checkBalanceJump(tx) {
+  if (tx.rawBalance == null) return;
+  const key = tx.card4 || '0';
+  const prev = lastBalances[key];
+  if (prev != null) {
+    const expected = prev + (tx.dir === 'in' ? tx.amtUzs : -tx.amtUzs);
+    const diff = tx.rawBalance - expected;
+    if (Math.abs(diff) > 100) {
+      try {
+        await deps.msg(target(), `⚠️ *Karta balansi nazorati* (***${key})\nKutilgan: ${deps.fmtUzs(expected)} so'm\nCardXabar: ${deps.fmtUzs(tx.rawBalance)} so'm\nFarq: ${diff > 0 ? '+' : ''}${deps.fmtUzs(diff)} so'm\n\n_Orada hisobga tushmagan harakat bo'lgan ko'rinadi (SMS kelmagan tranzaksiya, komissiya yoki bot o'chiq paytdagi o'tkazma)._`);
+      } catch (e) {}
+    }
+  }
+  lastBalances[key] = tx.rawBalance;
+  await persist();
+}
+// eski nom bilan chaqiruvlar uchun (save* ichida) — endi hech narsa qilmaydi
+async function checkBalance(p) {}
+
+// ── Javobsiz so'rovlarni har 2 soatda eslatish ──
+async function remindStalePending() {
+  const now = Date.now();
+  const TWO_H = 2 * 60 * 60 * 1000;
+  for (const [id, p] of Object.entries(cardPending)) {
+    const base = p.remindedAt || p.askedAt || 0;
+    if (!base || now - base < TWO_H) continue;
+    p.remindedAt = now;
+    try {
+      await deps.msg(target(), `⏰ *Eslatma:* quyidagi karta tranzaksiyasi hali tasniflanmagan:`);
+      if (p.step === 'note') await askNote(id, p.kind, target());
+      else await sendClassify(id, p);
+    } catch (e) {}
+    await persist();
+  }
+}
+
+// ── Kunlik solishtiruv (21:00 Toshkent): CardXabar vs loglar ──
+function tashkentHHMM() {
+  const d = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Tashkent' }));
+  return ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+}
+async function maybeDailyReconcile() {
+  const today = deps.todayStr();
+  if (lastReconcileDate === today) return;
+  const hm = tashkentHHMM();
+  if (hm < '21:00') return;
+  lastReconcileDate = today;
+  await persist();
+  await dailyReconcile(today);
+}
+async function dailyReconcile(today) {
+  if (!tgUser) return;
+  try {
+    const msgs = await tgUser.getMessages('CardXabarBot', { limit: 100 });
+    const txs = [];
+    for (const m of msgs) {
+      const tx = parseCardMsg(m.message || '');
+      if (tx && tx.date === today) txs.push(tx);
+    }
+    if (!txs.length) return;
+    // yakunlanganlar va hali pending turganlar — qoplangan hisoblanadi
+    const pool = resolved.filter(r => r.date === today).map(r => `${r.dir}:${r.amt}`);
+    const pendPool = Object.values(cardPending).filter(p => p.date === today).map(p => `${p.dir}:${p.amtUzs}`);
+    const missing = [];
+    for (const tx of txs) {
+      const k = `${tx.dir}:${tx.amtUzs}`;
+      let i = pool.indexOf(k);
+      if (i >= 0) { pool.splice(i, 1); continue; }
+      i = pendPool.indexOf(k);
+      if (i >= 0) { pendPool.splice(i, 1); continue; }
+      missing.push(tx);
+    }
+    if (!missing.length) {
+      await deps.msg(target(), `✅ *Kunlik karta solishtiruvi (${today}):* barcha ${txs.length} ta tranzaksiya hisobga olingan.`);
+      return;
+    }
+    await deps.msg(target(), `⚠️ *Kunlik karta solishtiruvi (${today}):* ${missing.length} ta tranzaksiya hisobga olinmagan! Har birini tasniflang:`);
+    for (const tx of missing) await askClassify(tx);
+  } catch (e) { console.error('dailyReconcile:', e.message); }
 }
 
 // ── Sessiya ochish ──
@@ -344,14 +441,16 @@ async function connect() {
 async function poll() {
   if (!tgUser) return;
   try {
-    const msgs = await tgUser.getMessages('CardXabarBot', { limit: 5 });
+    const msgs = await tgUser.getMessages('CardXabarBot', { limit: 20 });
     // eng eski→yangi tartibda, faqat yangi id
     const fresh = msgs.filter(m => m.id > lastMsgId).sort((a, b) => a.id - b.id);
     for (const m of fresh) {
       lastMsgId = Math.max(lastMsgId, m.id);
       const tx = parseCardMsg(m.message || '');
-      if (tx) await askClassify(tx);
+      if (tx) { await checkBalanceJump(tx); await askClassify(tx); }
     }
+    await remindStalePending();
+    await maybeDailyReconcile();
   } catch (e) {
     console.error('card poll error:', e.message);
     // sessiya uzilsa qayta ulanish
