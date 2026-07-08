@@ -40,5 +40,15 @@
     "rate": 12000,
     "note": "IP OOO YANDEXGO EATS, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mrbzcxjsr1p",
+    "date": "08.07.2026",
+    "ts": "2026-07-08T11:14:11.032Z",
+    "name": "💳 Viza card",
+    "amount_uzs": 1207500,
+    "rate": 12000,
+    "note": "IYB MOBILE EXCHANGE, UZ",
+    "pay_method": "card"
   }
 ]
