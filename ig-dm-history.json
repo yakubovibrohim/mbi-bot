@@ -2421,6 +2421,24 @@
     "role": "assistant",
     "content": "Подскажу! Что планируете — кухню, шкаф или спальню? И какие размеры?"
    }
+  ],
+  "1750609979445126": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Канчага бити бу жой\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHeFaGxA47W] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум! Ошхонами, шкафми — нима керак эди? Ўлчамини айтсангиз, тахминий нарх айтиб берамиз 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz ovozli xabar yubordi]\n[Mijoz ovozli xabar yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Овозли хабарни эшита олмаяпман 😊 Ёзиб юборсангиз, тезда жавоб берамиз!"
+   }
   ]
  },
  "activity": {
@@ -2887,6 +2905,11 @@
   },
   "1374406501316725": {
    "lastClientAt": 1783498393815,
+   "followedUp": false,
+   "fu3": false
+  },
+  "1750609979445126": {
+   "lastClientAt": 1783500445809,
    "followedUp": false,
    "fu3": false
   }
