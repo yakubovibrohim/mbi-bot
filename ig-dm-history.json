@@ -2559,6 +2559,16 @@
     "role": "assistant",
     "content": "Хоп, бемалол 👍🏻\n\nРақамингизни шу ерга ёзиб қолдиринг, Иброхим ака ўзи боғланади. Бизнинг рақам ҳам: +998 91 135 44 66"
    }
+  ],
+  "2435533076923862": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Shu ichida turganda hovo aylanmasidan qizib ketmaydimi. Haladilnikniyam tiqib qoyshadi bazila\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHeFaGxA47W] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Savol juda o'rinli 😊\n\nHavo aylanishi (ventilyatsiya) loyiha bosqichida hisobga olinadi — shkafda maxsus teshiklar qoldiriladi. Muzlatgich uchun ham alohida joy ajratiladi, havo chiqish joyi mo'ljallanadi. Shuning uchun qizib qolish muammosi bo'lmaydi.\n\nSiz ham oshxona qilmoqchimisiz? O'lcham taxminan qancha?"
+   }
   ]
  },
  "activity": {
@@ -3050,6 +3060,11 @@
   },
   "1344245621150942": {
    "lastClientAt": 1783505780661,
+   "followedUp": false,
+   "fu3": false
+  },
+  "2435533076923862": {
+   "lastClientAt": 1783507150299,
    "followedUp": false,
    "fu3": false
   }
