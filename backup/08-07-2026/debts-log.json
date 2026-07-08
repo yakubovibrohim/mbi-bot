@@ -1,0 +1,72 @@
+[
+  {
+    "id": "mqi1io5kwqhl",
+    "dir": "out",
+    "name": "Olim aka ish (kottasi)",
+    "amount_uzs": 12000000,
+    "paid_uzs": 2400000,
+    "date": "17.06.2026",
+    "note": "oyliklar fevral mart"
+  },
+  {
+    "id": "mqi1x8bswolm",
+    "dir": "out",
+    "name": "Rustam aka mebel usta",
+    "amount_uzs": 10800000,
+    "paid_uzs": 0,
+    "date": "17.06.2026",
+    "note": "obshiy hamasi bo’lib"
+  },
+  {
+    "id": "mqi2726u7odo",
+    "dir": "out",
+    "name": "Aziz aka mebelchi",
+    "amount_uzs": 1936000,
+    "paid_uzs": 1200000,
+    "date": "17.06.2026",
+    "note": "Oylik qarz"
+  },
+  {
+    "id": "mqi2aghk0iuo",
+    "dir": "out",
+    "name": "Nazif dunyo",
+    "amount_uzs": 2811950,
+    "paid_uzs": 2811950,
+    "date": "17.06.2026",
+    "note": "Bohodir aka zina mebel"
+  },
+  {
+    "id": "mqi2cnateese",
+    "dir": "out",
+    "name": "Rustam akam",
+    "amount_uzs": 1596000,
+    "paid_uzs": 0,
+    "date": "17.06.2026",
+    "note": "may svet va arenda qoldiq summa"
+  },
+  {
+    "id": "mr81ag2s6k35",
+    "dir": "in",
+    "name": "Kale gallery",
+    "amount_uzs": 30000000,
+    "paid_uzs": 24000000,
+    "date": "05.07.2026",
+    "note": "2-etaj mebel",
+    "payments": [
+      {
+        "date": "05.07.2026",
+        "amount_uzs": 24000000
+      }
+    ],
+    "pay_date": "05.07.2026"
+  },
+  {
+    "id": "mr81gikgijn7",
+    "dir": "in",
+    "name": "Muhammadyunus",
+    "amount_uzs": 31800000,
+    "paid_uzs": 0,
+    "date": "05.07.2026",
+    "note": "mebel restavratsiya"
+  }
+]
