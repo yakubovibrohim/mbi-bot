@@ -74,8 +74,17 @@
     "dir": "in",
     "name": "Dilmurod aka",
     "amount_uzs": 6000000,
-    "paid_uzs": 0,
+    "paid_uzs": 2400000,
     "date": "08.07.2026",
-    "note": "Spalni mebel uchun"
+    "note": "Spalni mebel uchun",
+    "payments": [
+      {
+        "date": "08.07.2026",
+        "ts": "2026-07-08T10:33:19.051Z",
+        "amount_uzs": 2400000,
+        "pay_method": "card"
+      }
+    ],
+    "pay_date": "08.07.2026"
   }
 ]
