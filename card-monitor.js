@@ -54,10 +54,11 @@ async function restorePending() {
       if (data.lastReconcileDate) lastReconcileDate = data.lastReconcileDate;
     }
   } catch (e) {}
-  // javobsiz qolgan so'rovlarni qayta yuborish
+  // javobsiz qolgan so'rovlarni qayta yuborish (avval avto-bog'lashga urinamiz)
   for (const [id, p] of Object.entries(cardPending)) {
     try {
       if (p.step === 'note') { await askNote(id, p.kind, target()); }
+      else if (p.dir === 'in' && await tryAutoLink(p)) { delete cardPending[id]; await persist(); }
       else { await reAsk(id); }
     } catch (e) {}
   }
@@ -420,6 +421,9 @@ async function remindStalePending() {
     const base = p.remindedAt || p.askedAt || 0;
     if (!base || now - base < TWO_H) continue;
     p.remindedAt = now;
+    if (p.step !== 'note' && p.dir === 'in') {
+      try { if (await tryAutoLink(p)) { delete cardPending[id]; await persist(); continue; } } catch (e) {}
+    }
     try {
       await deps.msg(target(), `⏰ *Eslatma:* quyidagi karta tranzaksiyasi hali tasniflanmagan:`);
       if (p.step === 'note') await askNote(id, p.kind, target());
