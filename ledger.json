@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-08T08:38:09.165Z",
+  "updated": "2026-07-08T09:18:22.380Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 163485065,
+  "balance_uzs": 163168065,
   "totals_after_opening": {
     "kirim": 48300000,
-    "chiqim": 59982193,
+    "chiqim": 60299193,
     "by_category": {
       "office": 526000,
-      "personal": 31130428,
+      "personal": 31447428,
       "staff_advance": 11833920,
       "deal_payment": 24000000,
       "deal_expense": 16491845,
@@ -698,7 +698,7 @@
       "category": "office",
       "category_uz": "Ishxona",
       "amount_uzs": 26000,
-      "name": "💳 Shaxsiy xarajat, taksi 42000.",
+      "name": "💳 Ovqat (YandexGo Eats)",
       "pay": "karta",
       "src": "office"
     },
@@ -722,6 +722,28 @@
       "amount_uzs": 13000,
       "name": "suv",
       "pay": "naqd",
+      "src": "personal"
+    },
+    {
+      "date": "08.07.2026",
+      "time": "13:40",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 42000,
+      "name": "💳 taksi",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "08.07.2026",
+      "time": "13:43",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 275000,
+      "name": "💳 Wifi oylik to'lov",
+      "pay": "karta",
       "src": "personal"
     },
     {
