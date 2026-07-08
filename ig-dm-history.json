@@ -1606,6 +1606,22 @@
    {
     "role": "assistant",
     "content": "Qancha metr va nechta etaj — 2 etajmi, 3 etaj?"
+   },
+   {
+    "role": "user",
+    "content": "Ofisilaga boraman"
+   },
+   {
+    "role": "assistant",
+    "content": "Marhamat, kelib ko'ring 👍🏻\n\nKelishdan oldin Ibrohim aka bilan oldindan kelishib qo'ysangiz qulay bo'ladi: +998 91 135 44 66"
+   },
+   {
+    "role": "user",
+    "content": "Ok"
+   },
+   {
+    "role": "assistant",
+    "content": "Telefon raqamingizni qoldirsangiz, Ibrohim aka o'zi qo'ng'iroq qilib, qulay vaqtni kelishib oladi 😊"
    }
   ]
  },
@@ -1911,7 +1927,7 @@
    "followedUp": false
   },
   "1644982046586736": {
-   "lastClientAt": 1783534529606,
+   "lastClientAt": 1783534583331,
    "followedUp": false
   }
  }
