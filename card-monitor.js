@@ -98,8 +98,59 @@ function parseCardMsg(text) {
   return { dir: isOut ? 'out' : 'in', amtUzs, place, rawBalance, date, title: firstLine, card4 };
 }
 
+// ── Avto-bog'lash: yangi kirim = allaqachon yozilgan qarz/mijoz to'lovimi? ──
+async function tryAutoLink(tx) {
+  if (tx.dir !== 'in') return false; // hozircha faqat kirim
+  try {
+    const dbR = await deps.ghRead('debts-log.json');
+    const dlR = await deps.ghRead('deals-log.json');
+    const cands = [];
+    for (const d of (dbR.data || [])) {
+      if (d.dir !== 'in') continue; // kirim faqat qarzdor to'loviga mos
+      for (const p of (d.payments || [])) {
+        if (p.cardLinked) continue;
+        if (p.date !== tx.date) continue;
+        if ((p.amount_uzs || 0) !== tx.amtUzs) continue;
+        if (p.pay_method && p.pay_method !== 'card') continue;
+        cands.push({ kind: "qarz to'lovi", name: d.name, p, file: 'debts-log.json', R: dbR });
+      }
+    }
+    for (const o of (dlR.data || [])) {
+      for (const p of (o.payments || [])) {
+        if (p.cardLinked) continue;
+        if (p.date !== tx.date) continue;
+        if ((p.amount_uzs || 0) !== tx.amtUzs) continue;
+        if (p.pay_method && p.pay_method !== 'card') continue;
+        cands.push({ kind: "mijoz to'lovi", name: o.client, p, file: 'deals-log.json', R: dlR });
+      }
+    }
+    if (cands.length !== 1) return false; // 0 yoki shubhali (2+) — odatdagidek so'raymiz
+    const c = cands[0];
+    c.p.cardLinked = true; c.p.pay_method = 'card';
+    await deps.ghPut(c.file, JSON.stringify(c.R.data, null, 2), c.R.sha, 'card auto-link: ' + c.name);
+    markResolved({ date: tx.date, dir: tx.dir, amtUzs: tx.amtUzs });
+    await persist();
+    await deps.msg(target(), `🔗 *Avtomatik bog'landi:* 🟢 ${deps.fmtUzs(tx.amtUzs)} so'm kirim = ${c.name} (${c.kind}, allaqachon yozilgan). Qayta so'ralmaydi.`);
+    return true;
+  } catch (e) { console.error('tryAutoLink:', e.message); return false; }
+}
+
+// ── Tashqaridan (bot menyusidan yozilganda) ochiq karta savolini yopish ──
+async function resolveExternally(amtUzs, dir, label) {
+  try {
+    const ids = Object.keys(cardPending).filter(k => { const p = cardPending[k]; return p.amtUzs === amtUzs && p.dir === dir; });
+    if (ids.length !== 1) return false; // 0 yoki shubhali — tegmaymiz
+    const p = cardPending[ids[0]];
+    markResolved(p);
+    delete cardPending[ids[0]]; await persist();
+    try { await deps.msg(target(), `🔗 *Karta savoli avtomatik yopildi:* ${deps.fmtUzs(amtUzs)} so'm = ${label} (menyudan yozildi).`); } catch (e) {}
+    return true;
+  } catch (e) { console.error('resolveExternally:', e.message); return false; }
+}
+
 // ── Tranzaksiya kelganda admin'ga tugmali savol ──
 async function askClassify(tx) {
+  if (await tryAutoLink(tx)) return;
   const id = shortId();
   cardPending[id] = { ...tx, step: 'type', askedAt: Date.now() };
   await persist();
@@ -316,7 +367,7 @@ async function saveDealPayment(id, dealId) {
   const o = data.find(x => x.id === dealId);
   if (!o) { await deps.msg(target(), '⚠️ Buyurtma topilmadi.'); delete cardPending[id]; await persist(); return; }
   if (!Array.isArray(o.payments)) o.payments = [];
-  o.payments.push({ date: p.date, ts: new Date().toISOString(), amount_uzs: p.amtUzs, note: '💳 karta', pay_method: 'card' });
+  o.payments.push({ date: p.date, ts: new Date().toISOString(), amount_uzs: p.amtUzs, note: '💳 karta', pay_method: 'card', cardLinked: true });
   await deps.ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, `card deal-payment: ${o.client} ${p.amtUzs}`);
   markResolved(p);
   delete cardPending[id]; await persist();
@@ -331,9 +382,10 @@ async function saveDebtPayment(id, debtId, dir) {
   if (!d) { await deps.msg(target(), '⚠️ Qarz topilmadi.'); delete cardPending[id]; await persist(); return; }
   d.paid_uzs = (d.paid_uzs || 0) + p.amtUzs;
   if (!Array.isArray(d.payments)) d.payments = [];
-  d.payments.push({ date: p.date, ts: new Date().toISOString(), amount_uzs: p.amtUzs, pay_method: 'card' });
+  d.payments.push({ date: p.date, ts: new Date().toISOString(), amount_uzs: p.amtUzs, pay_method: 'card', cardLinked: true });
   d.pay_date = p.date;
   await deps.ghPut('debts-log.json', JSON.stringify(data, null, 2), sha, `card debt-${dir}: ${d.name} ${p.amtUzs}`);
+  markResolved(p);
   delete cardPending[id]; await persist();
   const remain = (d.amount_uzs || 0) - d.paid_uzs;
   await deps.msg(target(), `✅ ${dir === 'in' ? '📥 Qarzdor to\'lovi' : '🔴 Qarz to\'lovi'} (${d.name}): ${deps.fmtUzs(p.amtUzs)} so'm (💳 karta)\nQolgan qarz: ${deps.fmtUzs(remain > 0 ? remain : 0)} so'm`);
@@ -483,4 +535,4 @@ async function start(dependencies, cfg) {
   }
 }
 
-module.exports = { start, handleCallback, tryTakeNote, cardPending };
+module.exports = { start, handleCallback, tryTakeNote, cardPending, resolveExternally };

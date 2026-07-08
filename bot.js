@@ -586,8 +586,13 @@ async function paySave(c, id, amountUzs) {
   const { data, sha, idx } = await findDeal(id);
   if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return; }
   data[idx].payments = data[idx].payments || [];
-  data[idx].payments.push({ id: uid(), date: todayStr(), ts: new Date().toISOString(), amount_uzs: amountUzs, rate: USD_UZS, note: '' });
+  let cardLink = false;
+  try { if (cardMon && cardMon.cardPending) cardLink = Object.values(cardMon.cardPending).filter(p => p.amtUzs === amountUzs && p.dir === 'in').length === 1; } catch (e) {}
+  const payRec = { id: uid(), date: todayStr(), ts: new Date().toISOString(), amount_uzs: amountUzs, rate: USD_UZS, note: '' };
+  if (cardLink) { payRec.pay_method = 'card'; payRec.cardLinked = true; payRec.note = '💳 karta'; }
+  data[idx].payments.push(payRec);
   await ghPut('deals-log.json', JSON.stringify(data, null, 2), sha, 'payment: ' + data[idx].client);
+  if (cardLink) { try { await cardMon.resolveExternally(amountUzs, 'in', data[idx].client + " to'lovi"); } catch (e) {} }
   await msg(c, `✅ To'lov qo'shildi: ${fmtUzs(amountUzs)} so'm\n📉 Qolgan qarz: *${fmtUzs(dealDebtUzs(data[idx]))} so'm*`);
   await showClientPayments(c, id);
 }
@@ -1742,10 +1747,17 @@ async function debtPaySave(c, id, amountUzs) {
   if (idx < 0) { await msg(c, '⚠️ Topilmadi.'); return; }
   data[idx].paid_uzs = (data[idx].paid_uzs || 0) + amountUzs;
   if (!Array.isArray(data[idx].payments)) data[idx].payments = [];
-  data[idx].payments.push({ date: todayStr(), ts: new Date().toISOString(), amount_uzs: amountUzs });
+  // Karta monitorida shu summali ochiq savol bo'lsa — bog'laymiz (ikki marta hisoblanmasin)
+  const dirTx = data[idx].dir === 'in' ? 'in' : 'out';
+  let cardLink = false;
+  try { if (cardMon && cardMon.cardPending) cardLink = Object.values(cardMon.cardPending).filter(p => p.amtUzs === amountUzs && p.dir === dirTx).length === 1; } catch (e) {}
+  const payRec = { date: todayStr(), ts: new Date().toISOString(), amount_uzs: amountUzs };
+  if (cardLink) { payRec.pay_method = 'card'; payRec.cardLinked = true; }
+  data[idx].payments.push(payRec);
   data[idx].pay_date = todayStr();
   const remain = (data[idx].amount_uzs || 0) - data[idx].paid_uzs;
   await ghPut('debts-log.json', JSON.stringify(data, null, 2), sha, 'debt pay: ' + data[idx].name);
+  if (cardLink) { try { await cardMon.resolveExternally(amountUzs, dirTx, data[idx].name + " qarz to'lovi"); } catch (e) {} }
   await msg(c, `✅ To'lov yozildi: ${fmtUzs(amountUzs)} so'm\n${remain > 0 ? '📉 Qoldi: ' + fmtUzs(remain) + ' so\'m' : '✔️ To\'liq yopildi!'}`);
   await showDebts(c);
 }
