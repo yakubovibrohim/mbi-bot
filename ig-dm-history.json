@@ -1,75 +1,5 @@
 {
  "histories": {
-  "1534839131449022": [
-   {
-    "role": "user",
-    "content": "Assalomu alekum"
-   },
-   {
-    "role": "assistant",
-    "content": "Va Alaykum Assalom, yaxshimisiz tuzumisiz 👍🏻\n\nIsmingiz nima?"
-   },
-   {
-    "role": "user",
-    "content": "Gazi tagini qlasilami maniki oq de"
-   },
-   {
-    "role": "assistant",
-    "content": "Ha, gazni tagini yopib qilamiz 👍🏻\n\nOshxona necha metr, 2 etajmi 3 etaj?"
-   },
-   {
-    "role": "assistant",
-    "content": "Gazingiz uchun hali ham yordamlasha olamiz, o'lchamingizni yuborsangiz narx aytib beramiz 🙂"
-   },
-   {
-    "role": "user",
-    "content": "[Mijoz rasm yubordi]"
-   },
-   {
-    "role": "assistant",
-    "content": "Ko'rdim 👍🏻\n\nBu oshxonaning pastki qismini qilmoqchimisiz, yoki to'liq oshxona — yuqori qism ham bilan?"
-   },
-   {
-    "role": "user",
-    "content": "Wu gazi õrniga tagi yõq gaz oloqchiman"
-   },
-   {
-    "role": "assistant",
-    "content": "Tushundim! Gaz o'rni ochiq qoladi, tagiga shkafcha qo'yilmaydi.\n\nOshxonaning umumiy uzunligi necha metr? Yuqori qism ham bormi?"
-   },
-   {
-    "role": "user",
-    "content": "Tortmaliy qanchaga tuwadi wunaqa rangi bõliw kerak"
-   },
-   {
-    "role": "assistant",
-    "content": "Tortmali shkaf — LMDF korpus, GTV furnitura bilan taxminan 110-140$/m² atrofida.\n\nOshxonaning umumiy o'lchami bormi? Uzunligi necha metr — aniq hisob chiqarib beramiz 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Faqat gazi tagni tortmaliy bõladi"
-   },
-   {
-    "role": "assistant",
-    "content": "Tushundim 👍🏻\n\nGaz tagidagi qismning eni necha sm yoki metr? Shuga qarab taxminiy narx aytib beramiz."
-   },
-   {
-    "role": "user",
-    "content": "[Mijoz video yubordi]"
-   },
-   {
-    "role": "assistant",
-    "content": "Video kelmadi menга, lekin tushundim — gaz tagiga tortmali shkafcha kerak 👍🏻\n\nEni necha sm bo'ladi o'sha qismning?"
-   },
-   {
-    "role": "assistant",
-    "content": "O'lchamini bilib olsak, tez hisob chiqarib beramiz 😊 Gaz tagidagi kenglik necha sm?"
-   },
-   {
-    "role": "assistant",
-    "content": "O'lchamlarni ko'rib chiqdingizmi? 😊"
-   }
-  ],
   "4427561740849593": [
    {
     "role": "user",
@@ -168,60 +98,6 @@
     "content": "Как ремонт, продвигается? 😊"
    }
   ],
-  "1645341503220415": [
-   {
-    "role": "user",
-    "content": "Шу ишилани погонный метр и қанчадан?"
-   },
-   {
-    "role": "assistant",
-    "content": "Ассалому Алейкум, яхшимисз 👍🏻\n\nПогонный метр нарх бермаймиз — oshxonaнинг умумий нархи ўлчам, этаж ва материалга қараб чиқади.\n\nОшхона неча метр ва 2 этажми, 3 этажми?"
-   },
-   {
-    "role": "user",
-    "content": "5 метр га 3 этаж"
-   },
-   {
-    "role": "assistant",
-    "content": "Тушунарли! Материал танлов бор — ЛМДФ, акрил, крашенный, шпон. Фурнитура GTV, Hettich ёки Blum.\n\nҚайси томонга афзаллик берасиз?"
-   },
-   {
-    "role": "user",
-    "content": "Крашенный Blum"
-   },
-   {
-    "role": "assistant",
-    "content": "Яхши танлов! Премиум вариант 👍🏻\n\n5 метр, 3 этаж, крашенный + Blum — тахминан **3250–3750$** атрофида чиқади.\n\nАниқ нархни ва лойиҳани Иброхим ака берadi. Телефон рақамингизни қолдиринг, ўзи ҳисоблаб қўнғироқ қилади 📞"
-   },
-   {
-    "role": "assistant",
-    "content": "Ҳисоб-китоб тайёр, шуни тасдиқлаб юборайми? 😊"
-   },
-   {
-    "role": "user",
-    "content": "Майли кўричи"
-   },
-   {
-    "role": "assistant",
-    "content": "Рақамингизни шу ерга ёзиб қолдиринг 😊\n\nИброхим аканинг рақами ҳам: +998 91 135 44 66"
-   },
-   {
-    "role": "user",
-    "content": "99 850 06 00"
-   },
-   {
-    "role": "assistant",
-    "content": "Раҳмат! Иброхим ака тез орада боғланади 👍🏻"
-   },
-   {
-    "role": "assistant",
-    "content": "Ассалому алайкум, Иброхим ака сиз билан боғлана олдими? 😊"
-   },
-   {
-    "role": "assistant",
-    "content": "Иброхим ака сиз билан боғланди ми? 😊"
-   }
-  ],
   "1518313619771727": [
    {
     "role": "user",
@@ -278,20 +154,6 @@
    {
     "role": "assistant",
     "content": "Ibrohim aka siz bilan bog'landimi? 😊"
-   }
-  ],
-  "1061962753170611": [
-   {
-    "role": "user",
-    "content": "Сколько стоит дизайн интерьера?"
-   },
-   {
-    "role": "assistant",
-    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%.\n\nКухни примерно от 1000$. Что планируете?"
-   },
-   {
-    "role": "assistant",
-    "content": "Кстати, дизайн интерьера у нас бесплатно при заказе мебели 😊 Какое помещение хотите оформить?"
    }
   ],
   "5415718685380238": [
@@ -1116,6 +978,10 @@
    {
     "role": "assistant",
     "content": "Кечирасиз, ҳисоблаб кўрдикми? 😊"
+   },
+   {
+    "role": "assistant",
+    "content": "Ошхонангиз ҳисобини чиқариб қўйдик, натижани кўришни хоҳлайсизми? 😊"
    }
   ],
   "4340627729523428": [
@@ -1126,6 +992,10 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%.\n\nКухни примерно от 1000$. Что планируете?"
+   },
+   {
+    "role": "assistant",
+    "content": "Ну что, определились с чем-нибудь? 😊"
    }
   ],
   "1018538037242931": [
@@ -1136,6 +1006,10 @@
    {
     "role": "assistant",
     "content": "Ва Алейкум Ассалом 👍🏻\n\nРаҳмат, лекин бизга шу хизмат керак эмас."
+   },
+   {
+    "role": "assistant",
+    "content": "Mebel tanlashda savol chiqib qolsa, shu yerdamiz 😊"
    }
   ],
   "1621837499277650": [
@@ -1212,6 +1086,10 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Напишите нам в личку — подскажем примерную стоимость и всё расскажем 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Ну что, посчитаем вашу кухню? 😊"
    }
   ],
   "1680784449637303": [
@@ -1834,18 +1712,8 @@
   ]
  },
  "activity": {
-  "1534839131449022": {
-   "lastClientAt": 1783354388741,
-   "followedUp": true,
-   "fu3": true
-  },
   "4427561740849593": {
    "lastClientAt": 1783396893673,
-   "followedUp": true,
-   "fu3": true
-  },
-  "1645341503220415": {
-   "lastClientAt": 1783355205124,
    "followedUp": true,
    "fu3": true
   },
@@ -1853,11 +1721,6 @@
    "lastClientAt": 1783403674737,
    "followedUp": true,
    "fu3": true
-  },
-  "1061962753170611": {
-   "lastClientAt": 1783355885042,
-   "followedUp": true,
-   "fu3": false
   },
   "5415718685380238": {
    "lastClientAt": 1783356856257,
@@ -1996,17 +1859,17 @@
   },
   "1572144184326217": {
    "lastClientAt": 1783442224057,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": true
   },
   "4340627729523428": {
    "lastClientAt": 1783441888733,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": false
   },
   "1018538037242931": {
    "lastClientAt": 1783442013164,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": false
   },
   "1621837499277650": {
@@ -2016,7 +1879,7 @@
   },
   "1429930878893970": {
    "lastClientAt": 1783442963074,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": false
   },
   "1680784449637303": {
