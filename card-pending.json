@@ -1,18 +1,6 @@
 {
   "lastMsgId": 95819,
   "pending": {
-    "mrc16frjdxx": {
-      "dir": "out",
-      "amtUzs": 225000,
-      "place": "OOO KOURI, TOSHKENT, DOSTOBOD MFY KORASUV BOYI KOChA",
-      "rawBalance": 2200127,
-      "date": "08.07.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1783512307279,
-      "kind": "personal"
-    },
     "mrc16gsthdj": {
       "dir": "out",
       "amtUzs": 30000,
@@ -60,6 +48,11 @@
       "date": "08.07.2026",
       "dir": "out",
       "amt": 25000
+    },
+    {
+      "date": "08.07.2026",
+      "dir": "out",
+      "amt": 225000
     }
   ],
   "lastBalances": {
