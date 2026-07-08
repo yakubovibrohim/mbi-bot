@@ -240,48 +240,6 @@
     "content": "Ну что, ремонт заканчивается? 😊"
    }
   ],
-  "2763984640634432": [
-   {
-    "role": "user",
-    "content": "Сколько стоит дизайн интерьера?"
-   },
-   {
-    "role": "assistant",
-    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%.\n\nКухни примерно от 1000$. Что планируете?"
-   },
-   {
-    "role": "user",
-    "content": "Под леснитса шкаф"
-   },
-   {
-    "role": "assistant",
-    "content": "Понял, шкаф под лестницу — нестандартный проект, делаем такое 👍🏻\n\nКакие размеры примерно — высота, ширина, глубина? И что будет внутри — одежда, вещи на хранение?"
-   },
-   {
-    "role": "user",
-    "content": "Веши хранения"
-   },
-   {
-    "role": "assistant",
-    "content": "Хорошо. Размеры есть примерно?"
-   },
-   {
-    "role": "user",
-    "content": "10 сткпкнка"
-   },
-   {
-    "role": "assistant",
-    "content": "Не совсем понял — 10 что именно? Метров, секций?"
-   },
-   {
-    "role": "assistant",
-    "content": "Кстати, вы про шкаф под лестницу спрашивали — если пришлёте размеры, сразу посчитаем стоимость 🙂"
-   },
-   {
-    "role": "assistant",
-    "content": "Вы определились с размерами? Готовы посчитать стоимость шкафа под лестницу 🙂"
-   }
-  ],
   "1877393679906083": [
    {
     "role": "user",
@@ -962,6 +920,10 @@
    {
     "role": "assistant",
     "content": "Btw, qaysi model yoki rang ko'proq yoqqan edi? Yordam berishga tayyormiz 😊"
+   },
+   {
+    "role": "assistant",
+    "content": "Nima bo'ldi, ko'rib chiqayapmizmi hali ham? 😊"
    }
   ],
   "1429930878893970": [
@@ -1116,6 +1078,10 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкум 👍🏻 Бу ошхона погонаж метри taxminan 800$ atrofida.\n\nByudjetga qarab arzonroq ham qilamiz — akril yoki EGGER fasad bilan 450-550$ atrofida chiqadi, sifat baribir a'lo.\n\nOshxonangiz necha metr?"
+   },
+   {
+    "role": "assistant",
+    "content": "O'lchamlarni aniqlab, narxni hisoblab beraymi? 😊"
    }
   ],
   "1404581371488692": [
@@ -1646,11 +1612,6 @@
    "followedUp": true,
    "fu3": true
   },
-  "2763984640634432": {
-   "lastClientAt": 1783370784664,
-   "followedUp": true,
-   "fu3": true
-  },
   "1877393679906083": {
    "lastClientAt": 1783393572814,
    "followedUp": true,
@@ -1763,7 +1724,7 @@
   },
   "1621837499277650": {
    "lastClientAt": 1783455000163,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": true
   },
   "1429930878893970": {
@@ -1808,7 +1769,7 @@
   },
   "870397559043478": {
    "lastClientAt": 1783455706152,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": false
   },
   "1404581371488692": {
