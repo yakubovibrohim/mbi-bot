@@ -68,5 +68,14 @@
     "paid_uzs": 0,
     "date": "05.07.2026",
     "note": "mebel restavratsiya"
+  },
+  {
+    "id": "mrbxw0hl6po9",
+    "dir": "in",
+    "name": "Dilmurod aka",
+    "amount_uzs": 6000000,
+    "paid_uzs": 0,
+    "date": "08.07.2026",
+    "note": "Spalni mebel uchun"
   }
 ]
