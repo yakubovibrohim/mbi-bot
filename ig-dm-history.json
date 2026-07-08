@@ -1500,6 +1500,10 @@
    {
     "role": "assistant",
     "content": "Xop 👍🏻 Kerak bo'lsa yozing!"
+   },
+   {
+    "role": "assistant",
+    "content": "Aytgancha, hozir omborda ajoyib aksiyalar bor — qiziqtiradigan mebel yo'nalishi bormi, yo'naltirtirib yuboray? 😊"
    }
   ],
   "2095005218061447": [
@@ -1692,6 +1696,10 @@
    {
     "role": "assistant",
     "content": "Qaysi loyiha haqida so'rayapsiz? Rasm yoki video yuboring, aniqroq aytaman 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Hali ham qiziqish bor ekanmi? 😊 Kuhnya bo'yicha narxni aniqlab bersam, telefon raqamingizni yozing"
    }
   ],
   "2391760691316465": [
@@ -1702,6 +1710,10 @@
    {
     "role": "assistant",
     "content": "Тошкент, Яккасарой, Қушбеги 6 📍\n\nКелинг, материалларни жонли кўрсатамиз 👍🏻 Ошхонами режалаштираётгансиз?"
+   },
+   {
+    "role": "assistant",
+    "content": "Hali ham qiziqish bormi? 😊 Savollaringiz bo'lsa, yordamga tayyormiz!"
    }
   ],
   "26642661412074937": [
@@ -1758,6 +1770,10 @@
    {
     "role": "assistant",
     "content": "Assalomu alaykum, Qarshiboʻyicha maʼlumot yetib bordimi? 🙂"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu alaykum! Qo'ng'iroq qila oldikmi, yoki qulay vaqt aytib qo'ying, o'zimiz bog'lanamiz 😊"
    }
   ],
   "1298409299040968": [
@@ -2154,6 +2170,10 @@
    {
     "role": "assistant",
     "content": "Хоп, бемалол 😊 Вақти келганда ёзинг, иншааллоҳ ёрдам беришга тайёрмиз 👍🏻\n\nРақамимиз: +998 91 135 44 66"
+   },
+   {
+    "role": "assistant",
+    "content": "Иншааллоҳ яхши имкониятга эришасиз тез орада 🤲 Режангизни амалга оширишда ёрдам берсак, хурсанд бўламиз 😊"
    }
   ],
   "1348624866600558": [
@@ -2264,6 +2284,10 @@
    {
     "role": "assistant",
     "content": "Хоп, кутамиз 😊"
+   },
+   {
+    "role": "assistant",
+    "content": "Иброхим ака боғлана олдими, ёки қулай вақт айтсангиз қўнғироқ қиламиз? 😊"
    }
   ],
   "963612633396565": [
@@ -2358,6 +2382,10 @@
    {
     "role": "assistant",
     "content": "Yaxshi. 3,5 metr, 3 etaj, akril fasad:\n\nArzon variant (akril + GTV): taxminan 1570–1600$ atrofida\nO'rta variant (akril + Hettich): taxminan 1900–2000$ atrofida\n\nAniq hisob-kitobni Ibrohim aka qilib beradi. Telefon raqamingizni qoldiring, u kishi o'zi bog'lanadi 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Akril oshxona bo'yicha qiziqib qoldinmi? 😊 Aniq narx va loyiha uchun raqamingizni yuborsangiz, hisob-kitobni tayyorlab yuboramiz!"
    }
   ],
   "1545034443688324": [
@@ -2386,6 +2414,10 @@
    {
     "role": "assistant",
     "content": "Bu loyihaning aniq o'lchami bizda yo'q — har bir oshxona buyurtmaga ko'ra individual qilinadi.\n\nSizning xonangiz nechanchi metr? Ayting, taxminiy narx ham aytib qo'yaman 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Salom! Savolingiz qolib ketdi — xonangiz nechanchi metr? Aytсangiz, hamma ma'lumotni beramiz 😊"
    }
   ],
   "1374406501316725": [
@@ -2518,6 +2550,14 @@
    {
     "role": "assistant",
     "content": "Тошкентdan Surxondaryoga yetkazib berish masofasi katta — bu haqda Ibrohim aka o'zi aniq javob beradi.\n\nTelefon raqamingizni qoldiring, u kishi bog'lanadi 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Хуп булади ремонтимиз тугасин богланаман иншоллох"
+   },
+   {
+    "role": "assistant",
+    "content": "Хоп, бемалол 👍🏻\n\nРақамингизни шу ерга ёзиб қолдиринг, Иброхим ака ўзи боғланади. Бизнинг рақам ҳам: +998 91 135 44 66"
    }
   ]
  },
@@ -2786,7 +2826,7 @@
   "1045068831353548": {
    "lastClientAt": 1783493343103,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "2095005218061447": {
    "lastClientAt": 1783414300122,
@@ -2825,12 +2865,12 @@
   },
   "1401964665076691": {
    "lastClientAt": 1783429228233,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": false
   },
   "2391760691316465": {
    "lastClientAt": 1783429471002,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": false
   },
   "26642661412074937": {
@@ -2840,7 +2880,7 @@
   },
   "1543177867279892": {
    "lastClientAt": 1783432307626,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": true
   },
   "1298409299040968": {
@@ -2921,7 +2961,7 @@
   "1404581371488692": {
    "lastClientAt": 1783489863939,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "1348624866600558": {
    "lastClientAt": 1783477101905,
@@ -2936,7 +2976,7 @@
   "1002268709284619": {
    "lastClientAt": 1783492550345,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "963612633396565": {
    "lastClientAt": 1783479603590,
@@ -2971,7 +3011,7 @@
   "1541164491070842": {
    "lastClientAt": 1783491064869,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "1545034443688324": {
    "lastClientAt": 1783490627054,
@@ -2981,7 +3021,7 @@
   "1753506935803641": {
    "lastClientAt": 1783494502463,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "1374406501316725": {
    "lastClientAt": 1783498393815,
@@ -3009,7 +3049,7 @@
    "fu3": false
   },
   "1344245621150942": {
-   "lastClientAt": 1783505704610,
+   "lastClientAt": 1783505780661,
    "followedUp": false,
    "fu3": false
   }
