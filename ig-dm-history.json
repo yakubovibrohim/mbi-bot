@@ -1589,6 +1589,16 @@
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%.\n\nКухни примерно от $1000. Что планируете?"
    }
+  ],
+  "1644982046586736": [
+   {
+    "role": "user",
+    "content": "Assalomu alaykum\nOka manzilila qata joylashgan"
+   },
+   {
+    "role": "assistant",
+    "content": "Va Alaykum Assalom, yaxshimisiz 👍🏻\n\nBiz Toshkentda, Yakkasaroy tumani, Qushbegi ko'chasi 6-uy. Kelib ko'rishingiz mumkin, materiallarni jonli ko'rsatamiz.\n\nNima rejalashtirmoqdasiz — oshxona, shkaf yoki yotoqxonami?"
+   }
   ]
  },
  "activity": {
@@ -1890,6 +1900,10 @@
   },
   "1555846252847388": {
    "lastClientAt": 1783514136128,
+   "followedUp": false
+  },
+  "1644982046586736": {
+   "lastClientAt": 1783534469730,
    "followedUp": false
   }
  }
