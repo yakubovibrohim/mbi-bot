@@ -942,6 +942,10 @@
    {
     "role": "assistant",
     "content": "Ibrohim aka siz bilan bog'landimi? 😊"
+   },
+   {
+    "role": "assistant",
+    "content": "Ibrohim aka siz bilan bog'landimi? 😊"
    }
   ],
   "2271444390287794": [
@@ -1262,6 +1266,10 @@
    {
     "role": "assistant",
     "content": "Hali ham oshxona mebelingiz bo'yicha yordam bera olamiz 😊 Telefon raqamingizni qoldiring, Ibrohim aka aniq narx va loyiha bilan bog'lanadi 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Oshxona mebelingiz bo'yicha gaplashgandik — 5 metr, 2 etaj, premium variant 😊 Hali ham qiziqish bor bo'lsa, telefon raqamingizni qoldiring, Ibrohim aka aniq loyiha va narx bilan bog'lanadi 👍🏻"
    }
   ],
   "993804773642305": [
@@ -2037,6 +2045,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкум 👍🏻 Бу ошхона погонаж метри taxminan 800$ atrofida.\n\nByudjetga qarab arzonroq ham qilamiz — akril yoki EGGER fasad bilan 450-550$ atrofida chiqadi, sifat baribir a'lo.\n\nOshxonangiz necha metr?"
    }
+  ],
+  "1404581371488692": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"👍👍👍👏👏👏\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHeFaGxA47W] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Раҳмат! 😊 Ошхона, шкаф ёки бошқа нарса режалаштиряпсизми?"
+   }
   ]
  },
  "activity": {
@@ -2188,7 +2206,7 @@
   },
   "1518313619771727": {
    "lastClientAt": 1783403674737,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": true
   },
   "2271444390287794": {
@@ -2258,7 +2276,7 @@
   },
   "2018998308822163": {
    "lastClientAt": 1783401711517,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": true
   },
   "993804773642305": {
@@ -2433,6 +2451,11 @@
   },
   "870397559043478": {
    "lastClientAt": 1783455706152,
+   "followedUp": false,
+   "fu3": false
+  },
+  "1404581371488692": {
+   "lastClientAt": 1783476882806,
    "followedUp": false,
    "fu3": false
   }
