@@ -2569,6 +2569,16 @@
     "role": "assistant",
     "content": "Savol juda o'rinli 😊\n\nHavo aylanishi (ventilyatsiya) loyiha bosqichida hisobga olinadi — shkafda maxsus teshiklar qoldiriladi. Muzlatgich uchun ham alohida joy ajratiladi, havo chiqish joyi mo'ljallanadi. Shuning uchun qizib qolish muammosi bo'lmaydi.\n\nSiz ham oshxona qilmoqchimisiz? O'lcham taxminan qancha?"
    }
+  ],
+  "853014094294597": [
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"[REEL:DZkxBJ6oYo0] +998 91 135 44 66 +998 95 190 44 66\"]\nAssalomu aleykum metri qanchadan"
+   },
+   {
+    "role": "assistant",
+    "content": "Ва Алейкум Ассалом, яхшимисиз 👍🏻\n\nБу ошхона AGT акрил фасад, Blum фурнитура, корпус ЛМДФ. Погонаж метри тахминан 650-750$ атрофида.\n\nОшхонангиз неча метр?"
+   }
   ]
  },
  "activity": {
@@ -3067,6 +3077,10 @@
    "lastClientAt": 1783507150299,
    "followedUp": false,
    "fu3": false
+  },
+  "853014094294597": {
+   "lastClientAt": 1783508379407,
+   "followedUp": false
   }
  }
 }
