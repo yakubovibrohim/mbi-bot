@@ -1606,6 +1606,10 @@
    {
     "role": "assistant",
     "content": "Assalomu Alaykum! Qaysi mebel kerak — oshxona, shkaf yoki yotoqxona? Va o'lchami bormi?"
+   },
+   {
+    "role": "assistant",
+    "content": "Narx bo'yicha savollaringiz bo'lsa, yordam berishga tayyorman 😊 Qaysi mebel qiziqtirgan edi?"
    }
   ],
   "1070415588888387": [
@@ -1652,6 +1656,10 @@
    {
     "role": "assistant",
     "content": "Ҳали ҳам шкаф масаласида ёрдам бера оламиз — 1000$ атрофида мос вариант топишга ҳаракат қиламиз 😊 Рақамингизни қолдиринг, Иброхим ака қўнғироқ қилади 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалом, шкаф масаласини ўйлаб кўрдингизми? 😊 Рақамингизни қолдиринг, Иброхим ака қўнғироқ қилиб аниқ нарх айтади 👍🏻"
    }
   ],
   "1960032048029788": [
@@ -1824,6 +1832,10 @@
    {
     "role": "assistant",
     "content": "Хоп, бемалол 😊"
+   },
+   {
+    "role": "assistant",
+    "content": "Замира, Иброхим ака боғлана олдими? 😊"
    }
   ],
   "1046538874728091": [
@@ -2220,6 +2232,10 @@
    {
     "role": "assistant",
     "content": "Раҳмат! Иброхим ака тез орада боғланади 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Иброхим ака сиз билан боғланиб қолдими? 😊"
    }
   ],
   "963612633396565": [
@@ -2616,12 +2632,12 @@
   },
   "2151802285606521": {
    "lastClientAt": 1783417858498,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": false
   },
   "1070415588888387": {
    "lastClientAt": 1783420015232,
-   "followedUp": false,
+   "followedUp": true,
    "fu3": true
   },
   "1960032048029788": {
@@ -2652,7 +2668,7 @@
   "1298409299040968": {
    "lastClientAt": 1783480032792,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "1046538874728091": {
    "lastClientAt": 1783438264207,
@@ -2742,7 +2758,7 @@
   "1002268709284619": {
    "lastClientAt": 1783479038917,
    "followedUp": false,
-   "fu3": false
+   "fu3": true
   },
   "963612633396565": {
    "lastClientAt": 1783479603590,
