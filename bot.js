@@ -86,7 +86,15 @@ function ghGet(path) {
     const req = https.request({
       hostname: 'api.github.com', path: '/repos/' + GH_REPO + '/contents/' + path, method: 'GET',
       headers: { 'Authorization': 'token ' + GH_TOKEN, 'User-Agent': 'mbi-bot', 'Accept': 'application/vnd.github.v3+json' }
-    }, r => { let d = ''; r.on('data', c => d += c); r.on('end', () => res(JSON.parse(d))); });
+    }, r => {
+      let d = ''; r.on('data', c => d += c);
+      r.on('end', () => {
+        let j = null; try { j = JSON.parse(d); } catch (e) {}
+        if (j && r.statusCode >= 200 && r.statusCode < 300) return res(j);
+        rej(new Error('ghGet ' + path + ': HTTP ' + r.statusCode + (j && j.message ? ' ' + String(j.message).slice(0, 80) : ' (JSON emas)')));
+      });
+    });
+    req.setTimeout(30000, () => req.destroy(new Error('ghGet timeout: ' + path)));
     req.on('error', rej); req.end();
   });
 }
@@ -103,7 +111,17 @@ function ghPutRaw(path, content, sha, commitMsg) {
     const req = https.request({
       hostname: 'api.github.com', path: '/repos/' + GH_REPO + '/contents/' + path, method: 'PUT',
       headers: { 'Authorization': 'token ' + GH_TOKEN, 'User-Agent': 'mbi-bot', 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) }
-    }, r => { let d = ''; r.on('data', c => d += c); r.on('end', () => res(JSON.parse(d))); });
+    }, r => {
+      let d = ''; r.on('data', c => d += c);
+      r.on('end', () => {
+        let j = null; try { j = JSON.parse(d); } catch (e) {}
+        if (j && r.statusCode >= 200 && r.statusCode < 300) return res(j);
+        const em = (r.statusCode === 409 || r.statusCode === 422)
+          ? 'sha eskirgan (parallel yozuv)' : (j && j.message ? String(j.message).slice(0, 80) : 'JSON emas');
+        rej(new Error('ghPut ' + path + ': HTTP ' + r.statusCode + ' ' + em));
+      });
+    });
+    req.setTimeout(30000, () => req.destroy(new Error('ghPut timeout: ' + path)));
     req.on('error', rej); req.write(body); req.end();
   });
 }
@@ -114,13 +132,20 @@ async function ghRead(file) {
   } catch (e) { return { data: [], sha: null }; }
 }
 async function ghWrite(file, newEntry, label) {
-  try {
-    const { data, sha } = await ghRead(file);
-    data.push(newEntry);
-    if (data.length > 500) data.splice(0, data.length - 500);
-    await ghPut(file, JSON.stringify(data, null, 2), sha, label || 'update');
-    return true;
-  } catch (e) { console.error('ghWrite error:', e.message); return false; }
+  for (let i = 1; i <= 2; i++) {
+    try {
+      const { data, sha } = await ghRead(file);
+      data.push(newEntry);
+      if (data.length > 500) data.splice(0, data.length - 500);
+      await ghPut(file, JSON.stringify(data, null, 2), sha, label || 'update');
+      return true;
+    } catch (e) {
+      console.error('ghWrite xato (' + i + '-urinish, ' + file + '):', e.message);
+      if (i === 2) { try { msg(ADMIN, '⚠️ *Saqlash xatosi*\n' + file + ': ' + e.message.slice(0, 120)); } catch (e2) {} }
+      await new Promise(r => setTimeout(r, 800));
+    }
+  }
+  return false;
 }
 async function ghReadAll(file) {
   const { data } = await ghRead(file);
@@ -5396,3 +5421,22 @@ loadIgHistory();
 
 
 
+
+
+// ─── Global xato ushlagichlar: bot qotmasin, xato ko'rinsin ───
+let lastErrAlert = 0;
+function reportFatal(kind, err) {
+  const m = kind + ': ' + (err && err.message ? err.message : String(err)).slice(0, 200);
+  console.error('🔴', m, err && err.stack ? '\n' + String(err.stack).slice(0, 400) : '');
+  if (Date.now() - lastErrAlert > 60000) {
+    lastErrAlert = Date.now();
+    try { msg(ADMIN, '🔴 *Bot ichki xato*\n' + m); } catch (e) {}
+  }
+}
+process.on('unhandledRejection', (e) => reportFatal('unhandledRejection', e));
+process.on('uncaughtException', (e) => reportFatal('uncaughtException', e));
+
+// ─── Tan narx bot keep-alive: free plan uxlamasligi uchun har 10 daqiqada ping ───
+setInterval(() => {
+  https.get('https://mbi-tannarx-bot.onrender.com', (r) => { r.resume(); }).on('error', () => {});
+}, 10 * 60 * 1000);
