@@ -223,5 +223,13 @@
     "rate": 12000,
     "type": "personal",
     "ts": "2026-07-07T05:47:37.871Z"
+  },
+  {
+    "date": "08.07.2026",
+    "note": "Wi-Fi router",
+    "amount_uzs": 3300000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-08T08:37:39.715Z"
   }
 ]
