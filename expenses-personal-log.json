@@ -289,5 +289,13 @@
     "pay_method": "card",
     "place": "OOO KOURI, TOSHKENT, DOSTOBOD MFY KORASUV BOYI KOChA",
     "ts": "2026-07-08T12:07:30.844Z"
+  },
+  {
+    "date": "08.07.2026",
+    "note": "suv uchun",
+    "amount_uzs": 46000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-08T18:21:18.792Z"
   }
 ]
