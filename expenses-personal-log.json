@@ -279,5 +279,15 @@
     "pay_method": "card",
     "place": "OOO KOURI, TOSHKENT, DOSTOBOD MFY KORASUV BOYI KOChA",
     "ts": "2026-07-08T12:07:18.912Z"
+  },
+  {
+    "date": "08.07.2026",
+    "note": "💳 Sigaret",
+    "amount_uzs": 30000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO KOURI, TOSHKENT, DOSTOBOD MFY KORASUV BOYI KOChA",
+    "ts": "2026-07-08T12:07:30.844Z"
   }
 ]
