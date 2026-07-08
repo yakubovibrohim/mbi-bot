@@ -2578,6 +2578,14 @@
    {
     "role": "assistant",
     "content": "Ва Алейкум Ассалом, яхшимисиз 👍🏻\n\nБу ошхона AGT акрил фасад, Blum фурнитура, корпус ЛМДФ. Погонаж метри тахминан 650-750$ атрофида.\n\nОшхонангиз неча метр?"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz ovozli xabar yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ovozli xabarni eshita olmayapman, yozib yuboring 😊"
    }
   ]
  },
@@ -3079,7 +3087,7 @@
    "fu3": false
   },
   "853014094294597": {
-   "lastClientAt": 1783508379407,
+   "lastClientAt": 1783508985546,
    "followedUp": false
   }
  }
