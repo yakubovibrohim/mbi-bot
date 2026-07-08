@@ -2439,6 +2439,16 @@
     "role": "assistant",
     "content": "Овозли хабарни эшита олмаяпман 😊 Ёзиб юборсангиз, тезда жавоб берамиз!"
    }
+  ],
+  "1494716461968221": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Нархи.\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHeFaGxA47W] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум! Шахсийга ёзинг, нархни айтиб берамиз 👍🏻"
+   }
   ]
  },
  "activity": {
@@ -2910,6 +2920,11 @@
   },
   "1750609979445126": {
    "lastClientAt": 1783500445809,
+   "followedUp": false,
+   "fu3": false
+  },
+  "1494716461968221": {
+   "lastClientAt": 1783501169207,
    "followedUp": false,
    "fu3": false
   }
