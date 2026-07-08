@@ -216,6 +216,23 @@
         "rate": 12000,
         "note": "",
         "source": "manual"
+      },
+      {
+        "id": "mrbykeavwgkd",
+        "date": "08.07.2026",
+        "ts": "2026-07-08T10:51:59.719Z",
+        "products": [
+          {
+            "name": "Dostavka",
+            "qty": 1,
+            "price_uzs": 400000,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 400000,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
       }
     ],
     "finished_date": null,
