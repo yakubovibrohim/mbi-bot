@@ -2291,6 +2291,16 @@
     "role": "assistant",
     "content": "Narxlarni bilaman 👍🏻 Nima kerak edi — oshxona, shkaf yoki yotoqxonamи?"
    }
+  ],
+  "1545034443688324": [
+   {
+    "role": "user",
+    "content": "Сколько стоит дизайн интерьера?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%.\n\nКухни примерно от $1000. Что планируете?"
+   }
   ]
  },
  "activity": {
@@ -2742,6 +2752,11 @@
   },
   "1541164491070842": {
    "lastClientAt": 1783489326792,
+   "followedUp": false,
+   "fu3": false
+  },
+  "1545034443688324": {
+   "lastClientAt": 1783490627054,
    "followedUp": false,
    "fu3": false
   }
