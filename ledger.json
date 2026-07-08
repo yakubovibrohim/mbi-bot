@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-08T08:34:40.291Z",
+  "updated": "2026-07-08T08:37:48.717Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 166798065,
+  "balance_uzs": 163498065,
   "totals_after_opening": {
     "kirim": 48300000,
-    "chiqim": 56669193,
+    "chiqim": 59969193,
     "by_category": {
       "office": 526000,
-      "personal": 27817428,
+      "personal": 31117428,
       "staff_advance": 11833920,
       "deal_payment": 24000000,
       "deal_expense": 16491845,
@@ -701,6 +701,17 @@
       "name": "💳 Shaxsiy xarajat, taksi 42000.",
       "pay": "karta",
       "src": "office"
+    },
+    {
+      "date": "08.07.2026",
+      "time": "13:37",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 3300000,
+      "name": "Wi-Fi router",
+      "pay": "naqd",
+      "src": "personal"
     },
     {
       "date": "08.07.2026",
