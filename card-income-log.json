@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "id": "mrbqe1ezl4c",
+    "date": "08.07.2026",
+    "name": "💳 PAYME P2P, UZ",
+    "amount_uzs": 300000,
+    "rate": 12000,
+    "note": "karta",
+    "pay_method": "card",
+    "ts": "2026-07-08T07:03:06.155Z"
+  }
+]
