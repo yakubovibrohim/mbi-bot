@@ -4739,8 +4739,17 @@ function igDetectHotLead(text) {
   return signals;
 }
 
+async function igGetUsername(uid) {
+  if (igUsernames[uid]) return igUsernames[uid];
+  try {
+    const j = await httpsGetJson(`https://graph.instagram.com/v21.0/${uid}?fields=username&access_token=${IG_TOKEN}`);
+    if (j && j.username) { igUsernames[uid] = '@' + j.username; return igUsernames[uid]; }
+  } catch (e) { console.error('igGetUsername:', e.message); }
+  return uid;
+}
+
 async function igNotifyHotLead(from, clientText, signals) {
-  const uname = igUsernames[from] || from;
+  const uname = await igGetUsername(from);
   const pm = (clientText || '').match(/\+?998[\s\-]?\d{2}[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}|\b\d{2}[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}\b/);
   const phone = pm ? pm[0] : '';
   let need = '';
