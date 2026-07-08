@@ -1,20 +1,20 @@
 {
-  "updated": "2026-07-08T10:33:27.889Z",
+  "updated": "2026-07-08T10:52:08.549Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 165568065,
+  "balance_uzs": 165168065,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 60299193,
+    "chiqim": 60699193,
     "by_category": {
       "office": 526000,
       "personal": 31447428,
       "staff_advance": 11833920,
       "deal_payment": 24000000,
-      "deal_expense": 16491845,
+      "deal_expense": 16891845,
       "debt_in": 26400000,
       "card_income": 300000
     }
@@ -690,6 +690,17 @@
       "name": "xotinga harajat",
       "pay": "naqd",
       "src": "personal"
+    },
+    {
+      "date": "08.07.2026",
+      "time": "15:51",
+      "dir": "out",
+      "category": "deal_expense",
+      "category_uz": "Buyurtma xarajati",
+      "amount_uzs": 400000,
+      "name": "Nodira opa olmazor: xarajat",
+      "pay": "naqd",
+      "src": "deals"
     },
     {
       "date": "08.07.2026",
