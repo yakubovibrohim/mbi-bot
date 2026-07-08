@@ -239,5 +239,25 @@
     "rate": 12000,
     "type": "personal",
     "ts": "2026-07-08T08:38:00.016Z"
+  },
+  {
+    "date": "08.07.2026",
+    "note": "💳 taksi",
+    "amount_uzs": 42000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "taksi",
+    "ts": "2026-07-08T08:40:00.000Z"
+  },
+  {
+    "date": "08.07.2026",
+    "note": "💳 Wifi oylik to'lov",
+    "amount_uzs": 275000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-07-08T08:43:00.000Z"
   }
 ]
