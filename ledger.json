@@ -1,13 +1,13 @@
 {
-  "updated": "2026-07-08T10:33:10.903Z",
+  "updated": "2026-07-08T10:33:27.889Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 163168065,
+  "balance_uzs": 165568065,
   "totals_after_opening": {
-    "kirim": 48300000,
+    "kirim": 50700000,
     "chiqim": 60299193,
     "by_category": {
       "office": 526000,
@@ -15,7 +15,7 @@
       "staff_advance": 11833920,
       "deal_payment": 24000000,
       "deal_expense": 16491845,
-      "debt_in": 24000000,
+      "debt_in": 26400000,
       "card_income": 300000
     }
   },
@@ -745,6 +745,17 @@
       "name": "💳 Wifi oylik to'lov",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "08.07.2026",
+      "time": "15:33",
+      "dir": "in",
+      "category": "debt_in",
+      "category_uz": "Qarzdor to'lovi",
+      "amount_uzs": 2400000,
+      "name": "Dilmurod aka",
+      "pay": "karta",
+      "src": "debts"
     },
     {
       "date": "08.07.2026",
