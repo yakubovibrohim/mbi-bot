@@ -1492,6 +1492,14 @@
    {
     "role": "assistant",
     "content": "Salom demayman deb aytgandingiz, shu sababli to'g'ri savol bilan boshlayapman 😊 Mebel borasida qandaydir ehtiyoj bor bo'lsa, yordam berishga tayyormiz — qiziqtirgan narsa bo'lsa aytavering!"
+   },
+   {
+    "role": "user",
+    "content": "Hop"
+   },
+   {
+    "role": "assistant",
+    "content": "Xop 👍🏻 Kerak bo'lsa yozing!"
    }
   ],
   "2095005218061447": [
@@ -2357,6 +2365,24 @@
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%.\n\nКухни примерно от $1000. Что планируете?"
    }
+  ],
+  "1753506935803641": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Shu mebel  necha metr joyga qo‘yilgan\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHeFaGxA47W] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ushbu loyihada aniq o'lchamni ayta olmayman — har bir oshxona buyurtmaga ko'ra o'lchanadi 😊\n\nSizning xonangiz nechanchi metr? Ayting, taxminiy narxni ham aytib qo'yaman 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz \"Shu mebel  necha metr joyga qo‘yilgan\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHeFaGxA47W] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Bu loyihaning aniq o'lchami bizda yo'q — har bir oshxona buyurtmaga ko'ra individual qilinadi.\n\nSizning xonangiz nechanchi metr? Ayting, taxminiy narx ham aytib qo'yaman 👍🏻"
+   }
   ]
  },
  "activity": {
@@ -2622,9 +2648,9 @@
    "fu3": false
   },
   "1045068831353548": {
-   "lastClientAt": 1783412863164,
-   "followedUp": true,
-   "fu3": true
+   "lastClientAt": 1783493343103,
+   "followedUp": false,
+   "fu3": false
   },
   "2095005218061447": {
    "lastClientAt": 1783414300122,
@@ -2813,6 +2839,11 @@
   },
   "1545034443688324": {
    "lastClientAt": 1783490627054,
+   "followedUp": false,
+   "fu3": false
+  },
+  "1753506935803641": {
+   "lastClientAt": 1783494502463,
    "followedUp": false,
    "fu3": false
   }
