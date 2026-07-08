@@ -1,6 +1,18 @@
 {
   "lastMsgId": 95819,
-  "pending": {},
+  "pending": {
+    "mrc9kzxbohx": {
+      "dir": "in",
+      "amtUzs": 2400000,
+      "place": "IYB P2P, UZ",
+      "rawBalance": 3657627,
+      "date": "08.07.2026",
+      "title": "Perevod na kartu",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1783526423519
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
