@@ -2290,6 +2290,14 @@
    {
     "role": "assistant",
     "content": "Narxlarni bilaman 👍🏻 Nima kerak edi — oshxona, shkaf yoki yotoqxonamи?"
+   },
+   {
+    "role": "user",
+    "content": "Oshxona mebel"
+   },
+   {
+    "role": "assistant",
+    "content": "Tushunарли. Neча metr va 2 etajmi, 3 etajmi?"
    }
   ],
   "1545034443688324": [
@@ -2751,7 +2759,7 @@
    "fu3": false
   },
   "1541164491070842": {
-   "lastClientAt": 1783489326792,
+   "lastClientAt": 1783490786273,
    "followedUp": false,
    "fu3": false
   },
