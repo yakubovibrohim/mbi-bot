@@ -4786,6 +4786,13 @@ async function igGetUsername(uid) {
     const j = await httpsGetJson(`https://graph.instagram.com/v21.0/${uid}?fields=username&access_token=${IG_TOKEN}`);
     if (j && j.username) { igUsernames[uid] = '@' + j.username; return igUsernames[uid]; }
   } catch (e) { console.error('igGetUsername:', e.message); }
+  // Zaxira: profil yopiq bo'lsa (230-xato) — conversations orqali
+  try {
+    const c = await httpsGetJson(`https://graph.instagram.com/v21.0/me/conversations?user_id=${uid}&fields=participants&access_token=${IG_TOKEN}`);
+    const parts = c && c.data && c.data[0] && c.data[0].participants && c.data[0].participants.data || [];
+    const p = parts.find(x => x.id === String(uid));
+    if (p && p.username) { igUsernames[uid] = '@' + p.username; return igUsernames[uid]; }
+  } catch (e) { console.error('igGetUsername fallback:', e.message); }
   return uid;
 }
 
