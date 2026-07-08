@@ -1,13 +1,13 @@
 {
-  "updated": "2026-07-08T05:07:57.059Z",
+  "updated": "2026-07-08T07:03:15.210Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 166524065,
+  "balance_uzs": 166824065,
   "totals_after_opening": {
-    "kirim": 48000000,
+    "kirim": 48300000,
     "chiqim": 56643193,
     "by_category": {
       "office": 500000,
@@ -15,7 +15,8 @@
       "staff_advance": 11833920,
       "deal_payment": 24000000,
       "deal_expense": 16491845,
-      "debt_in": 24000000
+      "debt_in": 24000000,
+      "card_income": 300000
     }
   },
   "movements": [
@@ -689,6 +690,17 @@
       "name": "xotinga harajat",
       "pay": "naqd",
       "src": "personal"
+    },
+    {
+      "date": "08.07.2026",
+      "time": "12:03",
+      "dir": "in",
+      "category": "card_income",
+      "category_uz": "Boshqa kirim (karta)",
+      "amount_uzs": 300000,
+      "name": "💳 PAYME P2P, UZ",
+      "pay": "karta",
+      "src": "card"
     }
   ]
 }
