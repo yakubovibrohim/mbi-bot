@@ -2709,7 +2709,7 @@ let secretsReady = (async function loadSecrets() {
         const sess = await getSecretKey('telegram_user_session');
         if (sess && sess.session) {
           await cardMon.start(
-            { ADMIN, msg, btn, api, ghReadAll, ghWrite, ghRead, ghPut, todayStr, fmtUzs, USD_UZS },
+            { ADMIN, msg, btn, api, ghReadAll, ghWrite, ghRead, ghPut, todayStr, fmtUzs, USD_UZS, getOfficeChat: () => officeChat },
             { session: sess.session, api_id: sess.api_id, api_hash: sess.api_hash }
           );
         } else { console.log('card-monitor: sessiya topilmadi'); }
@@ -4752,8 +4752,10 @@ async function igNotifyHotLead(from, clientText, signals) {
     ], 40, 'anthropic/claude-haiku-4.5') || '';
   } catch (e) {}
   const txt = `🔥 *ТАЙЁР МИЖОЗ*\n👤 ${uname}\n📦 Керак: ${need || '-'}\n🎯 Сигнал: ${signals.join(', ')}${phone ? '\n📞 ' + phone : ''}\n💬 "${(clientText||'').slice(0,150)}"\n🕐 ${new Date().toLocaleString('ru-RU',{timeZone:'Asia/Tashkent'})}`;
-  try { await msg(ADMIN, txt); } catch(e) { console.error('igNotifyHotLead:', e.message); }
-  try { if (officeChat && String(officeChat) !== String(ADMIN)) await agentMsg(officeChat, 'aziza', txt); } catch(e) {}
+  try {
+    if (officeChat) await agentMsg(officeChat, 'aziza', txt);
+    else await msg(ADMIN, txt);
+  } catch(e) { console.error('igNotifyHotLead:', e.message); }
   try { await leadsAppend({ ts: new Date().toISOString(), uid: from, username: uname, need, phone, signals, msg: (clientText || '').slice(0, 200), status: 'new' }); } catch(e) { console.error('lead save:', e.message); }
 }
 
