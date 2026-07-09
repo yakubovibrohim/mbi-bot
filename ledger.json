@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-09T09:07:02.214Z",
+  "updated": "2026-07-09T10:19:47.875Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 163066804,
+  "balance_uzs": 163020304,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 62800454,
+    "chiqim": 62846954,
     "by_category": {
       "office": 1733500,
-      "personal": 32341189,
+      "personal": 32387689,
       "staff_advance": 11833920,
       "deal_payment": 24000000,
       "deal_expense": 16891845,
@@ -864,6 +864,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 67737,
       "name": "💳 Kromka aval",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "09.07.2026",
+      "time": "15:19",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 46500,
+      "name": "💳 Taxi",
       "pay": "karta",
       "src": "personal"
     }
