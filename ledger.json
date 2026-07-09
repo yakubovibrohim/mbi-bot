@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-09T08:15:41.158Z",
+  "updated": "2026-07-09T08:50:43.272Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 163320565,
+  "balance_uzs": 163134541,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 62546693,
+    "chiqim": 62732717,
     "by_category": {
       "office": 1733500,
-      "personal": 32087428,
+      "personal": 32273452,
       "staff_advance": 11833920,
       "deal_payment": 24000000,
       "deal_expense": 16891845,
@@ -843,6 +843,17 @@
       "amount_uzs": 314000,
       "name": "material",
       "pay": "naqd",
+      "src": "personal"
+    },
+    {
+      "date": "09.07.2026",
+      "time": "13:50",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 186024,
+      "name": "💳 Rover destkiy mebel",
+      "pay": "karta",
       "src": "personal"
     }
   ]
