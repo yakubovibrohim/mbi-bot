@@ -77,8 +77,7 @@
         "date": "09.07.2026",
         "ts": "2026-07-09T13:58:54.753Z",
         "amount_usd": 25,
-        "entered_by": "admin",
-        "pending": true
+        "entered_by": "admin"
       }
     ],
     "attendance": [
