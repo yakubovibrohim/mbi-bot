@@ -1621,6 +1621,16 @@
     "role": "assistant",
     "content": "Здравствуйте! Мы в Ташкенте, Яккасарай, ул. Кушбеги 6.\n\nУточните — что именно планируете, кухню, шкаф или спальню? Подскажу примерную стоимость."
    }
+  ],
+  "1988689021791252": [
+   {
+    "role": "user",
+    "content": "Нечи пулга тушти шу туриши"
+   },
+   {
+    "role": "assistant",
+    "content": "Qaysi loyihani ko'rib yozyapsiz — oshxonami yoki boshqa mebel?"
+   }
   ]
  },
  "activity": {
@@ -1929,6 +1939,10 @@
   },
   "1563255352199373": {
    "lastClientAt": 1783554495106,
+   "followedUp": false
+  },
+  "1988689021791252": {
+   "lastClientAt": 1783577243090,
    "followedUp": false
   }
  }
