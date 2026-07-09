@@ -1,6 +1,18 @@
 {
   "lastMsgId": 95908,
-  "pending": {},
+  "pending": {
+    "mrda898mjaa": {
+      "dir": "out",
+      "amtUzs": 67737,
+      "place": "PAYME P2P, UZ",
+      "rawBalance": 1916366,
+      "date": "09.07.2026",
+      "title": "Spisanie c karty",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1783587974854
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
