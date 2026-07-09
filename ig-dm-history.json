@@ -1310,6 +1310,14 @@
    {
     "role": "assistant",
     "content": "Akril oshxona bo'yicha qiziqib qoldinmi? 😊 Aniq narx va loyiha uchun raqamingizni yuborsangiz, hisob-kitobni tayyorlab yuboramiz!"
+   },
+   {
+    "role": "user",
+    "content": "Pagona metri qancha sizlarda akril"
+   },
+   {
+    "role": "assistant",
+    "content": "Pogonaj metr narxini aytmasligimiz sababli to'g'ri hisob chiqarmaydi — chunki etaj, hajm, furnitura hammasi ta'sir qiladi.\n\nSizning holatda 3,5 metr, 3 etaj, akril — taxminan 1570–2000$ orasida chiqadi (furnituraga qarab).\n\nAniq raqamni Ibrohim aka beradi — raqamingizni qoldiring, o'zi qo'ng'iroq qiladi 😊"
    }
   ],
   "1545034443688324": [
@@ -1842,7 +1850,7 @@
    "fu3": false
   },
   "1541164491070842": {
-   "lastClientAt": 1783491064869,
+   "lastClientAt": 1783576889280,
    "followedUp": false,
    "fu3": true
   },
