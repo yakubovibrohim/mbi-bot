@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-09T08:50:43.272Z",
+  "updated": "2026-07-09T09:07:02.214Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 163134541,
+  "balance_uzs": 163066804,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 62732717,
+    "chiqim": 62800454,
     "by_category": {
       "office": 1733500,
-      "personal": 32273452,
+      "personal": 32341189,
       "staff_advance": 11833920,
       "deal_payment": 24000000,
       "deal_expense": 16891845,
@@ -853,6 +853,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 186024,
       "name": "💳 Rover destkiy mebel",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "09.07.2026",
+      "time": "14:06",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 67737,
+      "name": "💳 Kromka aval",
       "pay": "karta",
       "src": "personal"
     }
