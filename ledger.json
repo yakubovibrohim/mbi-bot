@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-09T05:50:51.848Z",
+  "updated": "2026-07-09T08:15:41.158Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 163634565,
+  "balance_uzs": 163320565,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 62232693,
+    "chiqim": 62546693,
     "by_category": {
       "office": 1733500,
-      "personal": 31773428,
+      "personal": 32087428,
       "staff_advance": 11833920,
       "deal_payment": 24000000,
       "deal_expense": 16891845,
@@ -833,6 +833,17 @@
       "name": "💳 PAYME P2P, UZ",
       "pay": "karta",
       "src": "card"
+    },
+    {
+      "date": "09.07.2026",
+      "time": "13:15",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 314000,
+      "name": "material",
+      "pay": "naqd",
+      "src": "personal"
     }
   ]
 }
