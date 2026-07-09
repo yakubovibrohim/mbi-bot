@@ -297,5 +297,13 @@
     "rate": 12000,
     "type": "personal",
     "ts": "2026-07-08T18:21:18.792Z"
+  },
+  {
+    "date": "09.07.2026",
+    "note": "material",
+    "amount_uzs": 314000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-09T08:15:32.129Z"
   }
 ]
