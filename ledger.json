@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-09T10:19:47.875Z",
+  "updated": "2026-07-09T12:36:16.449Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 163020304,
+  "balance_uzs": 162979304,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 62846954,
+    "chiqim": 62887954,
     "by_category": {
       "office": 1733500,
-      "personal": 32387689,
+      "personal": 32428689,
       "staff_advance": 11833920,
       "deal_payment": 24000000,
       "deal_expense": 16891845,
@@ -875,6 +875,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 46500,
       "name": "💳 Taxi",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "09.07.2026",
+      "time": "17:36",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 41000,
+      "name": "💳 taxi",
       "pay": "karta",
       "src": "personal"
     }
