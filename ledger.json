@@ -1,18 +1,18 @@
 {
-  "updated": "2026-07-09T13:44:26.158Z",
+  "updated": "2026-07-09T13:59:08.662Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 162979304,
+  "balance_uzs": 162679304,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 62887954,
+    "chiqim": 63187954,
     "by_category": {
       "office": 1733500,
       "personal": 32428689,
-      "staff_advance": 11833920,
+      "staff_advance": 12133920,
       "deal_payment": 24000000,
       "deal_expense": 16891845,
       "debt_in": 26400000,
@@ -888,6 +888,17 @@
       "name": "💳 taxi",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "09.07.2026",
+      "time": "18:58",
+      "dir": "out",
+      "category": "staff_advance",
+      "category_uz": "Xodim avansi",
+      "amount_uzs": 300000,
+      "name": "Diyor",
+      "pay": "naqd",
+      "src": "staff"
     }
   ]
 }
