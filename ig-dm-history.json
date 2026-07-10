@@ -609,6 +609,16 @@
     "role": "assistant",
     "content": "Qaysi loyihani ko'rib yozyapsiz — oshxonami yoki boshqa mebel?"
    }
+  ],
+  "1589375982651304": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"+++\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум! Яхшимисиз 😊\n\nБу премиум крашенний ошхона — корпус ЛМДФ, фасад 4 этапли Genc крашенний, фурнитура Blum (20 йил гарантия), столешница акрил тош — ҳеч қандай чок йўқ.\n\nОшхонангиз неча метр?"
+   }
   ]
  },
  "activity": {
@@ -736,6 +746,10 @@
   },
   "1988689021791252": {
    "lastClientAt": 1783577243090,
+   "followedUp": false
+  },
+  "1589375982651304": {
+   "lastClientAt": 1783696943223,
    "followedUp": false
   }
  }
