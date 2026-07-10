@@ -1,6 +1,18 @@
 {
   "lastMsgId": 96002,
-  "pending": {},
+  "pending": {
+    "mrf11gx561t": {
+      "dir": "out",
+      "amtUzs": 1212500,
+      "place": "IYB MOBILE EXCHANGE, UZ",
+      "rawBalance": 616366,
+      "date": "10.07.2026",
+      "title": "Platezh",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1783693474025
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
