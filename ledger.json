@@ -1,16 +1,16 @@
 {
-  "updated": "2026-07-10T13:19:21.864Z",
+  "updated": "2026-07-10T14:25:42.450Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 162679304,
+  "balance_uzs": 161466804,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 63187954,
+    "chiqim": 64400454,
     "by_category": {
-      "office": 1733500,
+      "office": 2946000,
       "personal": 32428689,
       "staff_advance": 12133920,
       "deal_payment": 24000000,
@@ -899,6 +899,17 @@
       "name": "Diyor",
       "pay": "naqd",
       "src": "staff"
+    },
+    {
+      "date": "10.07.2026",
+      "time": "19:25",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 1212500,
+      "name": "💳 Vizaga",
+      "pay": "karta",
+      "src": "office"
     }
   ]
 }
