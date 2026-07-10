@@ -4691,7 +4691,7 @@ Fasadlar maxsus KERAMOGRANIT bilan qoplangan — suvdan, olovdan, qirilish-chizi
 [REEL:C-X7PDfoAQJ] — OBKLADNOY KRASHENNIY MDF:
 Fasadlar obkladnoy uslubda ishlangan krashenniy MDF. Ichki qismlar (korpus) LMDF. Furnitura Blum — maxsus og'irlikka chidamli mexanizmlar, 20 yil garantiya. Bu loyiha taxminan 1700$ ga qilingan. Srok: krashenniy — 30 kun.
 
-Boshqa [REEL:...] kodi yoki tavsif kelsa — tavsifdan material/ko'rinishni olib bog'la, yetmasa aynan o'sha mebel bo'yicha aniqlashtiruvchi savol ber. Tavsifda narx bo'lsa ham ANIQ narx sifatida aytma — taxminiy qoidalar o'z kuchida.`;
+Boshqa [REEL:...] kodi yoki tavsif kelsa (yuqoridagi bazada YO'Q bo'lsa) — o'sha video bo'yicha HECH NARSA TAXMIN QILMA. Material, o'lcham, narx, ko'rinish haqida o'zingdan gap TO'QIMA. Faqat shunday de: "Бу лойиҳа бўйича Иброхим ака аниқ маълумот беради 👍🏻" va aniqlashtiruvchi savol ber (нима керак — ошхона/шкаф, ўлчами борми). Bazada bo'lmagan videoning materiali yoki narxини AYTISH QAT'IYAN TAQIQLANADI.`;
 
 // ─── Post/reel tavsifini olish (mijoz qaysi mebel haqida so'rayotganini bilish) ───
 async function igMediaCaption(mediaId) {
