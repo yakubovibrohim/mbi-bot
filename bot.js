@@ -3700,6 +3700,8 @@ const MON = {
   tnUrl: process.env.TN_BOT_URL || 'https://mbi-tannarx-bot.onrender.com',
   tnToken: process.env.TN_BOT_TOKEN || '',
   mbiSrv: process.env.MBI_BOT_SRV || 'srv-d8fvkdurnols73d2q720',
+  iboSrv: process.env.IBO_WATCHER_SRV || 'srv-d98jmlreo5us73dko760',
+  iboMaxSilence: parseInt(process.env.IBO_MAX_SILENCE || '1800', 10) * 1000, // 30 daqiqa jimlik = muammo
   webhookUrl: (process.env.WEBHOOK_BASE || 'https://mbi-bot-yw9q.onrender.com') + '/webhook',
   igUserId: '17841464753251739',
   interval: parseInt(process.env.MON_INTERVAL || '300', 10) * 1000,
@@ -3838,6 +3840,47 @@ async function monCheckTanNarx() {
     monAlert(name + '_tg', `⚠️ *${name}* Telegram'ga ulanmayapti (polling to'xtagan bo'lishi mumkin).`);
 }
 
+// IBO Trading watcher'ni tekshirish (background worker + heartbeat)
+async function monCheckIBO() {
+  const name = 'ibo-watcher';
+  if (!MON.iboSrv) return;
+
+  // 1) Render service holati: suspend/deploy muammosi bo'lsa jim tuzatadi
+  const state = await monRenderState(MON.iboSrv);
+  if (state === 'suspended') {
+    MON.fail[name] = (MON.fail[name] || 0) + 1;
+    if (await monRenderAction(MON.iboSrv, 'resume'))
+      msg(ADMIN, `🔧 *IBO watcher* to'xtagan edi — qayta yoqdim (${monTime()}).`).catch(() => {});
+    else
+      monAlert(name + '_resume', `🚨 *IBO watcher* to'xtagan, qayta yoqib bo'lmadi. Qo'lda tekshiring.`);
+    return;
+  }
+  if (state === 'error' || state === 'no_key') return;  // Render API muammosi — o'zimiznikimas
+
+  // 2) Heartbeat: watcher har tekshiruvda /ibo-ping yuboradi.
+  //    iboMaxSilence (30 daq) dan ko'p jim tursa — process qotgan/o'lgan.
+  //    Birinchi ping hali kelmagan bo'lsa (bot yangi start) — kutamiz, jarima yo'q.
+  if (MON.iboLastPing) {
+    const silent = Date.now() - MON.iboLastPing;
+    if (silent > MON.iboMaxSilence) {
+      MON.fail[name] = (MON.fail[name] || 0) + 1;
+      // avval jim restart
+      if (MON.fail[name] <= 2) {
+        if (await monRenderAction(MON.iboSrv, 'restart'))
+          msg(ADMIN, `🔧 *IBO watcher* ${Math.round(silent/60000)} daq jim edi — restart qildim (${monTime()}).`).catch(() => {});
+      } else {
+        monAlert(name + '_silent', `🚨 *IBO watcher* ${Math.round(silent/60000)} daq javob bermayapti, restart ham yordam bermadi. Qo'lda tekshiring.`);
+      }
+      return;
+    }
+  }
+
+  // Hammasi joyida — sanoqni tozalab qo'yamiz
+  if (MON.fail[name] > 0) { msg(ADMIN, `✅ *IBO watcher* yana ishlayapti (${monTime()}).`).catch(() => {}); }
+  MON.fail[name] = 0;
+  monClear(name + '_resume'); monClear(name + '_silent');
+}
+
 // mbi-bot tashqi qismlari (webhook + Instagram) — o'zini kuzatmaydi
 async function monCheckSelf() {
   // Webhook
@@ -3881,6 +3924,7 @@ async function monCheckSelf() {
 
 async function monitorTick() {
   try { await monCheckTanNarx(); } catch (e) { console.error('mon tannarx:', e.message); }
+  try { await monCheckIBO(); } catch (e) { console.error('mon ibo:', e.message); }
   try { await monCheckSelf(); } catch (e) { console.error('mon self:', e.message); }
   try { await pollIGComments(); } catch (e) { console.error('poll IG comments:', e.message); }
 }
@@ -5279,6 +5323,10 @@ http.createServer((req, res) => {
   if (req.method === 'POST' && req.url === '/instagram') {
     let b = ''; req.on('data', c => b += c);
     req.on('end', async () => { try { await handleIG(JSON.parse(b)); } catch(e) {} res.writeHead(200); res.end('OK'); }); return;
+  }
+  if (req.method === 'GET' && req.url === '/ibo-ping') {
+    MON.iboLastPing = Date.now();
+    res.writeHead(200); res.end('OK'); return;
   }
   if (req.method==='POST' && req.url==='/webhook') {
     let b=''; req.on('data',c=>b+=c);
