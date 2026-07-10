@@ -50,5 +50,15 @@
     "rate": 12000,
     "note": "IYB MOBILE EXCHANGE, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mrf12qk0pl4",
+    "date": "10.07.2026",
+    "ts": "2026-07-10T14:25:33.168Z",
+    "name": "💳 Vizaga",
+    "amount_uzs": 1212500,
+    "rate": 12000,
+    "note": "IYB MOBILE EXCHANGE, UZ",
+    "pay_method": "card"
   }
 ]
