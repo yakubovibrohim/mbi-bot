@@ -4699,8 +4699,10 @@ async function igMediaCaption(mediaId) {
   try {
     const j = await httpsGetJson(`https://graph.instagram.com/${mediaId}?fields=caption,permalink&access_token=${IG_TOKEN}`);
     if (!j) return '';
+    const REEL_ALIAS = { 'DHeFaGxA47W': 'DHGbB-eohGs' };
     const pmm = (j.permalink || '').match(/\/(?:reel|p)\/([A-Za-z0-9_-]+)/);
-    const tag = pmm ? '[REEL:' + pmm[1] + '] ' : '';
+    const _rcode = pmm ? (REEL_ALIAS[pmm[1]] || pmm[1]) : '';
+    const tag = _rcode ? '[REEL:' + _rcode + '] ' : '';
     const cap = j.caption ? String(j.caption).replace(/\s+/g, ' ').slice(0, 300) : '';
     return (tag + cap).trim();
   } catch (e) { return ''; }
