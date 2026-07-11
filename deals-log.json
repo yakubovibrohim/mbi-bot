@@ -266,7 +266,25 @@
         "note": "Avans"
       }
     ],
-    "expenses": [],
+    "expenses": [
+      {
+        "id": "mrgeyfgddzfd",
+        "date": "11.07.2026",
+        "ts": "2026-07-11T13:41:52.958Z",
+        "products": [
+          {
+            "name": "Обклад",
+            "qty": 22,
+            "price_uzs": 45900,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 1009800,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
+      }
+    ],
     "finished_date": null,
     "cancelled_date": null,
     "cancel_reason": ""
