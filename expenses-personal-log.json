@@ -345,5 +345,13 @@
     "pay_method": "card",
     "place": "OOO YANDEXGO UB, UZ",
     "ts": "2026-07-09T12:36:07.442Z"
+  },
+  {
+    "date": "11.07.2026",
+    "note": "рейка",
+    "amount_uzs": 180000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-11T13:43:23.596Z"
   }
 ]
