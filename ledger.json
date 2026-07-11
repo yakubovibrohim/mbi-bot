@@ -1,20 +1,20 @@
 {
-  "updated": "2026-07-11T13:01:06.753Z",
+  "updated": "2026-07-11T13:42:07.616Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 161466804,
+  "balance_uzs": 160457004,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 64400454,
+    "chiqim": 65410254,
     "by_category": {
       "office": 2946000,
       "personal": 32428689,
       "staff_advance": 12133920,
       "deal_payment": 24000000,
-      "deal_expense": 16891845,
+      "deal_expense": 17901645,
       "debt_in": 26400000,
       "card_income": 300000
     }
@@ -910,6 +910,17 @@
       "name": "💳 Vizaga",
       "pay": "karta",
       "src": "office"
+    },
+    {
+      "date": "11.07.2026",
+      "time": "18:41",
+      "dir": "out",
+      "category": "deal_expense",
+      "category_uz": "Buyurtma xarajati",
+      "amount_uzs": 1009800,
+      "name": "Sevara opa Taqachi: xarajat",
+      "pay": "naqd",
+      "src": "deals"
     }
   ]
 }
