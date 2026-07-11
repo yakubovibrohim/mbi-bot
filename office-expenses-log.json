@@ -60,5 +60,14 @@
     "rate": 12000,
     "note": "IYB MOBILE EXCHANGE, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mrgf18fvwbsf",
+    "date": "11.07.2026",
+    "ts": "2026-07-11T13:44:03.835Z",
+    "name": "Бензин",
+    "amount_uzs": 100000,
+    "rate": 12000,
+    "note": ""
   }
 ]
