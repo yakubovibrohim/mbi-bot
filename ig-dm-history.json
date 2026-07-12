@@ -724,6 +724,14 @@
    {
     "role": "assistant",
     "content": "Хоп, кутаман 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz rasm yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Раҳмат, кўрд��м. Расм бўйича узунлигини аниқ айта олмайман — неча метр эканини ёзиб юборинг, шунга қараб ҳисоблайман."
    }
   ]
  },
@@ -875,7 +883,7 @@
    "followedUp": false
   },
   "1525035905531019": {
-   "lastClientAt": 1783888051021,
+   "lastClientAt": 1783888159009,
    "followedUp": false
   }
  }
