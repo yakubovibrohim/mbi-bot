@@ -4876,7 +4876,41 @@ async function igNotifyHotLead(from, clientText, signals) {
 }
 
 
-// ── IG DM javob: Sonnet 4.6 (OpenRouter, prompt caching) → GROQ zaxira ──
+// ── IG DM javob: Opus 4.8 (Anthropic to'g'ridan, prompt caching) → GROQ zaxira ──
+// Anthropic Messages API. system alohida yuboriladi, messages faqat user/assistant.
+function anthropicChat(systemText, history, maxTokens) {
+  return new Promise((resolve) => {
+    const key = process.env.ANTHROPIC_API_KEY || '';
+    if (!key) return resolve(null);
+    const body = JSON.stringify({
+      model: 'claude-opus-4-8',
+      max_tokens: maxTokens || 400,
+      system: [{ type: 'text', text: systemText, cache_control: { type: 'ephemeral' } }],
+      messages: history.map(m => ({ role: m.role, content: m.content }))
+    });
+    const req = https.request({
+      hostname: 'api.anthropic.com', path: '/v1/messages', method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'Content-Length': Buffer.byteLength(body)
+      }
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => {
+        try {
+          const j = JSON.parse(d);
+          const t = (j.content || []).filter(b => b.type === 'text').map(b => b.text).join('').trim();
+          resolve(t || null);
+        } catch (e) { console.log('anthropicChat xato:', d.slice(0, 200)); resolve(null); }
+      });
+    });
+    req.on('error', (e) => { console.log('anthropicChat network:', e.message); resolve(null); });
+    req.write(body); req.end();
+  });
+}
+
 function orChatMessages(messages, maxTokens, model) {
   return new Promise((resolve) => {
     const key = process.env.OPENROUTER_KEY || process.env.OPENROUTER_API_KEY || '';
@@ -4916,13 +4950,12 @@ async function aiReply(text, userId) {
   history.push({ role: 'user', content: text });
   while (history.length > 30) history.shift();
 
-  // Sonnet 4.6 + prompt caching (system prompt keshdan o'qiladi — 10x arzon)
-  const systemCached = { role: 'system', content: [{ type: 'text', text: IG_SALES_SYSTEM + IG_EXTRA, cache_control: { type: 'ephemeral' } }] };
-  let reply = await orChatMessages([systemCached, ...history], 400, 'anthropic/claude-sonnet-4.6');
+  // Opus 4.8 + prompt caching (Anthropic to'g'ridan; system keshdan o'qiladi — arzon)
+  let reply = await anthropicChat(IG_SALES_SYSTEM + IG_EXTRA, history, 400);
 
-  // Zaxira 1: GROQ (Sonnet ishlamasa)
+  // Zaxira 1: GROQ (Opus ishlamasa)
   if (!reply) {
-    console.log('aiReply: Sonnet javob bermadi, GROQ zaxiraga o\'tildi');
+    console.log('aiReply: Opus javob bermadi, GROQ zaxiraga o\'tildi');
     reply = await groqChatMessages([{ role: 'system', content: IG_SALES_SYSTEM + IG_EXTRA }, ...history], 400);
   }
   // Zaxira 2: yumshoq javob + adminga xabar
