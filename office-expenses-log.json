@@ -69,5 +69,15 @@
     "amount_uzs": 100000,
     "rate": 12000,
     "note": ""
+  },
+  {
+    "id": "mri4rmbth4d",
+    "date": "12.07.2026",
+    "ts": "2026-07-12T18:32:11.465Z",
+    "name": "💳 Viza",
+    "amount_uzs": 363750,
+    "rate": 12000,
+    "note": "IYB MOBILE EXCHANGE, UZ",
+    "pay_method": "card"
   }
 ]
