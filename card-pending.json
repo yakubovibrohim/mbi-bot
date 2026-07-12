@@ -1,18 +1,6 @@
 {
   "lastMsgId": 96298,
-  "pending": {
-    "mrib87gfg05": {
-      "dir": "in",
-      "amtUzs": 2400000,
-      "place": "UZCARD OTHERS 2 ANY PAYNET, UZ",
-      "rawBalance": 2652616,
-      "date": "13.07.2026",
-      "title": "Perevod na kartu",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1783891983039
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -93,6 +81,11 @@
       "date": "12.07.2026",
       "dir": "out",
       "amt": 363750
+    },
+    {
+      "date": "13.07.2026",
+      "dir": "in",
+      "amt": 2400000
     }
   ],
   "lastBalances": {
