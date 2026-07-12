@@ -1,16 +1,16 @@
 {
-  "updated": "2026-07-11T13:44:16.504Z",
+  "updated": "2026-07-12T18:32:30.912Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 159470004,
+  "balance_uzs": 159106254,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 66397254,
+    "chiqim": 66761004,
     "by_category": {
-      "office": 3046000,
+      "office": 3409750,
       "personal": 32933689,
       "staff_advance": 12133920,
       "deal_payment": 24000000,
@@ -965,6 +965,17 @@
       "name": "Аркон",
       "pay": "naqd",
       "src": "personal"
+    },
+    {
+      "date": "12.07.2026",
+      "time": "23:32",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 363750,
+      "name": "💳 Viza",
+      "pay": "karta",
+      "src": "office"
     }
   ]
 }
