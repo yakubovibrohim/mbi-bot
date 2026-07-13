@@ -361,5 +361,15 @@
     "rate": 12000,
     "type": "personal",
     "ts": "2026-07-11T13:43:41.307Z"
+  },
+  {
+    "date": "13.07.2026",
+    "note": "💳 IVI UZBEKISTAN, UZ",
+    "amount_uzs": 12490,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IVI UZBEKISTAN, UZ",
+    "ts": "2026-07-13T17:33:45.854Z"
   }
 ]
