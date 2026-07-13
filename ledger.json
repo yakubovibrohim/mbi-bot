@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-13T13:14:06.066Z",
+  "updated": "2026-07-13T17:33:55.095Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 159106254,
+  "balance_uzs": 159093764,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 66761004,
+    "chiqim": 66773494,
     "by_category": {
       "office": 3409750,
-      "personal": 32933689,
+      "personal": 32946179,
       "staff_advance": 12133920,
       "deal_payment": 24000000,
       "deal_expense": 18283645,
@@ -976,6 +976,17 @@
       "name": "💳 Viza",
       "pay": "karta",
       "src": "office"
+    },
+    {
+      "date": "13.07.2026",
+      "time": "22:33",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 12490,
+      "name": "💳 IVI UZBEKISTAN, UZ",
+      "pay": "karta",
+      "src": "personal"
     }
   ]
 }
