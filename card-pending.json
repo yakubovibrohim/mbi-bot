@@ -1,6 +1,19 @@
 {
   "lastMsgId": 96372,
-  "pending": {},
+  "pending": {
+    "mrjd38izp07": {
+      "dir": "out",
+      "amtUzs": 12490,
+      "place": "IVI UZBEKISTAN, UZ",
+      "rawBalance": 2640126,
+      "date": "13.07.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "note",
+      "askedAt": 1783955576555,
+      "kind": "personal"
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
