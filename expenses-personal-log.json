@@ -371,5 +371,15 @@
     "pay_method": "card",
     "place": "IVI UZBEKISTAN, UZ",
     "ts": "2026-07-13T17:33:45.854Z"
+  },
+  {
+    "date": "14.07.2026",
+    "note": "💳 Shaxsiy",
+    "amount_uzs": 657150,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-07-14T15:31:11.459Z"
   }
 ]
