@@ -105,9 +105,12 @@ async function ghPut(path, content, sha, commitMsg) {
   if (FIN_FILES.includes(path)) scheduleLedgerRebuild();
   return r;
 }
-function ghPutRaw(path, content, sha, commitMsg) {
+// Bitta HTTP PUT (past daraja)
+function ghPutHttp(path, content, sha, commitMsg) {
   return new Promise((res, rej) => {
-    const body = JSON.stringify({ message: commitMsg, content: Buffer.from(content).toString('base64'), sha: sha });
+    const bodyObj = { message: commitMsg, content: Buffer.from(content).toString('base64') };
+    if (sha) bodyObj.sha = sha;
+    const body = JSON.stringify(bodyObj);
     const req = https.request({
       hostname: 'api.github.com', path: '/repos/' + GH_REPO + '/contents/' + path, method: 'PUT',
       headers: { 'Authorization': 'token ' + GH_TOKEN, 'User-Agent': 'mbi-bot', 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) }
@@ -115,15 +118,41 @@ function ghPutRaw(path, content, sha, commitMsg) {
       let d = ''; r.on('data', c => d += c);
       r.on('end', () => {
         let j = null; try { j = JSON.parse(d); } catch (e) {}
-        if (j && r.statusCode >= 200 && r.statusCode < 300) return res(j);
-        const em = (r.statusCode === 409 || r.statusCode === 422)
-          ? 'sha eskirgan (parallel yozuv)' : (j && j.message ? String(j.message).slice(0, 80) : 'JSON emas');
-        rej(new Error('ghPut ' + path + ': HTTP ' + r.statusCode + ' ' + em));
+        if (j && r.statusCode >= 200 && r.statusCode < 300) return res({ ok: true, json: j });
+        const conflict = (r.statusCode === 409 || r.statusCode === 422);
+        const em = conflict ? 'sha eskirgan (parallel yozuv)' : (j && j.message ? String(j.message).slice(0, 80) : 'JSON emas');
+        res({ ok: false, conflict, status: r.statusCode, msg: em });
       });
     });
     req.setTimeout(30000, () => req.destroy(new Error('ghPut timeout: ' + path)));
-    req.on('error', rej); req.write(body); req.end();
+    req.on('error', e => res({ ok: false, conflict: false, status: 0, msg: e.message }));
+    req.write(body); req.end();
   });
+}
+// SHA konfliktida yangi SHA olib qayta yozadi (5 urinish)
+async function ghPutSmart(path, content, sha, commitMsg) {
+  let curSha = sha;
+  for (let i = 1; i <= 5; i++) {
+    const r = await ghPutHttp(path, content, curSha, commitMsg);
+    if (r.ok) return r.json;
+    if (r.conflict) {
+      // yangi SHA ni olib qayta uramiz
+      try { const g = await ghGet(path); curSha = g.sha || null; } catch (e) { curSha = null; }
+      await new Promise(rr => setTimeout(rr, 300 + i * 250));
+      continue;
+    }
+    // konflikt emas — chinakam xato
+    throw new Error('ghPut ' + path + ': HTTP ' + r.status + ' ' + r.msg);
+  }
+  throw new Error('ghPut ' + path + ': 5 urinishdan keyin ham sha konflikti ketmadi');
+}
+// ── Serial write queue: barcha yozuvlar bittalab navbat bilan ──
+let _ghQueue = Promise.resolve();
+function ghPutRaw(path, content, sha, commitMsg) {
+  const task = _ghQueue.then(() => ghPutSmart(path, content, sha, commitMsg));
+  // navbatni uzmaslik uchun xatoni yutamiz (natija asl chaqiruvchiga qaytadi)
+  _ghQueue = task.catch(() => {});
+  return task;
 }
 async function ghRead(file) {
   try {
@@ -1276,12 +1305,28 @@ async function attCheckIn(c, timeHm, isLate) {
   const dt = todayStr();
   data[idx].attendance = data[idx].attendance || [];
   let rec = data[idx].attendance.find(a => a.date === dt);
-  const inTime = timeHm || nowHHMM();
+  let rawTime = timeHm || nowHHMM();
+  // Ish vaqti 09:00 dan boshlanadi: 09:00 dan oldin kelsa 09:00 deb yoziladi
+  const cameEarly = hmToMin(rawTime) < WORK_START;
+  const inTime = cameEarly ? '09:00' : rawTime;
   const late = hmToMin(inTime) > LATE_AFTER;
   if (rec) { rec.in = inTime; rec.late = late; } else { rec = { date: dt, in: inTime, out: null, late }; data[idx].attendance.push(rec); }
-  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'attendance in: ' + s.name);
+  // YOZUV KAFOLATI: tushmaguncha "Tasdiqlandi" chiqarmaymiz
+  try {
+    await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'attendance in: ' + s.name);
+  } catch (e) {
+    console.error('attCheckIn saqlash xato:', e.message);
+    await msg(c, '⚠️ Saqlashda muammo bo\'ldi, qayta urinilyapti... Agar «Tasdiqlandi» kelmasa, biroz kutib «✅ Keldim» ni yana bosing.');
+    try { await msg(ADMIN, '⚠️ attCheckIn saqlanmadi (' + s.name + '): ' + e.message.slice(0,100)); } catch(e2){}
+    return;
+  }
   // guruhga xabar (Botir botidan)
   if (officeChat) { try { await agentMsg(officeChat, 'botir', `🟢 ${s.name} ishga keldi — ${inTime}${late ? ' (kech)' : ''}`); } catch (e) {} }
+  // Erta kelganga izoh
+  if (cameEarly) {
+    await msg(c, `✅ Tasdiqlandi. Ish vaqti *9:00–18:00*.\nErta kelganingiz uchun rahmat 🙏 — ish vaqtingiz *9:00* dan hisoblanadi.`);
+    return;
+  }
   if (late) {
     orderState[c] = { step: 'late_reason', staffId: s.id, date: dt, inTime };
     await msg(c, `✅ Belgilandi: ishga keldingiz — *${inTime}*`);
@@ -1326,7 +1371,15 @@ async function attCheckOut(c, timeHm) {
   const early = hmToMin(outTime) < EARLY_BEFORE;
   rec.early = early;
   const d = computeDayHours(rec.in, rec.out, rec.leave_min);
-  await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'attendance out: ' + s.name);
+  // YOZUV KAFOLATI
+  try {
+    await ghPut('staff-log.json', JSON.stringify(data, null, 2), sha, 'attendance out: ' + s.name);
+  } catch (e) {
+    console.error('attCheckOut saqlash xato:', e.message);
+    await msg(c, '⚠️ Saqlashda muammo bo\'ldi. Agar «Tasdiqlandi» kelmasa, biroz kutib «🏁 Ketdim» ni yana bosing.');
+    try { await msg(ADMIN, '⚠️ attCheckOut saqlanmadi (' + s.name + '): ' + e.message.slice(0,100)); } catch(e2){}
+    return;
+  }
   // guruhga xabar (Botir botidan)
   if (officeChat) { try { await agentMsg(officeChat, 'botir', `🔴 ${s.name} ishdan ketdi — ${outTime}${early ? ' (erta)' : ''}`); } catch (e) {} }
   if (early) {
@@ -4053,7 +4106,7 @@ async function handle(upd) {
       if (cd.startsWith('stf_sal_')) { await staffSalStart(c, cd.slice(8)); return; }
       if (cd.startsWith('stf_del_')) { await staffDelete(c, cd.slice(8)); return; }
       // xodim check-in/out (yo'qlama javoblari)
-      if (cd === 'att_in_09') { const cur = nowHHMM(); const useTime = (hmToMin(cur) <= WORK_START) ? '09:00' : cur; await attCheckIn(c, useTime, false); return; }
+      if (cd === 'att_in_09') { await attCheckIn(c, nowHHMM(), false); return; }
       if (cd.startsWith('att_in_') && cd !== 'att_in_late') { await attCheckIn(c, null, false); return; }
       if (cd === 'att_in_late') { await attCheckInLate(c); return; }
       if (cd === 'att_absent') { await attMarkAbsent(c); return; }
