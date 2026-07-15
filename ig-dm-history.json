@@ -36,6 +36,14 @@
    {
     "role": "assistant",
     "content": "Aytgancha, hozir omborda ajoyib aksiyalar bor — qiziqtiradigan mebel yo'nalishi bormi, yo'naltirtirib yuboray? 😊"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"#instagramdesign #brend#logodesigner\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Rahmat, lekin dizayn xizmati bizga hozircha kerak emas 🙏"
    }
   ],
   "26642661412074937": [
@@ -835,7 +843,7 @@
  },
  "activity": {
   "1045068831353548": {
-   "lastClientAt": 1783493343103,
+   "lastClientAt": 1784139780779,
    "followedUp": false,
    "fu3": true
   },
