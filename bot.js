@@ -2959,6 +2959,9 @@ Vazifa berish (kimgadir topshiriq): {"action":"task","assignee":"aziza"|"sardor"
 Vazifani yopish: {"action":"task_done","id":raqam}
 Vazifani qayta ochish: {"action":"task_reopen","id":raqam}
 Vazifalar ro'yxatini so'rash: {"action":"tasks_list"}
+Uchrashuv / korishish / meeting / rejalashtirilgan ish (kim bilandir biror vaqtda uchrashish): {"action":"meeting","client":"kim bilan yoki nima","date":"YYYY-MM-DD","time":"HH:MM","text":"qisqa izoh","remind_before_min":30}
+Eslatma / esimdan chiqmasin / falon vaqtda falon ish (uchrashuv emas umumiy eslatma): {"action":"reminder","title":"qisqa nima","date":"YYYY-MM-DD","time":"HH:MM"}
+Meeting va reminder uchun sana qoidasi: bugun=joriy kun; ertaga=+1; indinga=+2; hafta kuni aytilsa keyingi eng yaqin osha kun; sana aytilmasa bugun; vaqt aytilmasa 09:00; otib ketgan vaqt bolsa keyingi mos kunga sur.
 Agar bu SAVOL, hisobot so'rovi yoki oddiy suhbat bo'lsa: {"action":"none"}
 Raqamlar: "2 mln"=2000000, "500 ming"=500000, "1.5 million"=1500000. Valyuta aytilmasa UZS. Dollar/$ bo'lsa USD.`;
 
@@ -3050,6 +3053,40 @@ async function officeApplyData(c, p) {
     return true;
   }
   if (p.action === 'tasks_list') { await listTasks(c); return true; }
+  // ── Uchrashuv (meeting) → meetings-log + iPhone Kalendar ──
+  if (p.action === 'meeting') {
+    const date = p.date || today;
+    const time = p.time || '09:00';
+    const client = p.client || p.text || 'Uchrashuv';
+    const text = p.text || client;
+    const title = '🤝 ' + date + ' ' + time + ' | ' + client + (text && text !== client ? ' | ' + text : '');
+    const entry = { date, time, title, text, client, type: 'meeting',
+      remind_before_min: Number(p.remind_before_min) || 30, reminded: false, ts: new Date().toISOString() };
+    await ghWrite('meetings-log.json', entry, 'office: meeting');
+    // iPhone Kalendarga (iCloud CalDAV)
+    let icloudOk = false;
+    try { icloudOk = await icloudAddReminder(client + (text && text !== client ? ' — ' + text : ''), date, time); } catch (e) { console.error('meeting icloud:', e.message); }
+    await agentMsg(c, 'botir', 'Yozib qoydim ✅\n🤝 *Uchrashuv:* ' + client +
+      '\n🕐 ' + date + ' ' + time +
+      (text && text !== client ? '\n📝 ' + text : '') +
+      '\n⏰ ' + (Number(p.remind_before_min) || 30) + ' daqiqa oldin eslataman' +
+      (icloudOk ? '\n📱 iPhone Kalendarga qoshildi' : '\n⚠️ iPhone Kalendarga yozilmadi (keyin qayta urinaman)'));
+    return true;
+  }
+  // ── Eslatma (reminder) → iPhone Kalendar ──
+  if (p.action === 'reminder') {
+    const date = p.date || today;
+    const time = p.time || '09:00';
+    const title = p.title || p.text || 'Eslatma';
+    let icloudOk = false;
+    try { icloudOk = await icloudAddReminder(title, date, time); } catch (e) { console.error('reminder icloud:', e.message); }
+    // meetings-log ga ham yozamiz — kunlik rejada korinishi uchun
+    await ghWrite('meetings-log.json', { date, time, title: '📌 ' + date + ' ' + time + ' | ' + title,
+      text: title, client: title, type: 'reminder', remind_before_min: 15, reminded: false, ts: new Date().toISOString() }, 'office: reminder');
+    await agentMsg(c, 'botir', (icloudOk ? '📱 *iPhone Kalendarga qoshildi:*' : '⚠️ iPhone Kalendarga yozilmadi, lekin rejaga qoshdim:') +
+      '\n' + title + '\n🕐 ' + date + ' ' + time);
+    return true;
+  }
   // ── Xodim davomati (kelmadi) — tasdiq bilan ──
   if (p.action === 'staff_absence' && p.worker) {
     const list = await readStaff();
