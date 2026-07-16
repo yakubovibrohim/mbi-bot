@@ -391,5 +391,15 @@
     "pay_method": "card",
     "place": "MULTICARD MUNIS, UZ",
     "ts": "2026-07-16T07:47:47.283Z"
+  },
+  {
+    "date": "16.07.2026",
+    "note": "💳 Taxi",
+    "amount_uzs": 37000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-07-16T13:51:43.861Z"
   }
 ]
