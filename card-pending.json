@@ -1,19 +1,6 @@
 {
   "lastMsgId": 96610,
-  "pending": {
-    "mrn7hvoeqjn": {
-      "dir": "out",
-      "amtUzs": 206000,
-      "place": "MULTICARD MUNIS, UZ",
-      "rawBalance": 776086,
-      "date": "16.07.2026",
-      "title": "Platezh",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1784188046750,
-      "kind": "personal"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -114,6 +101,11 @@
       "date": "16.07.2026",
       "dir": "out",
       "amt": 1000890
+    },
+    {
+      "date": "16.07.2026",
+      "dir": "out",
+      "amt": 206000
     }
   ],
   "lastBalances": {
