@@ -1,20 +1,20 @@
 {
-  "updated": "2026-07-16T04:30:54.474Z",
+  "updated": "2026-07-16T05:55:50.888Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 158436614,
+  "balance_uzs": 157435724,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 67430644,
+    "chiqim": 68431534,
     "by_category": {
       "office": 3409750,
       "personal": 33603329,
       "staff_advance": 12133920,
       "deal_payment": 24000000,
-      "deal_expense": 18283645,
+      "deal_expense": 19284535,
       "debt_in": 26400000,
       "card_income": 300000
     }
@@ -998,6 +998,17 @@
       "name": "💳 Shaxsiy",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "16.07.2026",
+      "time": "10:55",
+      "dir": "out",
+      "category": "deal_expense",
+      "category_uz": "Buyurtma xarajati",
+      "amount_uzs": 1000890,
+      "name": "Sevara opa Taqachi: 💳 PAYME P2P, UZ",
+      "pay": "karta",
+      "src": "deals"
     }
   ]
 }
