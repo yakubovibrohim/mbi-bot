@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-16T13:51:52.842Z",
+  "updated": "2026-07-16T23:45:20.457Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 157192724,
+  "balance_uzs": 156990724,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 68674534,
+    "chiqim": 68876534,
     "by_category": {
       "office": 3409750,
-      "personal": 33846329,
+      "personal": 34048329,
       "staff_advance": 12133920,
       "deal_payment": 24000000,
       "deal_expense": 19284535,
@@ -1029,6 +1029,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 37000,
       "name": "💳 Taxi",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "17.07.2026",
+      "time": "04:45",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 202000,
+      "name": "💳 Tok bor",
       "pay": "karta",
       "src": "personal"
     }
