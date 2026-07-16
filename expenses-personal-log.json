@@ -381,5 +381,15 @@
     "pay_method": "card",
     "place": "PAYME P2P, UZ",
     "ts": "2026-07-14T15:31:11.459Z"
+  },
+  {
+    "date": "16.07.2026",
+    "note": "💳 Shtraf byd",
+    "amount_uzs": 206000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "MULTICARD MUNIS, UZ",
+    "ts": "2026-07-16T07:47:47.283Z"
   }
 ]
