@@ -1,5 +1,5 @@
 {
-  "lastMsgId": 96598,
+  "lastMsgId": 96610,
   "pending": {},
   "resolved": [
     {
@@ -104,7 +104,7 @@
     }
   ],
   "lastBalances": {
-    "5893": 982086
+    "5893": 776086
   },
   "lastReconcileDate": "15.07.2026"
 }
