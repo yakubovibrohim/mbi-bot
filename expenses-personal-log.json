@@ -411,5 +411,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-07-16T23:45:11.499Z"
+  },
+  {
+    "date": "17.07.2026",
+    "note": "💳 Zaryadka",
+    "amount_uzs": 20200,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "CLICK OPLATA, UZ",
+    "ts": "2026-07-17T03:25:05.046Z"
   }
 ]
