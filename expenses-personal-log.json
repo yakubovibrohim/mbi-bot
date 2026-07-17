@@ -431,5 +431,15 @@
     "pay_method": "card",
     "place": "CLICK OPLATA, UZ",
     "ts": "2026-07-17T03:25:32.114Z"
+  },
+  {
+    "date": "17.07.2026",
+    "note": "💳 Sigaret",
+    "amount_uzs": 250000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO IMPERIAL TOBACCO, TOSHKENT, Pastki yuz MFY, Mekhrigiyo,2 to",
+    "ts": "2026-07-17T12:04:33.006Z"
   }
 ]
