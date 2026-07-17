@@ -1,19 +1,6 @@
 {
   "lastMsgId": 96718,
-  "pending": {
-    "mrow0f0jc9w": {
-      "dir": "out",
-      "amtUzs": 250000,
-      "place": "OOO IMPERIAL TOBACCO, TOSHKENT, Pastki yuz MFY, Mekhrigiyo,2 to",
-      "rawBalance": 145686,
-      "date": "17.07.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1784289688579,
-      "kind": "personal"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -139,6 +126,11 @@
       "date": "17.07.2026",
       "dir": "out",
       "amt": 121200
+    },
+    {
+      "date": "17.07.2026",
+      "dir": "out",
+      "amt": 250000
     }
   ],
   "lastBalances": {
