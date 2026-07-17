@@ -1,20 +1,6 @@
 {
   "lastMsgId": 96666,
-  "pending": {
-    "mro6wz8n1s9": {
-      "dir": "out",
-      "amtUzs": 121200,
-      "place": "CLICK OPLATA, UZ",
-      "rawBalance": 395686,
-      "date": "17.07.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1784247537767,
-      "remindedAt": 1784254766927,
-      "kind": "personal"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -135,6 +121,11 @@
       "date": "17.07.2026",
       "dir": "out",
       "amt": 20200
+    },
+    {
+      "date": "17.07.2026",
+      "dir": "out",
+      "amt": 121200
     }
   ],
   "lastBalances": {
