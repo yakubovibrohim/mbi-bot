@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-17T03:25:14.141Z",
+  "updated": "2026-07-17T03:25:40.991Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 156970524,
+  "balance_uzs": 156849324,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 68896734,
+    "chiqim": 69017934,
     "by_category": {
       "office": 3409750,
-      "personal": 34068529,
+      "personal": 34189729,
       "staff_advance": 12133920,
       "deal_payment": 24000000,
       "deal_expense": 19284535,
@@ -1050,6 +1050,17 @@
       "category": "personal",
       "category_uz": "Shaxsiy",
       "amount_uzs": 20200,
+      "name": "💳 Zaryadka",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "17.07.2026",
+      "time": "08:25",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 121200,
       "name": "💳 Zaryadka",
       "pay": "karta",
       "src": "personal"
