@@ -1,55 +1,5 @@
 {
  "histories": {
-  "1045068831353548": [
-   {
-    "role": "user",
-    "content": "Assalomu alaykum. Sahifangizni ko'rdim. Sizning biznesingiz uchun zamonaviy reklama bannerlari tayyorlayman. Xohlasangiz namunalarimni yuboraman. Men Canva dizaynerman.\nSizning biznesingiz uchun chiroyli reklama postlari, story va bannerlar tayyorlab bera olaman.\nAgar kerak bo‘lsa, yordam beraman 😊n DM"
-   },
-   {
-    "role": "assistant",
-    "content": "Rahmat taklif uchun, hozircha kerak emas 🙏"
-   },
-   {
-    "role": "user",
-    "content": "Mayli, rahmat javobingiz uchun. 😊 Hozircha kerak boʻlmasa ham, keyinchalik logo, banner yoki dizayn xizmatlari kerak boʻlsa, istalgan vaqtda murojaat qilishingiz mumkin. Sizni kutaman."
-   },
-   {
-    "role": "assistant",
-    "content": "Xop, yaxshi 👍🏻"
-   },
-   {
-    "role": "assistant",
-    "content": "Aytgancha, bizda hozir yangi mebel kolleksiyalarimiz bor — agar qiziqsangiz, ko'rsatib yuborishim mumkin 😊"
-   },
-   {
-    "role": "assistant",
-    "content": "Salom demayman deb aytgandingiz, shu sababli to'g'ri savol bilan boshlayapman 😊 Mebel borasida qandaydir ehtiyoj bor bo'lsa, yordam berishga tayyormiz — qiziqtirgan narsa bo'lsa aytavering!"
-   },
-   {
-    "role": "user",
-    "content": "Hop"
-   },
-   {
-    "role": "assistant",
-    "content": "Xop 👍🏻 Kerak bo'lsa yozing!"
-   },
-   {
-    "role": "assistant",
-    "content": "Aytgancha, hozir omborda ajoyib aksiyalar bor — qiziqtiradigan mebel yo'nalishi bormi, yo'naltirtirib yuboray? 😊"
-   },
-   {
-    "role": "user",
-    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"#instagramdesign #brend#logodesigner\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Rahmat, lekin dizayn xizmati bizga hozircha kerak emas 🙏"
-   },
-   {
-    "role": "assistant",
-    "content": "(bo'sh qator)"
-   }
-  ],
   "26642661412074937": [
    {
     "role": "user",
@@ -846,11 +796,6 @@
   ]
  },
  "activity": {
-  "1045068831353548": {
-   "lastClientAt": 1784139780779,
-   "followedUp": true,
-   "fu3": true
-  },
   "26642661412074937": {
    "lastClientAt": 1783522770205,
    "followedUp": false,
