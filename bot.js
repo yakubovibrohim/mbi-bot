@@ -4226,6 +4226,8 @@ async function handle(upd) {
       if (cd === 'exp_done') { if (orderState[c] && orderState[c].expProducts && orderState[c].expProducts.length) { await expSave(c); } else { await msg(c, '❗️ Kamida bitta mahsulot qo\'shing.'); if (orderState[c]) await expProductsMenu(c); } return; }
       // ── Yangi buyurtma oqimi tugmalari ──
       if (cd.startsWith('ord_')) { if (await orderHandleCallback(c, cd)) return; }
+      // Til/anketa oqimi — FAQAT haqiqiy mijozga (ulangan xodimga emas)
+      if (cd==='til_uz'||cd==='til_ru'||cd==='file_ha'||cd==='file_yoq'){ const wsCb = await staffByChat(c); if (wsCb) { await showWorkerPanel(c, wsCb); return; } }
       if (cd==='til_uz'){state[c]={lang:'uz',step:'ask_file'};await btn(c,'Sizda tayyor loyiha yoki xona rasmi bormi?',[[{text:'Ha, bor',callback_data:'file_ha'}],[{text:"Yo'q",callback_data:'file_yoq'}]]);}
       else if(cq.data==='til_ru'){state[c]={lang:'ru',step:'ask_file'};await btn(c,'U vas est gotoviy proekt?',[[{text:'Da, est',callback_data:'file_ha'}],[{text:'Net',callback_data:'file_yoq'}]]);}
       else if(cq.data==='file_ha'){const l=(state[c]||{}).lang||'uz';state[c]={lang:l,step:'waiting_file'};await msg(c,l==='uz'?'Fayl yuboring:':'Otpravte fayl:');}
@@ -4248,9 +4250,12 @@ async function handle(upd) {
     const t = upd.message.text || '';
 
     // ── Xodim reply-keyboard tugmalari (matn sifatida keladi) ──
-    if (!isAdmin && t && !orderState[c]) {
+    // MUHIM: bu tugmalar HAR DOIM ishlashi kerak — orderState/state osilib qolgan bo'lsa ham.
+    // Til-tanlash va boshqa fallbacklardan OLDIN, orderState shartisiz tekshiramiz.
+    if (!isAdmin && t && ['✅ Keldim','🏁 Ketdim','🙋 Javob so\'rash','💵 Hisobim','📅 Jadval','🏠 Bosh menyu'].includes(t)) {
       const ws = await staffByChat(c);
       if (ws) {
+        delete orderState[c]; // osilib qolgan holatni tozalaymiz
         if (t === '✅ Keldim') { await attCheckIn(c, nowHHMM(), false); const s2 = await staffByChat(c); if (s2) await showWorkerPanel(c, s2); return; }
         if (t === '🏁 Ketdim') { await attCheckOut(c, nowHHMM()); const s2 = await staffByChat(c); if (s2) await showWorkerPanel(c, s2); return; }
         if (t === '🙋 Javob so\'rash') { await showLeaveMenu(c, ws); return; }
@@ -4632,6 +4637,9 @@ async function handle(upd) {
     }
 
     if ((upd.message.photo || upd.message.document) && !isAdmin) {
+      // Ulangan xodim bo'lsa — mijoz oqimi (anketa/fayl) ISHLAMASIN.
+      const wsFile = await staffByChat(c);
+      if (wsFile) { const s3 = await staffByChat(c); if (s3) await showWorkerPanel(c, s3); return; }
       await msg(ADMIN, 'Yangi fayl! '+ism+' ('+un+') '+c);
       await fwd(ADMIN, c, upd.message.message_id);
       const s = state[c]||{};
@@ -4639,8 +4647,11 @@ async function handle(upd) {
       return;
     }
 
+    // Til menyusi faqat HAQIQIY yangi mijozga — ulangan xodimga EMAS.
     if (!(state[c]||{}).lang && !isAdmin) {
-      await btn(c,'MEBEL BY IBROHIM\n\nTilni tanlang:',[[{text:"O'zbek tili",callback_data:'til_uz'}],[{text:'Russkiy yazyk',callback_data:'til_ru'}]]);
+      const wsFallback = await staffByChat(c);
+      if (wsFallback) { await showWorkerPanel(c, wsFallback); }
+      else { await btn(c,'MEBEL BY IBROHIM\n\nTilni tanlang:',[[{text:"O'zbek tili",callback_data:'til_uz'}],[{text:'Russkiy yazyk',callback_data:'til_ru'}]]); }
     }
   } catch (e) {
     console.error(e);

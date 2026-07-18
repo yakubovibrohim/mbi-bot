@@ -329,9 +329,24 @@
       },
       {
         "date": "16.07.2026",
-        "in": "09:30",
-        "out": null,
-        "late": true
+        "in": "09:00",
+        "out": "18:15",
+        "late": false,
+        "early": false
+      },
+      {
+        "date": "17.07.2026",
+        "in": "09:00",
+        "out": "17:47",
+        "late": false,
+        "early": true
+      },
+      {
+        "date": "18.07.2026",
+        "in": "09:21",
+        "out": "18:23",
+        "late": true,
+        "early": false
       }
     ],
     "tg_chat_id": "5868770869"
@@ -375,6 +390,10 @@
       {
         "date": "04.07.2026",
         "reason": "Oilaviy"
+      },
+      {
+        "date": "17.07.2026",
+        "reason": "sababsiz"
       }
     ],
     "advances": [
@@ -654,9 +673,10 @@
       },
       {
         "date": "18.07.2026",
-        "in": "18:10",
-        "out": null,
-        "late": true
+        "in": "09:09",
+        "out": "18:10",
+        "late": false,
+        "early": false
       }
     ],
     "tg_chat_id": "6586787202",
