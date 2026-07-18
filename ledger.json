@@ -1,18 +1,18 @@
 {
-  "updated": "2026-07-18T13:11:01.017Z",
+  "updated": "2026-07-18T13:23:56.748Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 154612325,
+  "balance_uzs": 152212325,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 71254933,
+    "chiqim": 73654933,
     "by_category": {
       "office": 4261750,
       "personal": 34499728,
-      "staff_advance": 12133920,
+      "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 20359535,
       "debt_in": 26400000,
@@ -1130,6 +1130,17 @@
       "name": "💳 OCTOBANK YANDEXPLUS OPLATA, UZ",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "18.07.2026",
+      "time": "18:23",
+      "dir": "out",
+      "category": "staff_advance",
+      "category_uz": "Xodim avansi",
+      "amount_uzs": 2400000,
+      "name": "Diyor",
+      "pay": "naqd",
+      "src": "staff"
     }
   ]
 }
