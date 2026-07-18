@@ -325,6 +325,23 @@
         "rate": 12000,
         "note": "",
         "source": "manual"
+      },
+      {
+        "id": "mrq8f981vh38",
+        "date": "18.07.2026",
+        "ts": "2026-07-18T10:36:42.481Z",
+        "products": [
+          {
+            "name": "MultMech",
+            "qty": 1,
+            "price_uzs": 795000,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 795000,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
       }
     ],
     "finished_date": null,
