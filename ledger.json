@@ -1,16 +1,16 @@
 {
-  "updated": "2026-07-18T09:41:19.895Z",
+  "updated": "2026-07-18T09:43:46.523Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 156319324,
+  "balance_uzs": 155967324,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 69547934,
+    "chiqim": 69899934,
     "by_category": {
-      "office": 3409750,
+      "office": 3761750,
       "personal": 34439729,
       "staff_advance": 12133920,
       "deal_payment": 24000000,
@@ -1086,6 +1086,17 @@
       "name": "Sevara opa Taqachi: xarajat",
       "pay": "naqd",
       "src": "deals"
+    },
+    {
+      "date": "18.07.2026",
+      "time": "14:43",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 352000,
+      "name": "Евро",
+      "pay": "naqd",
+      "src": "office"
     }
   ]
 }
