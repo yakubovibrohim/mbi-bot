@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-18T10:36:51.214Z",
+  "updated": "2026-07-18T12:23:44.928Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 154672324,
+  "balance_uzs": 154612325,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 71194934,
+    "chiqim": 71254933,
     "by_category": {
       "office": 4261750,
-      "personal": 34439729,
+      "personal": 34499728,
       "staff_advance": 12133920,
       "deal_payment": 24000000,
       "deal_expense": 20359535,
@@ -1119,6 +1119,17 @@
       "name": "Стижной",
       "pay": "naqd",
       "src": "office"
+    },
+    {
+      "date": "18.07.2026",
+      "time": "17:23",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 59999,
+      "name": "💳 OCTOBANK YANDEXPLUS OPLATA, UZ",
+      "pay": "karta",
+      "src": "personal"
     }
   ]
 }
