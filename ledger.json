@@ -1,20 +1,20 @@
 {
-  "updated": "2026-07-18T04:10:13.242Z",
+  "updated": "2026-07-18T09:41:19.895Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 156599324,
+  "balance_uzs": 156319324,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 69267934,
+    "chiqim": 69547934,
     "by_category": {
       "office": 3409750,
       "personal": 34439729,
       "staff_advance": 12133920,
       "deal_payment": 24000000,
-      "deal_expense": 19284535,
+      "deal_expense": 19564535,
       "debt_in": 26400000,
       "card_income": 300000
     }
@@ -1075,6 +1075,17 @@
       "name": "💳 Sigaret",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "18.07.2026",
+      "time": "14:41",
+      "dir": "out",
+      "category": "deal_expense",
+      "category_uz": "Buyurtma xarajati",
+      "amount_uzs": 280000,
+      "name": "Sevara opa Taqachi: xarajat",
+      "pay": "naqd",
+      "src": "deals"
     }
   ]
 }
