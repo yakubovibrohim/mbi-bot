@@ -441,5 +441,15 @@
     "pay_method": "card",
     "place": "OOO IMPERIAL TOBACCO, TOSHKENT, Pastki yuz MFY, Mekhrigiyo,2 to",
     "ts": "2026-07-17T12:04:33.006Z"
+  },
+  {
+    "date": "18.07.2026",
+    "note": "💳 OCTOBANK YANDEXPLUS OPLATA, UZ",
+    "amount_uzs": 59999,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OCTOBANK YANDEXPLUS OPLATA, UZ",
+    "ts": "2026-07-18T12:23:35.964Z"
   }
 ]
