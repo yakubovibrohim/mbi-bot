@@ -1,6 +1,18 @@
 {
   "lastMsgId": 96781,
-  "pending": {},
+  "pending": {
+    "mrq3gvte8sp": {
+      "dir": "out",
+      "amtUzs": 59999,
+      "place": "OCTOBANK YANDEXPLUS OPLATA, UZ",
+      "rawBalance": 85687,
+      "date": "18.07.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1784362680338
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
