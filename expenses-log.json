@@ -89,5 +89,18 @@
         "qty": 1
       }
     ]
+  },
+  {
+    "date": "18.07.2026",
+    "supplier": "Shonahar",
+    "deal": "",
+    "currency": "UZS",
+    "total_override": 80000,
+    "items": [
+      {
+        "name": "sensor",
+        "qty": 1
+      }
+    ]
   }
 ]
