@@ -102,5 +102,18 @@
         "qty": 1
       }
     ]
+  },
+  {
+    "date": "18.07.2026",
+    "supplier": "ishxona",
+    "deal": "",
+    "currency": "UZS",
+    "total_override": 50000,
+    "items": [
+      {
+        "name": "ishxona harajat",
+        "qty": 1
+      }
+    ]
   }
 ]
