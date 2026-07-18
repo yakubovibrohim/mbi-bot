@@ -308,6 +308,23 @@
         "total_uzs": 1000890,
         "rate": 12000,
         "pay_method": "card"
+      },
+      {
+        "id": "mrq6fuqxhrhq",
+        "date": "18.07.2026",
+        "ts": "2026-07-18T09:41:11.146Z",
+        "products": [
+          {
+            "name": "Сушилка furnimax",
+            "qty": 1,
+            "price_uzs": 280000,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 280000,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
       }
     ],
     "finished_date": null,
