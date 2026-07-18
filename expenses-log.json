@@ -115,5 +115,18 @@
         "qty": 1
       }
     ]
+  },
+  {
+    "date": "18.07.2026",
+    "supplier": "Xona",
+    "deal": "",
+    "currency": "UZS",
+    "total_override": 80000,
+    "items": [
+      {
+        "name": "Xona xarajati",
+        "qty": 1
+      }
+    ]
   }
 ]
