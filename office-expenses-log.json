@@ -79,5 +79,14 @@
     "rate": 12000,
     "note": "IYB MOBILE EXCHANGE, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mrq6izulxjgu",
+    "date": "18.07.2026",
+    "ts": "2026-07-18T09:43:37.726Z",
+    "name": "Евро",
+    "amount_uzs": 352000,
+    "rate": 12000,
+    "note": ""
   }
 ]
