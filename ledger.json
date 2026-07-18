@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-18T16:10:58.681Z",
+  "updated": "2026-07-18T16:12:43.151Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 152212325,
+  "balance_uzs": 152202335,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 73654933,
+    "chiqim": 73664923,
     "by_category": {
       "office": 4261750,
-      "personal": 34499728,
+      "personal": 34509718,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 20359535,
@@ -1128,6 +1128,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 59999,
       "name": "💳 OCTOBANK YANDEXPLUS OPLATA, UZ",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "18.07.2026",
+      "time": "21:12",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 9990,
+      "name": "💳 Blmiman",
       "pay": "karta",
       "src": "personal"
     },
