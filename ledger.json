@@ -1,20 +1,20 @@
 {
-  "updated": "2026-07-18T09:44:12.606Z",
+  "updated": "2026-07-18T10:36:51.214Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 155467324,
+  "balance_uzs": 154672324,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 70399934,
+    "chiqim": 71194934,
     "by_category": {
       "office": 4261750,
       "personal": 34439729,
       "staff_advance": 12133920,
       "deal_payment": 24000000,
-      "deal_expense": 19564535,
+      "deal_expense": 20359535,
       "debt_in": 26400000,
       "card_income": 300000
     }
@@ -1083,6 +1083,17 @@
       "category": "deal_expense",
       "category_uz": "Buyurtma xarajati",
       "amount_uzs": 280000,
+      "name": "Sevara opa Taqachi: xarajat",
+      "pay": "naqd",
+      "src": "deals"
+    },
+    {
+      "date": "18.07.2026",
+      "time": "15:36",
+      "dir": "out",
+      "category": "deal_expense",
+      "category_uz": "Buyurtma xarajati",
+      "amount_uzs": 795000,
       "name": "Sevara opa Taqachi: xarajat",
       "pay": "naqd",
       "src": "deals"
