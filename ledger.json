@@ -1,16 +1,16 @@
 {
-  "updated": "2026-07-18T09:43:46.523Z",
+  "updated": "2026-07-18T09:44:12.606Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 155967324,
+  "balance_uzs": 155467324,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 69899934,
+    "chiqim": 70399934,
     "by_category": {
-      "office": 3761750,
+      "office": 4261750,
       "personal": 34439729,
       "staff_advance": 12133920,
       "deal_payment": 24000000,
@@ -1095,6 +1095,17 @@
       "category_uz": "Ishxona",
       "amount_uzs": 352000,
       "name": "Евро",
+      "pay": "naqd",
+      "src": "office"
+    },
+    {
+      "date": "18.07.2026",
+      "time": "14:44",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 500000,
+      "name": "Стижной",
       "pay": "naqd",
       "src": "office"
     }
