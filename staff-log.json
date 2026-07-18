@@ -78,6 +78,14 @@
         "ts": "2026-07-09T13:58:54.753Z",
         "amount_usd": 25,
         "entered_by": "admin"
+      },
+      {
+        "id": "mrqee02ca4y1",
+        "date": "18.07.2026",
+        "ts": "2026-07-18T13:23:41.653Z",
+        "amount_usd": 200,
+        "entered_by": "admin",
+        "pending": true
       }
     ],
     "attendance": [
