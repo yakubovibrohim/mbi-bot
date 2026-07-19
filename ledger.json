@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-18T16:12:43.151Z",
+  "updated": "2026-07-19T13:23:56.473Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 152202335,
+  "balance_uzs": 152002335,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 73664923,
+    "chiqim": 73864923,
     "by_category": {
       "office": 4261750,
-      "personal": 34509718,
+      "personal": 34709718,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 20359535,
@@ -1152,6 +1152,17 @@
       "name": "Diyor",
       "pay": "naqd",
       "src": "staff"
+    },
+    {
+      "date": "19.07.2026",
+      "time": "18:23",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 200000,
+      "name": "Sartorosh",
+      "pay": "naqd",
+      "src": "personal"
     }
   ]
 }
