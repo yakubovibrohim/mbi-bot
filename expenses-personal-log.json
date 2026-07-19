@@ -461,5 +461,13 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-07-18T16:12:34.287Z"
+  },
+  {
+    "date": "19.07.2026",
+    "note": "Sartorosh",
+    "amount_uzs": 200000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-19T13:23:47.682Z"
   }
 ]
