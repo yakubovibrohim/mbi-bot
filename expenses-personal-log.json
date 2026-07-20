@@ -527,5 +527,15 @@
     "pay_method": "card",
     "place": "OOO YANDEXGO UB, UZ",
     "ts": "2026-07-20T12:02:58.758Z"
+  },
+  {
+    "date": "20.07.2026",
+    "note": "💳 OOO YANDEXGO UB, UZ",
+    "amount_uzs": 2500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-07-20T12:17:57.747Z"
   }
 ]
