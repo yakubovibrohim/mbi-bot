@@ -1,14 +1,14 @@
 {
-  "updated": "2026-07-20T04:18:26.507Z",
+  "updated": "2026-07-20T06:24:18.483Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 151759335,
+  "balance_uzs": 151023335,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 74107923,
+    "chiqim": 74843923,
     "by_category": {
       "office": 4261750,
       "personal": 34952718,
@@ -16,7 +16,8 @@
       "deal_payment": 24000000,
       "deal_expense": 20359535,
       "debt_in": 26400000,
-      "card_income": 300000
+      "card_income": 300000,
+      "debt_paid": 736000
     }
   },
   "movements": [
@@ -171,17 +172,6 @@
       "category_uz": "Qarz to'lovim",
       "amount_uzs": 2400000,
       "name": "Olim aka ish (kottasi)",
-      "pay": "naqd",
-      "src": "debts"
-    },
-    {
-      "date": "17.06.2026",
-      "time": null,
-      "dir": "out",
-      "category": "debt_paid",
-      "category_uz": "Qarz to'lovim",
-      "amount_uzs": 1200000,
-      "name": "Aziz aka mebelchi",
       "pay": "naqd",
       "src": "debts"
     },
@@ -1174,6 +1164,17 @@
       "name": "Kuksi",
       "pay": "naqd",
       "src": "personal"
+    },
+    {
+      "date": "20.07.2026",
+      "time": "11:24",
+      "dir": "out",
+      "category": "debt_paid",
+      "category_uz": "Qarz to'lovim",
+      "amount_uzs": 736000,
+      "name": "Aziz aka mebelchi",
+      "pay": "naqd",
+      "src": "debts"
     }
   ]
 }
