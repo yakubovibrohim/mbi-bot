@@ -507,5 +507,15 @@
     "pay_method": "card",
     "place": "PAYME EDIN QR, UZ",
     "ts": "2026-07-20T10:37:32.999Z"
+  },
+  {
+    "date": "20.07.2026",
+    "note": "💳 Taxi",
+    "amount_uzs": 25000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-07-20T12:01:25.497Z"
   }
 ]
