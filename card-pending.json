@@ -11,6 +11,17 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1784531139781
+    },
+    "mrsvrla8swk": {
+      "dir": "out",
+      "amtUzs": 500000,
+      "place": "HGT PAYNET, UZ",
+      "rawBalance": 775697,
+      "date": "19.07.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1784531141504
     }
   },
   "resolved": [
