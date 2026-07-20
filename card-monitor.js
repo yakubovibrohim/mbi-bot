@@ -21,6 +21,8 @@ let resolved = [];        // yakunlangan tranzaksiyalar: {date, dir, amt} — ku
 let lastBalances = {};    // karta oxirgi 4 raqami -> CardXabar'dagi oxirgi balans
 let lastReconcileDate = ''; // kunlik solishtiruv qaysi kunda bajarilgani
 let tgUser = null;
+let lastPollOk = 0;      // oxirgi muvaffaqiyatli poll vaqti (ms) — Botir kuzatadi
+let lastMsgTs = 0;       // CardXabarBot'dan oxirgi xabar vaqti (ms) — Botir kuzatadi
 let cardCfg = null;      // { session, api_id, api_hash }
 let deps = null;         // { ADMIN, msg, btn, api, ghReadAll, ghWrite, ghRead, ghPut, todayStr, fmtUzs, USD_UZS }
 
@@ -497,14 +499,21 @@ async function connect() {
 async function poll() {
   if (!tgUser) return;
   try {
-    const msgs = await tgUser.getMessages('CardXabarBot', { limit: 20 });
+    const msgs = await tgUser.getMessages('CardXabarBot', { limit: 100 });
     // eng eski→yangi tartibda, faqat yangi id
     const fresh = msgs.filter(m => m.id > lastMsgId).sort((a, b) => a.id - b.id);
+    // Agar oyna to'lgan bo'lsa (deploy/uzoq to'xtash) — eng eski yangi xabar hali oynadan tashqarida
+    // bo'lishi mumkin. Ogohlantiramiz, dailyReconcile keyin qoplaydi.
+    if (fresh.length && msgs.length >= 100 && fresh.length >= 100) {
+      console.error('karta: 100+ yangi xabar to\'plangan — deploy bo\'shlig\'i bo\'lishi mumkin, dailyReconcile qoplaydi');
+    }
     for (const m of fresh) {
       lastMsgId = Math.max(lastMsgId, m.id);
       const tx = parseCardMsg(m.message || '');
       if (tx) { await checkBalanceJump(tx); await askClassify(tx); }
     }
+    lastPollOk = Date.now();
+    if (msgs.length) { const t = msgs[0].date ? msgs[0].date * 1000 : 0; if (t > lastMsgTs) lastMsgTs = t; }
     await remindStalePending();
     await maybeDailyReconcile();
   } catch (e) {
@@ -530,6 +539,17 @@ async function start(dependencies, cfg) {
       await persist();
     }
     setInterval(poll, 30000); // har 30 soniya
+    // Deploy/restart 21:00 dan keyin bo'lsa, o'sha kunlik reconcile o'tkazib yuborilgan
+    // bo'lishi mumkin. Start'dan 90s keyin bir marta majburiy tekshiramiz.
+    setTimeout(async () => {
+      try {
+        const today = deps.todayStr();
+        if (lastReconcileDate !== today && tashkentHHMM() >= '21:00') {
+          lastReconcileDate = today; await persist();
+          await dailyReconcile(today);
+        }
+      } catch (e) { console.error('startup reconcile:', e.message); }
+    }, 90000);
     console.log('card-monitor: started, lastMsgId=', lastMsgId, 'user:', me.firstName || '');
     return true;
   } catch (e) {
@@ -539,4 +559,15 @@ async function start(dependencies, cfg) {
   }
 }
 
-module.exports = { start, handleCallback, tryTakeNote, cardPending, resolveExternally };
+// Botir (supervisor) uchun holat: monitoring tirikmi, oxirgi poll/xabar qachon
+function health() {
+  return {
+    connected: !!tgUser,
+    lastPollOk,        // oxirgi muvaffaqiyatli poll (ms)
+    lastMsgTs,         // CardXabarBot'dan oxirgi xabar (ms)
+    lastReconcileDate, // oxirgi kunlik solishtiruv sanasi
+    pendingCount: Object.keys(cardPending).length,
+  };
+}
+
+module.exports = { start, handleCallback, tryTakeNote, cardPending, resolveExternally, health };
