@@ -517,5 +517,15 @@
     "pay_method": "card",
     "place": "OOO YANDEXGO UB, UZ",
     "ts": "2026-07-20T12:01:25.497Z"
+  },
+  {
+    "date": "20.07.2026",
+    "note": "💳 Taxi",
+    "amount_uzs": 21500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-07-20T12:02:58.758Z"
   }
 ]
