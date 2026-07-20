@@ -3777,6 +3777,15 @@ async function botirContext() {
     const { list } = await leadsRead();
     parts.push(`IG DM: 24 soatda faol suhbat ${active} ta | jami leadlar ${list.length} ta (yangi: ${list.filter(l => l.status === 'new').length})`);
   } catch (e) {}
+  // Karta monitori holati
+  try {
+    if (cardMon && cardMon.health) {
+      const h = cardMon.health();
+      const pollAgo = h.lastPollOk ? Math.round((Date.now() - h.lastPollOk) / 60000) : null;
+      const msgAgo = h.lastMsgTs ? Math.round((Date.now() - h.lastMsgTs) / 3600000) : null;
+      parts.push(`KARTA MONITORI: ${h.connected ? '✅ ulangan' : '❌ uzilgan'} | oxirgi poll ${pollAgo === null ? '—' : pollAgo + ' daq oldin'} | oxirgi karta xabari ${msgAgo === null ? '—' : msgAgo + ' soat oldin'} | oxirgi solishtiruv ${h.lastReconcileDate || '—'} | kutilayotgan tasnif ${h.pendingCount} ta`);
+    }
+  } catch (e) {}
   return parts.join('\n\n');
 }
 
@@ -4037,10 +4046,48 @@ async function monCheckSelf() {
   } else { monClear('mbi_ig'); monClear('mbi_ig_toggle'); }
 }
 
+// ── Karta monitori nazorati (Botir) ──
+// Sabab: 19.07.2026 da deploy + poll oynasi tor bo'lgani uchun karta tranzaksiyalari
+// o'tkazib yuborilgan, lekin hech kim payqamagan. Endi Botir buni kuzatadi.
+async function monCheckCard() {
+  const name = 'card-monitor';
+  if (!cardMon || !cardMon.health) return;
+  let h; try { h = cardMon.health(); } catch (e) { return; }
+
+  // 1) Ulanish uzilgan bo'lsa
+  if (!h.connected) {
+    monAlert('card_conn', `⚠️ *Karta monitori* Telegram sessiyasiga ulanmagan. Karta tranzaksiyalari yozilmayapti — tekshiring.`);
+    return;
+  }
+  // 2) Poll uzoq vaqt muvaffaqiyatsiz (10 daqiqadan ko'p) — process qotgan
+  if (h.lastPollOk && (Date.now() - h.lastPollOk > 10 * 60 * 1000)) {
+    monAlert('card_poll', `⚠️ *Karta monitori* ${Math.round((Date.now() - h.lastPollOk) / 60000)} daqiqadan beri xabarlarni o'qimayapti. Karta chiqimlari o'tkazib yuborilishi mumkin.`);
+    return;
+  }
+  // 3) Kunlik solishtiruv o'tkazib yuborilgan: kecha 21:00 o'tgan, lekin reconcile bugungi ham, kechagi ham emas
+  try {
+    const today = todayStr();
+    const d = nowTZ();
+    const hh = d.getHours();
+    // ertalab 06:00–12:00 orasida tekshiramiz: kechagi reconcile bo'lganmi?
+    if (hh >= 6 && hh < 12) {
+      const y = new Date(d); y.setDate(d.getDate() - 1);
+      const yStr = ('0'+y.getDate()).slice(-2)+'.'+('0'+(y.getMonth()+1)).slice(-2)+'.'+y.getFullYear();
+      if (h.lastReconcileDate !== yStr && h.lastReconcileDate !== today) {
+        monAlert('card_recon', `⚠️ *Karta solishtiruvi o'tkazib yuborilgan!*\nOxirgi solishtiruv: ${h.lastReconcileDate || '—'}. Kecha (${yStr}) karta tranzaksiyalari tekshirilmagan bo'lishi mumkin. "Sardor, karta solishtiruvi" deb tekshiring.`);
+        return;
+      }
+    }
+  } catch (e) {}
+
+  monClear('card_conn'); monClear('card_poll'); monClear('card_recon');
+}
+
 async function monitorTick() {
   try { await monCheckTanNarx(); } catch (e) { console.error('mon tannarx:', e.message); }
   try { await monCheckIBO(); } catch (e) { console.error('mon ibo:', e.message); }
   try { await monCheckSelf(); } catch (e) { console.error('mon self:', e.message); }
+  try { await monCheckCard(); } catch (e) { console.error('mon card:', e.message); }
   try { await pollIGComments(); } catch (e) { console.error('poll IG comments:', e.message); }
 }
 
