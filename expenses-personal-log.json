@@ -487,5 +487,15 @@
     "pay_method": "card",
     "place": "HGT PAYNET, UZ",
     "ts": "2026-07-20T07:06:06.249Z"
+  },
+  {
+    "date": "20.07.2026",
+    "note": "💳 Xotinga",
+    "amount_uzs": 453375,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IYM UZCARD2VISA S KOMISS, UZ",
+    "ts": "2026-07-20T07:11:51.805Z"
   }
 ]
