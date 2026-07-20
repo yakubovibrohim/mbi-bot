@@ -1,6 +1,18 @@
 {
   "lastMsgId": 97046,
-  "pending": {},
+  "pending": {
+    "mrsvrjydvhp": {
+      "dir": "in",
+      "amtUzs": 1200000,
+      "place": "BRB P2P UZCARDDAN UZCARDGA, UZ",
+      "rawBalance": 1275697,
+      "date": "19.07.2026",
+      "title": "Perevod na kartu",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1784531139781
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
