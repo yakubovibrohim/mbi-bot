@@ -1,19 +1,6 @@
 {
   "lastMsgId": 97047,
-  "pending": {
-    "mrsvrla8swk": {
-      "dir": "out",
-      "amtUzs": 500000,
-      "place": "HGT PAYNET, UZ",
-      "rawBalance": 775697,
-      "date": "19.07.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1784531141504,
-      "kind": "personal"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -159,6 +146,11 @@
       "date": "19.07.2026",
       "dir": "in",
       "amt": 1200000
+    },
+    {
+      "date": "19.07.2026",
+      "dir": "out",
+      "amt": 500000
     }
   ],
   "lastBalances": {
