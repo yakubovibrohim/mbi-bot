@@ -477,5 +477,15 @@
     "rate": 12000,
     "type": "personal",
     "ts": "2026-07-19T13:24:27.633Z"
+  },
+  {
+    "date": "19.07.2026",
+    "note": "💳 Svet",
+    "amount_uzs": 500000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "HGT PAYNET, UZ",
+    "ts": "2026-07-20T07:06:06.249Z"
   }
 ]
