@@ -1,6 +1,18 @@
 {
   "lastMsgId": 97141,
-  "pending": {},
+  "pending": {
+    "mrt39zlnzrj": {
+      "dir": "out",
+      "amtUzs": 50000,
+      "place": "PAYME EDIN QR, UZ",
+      "rawBalance": 272322,
+      "date": "20.07.2026",
+      "title": "Platezh",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1784543757179
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
