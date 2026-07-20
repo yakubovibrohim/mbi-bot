@@ -497,5 +497,15 @@
     "pay_method": "card",
     "place": "IYM UZCARD2VISA S KOMISS, UZ",
     "ts": "2026-07-20T07:11:51.805Z"
+  },
+  {
+    "date": "20.07.2026",
+    "note": "💳 Abet",
+    "amount_uzs": 50000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME EDIN QR, UZ",
+    "ts": "2026-07-20T10:37:32.999Z"
   }
 ]
