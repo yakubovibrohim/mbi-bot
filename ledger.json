@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-20T07:15:04.353Z",
+  "updated": "2026-07-20T10:37:42.035Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 150069960,
+  "balance_uzs": 150019960,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 75797298,
+    "chiqim": 75847298,
     "by_category": {
       "office": 4261750,
-      "personal": 35906093,
+      "personal": 35956093,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 20359535,
@@ -1184,6 +1184,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 453375,
       "name": "💳 Xotinga",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "20.07.2026",
+      "time": "15:37",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 50000,
+      "name": "💳 Abet",
       "pay": "karta",
       "src": "personal"
     },
