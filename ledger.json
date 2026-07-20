@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-20T07:05:16.653Z",
+  "updated": "2026-07-20T07:06:15.558Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 151023335,
+  "balance_uzs": 150523335,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 74843923,
+    "chiqim": 75343923,
     "by_category": {
       "office": 4261750,
-      "personal": 34952718,
+      "personal": 35452718,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 20359535,
@@ -1163,6 +1163,17 @@
       "amount_uzs": 243000,
       "name": "Kuksi",
       "pay": "naqd",
+      "src": "personal"
+    },
+    {
+      "date": "19.07.2026",
+      "time": "12:06",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 500000,
+      "name": "💳 Svet",
+      "pay": "karta",
       "src": "personal"
     },
     {
