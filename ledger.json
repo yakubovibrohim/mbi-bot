@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-23T09:56:29.001Z",
+  "updated": "2026-07-23T10:44:40.358Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 149956960,
+  "balance_uzs": 149934460,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 75910298,
+    "chiqim": 75932798,
     "by_category": {
       "office": 4261750,
-      "personal": 36019093,
+      "personal": 36041593,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 20359535,
@@ -1249,6 +1249,28 @@
       "category": "personal",
       "category_uz": "Shaxsiy",
       "amount_uzs": 14000,
+      "name": "💳 OOO YANDEXGO UB, UZ",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "22.07.2026",
+      "time": "15:44",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 12500,
+      "name": "💳 OOO YANDEXGO UB, UZ",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "22.07.2026",
+      "time": "15:44",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 10000,
       "name": "💳 OOO YANDEXGO UB, UZ",
       "pay": "karta",
       "src": "personal"
