@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-23T04:05:21.143Z",
+  "updated": "2026-07-23T09:56:29.001Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 149970960,
+  "balance_uzs": 149956960,
   "totals_after_opening": {
     "kirim": 50700000,
-    "chiqim": 75896298,
+    "chiqim": 75910298,
     "by_category": {
       "office": 4261750,
-      "personal": 36005093,
+      "personal": 36019093,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 20359535,
@@ -1241,6 +1241,17 @@
       "name": "Aziz aka mebelchi",
       "pay": "naqd",
       "src": "debts"
+    },
+    {
+      "date": "22.07.2026",
+      "time": "14:56",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 14000,
+      "name": "💳 OOO YANDEXGO UB, UZ",
+      "pay": "karta",
+      "src": "personal"
     }
   ]
 }
