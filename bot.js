@@ -3938,6 +3938,7 @@ async function monFixIG() {
 
 // Tan narx botni tekshirish (free plan, polling)
 async function monCheckTanNarx() {
+  if (process.env.MON_TANNARX_OFF === '1') return;   // vaqtincha o'chirilgan
   const name = 'tan-narx-bot';
   const healthy = await monHealth(MON.tnUrl, 2);
   if (!healthy) {
