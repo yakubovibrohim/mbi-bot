@@ -379,9 +379,10 @@
       {
         "date": "24.07.2026",
         "in": "15:26",
-        "out": null,
+        "out": "18:18",
         "late": true,
-        "in_reason": "Shifokor"
+        "in_reason": "Shifokor",
+        "early": false
       }
     ],
     "tg_chat_id": "5868770869"
