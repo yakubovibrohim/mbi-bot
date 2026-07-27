@@ -8,5 +8,15 @@
     "note": "karta",
     "pay_method": "card",
     "ts": "2026-07-08T07:03:06.155Z"
+  },
+  {
+    "id": "ms2yd7rkz6d",
+    "date": "27.07.2026",
+    "name": "💳 OPERU  ASIA ALLIANCE BANK AT BANKI, UZ",
+    "amount_uzs": 500000,
+    "rate": 12000,
+    "note": "karta",
+    "pay_method": "card",
+    "ts": "2026-07-27T08:16:11.408Z"
   }
 ]
