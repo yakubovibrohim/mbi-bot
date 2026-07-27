@@ -1,13 +1,13 @@
 {
-  "updated": "2026-07-27T07:29:55.936Z",
+  "updated": "2026-07-27T08:16:20.588Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 149844470,
+  "balance_uzs": 150344470,
   "totals_after_opening": {
-    "kirim": 50700000,
+    "kirim": 51200000,
     "chiqim": 76022788,
     "by_category": {
       "office": 4261750,
@@ -16,7 +16,7 @@
       "deal_payment": 24000000,
       "deal_expense": 20359535,
       "debt_in": 26400000,
-      "card_income": 300000,
+      "card_income": 800000,
       "debt_paid": 736000
     }
   },
@@ -1285,6 +1285,17 @@
       "name": "💳 IP OOO YANDEX EATS, UZ",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "27.07.2026",
+      "time": "13:16",
+      "dir": "in",
+      "category": "card_income",
+      "category_uz": "Boshqa kirim (karta)",
+      "amount_uzs": 500000,
+      "name": "💳 OPERU  ASIA ALLIANCE BANK AT BANKI, UZ",
+      "pay": "karta",
+      "src": "card"
     }
   ]
 }
