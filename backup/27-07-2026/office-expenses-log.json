@@ -1,0 +1,101 @@
+[
+  {
+    "id": "mqm7ovai0s2i",
+    "date": "20.06.2026",
+    "name": "Abet",
+    "amount_uzs": 50000,
+    "rate": 12000,
+    "note": ""
+  },
+  {
+    "id": "mqmbkr1cdor1",
+    "date": "20.06.2026",
+    "name": "Katalog TimberZone",
+    "amount_uzs": 500000,
+    "rate": 12000,
+    "note": ""
+  },
+  {
+    "id": "mqt72r3b4c20",
+    "date": "25.06.2026",
+    "name": "Абет",
+    "amount_uzs": 100000,
+    "rate": 12000,
+    "note": ""
+  },
+  {
+    "id": "mqtcp94ie5ly",
+    "date": "25.06.2026",
+    "name": "Damas remont",
+    "amount_uzs": 400000,
+    "rate": 12000,
+    "note": ""
+  },
+  {
+    "id": "mrbtnl4ud9y",
+    "date": "08.07.2026",
+    "ts": "2026-07-08T08:34:30.462Z",
+    "name": "💳 Ovqat (YandexGo Eats)",
+    "amount_uzs": 26000,
+    "rate": 12000,
+    "note": "IP OOO YANDEXGO EATS, UZ",
+    "pay_method": "card"
+  },
+  {
+    "id": "mrbzcxjsr1p",
+    "date": "08.07.2026",
+    "ts": "2026-07-08T11:14:11.032Z",
+    "name": "💳 Viza card",
+    "amount_uzs": 1207500,
+    "rate": 12000,
+    "note": "IYB MOBILE EXCHANGE, UZ",
+    "pay_method": "card"
+  },
+  {
+    "id": "mrf12qk0pl4",
+    "date": "10.07.2026",
+    "ts": "2026-07-10T14:25:33.168Z",
+    "name": "💳 Vizaga",
+    "amount_uzs": 1212500,
+    "rate": 12000,
+    "note": "IYB MOBILE EXCHANGE, UZ",
+    "pay_method": "card"
+  },
+  {
+    "id": "mrgf18fvwbsf",
+    "date": "11.07.2026",
+    "ts": "2026-07-11T13:44:03.835Z",
+    "name": "Бензин",
+    "amount_uzs": 100000,
+    "rate": 12000,
+    "note": ""
+  },
+  {
+    "id": "mri4rmbth4d",
+    "date": "12.07.2026",
+    "ts": "2026-07-12T18:32:11.465Z",
+    "name": "💳 Viza",
+    "amount_uzs": 363750,
+    "rate": 12000,
+    "note": "IYB MOBILE EXCHANGE, UZ",
+    "pay_method": "card"
+  },
+  {
+    "id": "mrq6izulxjgu",
+    "date": "18.07.2026",
+    "ts": "2026-07-18T09:43:37.726Z",
+    "name": "Евро",
+    "amount_uzs": 352000,
+    "rate": 12000,
+    "note": ""
+  },
+  {
+    "id": "mrq6jjzwxct6",
+    "date": "18.07.2026",
+    "ts": "2026-07-18T09:44:03.836Z",
+    "name": "Стижной",
+    "amount_uzs": 500000,
+    "rate": 12000,
+    "note": ""
+  }
+]
