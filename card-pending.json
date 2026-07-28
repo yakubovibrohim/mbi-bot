@@ -1,6 +1,18 @@
 {
   "lastMsgId": 97858,
-  "pending": {},
+  "pending": {
+    "ms49ziq6vjx": {
+      "dir": "out",
+      "amtUzs": 505500,
+      "place": "PAYME UZCARD NA VISA, UZ",
+      "rawBalance": 91332,
+      "date": "28.07.2026",
+      "title": "Platezh",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1785220153998
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
