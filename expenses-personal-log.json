@@ -587,5 +587,15 @@
     "pay_method": "card",
     "place": "PAYME UZCARD NA VISA, UZ",
     "ts": "2026-07-28T06:29:33.444Z"
+  },
+  {
+    "date": "28.07.2026",
+    "note": "💳 Kamera",
+    "amount_uzs": 358905,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-07-28T09:32:13.757Z"
   }
 ]
