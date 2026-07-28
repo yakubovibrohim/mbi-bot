@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-28T04:21:55.726Z",
+  "updated": "2026-07-28T06:29:42.508Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 150344470,
+  "balance_uzs": 149838970,
   "totals_after_opening": {
     "kirim": 51200000,
-    "chiqim": 76022788,
+    "chiqim": 76528288,
     "by_category": {
       "office": 4261750,
-      "personal": 36131583,
+      "personal": 36637083,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 20359535,
@@ -1296,6 +1296,17 @@
       "name": "💳 OPERU  ASIA ALLIANCE BANK AT BANKI, UZ",
       "pay": "karta",
       "src": "card"
+    },
+    {
+      "date": "28.07.2026",
+      "time": "11:29",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 505500,
+      "name": "💳 PAYME UZCARD NA VISA, UZ",
+      "pay": "karta",
+      "src": "personal"
     }
   ]
 }
