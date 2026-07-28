@@ -577,5 +577,15 @@
     "pay_method": "card",
     "place": "IP OOO YANDEX EATS, UZ",
     "ts": "2026-07-26T17:12:48.417Z"
+  },
+  {
+    "date": "28.07.2026",
+    "note": "💳 PAYME UZCARD NA VISA, UZ",
+    "amount_uzs": 505500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME UZCARD NA VISA, UZ",
+    "ts": "2026-07-28T06:29:33.444Z"
   }
 ]
