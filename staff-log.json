@@ -415,9 +415,10 @@
       {
         "date": "30.07.2026",
         "in": "09:29",
-        "out": null,
+        "out": "19:18",
         "late": true,
-        "in_reason": "Yo'l muammosi"
+        "in_reason": "Yo'l muammosi",
+        "early": false
       }
     ],
     "tg_chat_id": "5868770869"
