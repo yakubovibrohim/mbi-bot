@@ -416,7 +416,8 @@
         "date": "30.07.2026",
         "in": "09:29",
         "out": null,
-        "late": true
+        "late": true,
+        "in_reason": "Yo'l muammosi"
       }
     ],
     "tg_chat_id": "5868770869"
