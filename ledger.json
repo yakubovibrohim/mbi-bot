@@ -1,17 +1,17 @@
 {
-  "updated": "2026-07-31T12:29:54.699Z",
+  "updated": "2026-07-31T14:06:45.870Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 149480065,
+  "balance_uzs": 149358776,
   "totals_after_opening": {
     "kirim": 51200000,
-    "chiqim": 76887193,
+    "chiqim": 77008482,
     "by_category": {
       "office": 4261750,
-      "personal": 36995988,
+      "personal": 37117277,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 20359535,
@@ -1316,6 +1316,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 358905,
       "name": "💳 Kamera",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "31.07.2026",
+      "time": "19:06",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 121289,
+      "name": "💳 IP OOO YANDEX EATS, UZ",
       "pay": "karta",
       "src": "personal"
     }
