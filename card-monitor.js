@@ -480,6 +480,62 @@ async function dailyReconcile(today) {
   } catch (e) { console.error('dailyReconcile:', e.message); }
 }
 
+// ── Watchdog sozlamalari ──
+const POLL_TIMEOUT_MS    = 25 * 1000;      // bitta poll uchun maksimal vaqt
+const STALL_RECONNECT_MS = 12 * 60 * 1000; // 12 daq poll yo'q → majburiy qayta ulanish
+const STALL_EXIT_MS      = 30 * 60 * 1000; // 30 daq poll yo'q → process qayta ishga tushadi
+let polling = false;       // bir vaqtda faqat bitta poll
+let reconnecting = false;
+let lastReconnectAt = 0;
+
+// Osilib qolgan promise'ni majburan uzish (gramjs javob bermay qolganda kerak)
+function withTimeout(promise, ms, label) {
+  return new Promise((resolve, reject) => {
+    const t = setTimeout(() => reject(new Error(`TIMEOUT_${label}`)), ms);
+    Promise.resolve(promise).then(
+      v => { clearTimeout(t); resolve(v); },
+      e => { clearTimeout(t); reject(e); }
+    );
+  });
+}
+
+// Eski client'ni o'ldirib, sessiyani noldan ochish
+async function reconnectHard(reason) {
+  if (reconnecting) return false;
+  if (Date.now() - lastReconnectAt < 60 * 1000) return false; // 1 daqiqada bir marta
+  reconnecting = true;
+  lastReconnectAt = Date.now();
+  console.error('card: majburiy qayta ulanish —', reason);
+  try {
+    const old = tgUser;
+    tgUser = null;
+    if (old) { try { await withTimeout(old.destroy(), 10000, 'destroy'); } catch (_) {} }
+    await withTimeout(connect(), 30000, 'connect');
+    lastPollOk = Date.now();
+    console.log('card: qayta ulandi');
+    return true;
+  } catch (e) {
+    console.error('card: qayta ulanmadi —', e.message);
+    return false;
+  } finally {
+    reconnecting = false;
+  }
+}
+
+// Har 2 daqiqada: monitoring tirikmi?
+async function watchdog() {
+  if (!lastPollOk || reconnecting) return;
+  const idle = Date.now() - lastPollOk;
+  const daq = Math.round(idle / 60000);
+  if (idle > STALL_EXIT_MS) {
+    console.error(`card: ${daq} daqiqa javob yo'q — process qayta ishga tushiriladi`);
+    try { await deps.msg(deps.ADMIN, `♻️ Karta monitori ${daq} daqiqa javob bermadi. Qayta ulanish ham yordam bermadi — bot qayta ishga tushirilmoqda.`); } catch (_) {}
+    setTimeout(() => process.exit(1), 3000); // Render avtomatik ko'taradi
+    return;
+  }
+  if (idle > STALL_RECONNECT_MS) await reconnectHard(`${daq} daq poll yo'q`);
+}
+
 // ── Sessiya ochish ──
 async function connect() {
   const sess = cardCfg.session;
@@ -497,9 +553,10 @@ async function connect() {
 
 // ── Yangi CardXabar xabarlarini tekshirish (polling) ──
 async function poll() {
-  if (!tgUser) return;
+  if (!tgUser || polling || reconnecting) return;
+  polling = true;
   try {
-    const msgs = await tgUser.getMessages('CardXabarBot', { limit: 100 });
+    const msgs = await withTimeout(tgUser.getMessages('CardXabarBot', { limit: 100 }), POLL_TIMEOUT_MS, 'poll');
     // eng eski→yangi tartibda, faqat yangi id
     const fresh = msgs.filter(m => m.id > lastMsgId).sort((a, b) => a.id - b.id);
     // Agar oyna to'lgan bo'lsa (deploy/uzoq to'xtash) — eng eski yangi xabar hali oynadan tashqarida
@@ -518,10 +575,12 @@ async function poll() {
     await maybeDailyReconcile();
   } catch (e) {
     console.error('card poll error:', e.message);
-    // sessiya uzilsa qayta ulanish
-    if (/disconnect|not connected|CONNECTION/i.test(e.message)) {
-      try { await connect(); } catch (_) {}
-    }
+    // Har qanday xato (TIMEOUT ham) → sessiyani noldan ochamiz.
+    // Ilgari faqat /disconnect|not connected|CONNECTION/ tekshirilardi va
+    // osilib qolgan poll umuman xato bermagani uchun tuzatish ishlamagan.
+    await reconnectHard(e.message);
+  } finally {
+    polling = false;
   }
 }
 
@@ -538,7 +597,9 @@ async function start(dependencies, cfg) {
       if (last && last.length) lastMsgId = last[0].id;
       await persist();
     }
+    lastPollOk = Date.now();  // boshlang'ich nuqta — watchdog shundan hisoblaydi
     setInterval(poll, 30000); // har 30 soniya
+    setInterval(watchdog, 120000); // har 2 daqiqa: qotib qolmadimi?
     // Deploy/restart 21:00 dan keyin bo'lsa, o'sha kunlik reconcile o'tkazib yuborilgan
     // bo'lishi mumkin. Start'dan 90s keyin bir marta majburiy tekshiramiz.
     setTimeout(async () => {
