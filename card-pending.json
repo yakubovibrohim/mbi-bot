@@ -1,19 +1,6 @@
 {
   "lastMsgId": 98070,
-  "pending": {
-    "ms904bqqrlc": {
-      "dir": "out",
-      "amtUzs": 121289,
-      "place": "IP OOO YANDEX EATS, UZ",
-      "rawBalance": 3191138,
-      "date": "31.07.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1785505912946,
-      "kind": "personal"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -229,6 +216,11 @@
       "date": "28.07.2026",
       "dir": "out",
       "amt": 358905
+    },
+    {
+      "date": "31.07.2026",
+      "dir": "out",
+      "amt": 121289
     }
   ],
   "lastBalances": {
