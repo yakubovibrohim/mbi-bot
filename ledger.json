@@ -1,17 +1,17 @@
 {
-  "updated": "2026-08-01T09:42:15.935Z",
+  "updated": "2026-08-01T15:02:52.299Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 149358776,
+  "balance_uzs": 149338776,
   "totals_after_opening": {
     "kirim": 51200000,
-    "chiqim": 77008482,
+    "chiqim": 77028482,
     "by_category": {
       "office": 4261750,
-      "personal": 37117277,
+      "personal": 37137277,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 20359535,
@@ -1327,6 +1327,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 121289,
       "name": "💳 IP OOO YANDEX EATS, UZ",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "01.08.2026",
+      "time": "20:02",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 20000,
+      "name": "💳 Blmiman",
       "pay": "karta",
       "src": "personal"
     }
