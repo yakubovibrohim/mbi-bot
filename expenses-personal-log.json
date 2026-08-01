@@ -607,5 +607,15 @@
     "pay_method": "card",
     "place": "IP OOO YANDEX EATS, UZ",
     "ts": "2026-07-31T14:06:36.650Z"
+  },
+  {
+    "date": "01.08.2026",
+    "note": "💳 Blmiman",
+    "amount_uzs": 20000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "HGT DOMO, UZ",
+    "ts": "2026-08-01T15:02:43.315Z"
   }
 ]
