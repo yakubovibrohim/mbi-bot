@@ -1,6 +1,18 @@
 {
   "lastMsgId": 98175,
-  "pending": {},
+  "pending": {
+    "msaueke1d06": {
+      "dir": "out",
+      "amtUzs": 154800,
+      "place": "UB AVTOSPISANIE APT, UZ",
+      "rawBalance": 3016338,
+      "date": "02.08.2026",
+      "title": "Platezh",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1785617245369
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
