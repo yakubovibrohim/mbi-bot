@@ -36,18 +36,6 @@
       "step": "note",
       "askedAt": 1785679288388,
       "kind": "personal"
-    },
-    "msbxv178bpe": {
-      "dir": "out",
-      "amtUzs": 1600000,
-      "place": "IYB P2P, UZ",
-      "rawBalance": 1142763,
-      "date": "02.08.2026",
-      "title": "Spisanie c karty",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1785683518676,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -280,6 +268,11 @@
       "date": "02.08.2026",
       "dir": "out",
       "amt": 101500
+    },
+    {
+      "date": "02.08.2026",
+      "dir": "out",
+      "amt": 1600000
     }
   ],
   "lastBalances": {
