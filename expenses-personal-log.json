@@ -637,5 +637,15 @@
     "pay_method": "card",
     "place": "IYB P2P, UZ",
     "ts": "2026-08-02T15:14:08.331Z"
+  },
+  {
+    "date": "02.08.2026",
+    "note": "💳 Абет",
+    "amount_uzs": 117075,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IP OOO YANDEX EATS, UZ",
+    "ts": "2026-08-02T16:02:24.157Z"
   }
 ]
