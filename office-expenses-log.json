@@ -97,5 +97,15 @@
     "amount_uzs": 500000,
     "rate": 12000,
     "note": ""
+  },
+  {
+    "id": "msc1p7guqjq",
+    "date": "02.08.2026",
+    "ts": "2026-08-02T16:59:25.326Z",
+    "name": "💳 Wifi",
+    "amount_uzs": 154800,
+    "rate": 12000,
+    "note": "UB AVTOSPISANIE APT, UZ",
+    "pay_method": "card"
   }
 ]
