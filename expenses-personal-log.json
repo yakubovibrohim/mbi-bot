@@ -617,5 +617,15 @@
     "pay_method": "card",
     "place": "HGT DOMO, UZ",
     "ts": "2026-08-01T15:02:43.315Z"
+  },
+  {
+    "date": "02.08.2026",
+    "note": "💳 Ucell",
+    "amount_uzs": 101500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-08-02T03:41:28.451Z"
   }
 ]
