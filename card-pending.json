@@ -35,7 +35,8 @@
       "card4": "5893",
       "step": "note",
       "askedAt": 1785679288388,
-      "kind": "personal"
+      "kind": "personal",
+      "remindedAt": 1785686518152
     }
   },
   "resolved": [
