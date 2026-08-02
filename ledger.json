@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-02T16:45:02.600Z",
+  "updated": "2026-08-02T16:59:34.360Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 147465201,
+  "balance_uzs": 147310401,
   "totals_after_opening": {
     "kirim": 51200000,
-    "chiqim": 78902057,
+    "chiqim": 79056857,
     "by_category": {
-      "office": 4261750,
+      "office": 4416550,
       "personal": 39010852,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
@@ -1340,6 +1340,17 @@
       "name": "💳 Blmiman",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "02.08.2026",
+      "time": "21:59",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 154800,
+      "name": "💳 Wifi",
+      "pay": "karta",
+      "src": "office"
     },
     {
       "date": "02.08.2026",
