@@ -1,17 +1,17 @@
 {
-  "updated": "2026-08-02T15:14:17.333Z",
+  "updated": "2026-08-02T16:02:33.164Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 147637276,
+  "balance_uzs": 147520201,
   "totals_after_opening": {
     "kirim": 51200000,
-    "chiqim": 78729982,
+    "chiqim": 78847057,
     "by_category": {
       "office": 4261750,
-      "personal": 38838777,
+      "personal": 38955852,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 20359535,
@@ -1360,6 +1360,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 1600000,
       "name": "💳 Gul",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "02.08.2026",
+      "time": "21:02",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 117075,
+      "name": "💳 Абет",
       "pay": "karta",
       "src": "personal"
     }
