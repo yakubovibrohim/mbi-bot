@@ -627,5 +627,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-08-02T03:41:28.451Z"
+  },
+  {
+    "date": "02.08.2026",
+    "note": "💳 Gul",
+    "amount_uzs": 1600000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IYB P2P, UZ",
+    "ts": "2026-08-02T15:14:08.331Z"
   }
 ]
