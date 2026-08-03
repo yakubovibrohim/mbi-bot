@@ -1,19 +1,6 @@
 {
   "lastMsgId": 98343,
-  "pending": {
-    "msdc8zuihmx": {
-      "dir": "out",
-      "amtUzs": 12000,
-      "place": "OOO OTA BOLA HOLDING, Toshkent, Uzbekiston Mustakilligi MFY  15",
-      "rawBalance": 2279317,
-      "date": "03.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1785768150906,
-      "kind": "personal"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -289,6 +276,11 @@
       "date": "03.08.2026",
       "dir": "out",
       "amt": 612834
+    },
+    {
+      "date": "03.08.2026",
+      "dir": "out",
+      "amt": 12000
     }
   ],
   "lastBalances": {
