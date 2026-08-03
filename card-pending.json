@@ -1,18 +1,6 @@
 {
   "lastMsgId": 98334,
-  "pending": {
-    "msd87of9re1": {
-      "dir": "in",
-      "amtUzs": 2400000,
-      "place": "OPENBANK P2P O2O UZCARD, UZ",
-      "rawBalance": 3315288,
-      "date": "03.08.2026",
-      "title": "Perevod na kartu",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1785761370981
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -273,6 +261,11 @@
       "date": "03.08.2026",
       "dir": "out",
       "amt": 25275
+    },
+    {
+      "date": "03.08.2026",
+      "dir": "in",
+      "amt": 2400000
     }
   ],
   "lastBalances": {
