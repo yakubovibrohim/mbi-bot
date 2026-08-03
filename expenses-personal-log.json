@@ -657,5 +657,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-08-02T16:44:53.586Z"
+  },
+  {
+    "date": "03.08.2026",
+    "note": "💳 Shaxsiy",
+    "amount_uzs": 202200,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-08-03T09:38:54.370Z"
   }
 ]
