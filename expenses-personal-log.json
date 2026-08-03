@@ -677,5 +677,15 @@
     "pay_method": "card",
     "place": "PAYME P2P, UZ",
     "ts": "2026-08-03T09:39:04.479Z"
+  },
+  {
+    "date": "03.08.2026",
+    "note": "💳 Bozor",
+    "amount_uzs": 411137,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "ORIFJONOV ZOIRJON ZOHIDJON OGL, Toshkent, 13",
+    "ts": "2026-08-03T15:39:21.342Z"
   }
 ]
