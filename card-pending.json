@@ -11,6 +11,17 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1785764130981
+    },
+    "msdacu1tyl4": {
+      "dir": "out",
+      "amtUzs": 612834,
+      "place": "FAYZ SUPER OPTOM MCHJ, TOSHKENT, ZANGIOTA MFY  SAMARKAND DARVOZA",
+      "rawBalance": 2291317,
+      "date": "03.08.2026",
+      "title": "Pokupka",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1785764970785
     }
   },
   "resolved": [
