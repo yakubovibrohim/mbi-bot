@@ -1,6 +1,18 @@
 {
   "lastMsgId": 98348,
-  "pending": {},
+  "pending": {
+    "msdg73sddwe": {
+      "dir": "out",
+      "amtUzs": 4044,
+      "place": "PAYME P2P, UZ",
+      "rawBalance": 2275273,
+      "date": "03.08.2026",
+      "title": "Spisanie c karty",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1785774781165
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
