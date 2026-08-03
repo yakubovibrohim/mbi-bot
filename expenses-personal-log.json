@@ -667,5 +667,15 @@
     "pay_method": "card",
     "place": "PAYME P2P, UZ",
     "ts": "2026-08-03T09:38:54.370Z"
+  },
+  {
+    "date": "03.08.2026",
+    "note": "💳 Suv",
+    "amount_uzs": 25275,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-08-03T09:39:04.479Z"
   }
 ]
