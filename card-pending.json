@@ -1,6 +1,18 @@
 {
   "lastMsgId": 98331,
-  "pending": {},
+  "pending": {
+    "msd10j63tu0": {
+      "dir": "out",
+      "amtUzs": 25275,
+      "place": "PAYME P2P, UZ",
+      "rawBalance": 1117488,
+      "date": "03.08.2026",
+      "title": "Platezh",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1785749280267
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
