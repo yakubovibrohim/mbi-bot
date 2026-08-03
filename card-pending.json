@@ -1,19 +1,6 @@
 {
   "lastMsgId": 98343,
   "pending": {
-    "msd9uu1xgj2": {
-      "dir": "out",
-      "amtUzs": 411137,
-      "place": "ORIFJONOV ZOIRJON ZOHIDJON OGL, Toshkent, 13",
-      "rawBalance": 2904151,
-      "date": "03.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1785764130981,
-      "remindedAt": 1785771360241,
-      "kind": "personal"
-    },
     "msdacu1tyl4": {
       "dir": "out",
       "amtUzs": 612834,
@@ -302,6 +289,11 @@
       "date": "03.08.2026",
       "dir": "in",
       "amt": 2400000
+    },
+    {
+      "date": "03.08.2026",
+      "dir": "out",
+      "amt": 411137
     }
   ],
   "lastBalances": {
