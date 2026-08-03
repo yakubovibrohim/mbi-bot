@@ -707,5 +707,15 @@
     "pay_method": "card",
     "place": "OOO OTA BOLA HOLDING, Toshkent, Uzbekiston Mustakilligi MFY  15",
     "ts": "2026-08-03T15:40:02.263Z"
+  },
+  {
+    "date": "03.08.2026",
+    "note": "💳 Ujin",
+    "amount_uzs": 103866,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IP OOO YANDEX EATS, UZ",
+    "ts": "2026-08-03T16:55:39.214Z"
   }
 ]
