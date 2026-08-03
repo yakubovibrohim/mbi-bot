@@ -697,5 +697,15 @@
     "pay_method": "card",
     "place": "FAYZ SUPER OPTOM MCHJ, TOSHKENT, ZANGIOTA MFY  SAMARKAND DARVOZA",
     "ts": "2026-08-03T15:39:45.529Z"
+  },
+  {
+    "date": "03.08.2026",
+    "note": "💳 Suv",
+    "amount_uzs": 12000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO OTA BOLA HOLDING, Toshkent, Uzbekiston Mustakilligi MFY  15",
+    "ts": "2026-08-03T15:40:02.263Z"
   }
 ]
