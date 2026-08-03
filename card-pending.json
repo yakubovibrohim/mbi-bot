@@ -1,18 +1,6 @@
 {
   "lastMsgId": 98343,
   "pending": {
-    "msdacu1tyl4": {
-      "dir": "out",
-      "amtUzs": 612834,
-      "place": "FAYZ SUPER OPTOM MCHJ, TOSHKENT, ZANGIOTA MFY  SAMARKAND DARVOZA",
-      "rawBalance": 2291317,
-      "date": "03.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1785764970785,
-      "kind": "personal"
-    },
     "msdc8zuihmx": {
       "dir": "out",
       "amtUzs": 12000,
@@ -295,6 +283,11 @@
       "date": "03.08.2026",
       "dir": "out",
       "amt": 411137
+    },
+    {
+      "date": "03.08.2026",
+      "dir": "out",
+      "amt": 612834
     }
   ],
   "lastBalances": {
