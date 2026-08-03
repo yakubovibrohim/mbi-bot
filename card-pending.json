@@ -11,18 +11,6 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1785749280267
-    },
-    "msd133tesd6": {
-      "dir": "out",
-      "amtUzs": 202200,
-      "place": "PAYME P2P, UZ",
-      "rawBalance": 915288,
-      "date": "03.08.2026",
-      "title": "Platezh",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1785749400338,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -275,6 +263,11 @@
       "date": "02.08.2026",
       "dir": "out",
       "amt": 154800
+    },
+    {
+      "date": "03.08.2026",
+      "dir": "out",
+      "amt": 202200
     }
   ],
   "lastBalances": {
