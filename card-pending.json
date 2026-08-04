@@ -1,19 +1,6 @@
 {
   "lastMsgId": 98365,
-  "pending": {
-    "msebkxjamed": {
-      "dir": "out",
-      "amtUzs": 50000,
-      "place": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
-      "rawBalance": 2121407,
-      "date": "04.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1785827494342,
-      "kind": "office"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -304,6 +291,11 @@
       "date": "03.08.2026",
       "dir": "out",
       "amt": 4044
+    },
+    {
+      "date": "04.08.2026",
+      "dir": "out",
+      "amt": 50000
     }
   ],
   "lastBalances": {
