@@ -727,5 +727,15 @@
     "pay_method": "card",
     "place": "PAYME P2P, UZ",
     "ts": "2026-08-03T16:55:57.990Z"
+  },
+  {
+    "date": "04.08.2026",
+    "note": "💳 Raspirator",
+    "amount_uzs": 130000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO AZAMAT ALI,  , UCHTEPA TUM BOLTAYEVA 4 PR 28",
+    "ts": "2026-08-04T10:45:32.421Z"
   }
 ]
