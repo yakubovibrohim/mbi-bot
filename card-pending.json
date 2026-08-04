@@ -1,6 +1,18 @@
 {
   "lastMsgId": 98376,
-  "pending": {},
+  "pending": {
+    "msejpi36ngw": {
+      "dir": "out",
+      "amtUzs": 35000,
+      "place": "YATT JUMAGULOV QUVONCHBEK PANJ, Toshkent, Chuvullok MFY Milliy khunarmand",
+      "rawBalance": 1466407,
+      "date": "04.08.2026",
+      "title": "Pokupka",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1785841144530
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
