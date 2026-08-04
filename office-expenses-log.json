@@ -127,5 +127,15 @@
     "rate": 12000,
     "note": "OOO AZAMAT ALI,  , UCHTEPA TUM BOLTAYEVA 4 PR 28",
     "pay_method": "card"
+  },
+  {
+    "id": "msezrmtcahp",
+    "date": "04.08.2026",
+    "ts": "2026-08-04T18:28:37.824Z",
+    "name": "💳 Ujin",
+    "amount_uzs": 264500,
+    "rate": 12000,
+    "note": "OOO ZIGIR OSH PAYSHANBA, OLTI, OLTI UGIL KFY, OLTI UGIL MFY",
+    "pay_method": "card"
   }
 ]
