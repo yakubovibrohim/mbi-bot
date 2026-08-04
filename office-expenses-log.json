@@ -117,5 +117,15 @@
     "rate": 12000,
     "note": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
     "pay_method": "card"
+  },
+  {
+    "id": "msej7vasozl",
+    "date": "04.08.2026",
+    "ts": "2026-08-04T10:45:21.845Z",
+    "name": "💳 Shukurka",
+    "amount_uzs": 490000,
+    "rate": 12000,
+    "note": "OOO AZAMAT ALI,  , UCHTEPA TUM BOLTAYEVA 4 PR 28",
+    "pay_method": "card"
   }
 ]
