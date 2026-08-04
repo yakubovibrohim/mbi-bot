@@ -37,19 +37,6 @@
       "askedAt": 1785842134486,
       "remindedAt": 1785863764213
     },
-    "mser1s50fwq": {
-      "dir": "out",
-      "amtUzs": 264500,
-      "place": "OOO ZIGIR OSH PAYSHANBA, OLTI, OLTI UGIL KFY, OLTI UGIL MFY",
-      "rawBalance": 924907,
-      "date": "04.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1785853474740,
-      "remindedAt": 1785867904309,
-      "kind": "office"
-    },
     "mser87r00o3": {
       "dir": "out",
       "amtUzs": 30000,
@@ -379,6 +366,11 @@
       "date": "04.08.2026",
       "dir": "out",
       "amt": 130000
+    },
+    {
+      "date": "04.08.2026",
+      "dir": "out",
+      "amt": 264500
     }
   ],
   "lastBalances": {
