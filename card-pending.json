@@ -1,18 +1,6 @@
 {
   "lastMsgId": 98375,
   "pending": {
-    "mseizsn9jqa": {
-      "dir": "out",
-      "amtUzs": 490000,
-      "place": "OOO AZAMAT ALI,  , UCHTEPA TUM BOLTAYEVA 4 PR 28",
-      "rawBalance": 1631407,
-      "date": "04.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1785839945157,
-      "kind": "office"
-    },
     "msej7hxr1sa": {
       "dir": "out",
       "amtUzs": 130000,
@@ -320,6 +308,11 @@
       "date": "04.08.2026",
       "dir": "out",
       "amt": 50000
+    },
+    {
+      "date": "04.08.2026",
+      "dir": "out",
+      "amt": 490000
     }
   ],
   "lastBalances": {
