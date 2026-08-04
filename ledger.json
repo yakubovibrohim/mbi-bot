@@ -1,17 +1,17 @@
 {
-  "updated": "2026-08-04T10:45:30.966Z",
+  "updated": "2026-08-04T10:45:41.633Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 145399045,
+  "balance_uzs": 145269045,
   "totals_after_opening": {
     "kirim": 51200000,
-    "chiqim": 80968213,
+    "chiqim": 81098213,
     "by_category": {
       "office": 4956550,
-      "personal": 40382208,
+      "personal": 40512208,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 20359535,
@@ -1494,6 +1494,17 @@
       "name": "💳 Shukurka",
       "pay": "karta",
       "src": "office"
+    },
+    {
+      "date": "04.08.2026",
+      "time": "15:45",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 130000,
+      "name": "💳 Raspirator",
+      "pay": "karta",
+      "src": "personal"
     }
   ]
 }
