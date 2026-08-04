@@ -107,5 +107,15 @@
     "rate": 12000,
     "note": "UB AVTOSPISANIE APT, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "msecboh1z8j",
+    "date": "04.08.2026",
+    "ts": "2026-08-04T07:32:22.309Z",
+    "name": "💳 Suv",
+    "amount_uzs": 50000,
+    "rate": 12000,
+    "note": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
+    "pay_method": "card"
   }
 ]
