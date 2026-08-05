@@ -45,9 +45,10 @@
       "date": "05.08.2026",
       "title": "E-Com oplata",
       "card4": "5893",
-      "step": "type",
+      "step": "note",
       "askedAt": 1785914977520,
-      "remindedAt": 1785958208668
+      "remindedAt": 1785958208668,
+      "kind": "office"
     },
     "msftm35etxt": {
       "dir": "out",
