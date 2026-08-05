@@ -60,17 +60,6 @@
       "step": "type",
       "askedAt": 1785918247538,
       "remindedAt": 1785932677689
-    },
-    "msg48plokdw": {
-      "dir": "in",
-      "amtUzs": 3600000,
-      "place": "UB VISA TO UZCARD, UZ",
-      "rawBalance": 4338407,
-      "date": "05.08.2026",
-      "title": "Perevod na kartu",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1785936099228
     }
   },
   "resolved": [
@@ -393,6 +382,11 @@
       "date": "04.08.2026",
       "dir": "out",
       "amt": 270000
+    },
+    {
+      "date": "05.08.2026",
+      "dir": "in",
+      "amt": 3600000
     }
   ],
   "lastBalances": {
