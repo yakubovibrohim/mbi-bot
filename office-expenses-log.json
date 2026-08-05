@@ -147,5 +147,15 @@
     "rate": 12000,
     "note": "BINKET SERVIS MCHJ,  , KATTA DOMBROBOD MFY, DOMBROBOD",
     "pay_method": "card"
+  },
+  {
+    "id": "msfkqj0dct3",
+    "date": "04.08.2026",
+    "ts": "2026-08-05T04:15:38.173Z",
+    "name": "💳 Шукурка",
+    "amount_uzs": 270000,
+    "rate": 12000,
+    "note": "OOO KOURI, TOSHKENT, DOSTOBOD MFY KORASUV BOYI KOChA",
+    "pay_method": "card"
   }
 ]
