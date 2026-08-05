@@ -48,19 +48,6 @@
       "step": "type",
       "askedAt": 1785918247538,
       "remindedAt": 1785954278582
-    },
-    "msg8eizil99": {
-      "dir": "out",
-      "amtUzs": 24000,
-      "place": "YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
-      "rawBalance": 4241407,
-      "date": "05.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1785943089054,
-      "remindedAt": 1785957518689,
-      "kind": "office"
     }
   },
   "resolved": [
@@ -398,6 +385,11 @@
       "date": "05.08.2026",
       "dir": "out",
       "amt": 37500
+    },
+    {
+      "date": "05.08.2026",
+      "dir": "out",
+      "amt": 24000
     }
   ],
   "lastBalances": {
