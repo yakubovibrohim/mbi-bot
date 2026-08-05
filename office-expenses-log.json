@@ -177,5 +177,15 @@
     "rate": 12000,
     "note": "IP OOO YANDEXGO EATS, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "msgiayggekm",
+    "date": "05.08.2026",
+    "ts": "2026-08-05T19:55:18.640Z",
+    "name": "💳 Suv",
+    "amount_uzs": 24000,
+    "rate": 12000,
+    "note": "YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
+    "pay_method": "card"
   }
 ]
