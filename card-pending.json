@@ -13,19 +13,6 @@
       "askedAt": 1785841144530,
       "remindedAt": 1785898775679
     },
-    "msejun63uub": {
-      "dir": "out",
-      "amtUzs": 7000,
-      "place": "BINKET SERVIS MCHJ,  , KATTA DOMBROBOD MFY, DOMBROBOD",
-      "rawBalance": 1459407,
-      "date": "04.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1785841384395,
-      "remindedAt": 1785899015690,
-      "kind": "office"
-    },
     "msekapxyaiq": {
       "dir": "out",
       "amtUzs": 270000,
@@ -373,6 +360,11 @@
       "date": "04.08.2026",
       "dir": "out",
       "amt": 264500
+    },
+    {
+      "date": "04.08.2026",
+      "dir": "out",
+      "amt": 7000
     }
   ],
   "lastBalances": {
