@@ -157,5 +157,15 @@
     "rate": 12000,
     "note": "OOO KOURI, TOSHKENT, DOSTOBOD MFY KORASUV BOYI KOChA",
     "pay_method": "card"
+  },
+  {
+    "id": "msgiac7gslw",
+    "date": "05.08.2026",
+    "ts": "2026-08-05T19:54:49.804Z",
+    "name": "💳 Suv",
+    "amount_uzs": 73000,
+    "rate": 12000,
+    "note": "YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
+    "pay_method": "card"
   }
 ]
