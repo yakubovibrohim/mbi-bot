@@ -13,19 +13,6 @@
       "askedAt": 1785841144530,
       "remindedAt": 1785898775679
     },
-    "msekapxyaiq": {
-      "dir": "out",
-      "amtUzs": 270000,
-      "place": "OOO KOURI, TOSHKENT, DOSTOBOD MFY KORASUV BOYI KOChA",
-      "rawBalance": 1189407,
-      "date": "04.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1785842134486,
-      "remindedAt": 1785899765728,
-      "kind": "office"
-    },
     "mser87r00o3": {
       "dir": "out",
       "amtUzs": 30000,
@@ -366,6 +353,11 @@
       "date": "04.08.2026",
       "dir": "out",
       "amt": 7000
+    },
+    {
+      "date": "04.08.2026",
+      "dir": "out",
+      "amt": 270000
     }
   ],
   "lastBalances": {
