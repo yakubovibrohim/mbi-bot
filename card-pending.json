@@ -46,7 +46,8 @@
       "title": "E-Com oplata",
       "card4": "5893",
       "step": "type",
-      "askedAt": 1785914977520
+      "askedAt": 1785914977520,
+      "remindedAt": 1785922207047
     },
     "msftm35etxt": {
       "dir": "out",
