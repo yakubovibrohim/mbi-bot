@@ -137,5 +137,15 @@
     "rate": 12000,
     "note": "OOO ZIGIR OSH PAYSHANBA, OLTI, OLTI UGIL KFY, OLTI UGIL MFY",
     "pay_method": "card"
+  },
+  {
+    "id": "msfkq6ic7xh",
+    "date": "04.08.2026",
+    "ts": "2026-08-05T04:15:21.972Z",
+    "name": "💳 Стоянка",
+    "amount_uzs": 7000,
+    "rate": 12000,
+    "note": "BINKET SERVIS MCHJ,  , KATTA DOMBROBOD MFY, DOMBROBOD",
+    "pay_method": "card"
   }
 ]
