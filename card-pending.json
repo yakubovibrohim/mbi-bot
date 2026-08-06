@@ -13,19 +13,6 @@
       "askedAt": 1785841144530,
       "remindedAt": 1785977979250
     },
-    "msewh9by752": {
-      "dir": "out",
-      "amtUzs": 74000,
-      "place": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
-      "rawBalance": 820907,
-      "date": "04.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1785862594942,
-      "remindedAt": 1785977829264,
-      "kind": "office"
-    },
     "msgveqq0abz": {
       "dir": "out",
       "amtUzs": 5000,
@@ -388,6 +375,11 @@
       "date": "04.08.2026",
       "dir": "out",
       "amt": 30000
+    },
+    {
+      "date": "04.08.2026",
+      "dir": "out",
+      "amt": 74000
     }
   ],
   "lastBalances": {
