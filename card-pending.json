@@ -24,6 +24,17 @@
       "step": "type",
       "askedAt": 1785862594942,
       "remindedAt": 1785977829264
+    },
+    "msgveqq0abz": {
+      "dir": "out",
+      "amtUzs": 5000,
+      "place": "PLUM OPLATA, UZ",
+      "rawBalance": 4236407,
+      "date": "06.08.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1785981730248
     }
   },
   "resolved": [
