@@ -757,5 +757,15 @@
     "pay_method": "card",
     "place": "OOO YANDEXGO UB, UZ",
     "ts": "2026-08-06T05:10:35.737Z"
+  },
+  {
+    "date": "06.08.2026",
+    "note": "💳 Abet",
+    "amount_uzs": 39000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "MCHJ FEEDUP ECO COMPASS, TAS, Chinoz  ul Yangi KHayot  dom 12",
+    "ts": "2026-08-06T10:50:10.742Z"
   }
 ]
