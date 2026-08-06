@@ -13,19 +13,6 @@
       "askedAt": 1785995500669,
       "remindedAt": 1786009960744
     },
-    "msh7tnj1wgk": {
-      "dir": "out",
-      "amtUzs": 39000,
-      "place": "MCHJ FEEDUP ECO COMPASS, TAS, Chinoz  ul Yangi KHayot  dom 12",
-      "rawBalance": 4096407,
-      "date": "06.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1786002581341,
-      "remindedAt": 1786009810704,
-      "kind": "personal"
-    },
     "msh7wv5ozfm": {
       "dir": "out",
       "amtUzs": 69000,
@@ -421,6 +408,11 @@
       "date": "06.08.2026",
       "dir": "out",
       "amt": 32000
+    },
+    {
+      "date": "06.08.2026",
+      "dir": "out",
+      "amt": 39000
     }
   ],
   "lastBalances": {
