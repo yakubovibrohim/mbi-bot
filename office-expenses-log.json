@@ -217,5 +217,15 @@
     "rate": 12000,
     "note": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
     "pay_method": "card"
+  },
+  {
+    "id": "msgvtz8vt1i",
+    "date": "06.08.2026",
+    "ts": "2026-08-06T02:14:01.135Z",
+    "name": "💳 Payme",
+    "amount_uzs": 5000,
+    "rate": 12000,
+    "note": "PLUM OPLATA, UZ",
+    "pay_method": "card"
   }
 ]
