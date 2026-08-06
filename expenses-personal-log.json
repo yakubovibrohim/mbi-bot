@@ -737,5 +737,15 @@
     "pay_method": "card",
     "place": "OOO AZAMAT ALI,  , UCHTEPA TUM BOLTAYEVA 4 PR 28",
     "ts": "2026-08-04T10:45:32.421Z"
+  },
+  {
+    "date": "04.08.2026",
+    "note": "💳 Ujin",
+    "amount_uzs": 35000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "YATT JUMAGULOV QUVONCHBEK PANJ, Toshkent, Chuvullok MFY Milliy khunarmand",
+    "ts": "2026-08-06T02:12:14.673Z"
   }
 ]
