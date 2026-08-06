@@ -1,19 +1,6 @@
 {
   "lastMsgId": 98496,
-  "pending": {
-    "msgveqq0abz": {
-      "dir": "out",
-      "amtUzs": 5000,
-      "place": "PLUM OPLATA, UZ",
-      "rawBalance": 4236407,
-      "date": "06.08.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1785981730248,
-      "kind": "office"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -374,6 +361,11 @@
       "date": "04.08.2026",
       "dir": "out",
       "amt": 35000
+    },
+    {
+      "date": "06.08.2026",
+      "dir": "out",
+      "amt": 5000
     }
   ],
   "lastBalances": {
