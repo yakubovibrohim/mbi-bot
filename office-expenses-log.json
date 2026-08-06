@@ -207,5 +207,15 @@
     "rate": 12000,
     "note": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
     "pay_method": "card"
+  },
+  {
+    "id": "msgvrbv4yr8",
+    "date": "04.08.2026",
+    "ts": "2026-08-06T02:11:57.520Z",
+    "name": "💳 Suv",
+    "amount_uzs": 74000,
+    "rate": 12000,
+    "note": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
+    "pay_method": "card"
   }
 ]
