@@ -767,5 +767,15 @@
     "pay_method": "card",
     "place": "MCHJ FEEDUP ECO COMPASS, TAS, Chinoz  ul Yangi KHayot  dom 12",
     "ts": "2026-08-06T10:50:10.742Z"
+  },
+  {
+    "date": "06.08.2026",
+    "note": "💳 Магазин",
+    "amount_uzs": 119050,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "HAVAS  FOOD MCHJ, Toshkent, Kadriyat MFY, Chigil, per  1 ku",
+    "ts": "2026-08-07T03:28:19.672Z"
   }
 ]
