@@ -777,5 +777,15 @@
     "pay_method": "card",
     "place": "HAVAS  FOOD MCHJ, Toshkent, Kadriyat MFY, Chigil, per  1 ku",
     "ts": "2026-08-07T03:28:19.672Z"
+  },
+  {
+    "date": "06.08.2026",
+    "note": "💳 Гостиница",
+    "amount_uzs": 900000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO HAPPY PEOPLE, TASHKENT, G. TASHKENT UL. YANGI KUYLIK DO",
+    "ts": "2026-08-07T03:28:49.139Z"
   }
 ]
