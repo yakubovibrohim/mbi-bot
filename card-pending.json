@@ -22,6 +22,17 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1786087574656
+    },
+    "msimg03xics": {
+      "dir": "out",
+      "amtUzs": 288400,
+      "place": "MULTICARD MUNIS, UZ",
+      "rawBalance": 3798257,
+      "date": "07.08.2026",
+      "title": "Platezh",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1786087604877
     }
   },
   "resolved": [
