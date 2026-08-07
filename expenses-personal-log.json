@@ -797,5 +797,15 @@
     "pay_method": "card",
     "place": "PAYME UZCARD NA VISA, UZ",
     "ts": "2026-08-07T04:58:45.914Z"
+  },
+  {
+    "date": "06.08.2026",
+    "note": "💳 Такси",
+    "amount_uzs": 69000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-08-07T04:59:02.882Z"
   }
 ]
