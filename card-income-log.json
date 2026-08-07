@@ -18,5 +18,15 @@
     "note": "karta",
     "pay_method": "card",
     "ts": "2026-07-27T08:16:11.408Z"
+  },
+  {
+    "id": "msikq1lbiyt",
+    "date": "07.08.2026",
+    "name": "💳 TBC EDIN EPOS H2U, UZ",
+    "amount_uzs": 1140000,
+    "rate": 12000,
+    "note": "karta",
+    "pay_method": "card",
+    "ts": "2026-08-07T06:38:34.127Z"
   }
 ]
