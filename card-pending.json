@@ -20,8 +20,9 @@
       "date": "07.08.2026",
       "title": "Pokupka",
       "card4": "5893",
-      "step": "type",
-      "askedAt": 1786092374843
+      "step": "note",
+      "askedAt": 1786092374843,
+      "kind": "office"
     }
   },
   "resolved": [
