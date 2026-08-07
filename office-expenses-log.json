@@ -227,5 +227,15 @@
     "rate": 12000,
     "note": "PLUM OPLATA, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "msipvaly9kv",
+    "date": "07.08.2026",
+    "ts": "2026-08-07T09:02:37.174Z",
+    "name": "💳 Abet",
+    "amount_uzs": 159000,
+    "rate": 12000,
+    "note": "OOO ZIGIR OSH PAYSHANBA, OLTI, OLTI UGIL KFY, OLTI UGIL MFY",
+    "pay_method": "card"
   }
 ]
