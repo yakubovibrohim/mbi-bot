@@ -1,6 +1,18 @@
 {
   "lastMsgId": 98573,
-  "pending": {},
+  "pending": {
+    "msikocgoxp9": {
+      "dir": "in",
+      "amtUzs": 1140000,
+      "place": "TBC EDIN EPOS H2U, UZ",
+      "rawBalance": 3990857,
+      "date": "07.08.2026",
+      "title": "Perevod na kartu",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1786084634904
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
