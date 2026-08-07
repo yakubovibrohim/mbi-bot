@@ -1,20 +1,6 @@
 {
   "lastMsgId": 98523,
-  "pending": {
-    "msh7wv5ozfm": {
-      "dir": "out",
-      "amtUzs": 69000,
-      "place": "OOO POINT TREND, Toshkent, YAKKASAROY TUM GLINKA KOCHASI 1",
-      "rawBalance": 4027407,
-      "date": "06.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1786002731196,
-      "remindedAt": 1786074763724,
-      "kind": "personal"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -405,6 +391,11 @@
       "date": "06.08.2026",
       "dir": "out",
       "amt": 57500
+    },
+    {
+      "date": "06.08.2026",
+      "dir": "out",
+      "amt": 69000
     },
     {
       "date": "06.08.2026",
