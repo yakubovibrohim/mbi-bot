@@ -1,19 +1,6 @@
 {
   "lastMsgId": 98620,
-  "pending": {
-    "msilu53sapf": {
-      "dir": "in",
-      "amtUzs": 240000,
-      "place": "PAYME P2P, UZ",
-      "rawBalance": 4230857,
-      "date": "07.08.2026",
-      "title": "Perevod na kartu",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1786086584920,
-      "remindedAt": 1786093814144
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -444,6 +431,11 @@
       "date": "07.08.2026",
       "dir": "out",
       "amt": 159000
+    },
+    {
+      "date": "07.08.2026",
+      "dir": "in",
+      "amt": 240000
     }
   ],
   "lastBalances": {
