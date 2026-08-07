@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-07T06:38:43.214Z",
+  "updated": "2026-08-07T09:02:46.218Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 144258495,
+  "balance_uzs": 144099495,
   "totals_after_opening": {
     "kirim": 52340000,
-    "chiqim": 83248763,
+    "chiqim": 83407763,
     "by_category": {
-      "office": 5786550,
+      "office": 5945550,
       "personal": 41832758,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
@@ -1703,6 +1703,17 @@
       "name": "💳 Блмиман",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "07.08.2026",
+      "time": "14:02",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 159000,
+      "name": "💳 Abet",
+      "pay": "karta",
+      "src": "office"
     },
     {
       "date": "07.08.2026",
