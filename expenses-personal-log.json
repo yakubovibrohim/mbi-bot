@@ -787,5 +787,15 @@
     "pay_method": "card",
     "place": "OOO HAPPY PEOPLE, TASHKENT, G. TASHKENT UL. YANGI KUYLIK DO",
     "ts": "2026-08-07T03:28:49.139Z"
+  },
+  {
+    "date": "06.08.2026",
+    "note": "💳 Сигарет",
+    "amount_uzs": 57500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME UZCARD NA VISA, UZ",
+    "ts": "2026-08-07T04:58:45.914Z"
   }
 ]
