@@ -11,17 +11,6 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1786086584920
-    },
-    "msimha7glef": {
-      "dir": "out",
-      "amtUzs": 412000,
-      "place": "MULTICARD MUNIS, UZ",
-      "rawBalance": 3097857,
-      "date": "07.08.2026",
-      "title": "Platezh",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1786087664620
     }
   },
   "resolved": [
@@ -444,6 +433,11 @@
       "date": "07.08.2026",
       "dir": "out",
       "amt": 288400
+    },
+    {
+      "date": "07.08.2026",
+      "dir": "out",
+      "amt": 412000
     }
   ],
   "lastBalances": {
