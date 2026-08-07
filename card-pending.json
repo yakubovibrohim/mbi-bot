@@ -1,5 +1,5 @@
 {
-  "lastMsgId": 98579,
+  "lastMsgId": 98585,
   "pending": {
     "msilu53sapf": {
       "dir": "in",
@@ -421,7 +421,7 @@
     }
   ],
   "lastBalances": {
-    "5893": 4230857
+    "5893": 4086657
   },
   "lastReconcileDate": "06.08.2026"
 }
