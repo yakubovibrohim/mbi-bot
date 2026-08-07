@@ -1,17 +1,17 @@
 {
-  "updated": "2026-08-07T03:28:28.732Z",
+  "updated": "2026-08-07T03:28:58.156Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 144213995,
+  "balance_uzs": 143313995,
   "totals_after_opening": {
     "kirim": 51200000,
-    "chiqim": 82153263,
+    "chiqim": 83053263,
     "by_category": {
       "office": 5786550,
-      "personal": 40737258,
+      "personal": 41637258,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 20359535,
@@ -1657,6 +1657,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 119050,
       "name": "💳 Магазин",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "06.08.2026",
+      "time": "08:28",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 900000,
+      "name": "💳 Гостиница",
       "pay": "karta",
       "src": "personal"
     }
