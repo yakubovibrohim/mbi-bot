@@ -247,5 +247,15 @@
     "rate": 12000,
     "note": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
     "pay_method": "card"
+  },
+  {
+    "id": "msiwvknz0zm",
+    "date": "07.08.2026",
+    "ts": "2026-08-07T12:18:47.519Z",
+    "name": "💳 Taxi",
+    "amount_uzs": 30330,
+    "rate": 12000,
+    "note": "PAYME P2P, UZ",
+    "pay_method": "card"
   }
 ]
