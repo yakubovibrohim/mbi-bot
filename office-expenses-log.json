@@ -237,5 +237,15 @@
     "rate": 12000,
     "note": "OOO ZIGIR OSH PAYSHANBA, OLTI, OLTI UGIL KFY, OLTI UGIL MFY",
     "pay_method": "card"
+  },
+  {
+    "id": "msivxgw16a9",
+    "date": "07.08.2026",
+    "ts": "2026-08-07T11:52:16.321Z",
+    "name": "💳 Suv",
+    "amount_uzs": 45000,
+    "rate": 12000,
+    "note": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
+    "pay_method": "card"
   }
 ]
