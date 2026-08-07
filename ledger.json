@@ -1,13 +1,13 @@
 {
-  "updated": "2026-08-07T09:02:46.218Z",
+  "updated": "2026-08-07T09:30:19.166Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 144099495,
+  "balance_uzs": 144339495,
   "totals_after_opening": {
-    "kirim": 52340000,
+    "kirim": 52580000,
     "chiqim": 83407763,
     "by_category": {
       "office": 5945550,
@@ -16,7 +16,7 @@
       "deal_payment": 24000000,
       "deal_expense": 20359535,
       "debt_in": 26400000,
-      "card_income": 1940000,
+      "card_income": 2180000,
       "debt_paid": 736000
     }
   },
@@ -1723,6 +1723,17 @@
       "category_uz": "Boshqa kirim (karta)",
       "amount_uzs": 1140000,
       "name": "💳 TBC EDIN EPOS H2U, UZ",
+      "pay": "karta",
+      "src": "card"
+    },
+    {
+      "date": "07.08.2026",
+      "time": "14:30",
+      "dir": "in",
+      "category": "card_income",
+      "category_uz": "Boshqa kirim (karta)",
+      "amount_uzs": 240000,
+      "name": "💳 PAYME P2P, UZ",
       "pay": "karta",
       "src": "card"
     }
