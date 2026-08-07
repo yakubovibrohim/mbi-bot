@@ -1,6 +1,18 @@
 {
   "lastMsgId": 98579,
-  "pending": {},
+  "pending": {
+    "msilu53sapf": {
+      "dir": "in",
+      "amtUzs": 240000,
+      "place": "PAYME P2P, UZ",
+      "rawBalance": 4230857,
+      "date": "07.08.2026",
+      "title": "Perevod na kartu",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1786086584920
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
