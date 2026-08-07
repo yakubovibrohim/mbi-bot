@@ -37,19 +37,6 @@
       "askedAt": 1786005821257,
       "remindedAt": 1786070653651
     },
-    "mshj5zg6nv6": {
-      "dir": "out",
-      "amtUzs": 119050,
-      "place": "HAVAS  FOOD MCHJ, Toshkent, Kadriyat MFY, Chigil, per  1 ku",
-      "rawBalance": 2908357,
-      "date": "06.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1786021632438,
-      "remindedAt": 1786072063679,
-      "kind": "personal"
-    },
     "mshovr857r0": {
       "dir": "out",
       "amtUzs": 57500,
@@ -438,6 +425,11 @@
       "date": "06.08.2026",
       "dir": "out",
       "amt": 39000
+    },
+    {
+      "date": "06.08.2026",
+      "dir": "out",
+      "amt": 119050
     }
   ],
   "lastBalances": {
