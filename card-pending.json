@@ -1,18 +1,6 @@
 {
   "lastMsgId": 98689,
   "pending": {
-    "msk915f2um2": {
-      "dir": "out",
-      "amtUzs": 950000,
-      "place": "IYB P2P, UZ",
-      "rawBalance": 1618327,
-      "date": "08.08.2026",
-      "title": "Spisanie c karty",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1786186009262,
-      "kind": "personal"
-    },
     "msk9cq2blgg": {
       "dir": "out",
       "amtUzs": 51000,
@@ -485,6 +473,11 @@
       "date": "08.08.2026",
       "dir": "out",
       "amt": 46100
+    },
+    {
+      "date": "08.08.2026",
+      "dir": "out",
+      "amt": 950000
     }
   ],
   "lastBalances": {
