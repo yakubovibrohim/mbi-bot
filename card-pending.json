@@ -1,6 +1,18 @@
 {
   "lastMsgId": 98684,
-  "pending": {},
+  "pending": {
+    "msk915f2um2": {
+      "dir": "out",
+      "amtUzs": 950000,
+      "place": "IYB P2P, UZ",
+      "rawBalance": 1618327,
+      "date": "08.08.2026",
+      "title": "Spisanie c karty",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1786186009262
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
