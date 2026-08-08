@@ -837,5 +837,15 @@
     "pay_method": "card",
     "place": "OOO GRAND PHARM TRADE,  , g.Tashkent, Yunusabadskiy r-n",
     "ts": "2026-08-08T05:57:20.947Z"
+  },
+  {
+    "date": "08.08.2026",
+    "note": "💳 Davernis",
+    "amount_uzs": 950000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IYB P2P, UZ",
+    "ts": "2026-08-08T10:56:34.635Z"
   }
 ]
