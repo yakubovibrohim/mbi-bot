@@ -1,19 +1,6 @@
 {
   "lastMsgId": 98664,
-  "pending": {
-    "msjx3lt4ggm": {
-      "dir": "out",
-      "amtUzs": 46100,
-      "place": "OOO GRAND PHARM TRADE,  , g.Tashkent, Yunusabadskiy r-n",
-      "rawBalance": 2568327,
-      "date": "08.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1786165968424,
-      "kind": "personal"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -469,6 +456,11 @@
       "date": "07.08.2026",
       "dir": "out",
       "amt": 119100
+    },
+    {
+      "date": "08.08.2026",
+      "dir": "out",
+      "amt": 46100
     }
   ],
   "lastBalances": {
