@@ -12,19 +12,6 @@
       "step": "type",
       "askedAt": 1786124506091,
       "remindedAt": 1786160537368
-    },
-    "msjd796s8qi": {
-      "dir": "out",
-      "amtUzs": 130000,
-      "place": "CANADA HOTDOG MCHJ, Tashkent, Uchtepinskiy r n  kv. 24  Vatan",
-      "rawBalance": 2614427,
-      "date": "08.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1786132546372,
-      "remindedAt": 1786161377424,
-      "kind": "office"
     }
   },
   "resolved": [
@@ -472,6 +459,11 @@
       "date": "07.08.2026",
       "dir": "out",
       "amt": 30330
+    },
+    {
+      "date": "08.08.2026",
+      "dir": "out",
+      "amt": 130000
     }
   ],
   "lastBalances": {
