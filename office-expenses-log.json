@@ -277,5 +277,15 @@
     "rate": 12000,
     "note": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
     "pay_method": "card"
+  },
+  {
+    "id": "mskdg6c7hmn",
+    "date": "08.08.2026",
+    "ts": "2026-08-08T12:50:28.759Z",
+    "name": "💳 Suv",
+    "amount_uzs": 13000,
+    "rate": 12000,
+    "note": "YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
+    "pay_method": "card"
   }
 ]
