@@ -466,8 +466,8 @@
       {
         "date": "08.08.2026",
         "in": "09:00",
-        "out": "10:19",
-        "early": true,
+        "out": "19:38",
+        "early": false,
         "late": false
       }
     ],
