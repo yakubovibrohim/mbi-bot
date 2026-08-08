@@ -847,5 +847,15 @@
     "pay_method": "card",
     "place": "IYB P2P, UZ",
     "ts": "2026-08-08T10:56:34.635Z"
+  },
+  {
+    "date": "08.08.2026",
+    "note": "💳 Davernis",
+    "amount_uzs": 40000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IYB P2P, UZ",
+    "ts": "2026-08-08T12:50:39.885Z"
   }
 ]
