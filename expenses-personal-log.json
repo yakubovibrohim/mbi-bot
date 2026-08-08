@@ -827,5 +827,15 @@
     "pay_method": "card",
     "place": "IP OOO YANDEX EATS, UZ",
     "ts": "2026-08-08T05:57:00.160Z"
+  },
+  {
+    "date": "08.08.2026",
+    "note": "💳 Rinoksil",
+    "amount_uzs": 46100,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO GRAND PHARM TRADE,  , g.Tashkent, Yunusabadskiy r-n",
+    "ts": "2026-08-08T05:57:20.947Z"
   }
 ]
