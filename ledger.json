@@ -1,17 +1,17 @@
 {
-  "updated": "2026-08-08T05:57:09.072Z",
+  "updated": "2026-08-08T05:57:29.863Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 144015065,
+  "balance_uzs": 143968965,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 83732193,
+    "chiqim": 83778293,
     "by_category": {
       "office": 6150880,
-      "personal": 41951858,
+      "personal": 41997958,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 20359535,
@@ -1780,6 +1780,17 @@
       "name": "💳 Ujin",
       "pay": "karta",
       "src": "office"
+    },
+    {
+      "date": "08.08.2026",
+      "time": "10:57",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 46100,
+      "name": "💳 Rinoksil",
+      "pay": "karta",
+      "src": "personal"
     }
   ]
 }
