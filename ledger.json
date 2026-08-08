@@ -1,17 +1,17 @@
 {
-  "updated": "2026-08-08T05:57:29.863Z",
+  "updated": "2026-08-08T10:56:50.898Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 143968965,
+  "balance_uzs": 142967965,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 83778293,
+    "chiqim": 84779293,
     "by_category": {
-      "office": 6150880,
-      "personal": 41997958,
+      "office": 6201880,
+      "personal": 42947958,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 20359535,
@@ -1783,12 +1783,34 @@
     },
     {
       "date": "08.08.2026",
+      "time": "15:56",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 51000,
+      "name": "💳 Suv",
+      "pay": "karta",
+      "src": "office"
+    },
+    {
+      "date": "08.08.2026",
       "time": "10:57",
       "dir": "out",
       "category": "personal",
       "category_uz": "Shaxsiy",
       "amount_uzs": 46100,
       "name": "💳 Rinoksil",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "08.08.2026",
+      "time": "15:56",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 950000,
+      "name": "💳 Davernis",
       "pay": "karta",
       "src": "personal"
     }
