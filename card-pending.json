@@ -9,8 +9,9 @@
       "date": "08.08.2026",
       "title": "Pokupka",
       "card4": "5893",
-      "step": "type",
-      "askedAt": 1786186999193
+      "step": "note",
+      "askedAt": 1786186999193,
+      "kind": "office"
     },
     "msk9s5l9iva": {
       "dir": "out",
