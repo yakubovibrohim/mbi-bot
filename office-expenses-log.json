@@ -267,5 +267,15 @@
     "rate": 12000,
     "note": "CANADA HOTDOG MCHJ, Tashkent, Uchtepinskiy r n  kv. 24  Vatan",
     "pay_method": "card"
+  },
+  {
+    "id": "msk9dusdc5c",
+    "date": "08.08.2026",
+    "ts": "2026-08-08T10:56:42.013Z",
+    "name": "💳 Suv",
+    "amount_uzs": 51000,
+    "rate": 12000,
+    "note": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
+    "pay_method": "card"
   }
 ]
