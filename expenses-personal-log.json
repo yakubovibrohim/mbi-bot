@@ -817,5 +817,15 @@
     "pay_method": "card",
     "place": "OOO POINT TREND, Toshkent, YAKKASAROY TUM GLINKA KOCHASI 1",
     "ts": "2026-08-07T04:59:24.553Z"
+  },
+  {
+    "date": "07.08.2026",
+    "note": "💳 Shirinli",
+    "amount_uzs": 119100,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IP OOO YANDEX EATS, UZ",
+    "ts": "2026-08-08T05:57:00.160Z"
   }
 ]
