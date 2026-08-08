@@ -257,5 +257,15 @@
     "rate": 12000,
     "note": "PAYME P2P, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "msjui67x47n",
+    "date": "08.08.2026",
+    "ts": "2026-08-08T04:00:09.213Z",
+    "name": "💳 Ujin",
+    "amount_uzs": 130000,
+    "rate": 12000,
+    "note": "CANADA HOTDOG MCHJ, Tashkent, Uchtepinskiy r n  kv. 24  Vatan",
+    "pay_method": "card"
   }
 ]
