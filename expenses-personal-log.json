@@ -857,5 +857,15 @@
     "pay_method": "card",
     "place": "IYB P2P, UZ",
     "ts": "2026-08-08T12:50:39.885Z"
+  },
+  {
+    "date": "08.08.2026",
+    "note": "💳 Taxi",
+    "amount_uzs": 35000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-08-08T16:43:01.279Z"
   }
 ]
