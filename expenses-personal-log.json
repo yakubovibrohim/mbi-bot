@@ -897,5 +897,15 @@
     "pay_method": "card",
     "place": "MCHJ VODNIK BUSINESS, Toshkent, ILGOR MFY, BO KOChASI,  uy:78",
     "ts": "2026-08-09T06:22:15.250Z"
+  },
+  {
+    "date": "08.08.2026",
+    "note": "💳 Benzin",
+    "amount_uzs": 336000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "CHINOBODNEFTBAZASI 27 QOYLIQ2,  , YUNUSOBOD T 17 MAVZE 27 UY 23 X",
+    "ts": "2026-08-09T06:57:42.405Z"
   }
 ]
