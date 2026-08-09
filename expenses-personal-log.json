@@ -907,5 +907,15 @@
     "pay_method": "card",
     "place": "CHINOBODNEFTBAZASI 27 QOYLIQ2,  , YUNUSOBOD T 17 MAVZE 27 UY 23 X",
     "ts": "2026-08-09T06:57:42.405Z"
+  },
+  {
+    "date": "09.08.2026",
+    "note": "💳 Suv",
+    "amount_uzs": 45495,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-08-09T14:44:40.458Z"
   }
 ]
