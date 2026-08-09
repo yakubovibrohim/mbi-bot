@@ -917,5 +917,15 @@
     "pay_method": "card",
     "place": "PAYME P2P, UZ",
     "ts": "2026-08-09T14:44:40.458Z"
+  },
+  {
+    "date": "09.08.2026",
+    "note": "💳 Uy wifi",
+    "amount_uzs": 215000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-08-09T16:12:44.801Z"
   }
 ]
