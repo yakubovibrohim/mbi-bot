@@ -877,5 +877,15 @@
     "pay_method": "card",
     "place": "QAVIS KHUSUSIY FIRMASI, GAZALKENT, Tashkentskaya oblast, Bostanlyk",
     "ts": "2026-08-09T06:21:25.531Z"
+  },
+  {
+    "date": "09.08.2026",
+    "note": "💳 Suv",
+    "amount_uzs": 290790,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "ANGLESEY FOOD MCHJ XK, Toshkent, g Tashkent  Mirzo Ulugbekskiy r",
+    "ts": "2026-08-09T06:21:56.318Z"
   }
 ]
