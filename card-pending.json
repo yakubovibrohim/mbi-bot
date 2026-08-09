@@ -1,20 +1,6 @@
 {
   "lastMsgId": 98712,
-  "pending": {
-    "mskpy38761x": {
-      "dir": "out",
-      "amtUzs": 336000,
-      "place": "CHINOBODNEFTBAZASI 27 QOYLIQ2,  , YUNUSOBOD T 17 MAVZE 27 UY 23 X",
-      "rawBalance": 1143327,
-      "date": "08.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1786214419927,
-      "remindedAt": 1786257651357,
-      "kind": "personal"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -515,6 +501,11 @@
       "date": "08.08.2026",
       "dir": "out",
       "amt": 61000
+    },
+    {
+      "date": "08.08.2026",
+      "dir": "out",
+      "amt": 336000
     }
   ],
   "lastBalances": {
