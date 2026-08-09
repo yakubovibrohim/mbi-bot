@@ -1,6 +1,18 @@
 {
   "lastMsgId": 98742,
-  "pending": {},
+  "pending": {
+    "msm03pbwdoe": {
+      "dir": "out",
+      "amtUzs": 215000,
+      "place": "PAYME OPLATA, UZ",
+      "rawBalance": 231042,
+      "date": "09.08.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1786291944188
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
