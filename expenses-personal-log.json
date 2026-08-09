@@ -867,5 +867,15 @@
     "pay_method": "card",
     "place": "OOO YANDEXGO UB, UZ",
     "ts": "2026-08-08T16:43:01.279Z"
+  },
+  {
+    "date": "09.08.2026",
+    "note": "💳 Marojniy",
+    "amount_uzs": 300000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "QAVIS KHUSUSIY FIRMASI, GAZALKENT, Tashkentskaya oblast, Bostanlyk",
+    "ts": "2026-08-09T06:21:25.531Z"
   }
 ]
