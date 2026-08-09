@@ -36,19 +36,6 @@
       "step": "type",
       "askedAt": 1786218770052,
       "remindedAt": 1786254801161
-    },
-    "msktac3wvuq": {
-      "dir": "out",
-      "amtUzs": 300000,
-      "place": "QAVIS KHUSUSIY FIRMASI, GAZALKENT, Tashkentskaya oblast, Bostanlyk",
-      "rawBalance": 491537,
-      "date": "09.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1786220030156,
-      "remindedAt": 1786256061246,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -536,6 +523,11 @@
       "date": "08.08.2026",
       "dir": "out",
       "amt": 35000
+    },
+    {
+      "date": "09.08.2026",
+      "dir": "out",
+      "amt": 300000
     }
   ],
   "lastBalances": {
