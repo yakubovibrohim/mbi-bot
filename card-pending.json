@@ -12,19 +12,6 @@
       "step": "type",
       "askedAt": 1786214419927,
       "remindedAt": 1786250450902
-    },
-    "mskq73ceceo": {
-      "dir": "out",
-      "amtUzs": 61000,
-      "place": "MCHJ VODNIK BUSINESS, Toshkent, ILGOR MFY, BO KOChASI,  uy:78",
-      "rawBalance": 1082327,
-      "date": "08.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1786214839983,
-      "remindedAt": 1786250870918,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -522,6 +509,11 @@
       "date": "09.08.2026",
       "dir": "out",
       "amt": 290790
+    },
+    {
+      "date": "08.08.2026",
+      "dir": "out",
+      "amt": 61000
     }
   ],
   "lastBalances": {
