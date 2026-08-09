@@ -887,5 +887,15 @@
     "pay_method": "card",
     "place": "ANGLESEY FOOD MCHJ XK, Toshkent, g Tashkent  Mirzo Ulugbekskiy r",
     "ts": "2026-08-09T06:21:56.318Z"
+  },
+  {
+    "date": "08.08.2026",
+    "note": "💳 Suv zaryadka",
+    "amount_uzs": 61000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "MCHJ VODNIK BUSINESS, Toshkent, ILGOR MFY, BO KOChASI,  uy:78",
+    "ts": "2026-08-09T06:22:15.250Z"
   }
 ]
