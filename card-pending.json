@@ -24,19 +24,6 @@
       "step": "type",
       "askedAt": 1786214839983,
       "remindedAt": 1786250870918
-    },
-    "msksjbt03v2": {
-      "dir": "out",
-      "amtUzs": 290790,
-      "place": "ANGLESEY FOOD MCHJ XK, Toshkent, g Tashkent  Mirzo Ulugbekskiy r",
-      "rawBalance": 791537,
-      "date": "09.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1786218770052,
-      "remindedAt": 1786254801161,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -529,6 +516,11 @@
       "date": "09.08.2026",
       "dir": "out",
       "amt": 300000
+    },
+    {
+      "date": "09.08.2026",
+      "dir": "out",
+      "amt": 290790
     }
   ],
   "lastBalances": {
