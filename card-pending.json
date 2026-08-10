@@ -12,18 +12,6 @@
       "step": "type",
       "askedAt": 1786362597067,
       "remindedAt": 1786377027225
-    },
-    "msnh65m758p": {
-      "dir": "out",
-      "amtUzs": 300000,
-      "place": "PL DOMO TOLOV, UZ",
-      "rawBalance": 1991742,
-      "date": "10.08.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1786381078255,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -561,6 +549,11 @@
       "date": "10.08.2026",
       "dir": "out",
       "amt": 1000000
+    },
+    {
+      "date": "10.08.2026",
+      "dir": "out",
+      "amt": 300000
     }
   ],
   "lastBalances": {
