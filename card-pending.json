@@ -1,6 +1,18 @@
 {
   "lastMsgId": 98793,
-  "pending": {},
+  "pending": {
+    "msmzitxy5zz": {
+      "dir": "in",
+      "amtUzs": 3600000,
+      "place": "PAYME P2P, UZ",
+      "rawBalance": 3831042,
+      "date": "10.08.2026",
+      "title": "Perevod na kartu",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1786351436566
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
