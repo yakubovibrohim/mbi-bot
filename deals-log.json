@@ -342,6 +342,14 @@
         "rate": 12000,
         "note": "",
         "source": "manual"
+      },
+      {
+        "date": "10.08.2026",
+        "ts": "2026-08-10T14:40:47.254Z",
+        "name": "💳 PAYME P2P, UZ",
+        "total_uzs": 303300,
+        "rate": 12000,
+        "pay_method": "card"
       }
     ],
     "finished_date": null,
