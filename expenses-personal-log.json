@@ -947,5 +947,15 @@
     "pay_method": "card",
     "place": "HGT PAYNET, UZ",
     "ts": "2026-08-10T17:43:32.001Z"
+  },
+  {
+    "date": "10.08.2026",
+    "note": "💳 Uy gaz",
+    "amount_uzs": 300000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PL DOMO TOLOV, UZ",
+    "ts": "2026-08-10T17:43:45.088Z"
   }
 ]
