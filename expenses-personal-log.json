@@ -927,5 +927,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-08-09T16:12:44.801Z"
+  },
+  {
+    "date": "10.08.2026",
+    "note": "💳 Suv",
+    "amount_uzs": 39000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
+    "ts": "2026-08-10T14:40:34.588Z"
   }
 ]
