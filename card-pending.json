@@ -13,18 +13,6 @@
       "askedAt": 1786362597067,
       "remindedAt": 1786377027225
     },
-    "msnh4vbshkq": {
-      "dir": "out",
-      "amtUzs": 1000000,
-      "place": "HGT PAYNET, UZ",
-      "rawBalance": 2291742,
-      "date": "10.08.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1786381018264,
-      "kind": "personal"
-    },
     "msnh65m758p": {
       "dir": "out",
       "amtUzs": 300000,
@@ -567,6 +555,11 @@
       "date": "10.08.2026",
       "dir": "out",
       "amt": 303300
+    },
+    {
+      "date": "10.08.2026",
+      "dir": "out",
+      "amt": 1000000
     }
   ],
   "lastBalances": {
