@@ -476,6 +476,12 @@
         "out": "09:39",
         "early": true,
         "late": true
+      },
+      {
+        "date": "11.08.2026",
+        "in": "09:00",
+        "out": "02:32",
+        "early": true
       }
     ],
     "tg_chat_id": "5868770869"
