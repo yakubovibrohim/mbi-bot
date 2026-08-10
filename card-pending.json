@@ -23,6 +23,17 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1786381018264
+    },
+    "msnh65m758p": {
+      "dir": "out",
+      "amtUzs": 300000,
+      "place": "PL DOMO TOLOV, UZ",
+      "rawBalance": 1991742,
+      "date": "10.08.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1786381078255
     }
   },
   "resolved": [
