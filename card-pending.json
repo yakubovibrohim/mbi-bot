@@ -21,8 +21,9 @@
       "date": "10.08.2026",
       "title": "E-Com oplata",
       "card4": "5893",
-      "step": "type",
-      "askedAt": 1786381018264
+      "step": "note",
+      "askedAt": 1786381018264,
+      "kind": "personal"
     },
     "msnh65m758p": {
       "dir": "out",
