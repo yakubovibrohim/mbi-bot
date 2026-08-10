@@ -1,20 +1,20 @@
 {
-  "updated": "2026-08-10T14:40:43.767Z",
+  "updated": "2026-08-10T14:40:56.244Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 141592680,
+  "balance_uzs": 141289380,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 86154578,
+    "chiqim": 86457878,
     "by_category": {
       "office": 6214880,
       "personal": 44310243,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
-      "deal_expense": 20359535,
+      "deal_expense": 20662835,
       "debt_in": 26400000,
       "card_income": 2180000,
       "debt_paid": 736000
@@ -1912,6 +1912,17 @@
       "name": "💳 Uy wifi",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "10.08.2026",
+      "time": "19:40",
+      "dir": "out",
+      "category": "deal_expense",
+      "category_uz": "Buyurtma xarajati",
+      "amount_uzs": 303300,
+      "name": "Sevara opa Taqachi: 💳 PAYME P2P, UZ",
+      "pay": "karta",
+      "src": "deals"
     },
     {
       "date": "10.08.2026",
