@@ -1,0 +1,931 @@
+[
+  {
+    "date": "17.06.2026",
+    "note": "Uy uchun ro’zg’or",
+    "amount_uzs": 4150000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-17T10:10:53.772Z"
+  },
+  {
+    "date": "19.06.2026",
+    "note": "Moshina moyka + ishxona abet",
+    "amount_uzs": 170000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-19T02:54:12.731Z"
+  },
+  {
+    "date": "19.06.2026",
+    "note": "Moshina zaryadka + ujin",
+    "amount_uzs": 206000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-19T02:57:02.703Z"
+  },
+  {
+    "date": "19.06.2026",
+    "note": "Xotinga",
+    "amount_uzs": 400000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-19T02:57:22.651Z"
+  },
+  {
+    "date": "19.06.2026",
+    "note": "MuhammadAli ⚽️futbolga",
+    "amount_uzs": 880000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-19T04:42:51.178Z"
+  },
+  {
+    "date": "19.06.2026",
+    "note": "Su uchun shaxsiy ehtiyoj",
+    "amount_uzs": 30000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-19T12:39:34.396Z"
+  },
+  {
+    "date": "20.06.2026",
+    "note": "Xotinga",
+    "amount_uzs": 400000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-20T10:24:55.488Z"
+  },
+  {
+    "date": "20.06.2026",
+    "note": "Абет",
+    "amount_uzs": 75000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-20T12:15:40.302Z"
+  },
+  {
+    "date": "22.06.2026",
+    "note": "Paynet xadica",
+    "amount_uzs": 70000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-22T05:50:15.679Z"
+  },
+  {
+    "date": "22.06.2026",
+    "note": "Moyka",
+    "amount_uzs": 110000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-22T10:31:50.508Z"
+  },
+  {
+    "date": "23.06.2026",
+    "note": "دنگه",
+    "amount_uzs": 300000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-23T04:06:00.166Z"
+  },
+  {
+    "date": "23.06.2026",
+    "note": "Sartorosh",
+    "amount_uzs": 100000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-23T04:08:26.764Z"
+  },
+  {
+    "date": "25.06.2026",
+    "note": "kasha nutrilak 2",
+    "amount_uzs": 200000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-25T10:20:28.707Z"
+  },
+  {
+    "date": "26.06.2026",
+    "note": "",
+    "amount_uzs": 1515000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-25T19:24:39.493Z"
+  },
+  {
+    "date": "27.06.2026",
+    "note": "Suv",
+    "amount_uzs": 50000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-27T13:41:35.232Z"
+  },
+  {
+    "date": "27.06.2026",
+    "note": "Suv",
+    "amount_uzs": 38000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-27T13:47:25.055Z"
+  },
+  {
+    "date": "27.06.2026",
+    "note": "Park",
+    "amount_uzs": 1120000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-27T18:35:03.191Z"
+  },
+  {
+    "date": "29.06.2026",
+    "note": "Balon detskiy",
+    "amount_uzs": 210000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-29T12:27:47.455Z"
+  },
+  {
+    "date": "29.06.2026",
+    "note": "Musor uchun",
+    "amount_uzs": 150000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-29T12:28:47.022Z"
+  },
+  {
+    "date": "30.06.2026",
+    "note": "Детский кровать для детей",
+    "amount_uzs": 9666000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-06-30T05:07:01.668Z"
+  },
+  {
+    "date": "06.07.2026",
+    "note": "bog'cha puli",
+    "amount_uzs": 2100000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-06T03:57:42.146Z"
+  },
+  {
+    "date": "06.07.2026",
+    "note": "zapchastlar",
+    "amount_uzs": 1200000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-06T03:59:15.286Z"
+  },
+  {
+    "date": "06.07.2026",
+    "note": "dacha+uyga rozgo'or",
+    "amount_uzs": 3810155,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-06T05:07:01.291Z"
+  },
+  {
+    "date": "30.06.2026",
+    "note": "Karta xarajatlari 25–30.06 (bank vypiska boyicha)",
+    "amount_uzs": 2262354,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-06T06:00:00.000Z"
+  },
+  {
+    "date": "06.07.2026",
+    "note": "Karta xarajatlari 01–06.07 (bank vypiska boyicha)",
+    "amount_uzs": 2299340,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-06T06:00:01.000Z"
+  },
+  {
+    "date": "06.07.2026",
+    "note": "Yozilmagan mayda naqd chiqimlar 24.06–06.07 (tekshiruv farqi)",
+    "amount_uzs": 3095564,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-06T06:00:02.000Z"
+  },
+  {
+    "date": "06.07.2026",
+    "note": "💳 PAYME OPLATA, UZ",
+    "amount_uzs": 1015,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "ts": "2026-07-06T10:45:21.870Z"
+  },
+  {
+    "date": "07.07.2026",
+    "note": "xotinga harajat",
+    "amount_uzs": 100000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-07T05:47:37.871Z"
+  },
+  {
+    "date": "08.07.2026",
+    "note": "Wi-Fi router",
+    "amount_uzs": 3300000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-08T08:37:39.715Z"
+  },
+  {
+    "date": "08.07.2026",
+    "note": "suv",
+    "amount_uzs": 13000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-08T08:38:00.016Z"
+  },
+  {
+    "date": "08.07.2026",
+    "note": "💳 taksi",
+    "amount_uzs": 42000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "taksi",
+    "ts": "2026-07-08T08:40:00.000Z"
+  },
+  {
+    "date": "08.07.2026",
+    "note": "💳 Wifi oylik to'lov",
+    "amount_uzs": 275000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-07-08T08:43:00.000Z"
+  },
+  {
+    "date": "08.07.2026",
+    "note": "💳 Bogcha taxi",
+    "amount_uzs": 25000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-07-08T11:46:58.175Z"
+  },
+  {
+    "date": "08.07.2026",
+    "note": "💳 Sigaret",
+    "amount_uzs": 225000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO KOURI, TOSHKENT, DOSTOBOD MFY KORASUV BOYI KOChA",
+    "ts": "2026-07-08T12:07:18.912Z"
+  },
+  {
+    "date": "08.07.2026",
+    "note": "💳 Sigaret",
+    "amount_uzs": 30000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO KOURI, TOSHKENT, DOSTOBOD MFY KORASUV BOYI KOChA",
+    "ts": "2026-07-08T12:07:30.844Z"
+  },
+  {
+    "date": "08.07.2026",
+    "note": "suv uchun",
+    "amount_uzs": 46000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-08T18:21:18.792Z"
+  },
+  {
+    "date": "09.07.2026",
+    "note": "material",
+    "amount_uzs": 314000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-09T08:15:32.129Z"
+  },
+  {
+    "date": "09.07.2026",
+    "note": "💳 Rover destkiy mebel",
+    "amount_uzs": 186024,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-07-09T08:50:34.298Z"
+  },
+  {
+    "date": "09.07.2026",
+    "note": "💳 Kromka aval",
+    "amount_uzs": 67737,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-07-09T09:06:52.904Z"
+  },
+  {
+    "date": "09.07.2026",
+    "note": "💳 Taxi",
+    "amount_uzs": 46500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-07-09T10:19:38.929Z"
+  },
+  {
+    "date": "09.07.2026",
+    "note": "💳 taxi",
+    "amount_uzs": 41000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-07-09T12:36:07.442Z"
+  },
+  {
+    "date": "11.07.2026",
+    "note": "рейка",
+    "amount_uzs": 180000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-11T13:43:23.596Z"
+  },
+  {
+    "date": "11.07.2026",
+    "note": "Аркон",
+    "amount_uzs": 325000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-11T13:43:41.307Z"
+  },
+  {
+    "date": "13.07.2026",
+    "note": "💳 IVI UZBEKISTAN, UZ",
+    "amount_uzs": 12490,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IVI UZBEKISTAN, UZ",
+    "ts": "2026-07-13T17:33:45.854Z"
+  },
+  {
+    "date": "14.07.2026",
+    "note": "💳 Shaxsiy",
+    "amount_uzs": 657150,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-07-14T15:31:11.459Z"
+  },
+  {
+    "date": "16.07.2026",
+    "note": "💳 Shtraf byd",
+    "amount_uzs": 206000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "MULTICARD MUNIS, UZ",
+    "ts": "2026-07-16T07:47:47.283Z"
+  },
+  {
+    "date": "16.07.2026",
+    "note": "💳 Taxi",
+    "amount_uzs": 37000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-07-16T13:51:43.861Z"
+  },
+  {
+    "date": "17.07.2026",
+    "note": "💳 Tok bor",
+    "amount_uzs": 202000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-07-16T23:45:11.499Z"
+  },
+  {
+    "date": "17.07.2026",
+    "note": "💳 Zaryadka",
+    "amount_uzs": 20200,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "CLICK OPLATA, UZ",
+    "ts": "2026-07-17T03:25:05.046Z"
+  },
+  {
+    "date": "17.07.2026",
+    "note": "💳 Zaryadka",
+    "amount_uzs": 121200,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "CLICK OPLATA, UZ",
+    "ts": "2026-07-17T03:25:32.114Z"
+  },
+  {
+    "date": "17.07.2026",
+    "note": "💳 Sigaret",
+    "amount_uzs": 250000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO IMPERIAL TOBACCO, TOSHKENT, Pastki yuz MFY, Mekhrigiyo,2 to",
+    "ts": "2026-07-17T12:04:33.006Z"
+  },
+  {
+    "date": "18.07.2026",
+    "note": "💳 OCTOBANK YANDEXPLUS OPLATA, UZ",
+    "amount_uzs": 59999,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OCTOBANK YANDEXPLUS OPLATA, UZ",
+    "ts": "2026-07-18T12:23:35.964Z"
+  },
+  {
+    "date": "18.07.2026",
+    "note": "💳 Blmiman",
+    "amount_uzs": 9990,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-07-18T16:12:34.287Z"
+  },
+  {
+    "date": "19.07.2026",
+    "note": "Sartorosh",
+    "amount_uzs": 200000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-19T13:23:47.682Z"
+  },
+  {
+    "date": "19.07.2026",
+    "note": "Kuksi",
+    "amount_uzs": 243000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-07-19T13:24:27.633Z"
+  },
+  {
+    "date": "19.07.2026",
+    "note": "💳 Svet",
+    "amount_uzs": 500000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "HGT PAYNET, UZ",
+    "ts": "2026-07-20T07:06:06.249Z"
+  },
+  {
+    "date": "20.07.2026",
+    "note": "💳 Xotinga",
+    "amount_uzs": 453375,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IYM UZCARD2VISA S KOMISS, UZ",
+    "ts": "2026-07-20T07:11:51.805Z"
+  },
+  {
+    "date": "20.07.2026",
+    "note": "💳 Abet",
+    "amount_uzs": 50000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME EDIN QR, UZ",
+    "ts": "2026-07-20T10:37:32.999Z"
+  },
+  {
+    "date": "20.07.2026",
+    "note": "💳 Taxi",
+    "amount_uzs": 25000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-07-20T12:01:25.497Z"
+  },
+  {
+    "date": "20.07.2026",
+    "note": "💳 Taxi",
+    "amount_uzs": 21500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-07-20T12:02:58.758Z"
+  },
+  {
+    "date": "20.07.2026",
+    "note": "💳 OOO YANDEXGO UB, UZ",
+    "amount_uzs": 2500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-07-20T12:17:57.747Z"
+  },
+  {
+    "date": "22.07.2026",
+    "note": "💳 OOO YANDEXGO UB, UZ",
+    "amount_uzs": 14000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-07-23T09:56:19.884Z"
+  },
+  {
+    "date": "22.07.2026",
+    "note": "💳 OOO YANDEXGO UB, UZ",
+    "amount_uzs": 12500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-07-23T10:44:24.574Z"
+  },
+  {
+    "date": "22.07.2026",
+    "note": "💳 OOO YANDEXGO UB, UZ",
+    "amount_uzs": 10000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-07-23T10:44:31.062Z"
+  },
+  {
+    "date": "26.07.2026",
+    "note": "💳 IP OOO YANDEX EATS, UZ",
+    "amount_uzs": 89990,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IP OOO YANDEX EATS, UZ",
+    "ts": "2026-07-26T17:12:48.417Z"
+  },
+  {
+    "date": "28.07.2026",
+    "note": "💳 PAYME UZCARD NA VISA, UZ",
+    "amount_uzs": 505500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME UZCARD NA VISA, UZ",
+    "ts": "2026-07-28T06:29:33.444Z"
+  },
+  {
+    "date": "28.07.2026",
+    "note": "💳 Kamera",
+    "amount_uzs": 358905,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-07-28T09:32:13.757Z"
+  },
+  {
+    "date": "31.07.2026",
+    "note": "💳 IP OOO YANDEX EATS, UZ",
+    "amount_uzs": 121289,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IP OOO YANDEX EATS, UZ",
+    "ts": "2026-07-31T14:06:36.650Z"
+  },
+  {
+    "date": "01.08.2026",
+    "note": "💳 Blmiman",
+    "amount_uzs": 20000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "HGT DOMO, UZ",
+    "ts": "2026-08-01T15:02:43.315Z"
+  },
+  {
+    "date": "02.08.2026",
+    "note": "💳 Ucell",
+    "amount_uzs": 101500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-08-02T03:41:28.451Z"
+  },
+  {
+    "date": "02.08.2026",
+    "note": "💳 Gul",
+    "amount_uzs": 1600000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IYB P2P, UZ",
+    "ts": "2026-08-02T15:14:08.331Z"
+  },
+  {
+    "date": "02.08.2026",
+    "note": "💳 Абет",
+    "amount_uzs": 117075,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IP OOO YANDEX EATS, UZ",
+    "ts": "2026-08-02T16:02:24.157Z"
+  },
+  {
+    "date": "02.08.2026",
+    "note": "💳 Билайн",
+    "amount_uzs": 55000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-08-02T16:44:53.586Z"
+  },
+  {
+    "date": "03.08.2026",
+    "note": "💳 Shaxsiy",
+    "amount_uzs": 202200,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-08-03T09:38:54.370Z"
+  },
+  {
+    "date": "03.08.2026",
+    "note": "💳 Suv",
+    "amount_uzs": 25275,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-08-03T09:39:04.479Z"
+  },
+  {
+    "date": "03.08.2026",
+    "note": "💳 Bozor",
+    "amount_uzs": 411137,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "ORIFJONOV ZOIRJON ZOHIDJON OGL, Toshkent, 13",
+    "ts": "2026-08-03T15:39:21.342Z"
+  },
+  {
+    "date": "03.08.2026",
+    "note": "💳 Bozor",
+    "amount_uzs": 612834,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "FAYZ SUPER OPTOM MCHJ, TOSHKENT, ZANGIOTA MFY  SAMARKAND DARVOZA",
+    "ts": "2026-08-03T15:39:45.529Z"
+  },
+  {
+    "date": "03.08.2026",
+    "note": "💳 Suv",
+    "amount_uzs": 12000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO OTA BOLA HOLDING, Toshkent, Uzbekiston Mustakilligi MFY  15",
+    "ts": "2026-08-03T15:40:02.263Z"
+  },
+  {
+    "date": "03.08.2026",
+    "note": "💳 Ujin",
+    "amount_uzs": 103866,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IP OOO YANDEX EATS, UZ",
+    "ts": "2026-08-03T16:55:39.214Z"
+  },
+  {
+    "date": "03.08.2026",
+    "note": "💳 PAYME P2P, UZ",
+    "amount_uzs": 4044,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-08-03T16:55:57.990Z"
+  },
+  {
+    "date": "04.08.2026",
+    "note": "💳 Raspirator",
+    "amount_uzs": 130000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO AZAMAT ALI,  , UCHTEPA TUM BOLTAYEVA 4 PR 28",
+    "ts": "2026-08-04T10:45:32.421Z"
+  },
+  {
+    "date": "04.08.2026",
+    "note": "💳 Ujin",
+    "amount_uzs": 35000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "YATT JUMAGULOV QUVONCHBEK PANJ, Toshkent, Chuvullok MFY Milliy khunarmand",
+    "ts": "2026-08-06T02:12:14.673Z"
+  },
+  {
+    "date": "06.08.2026",
+    "note": "💳 Taxi",
+    "amount_uzs": 32000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-08-06T05:10:35.737Z"
+  },
+  {
+    "date": "06.08.2026",
+    "note": "💳 Abet",
+    "amount_uzs": 39000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "MCHJ FEEDUP ECO COMPASS, TAS, Chinoz  ul Yangi KHayot  dom 12",
+    "ts": "2026-08-06T10:50:10.742Z"
+  },
+  {
+    "date": "06.08.2026",
+    "note": "💳 Магазин",
+    "amount_uzs": 119050,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "HAVAS  FOOD MCHJ, Toshkent, Kadriyat MFY, Chigil, per  1 ku",
+    "ts": "2026-08-07T03:28:19.672Z"
+  },
+  {
+    "date": "06.08.2026",
+    "note": "💳 Гостиница",
+    "amount_uzs": 900000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO HAPPY PEOPLE, TASHKENT, G. TASHKENT UL. YANGI KUYLIK DO",
+    "ts": "2026-08-07T03:28:49.139Z"
+  },
+  {
+    "date": "06.08.2026",
+    "note": "💳 Сигарет",
+    "amount_uzs": 57500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME UZCARD NA VISA, UZ",
+    "ts": "2026-08-07T04:58:45.914Z"
+  },
+  {
+    "date": "06.08.2026",
+    "note": "💳 Такси",
+    "amount_uzs": 69000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-08-07T04:59:02.882Z"
+  },
+  {
+    "date": "06.08.2026",
+    "note": "💳 Блмиман",
+    "amount_uzs": 69000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO POINT TREND, Toshkent, YAKKASAROY TUM GLINKA KOCHASI 1",
+    "ts": "2026-08-07T04:59:24.553Z"
+  },
+  {
+    "date": "07.08.2026",
+    "note": "💳 Shirinli",
+    "amount_uzs": 119100,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IP OOO YANDEX EATS, UZ",
+    "ts": "2026-08-08T05:57:00.160Z"
+  },
+  {
+    "date": "08.08.2026",
+    "note": "💳 Rinoksil",
+    "amount_uzs": 46100,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO GRAND PHARM TRADE,  , g.Tashkent, Yunusabadskiy r-n",
+    "ts": "2026-08-08T05:57:20.947Z"
+  },
+  {
+    "date": "08.08.2026",
+    "note": "💳 Davernis",
+    "amount_uzs": 950000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IYB P2P, UZ",
+    "ts": "2026-08-08T10:56:34.635Z"
+  },
+  {
+    "date": "08.08.2026",
+    "note": "💳 Davernis",
+    "amount_uzs": 40000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IYB P2P, UZ",
+    "ts": "2026-08-08T12:50:39.885Z"
+  },
+  {
+    "date": "08.08.2026",
+    "note": "💳 Taxi",
+    "amount_uzs": 35000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-08-08T16:43:01.279Z"
+  },
+  {
+    "date": "09.08.2026",
+    "note": "💳 Marojniy",
+    "amount_uzs": 300000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "QAVIS KHUSUSIY FIRMASI, GAZALKENT, Tashkentskaya oblast, Bostanlyk",
+    "ts": "2026-08-09T06:21:25.531Z"
+  },
+  {
+    "date": "09.08.2026",
+    "note": "💳 Suv",
+    "amount_uzs": 290790,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "ANGLESEY FOOD MCHJ XK, Toshkent, g Tashkent  Mirzo Ulugbekskiy r",
+    "ts": "2026-08-09T06:21:56.318Z"
+  },
+  {
+    "date": "08.08.2026",
+    "note": "💳 Suv zaryadka",
+    "amount_uzs": 61000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "MCHJ VODNIK BUSINESS, Toshkent, ILGOR MFY, BO KOChASI,  uy:78",
+    "ts": "2026-08-09T06:22:15.250Z"
+  },
+  {
+    "date": "08.08.2026",
+    "note": "💳 Benzin",
+    "amount_uzs": 336000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "CHINOBODNEFTBAZASI 27 QOYLIQ2,  , YUNUSOBOD T 17 MAVZE 27 UY 23 X",
+    "ts": "2026-08-09T06:57:42.405Z"
+  },
+  {
+    "date": "09.08.2026",
+    "note": "💳 Suv",
+    "amount_uzs": 45495,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-08-09T14:44:40.458Z"
+  },
+  {
+    "date": "09.08.2026",
+    "note": "💳 Uy wifi",
+    "amount_uzs": 215000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-08-09T16:12:44.801Z"
+  }
+]
