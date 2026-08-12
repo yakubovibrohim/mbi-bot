@@ -287,5 +287,14 @@
     "rate": 12000,
     "note": "YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
     "pay_method": "card"
+  },
+  {
+    "id": "mspvbxlmkl38",
+    "date": "12.08.2026",
+    "ts": "2026-08-12T09:09:54.778Z",
+    "name": "arenda +svet",
+    "amount_uzs": 9204000,
+    "rate": 12000,
+    "note": ""
   }
 ]
