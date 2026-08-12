@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-12T05:33:27.195Z",
+  "updated": "2026-08-12T09:10:03.892Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 139989380,
+  "balance_uzs": 130785380,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 87757878,
+    "chiqim": 96961878,
     "by_category": {
-      "office": 6214880,
+      "office": 15418880,
       "personal": 45610243,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
@@ -1956,6 +1956,17 @@
       "name": "💳 Uy gaz",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "12.08.2026",
+      "time": "14:09",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 9204000,
+      "name": "arenda +svet",
+      "pay": "naqd",
+      "src": "office"
     }
   ]
 }
