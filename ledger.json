@@ -1,14 +1,14 @@
 {
-  "updated": "2026-08-12T09:10:03.892Z",
+  "updated": "2026-08-12T09:10:41.015Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 130785380,
+  "balance_uzs": 129189380,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 96961878,
+    "chiqim": 98557878,
     "by_category": {
       "office": 15418880,
       "personal": 45610243,
@@ -17,7 +17,7 @@
       "deal_expense": 20662835,
       "debt_in": 26400000,
       "card_income": 2180000,
-      "debt_paid": 736000
+      "debt_paid": 2332000
     }
   },
   "movements": [
@@ -1967,6 +1967,17 @@
       "name": "arenda +svet",
       "pay": "naqd",
       "src": "office"
+    },
+    {
+      "date": "12.08.2026",
+      "time": "14:10",
+      "dir": "out",
+      "category": "debt_paid",
+      "category_uz": "Qarz to'lovim",
+      "amount_uzs": 1596000,
+      "name": "Rustam akam",
+      "pay": "naqd",
+      "src": "debts"
     }
   ]
 }
