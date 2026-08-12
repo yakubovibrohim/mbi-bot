@@ -48,9 +48,17 @@
     "dir": "out",
     "name": "Rustam akam",
     "amount_uzs": 1596000,
-    "paid_uzs": 0,
+    "paid_uzs": 1596000,
     "date": "17.06.2026",
-    "note": "may svet va arenda qoldiq summa"
+    "note": "may svet va arenda qoldiq summa",
+    "payments": [
+      {
+        "date": "12.08.2026",
+        "ts": "2026-08-12T09:10:32.082Z",
+        "amount_uzs": 1596000
+      }
+    ],
+    "pay_date": "12.08.2026"
   },
   {
     "id": "mr81ag2s6k35",
