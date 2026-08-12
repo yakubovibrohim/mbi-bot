@@ -306,5 +306,15 @@
     "rate": 12000,
     "note": "MCHJ MAK FOOD SERVIS, toshkent, Toshkent shahar shayxontohur tu",
     "pay_method": "card"
+  },
+  {
+    "id": "msqaqihy40l",
+    "date": "12.08.2026",
+    "ts": "2026-08-12T16:21:09.286Z",
+    "name": "💳 Instrument",
+    "amount_uzs": 67000,
+    "rate": 12000,
+    "note": "OT YUNUSOV DILSHOD FAXRITDINOV, TOSHKENT, UCHTEPA TUMANI ZIYO SAID KOCHAS",
+    "pay_method": "card"
   }
 ]
