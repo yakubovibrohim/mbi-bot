@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-12T09:10:41.015Z",
+  "updated": "2026-08-12T11:51:09.966Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 129189380,
+  "balance_uzs": 128992380,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 98557878,
+    "chiqim": 98754878,
     "by_category": {
-      "office": 15418880,
+      "office": 15615880,
       "personal": 45610243,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
@@ -1923,6 +1923,17 @@
       "name": "Sevara opa Taqachi: 💳 PAYME P2P, UZ",
       "pay": "karta",
       "src": "deals"
+    },
+    {
+      "date": "10.08.2026",
+      "time": "16:51",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 197000,
+      "name": "💳 Abet",
+      "pay": "karta",
+      "src": "office"
     },
     {
       "date": "10.08.2026",
