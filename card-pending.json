@@ -1,20 +1,6 @@
 {
   "lastMsgId": 98829,
-  "pending": {
-    "msn661fv75b": {
-      "dir": "out",
-      "amtUzs": 197000,
-      "place": "MCHJ MAK FOOD SERVIS, toshkent, Toshkent shahar shayxontohur tu",
-      "rawBalance": 3291742,
-      "date": "10.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1786362597067,
-      "remindedAt": 1786535442790,
-      "kind": "office"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -555,6 +541,11 @@
       "date": "10.08.2026",
       "dir": "out",
       "amt": 300000
+    },
+    {
+      "date": "10.08.2026",
+      "dir": "out",
+      "amt": 197000
     }
   ],
   "lastBalances": {
