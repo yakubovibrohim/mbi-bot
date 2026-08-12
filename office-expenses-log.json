@@ -296,5 +296,15 @@
     "amount_uzs": 9204000,
     "rate": 12000,
     "note": ""
+  },
+  {
+    "id": "msq133yws6s",
+    "date": "10.08.2026",
+    "ts": "2026-08-12T11:51:00.824Z",
+    "name": "💳 Abet",
+    "amount_uzs": 197000,
+    "rate": 12000,
+    "note": "MCHJ MAK FOOD SERVIS, toshkent, Toshkent shahar shayxontohur tu",
+    "pay_method": "card"
   }
 ]
