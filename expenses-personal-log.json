@@ -957,5 +957,15 @@
     "pay_method": "card",
     "place": "PL DOMO TOLOV, UZ",
     "ts": "2026-08-10T17:43:45.088Z"
+  },
+  {
+    "date": "12.08.2026",
+    "note": "💳 Ujin",
+    "amount_uzs": 126000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "XK  NON-KABOB BARAKA, TOSHKENT, S.DARBOZA",
+    "ts": "2026-08-12T16:49:25.888Z"
   }
 ]
