@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-12T16:20:58.657Z",
+  "updated": "2026-08-12T16:21:18.498Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 128992380,
+  "balance_uzs": 128925380,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 98754878,
+    "chiqim": 98821878,
     "by_category": {
-      "office": 15615880,
+      "office": 15682880,
       "personal": 45610243,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
@@ -1977,6 +1977,17 @@
       "amount_uzs": 9204000,
       "name": "arenda +svet",
       "pay": "naqd",
+      "src": "office"
+    },
+    {
+      "date": "12.08.2026",
+      "time": "21:21",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 67000,
+      "name": "💳 Instrument",
+      "pay": "karta",
       "src": "office"
     },
     {
