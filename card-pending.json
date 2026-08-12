@@ -11,18 +11,6 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1786547564142
-    },
-    "msqbnezbbx0": {
-      "dir": "out",
-      "amtUzs": 126000,
-      "place": "XK  NON-KABOB BARAKA, TOSHKENT, S.DARBOZA",
-      "rawBalance": 1786252,
-      "date": "12.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1786553204375,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -575,6 +563,11 @@
       "date": "12.08.2026",
       "dir": "out",
       "amt": 67000
+    },
+    {
+      "date": "12.08.2026",
+      "dir": "out",
+      "amt": 126000
     }
   ],
   "lastBalances": {
