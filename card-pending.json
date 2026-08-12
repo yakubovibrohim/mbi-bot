@@ -9,9 +9,10 @@
       "date": "12.08.2026",
       "title": "Pokupka",
       "card4": "5893",
-      "step": "type",
+      "step": "note",
       "askedAt": 1786543033953,
-      "remindedAt": 1786550234115
+      "remindedAt": 1786550234115,
+      "kind": "office"
     },
     "msq8aiy6lmw": {
       "dir": "out",
