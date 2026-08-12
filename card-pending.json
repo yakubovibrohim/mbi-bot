@@ -1,6 +1,18 @@
 {
   "lastMsgId": 99050,
-  "pending": {},
+  "pending": {
+    "msq5lffld8y": {
+      "dir": "out",
+      "amtUzs": 67000,
+      "place": "OT YUNUSOV DILSHOD FAXRITDINOV, TOSHKENT, UCHTEPA TUMANI ZIYO SAID KOCHAS",
+      "rawBalance": 1924742,
+      "date": "12.08.2026",
+      "title": "Pokupka",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1786543033953
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
