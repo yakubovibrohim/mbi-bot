@@ -1,19 +1,6 @@
 {
   "lastMsgId": 99073,
   "pending": {
-    "msq8aiy6lmw": {
-      "dir": "out",
-      "amtUzs": 12490,
-      "place": "IVI UZBEKISTAN, UZ",
-      "rawBalance": 1912252,
-      "date": "12.08.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1786547564142,
-      "remindedAt": 1786597995245,
-      "kind": "personal"
-    },
     "msqc1kaabr6": {
       "dir": "out",
       "amtUzs": 55000,
@@ -582,6 +569,11 @@
       "date": "12.08.2026",
       "dir": "out",
       "amt": 126000
+    },
+    {
+      "date": "12.08.2026",
+      "dir": "out",
+      "amt": 12490
     }
   ],
   "lastBalances": {
