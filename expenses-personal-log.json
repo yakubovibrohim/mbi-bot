@@ -987,5 +987,15 @@
     "pay_method": "card",
     "place": "XK  NON-KABOB BARAKA, TOSHKENT, S.DARBOZA",
     "ts": "2026-08-13T05:23:18.451Z"
+  },
+  {
+    "date": "13.08.2026",
+    "note": "💳 Benzin",
+    "amount_uzs": 526500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO UNG PETRO BASHLIK 24,  , TOSHKENT SHAHAR MIRZO ULUGBEK T",
+    "ts": "2026-08-13T08:06:42.010Z"
   }
 ]
