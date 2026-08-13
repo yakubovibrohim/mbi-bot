@@ -1,20 +1,20 @@
 {
-  "updated": "2026-08-13T08:06:51.025Z",
+  "updated": "2026-08-13T11:39:37.480Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 128205390,
+  "balance_uzs": 127505390,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 99541868,
+    "chiqim": 100241868,
     "by_category": {
       "office": 15682880,
       "personal": 46330233,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
-      "deal_expense": 20662835,
+      "deal_expense": 21362835,
       "debt_in": 26400000,
       "card_income": 2180000,
       "debt_paid": 2332000
@@ -2033,6 +2033,17 @@
       "name": "Rustam akam",
       "pay": "naqd",
       "src": "debts"
+    },
+    {
+      "date": "13.08.2026",
+      "time": "16:39",
+      "dir": "out",
+      "category": "deal_expense",
+      "category_uz": "Buyurtma xarajati",
+      "amount_uzs": 700000,
+      "name": "Sevara opa Taqachi: 💳 IYB P2P, UZ",
+      "pay": "karta",
+      "src": "deals"
     },
     {
       "date": "13.08.2026",
