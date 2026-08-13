@@ -977,5 +977,15 @@
     "pay_method": "card",
     "place": "IVI UZBEKISTAN, UZ",
     "ts": "2026-08-13T05:22:33.212Z"
+  },
+  {
+    "date": "12.08.2026",
+    "note": "💳 Nonkabob",
+    "amount_uzs": 55000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "XK  NON-KABOB BARAKA, TOSHKENT, S.DARBOZA",
+    "ts": "2026-08-13T05:23:18.451Z"
   }
 ]
