@@ -1,19 +1,6 @@
 {
   "lastMsgId": 99198,
-  "pending": {
-    "msrf2knkwbq": {
-      "dir": "out",
-      "amtUzs": 700000,
-      "place": "IYB P2P, UZ",
-      "rawBalance": 504752,
-      "date": "13.08.2026",
-      "title": "Spisanie c karty",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1786619416592,
-      "kind": "office"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -584,6 +571,11 @@
       "date": "13.08.2026",
       "dir": "out",
       "amt": 526500
+    },
+    {
+      "date": "13.08.2026",
+      "dir": "out",
+      "amt": 700000
     }
   ],
   "lastBalances": {
