@@ -350,6 +350,14 @@
         "total_uzs": 303300,
         "rate": 12000,
         "pay_method": "card"
+      },
+      {
+        "date": "13.08.2026",
+        "ts": "2026-08-13T11:39:28.758Z",
+        "name": "💳 IYB P2P, UZ",
+        "total_uzs": 700000,
+        "rate": 12000,
+        "pay_method": "card"
       }
     ],
     "finished_date": null,
