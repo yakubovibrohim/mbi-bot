@@ -1,6 +1,18 @@
 {
   "lastMsgId": 99112,
-  "pending": {},
+  "pending": {
+    "msr2xym3gcd": {
+      "dir": "out",
+      "amtUzs": 526500,
+      "place": "OOO UNG PETRO BASHLIK 24,  , TOSHKENT SHAHAR MIRZO ULUGBEK T",
+      "rawBalance": 1204752,
+      "date": "13.08.2026",
+      "title": "Pokupka",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1786599046011
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
