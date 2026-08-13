@@ -1,6 +1,18 @@
 {
   "lastMsgId": 99225,
-  "pending": {},
+  "pending": {
+    "msrqnwd73eu": {
+      "dir": "out",
+      "amtUzs": 143478,
+      "place": "IP OOO YANDEX EATS, UZ",
+      "rawBalance": 361274,
+      "date": "13.08.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1786638887323
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
