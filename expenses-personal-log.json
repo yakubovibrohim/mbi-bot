@@ -997,5 +997,15 @@
     "pay_method": "card",
     "place": "OOO UNG PETRO BASHLIK 24,  , TOSHKENT SHAHAR MIRZO ULUGBEK T",
     "ts": "2026-08-13T08:06:42.010Z"
+  },
+  {
+    "date": "13.08.2026",
+    "note": "💳 Xadicha oqat zakaz",
+    "amount_uzs": 143478,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IP OOO YANDEX EATS, UZ",
+    "ts": "2026-08-14T07:50:06.171Z"
   }
 ]
