@@ -1,17 +1,17 @@
 {
-  "updated": "2026-08-14T04:40:43.288Z",
+  "updated": "2026-08-14T07:50:15.377Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 127505390,
+  "balance_uzs": 127361912,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 100241868,
+    "chiqim": 100385346,
     "by_category": {
       "office": 15682880,
-      "personal": 46330233,
+      "personal": 46473711,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 21362835,
@@ -2053,6 +2053,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 526500,
       "name": "💳 Benzin",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "13.08.2026",
+      "time": "12:50",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 143478,
+      "name": "💳 Xadicha oqat zakaz",
       "pay": "karta",
       "src": "personal"
     }
