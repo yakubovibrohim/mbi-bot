@@ -1007,5 +1007,15 @@
     "pay_method": "card",
     "place": "IP OOO YANDEX EATS, UZ",
     "ts": "2026-08-14T07:50:06.171Z"
+  },
+  {
+    "date": "14.08.2026",
+    "note": "💳 Dori",
+    "amount_uzs": 14000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-08-14T16:18:11.559Z"
   }
 ]
