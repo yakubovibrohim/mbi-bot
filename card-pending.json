@@ -1,20 +1,6 @@
 {
   "lastMsgId": 99384,
-  "pending": {
-    "mssp0eiu0u1": {
-      "dir": "out",
-      "amtUzs": 278000,
-      "place": "MCHJ NOMDOR PALOV, Toshkent, Yakkasaroy t",
-      "rawBalance": 83274,
-      "date": "14.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1786696577670,
-      "remindedAt": 1786718207393,
-      "kind": "office"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -605,6 +591,11 @@
       "date": "14.08.2026",
       "dir": "out",
       "amt": 45000
+    },
+    {
+      "date": "14.08.2026",
+      "dir": "out",
+      "amt": 278000
     }
   ],
   "lastBalances": {
