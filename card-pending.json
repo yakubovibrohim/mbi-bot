@@ -12,19 +12,6 @@
       "step": "type",
       "askedAt": 1786696577670,
       "remindedAt": 1786718207393
-    },
-    "mssp49ivvhr": {
-      "dir": "out",
-      "amtUzs": 45000,
-      "place": "XAIFA BARAKA, TASHKENT, ul Pamir, Zaminabad MSG, 31 Dom",
-      "rawBalance": 38274,
-      "date": "14.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1786696757815,
-      "remindedAt": 1786718387404,
-      "kind": "office"
     }
   },
   "resolved": [
@@ -612,6 +599,11 @@
       "date": "14.08.2026",
       "dir": "out",
       "amt": 14000
+    },
+    {
+      "date": "14.08.2026",
+      "dir": "out",
+      "amt": 45000
     }
   ],
   "lastBalances": {
