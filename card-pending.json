@@ -1,6 +1,18 @@
 {
   "lastMsgId": 99463,
-  "pending": {},
+  "pending": {
+    "msu8o2ls05v": {
+      "dir": "out",
+      "amtUzs": 710288,
+      "place": "IYB UZCARD 2 HUMO, UZ",
+      "rawBalance": 498986,
+      "date": "15.08.2026",
+      "title": "Platezh",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1786790060848
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
