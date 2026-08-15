@@ -1,18 +1,6 @@
 {
   "lastMsgId": 99462,
-  "pending": {
-    "msu8h040ox3": {
-      "dir": "in",
-      "amtUzs": 100000,
-      "place": "IPAK YOLI YAKKASAROY FILIA, UZ",
-      "rawBalance": 1209274,
-      "date": "15.08.2026",
-      "title": "Perevod na kartu",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1786789731024
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -613,6 +601,11 @@
       "date": "15.08.2026",
       "dir": "in",
       "amt": 1085000
+    },
+    {
+      "date": "15.08.2026",
+      "dir": "in",
+      "amt": 100000
     }
   ],
   "lastBalances": {
