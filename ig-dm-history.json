@@ -793,6 +793,16 @@
     "role": "assistant",
     "content": "Здравствуйт��! Зависит от фасада: ЛМДФ и акрил — до 14 рабочих дней, крашеный и шпон — до 30 дней. Стараемся закончить раньше, а за каждый день опоздания платим штраф.\n\nА что планируете — кухню или шкаф?"
    }
+  ],
+  "1687762382308503": [
+   {
+    "role": "user",
+    "content": "GLASS HOUSE ga hush kelibsiz!"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu alaykum! Xush ko'rdik 😊\n\nNima bilan yordam bera olaman — oshxona, shkaf yoki yotoqxona mebeli qiziqtiryaptimi?"
+   }
   ]
  },
  "activity": {
@@ -959,6 +969,10 @@
   },
   "1346683367430121": {
    "lastClientAt": 1783921543043,
+   "followedUp": false
+  },
+  "1687762382308503": {
+   "lastClientAt": 1786879311817,
    "followedUp": false
   }
  }
