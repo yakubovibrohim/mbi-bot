@@ -802,6 +802,10 @@
    {
     "role": "assistant",
     "content": "Assalomu alaykum! Xush ko'rdik 😊\n\nNima bilan yordam bera olaman — oshxona, shkaf yoki yotoqxona mebeli qiziqtiryaptimi?"
+   },
+   {
+    "role": "assistant",
+    "content": "Нима бўлди, давом этамизми? 😊"
    }
   ]
  },
@@ -973,7 +977,7 @@
   },
   "1687762382308503": {
    "lastClientAt": 1786879311817,
-   "followedUp": false
+   "followedUp": true
   }
  }
 }
