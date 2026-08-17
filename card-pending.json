@@ -13,17 +13,6 @@
       "askedAt": 1786801761150,
       "remindedAt": 1786938624230
     },
-    "mswqq71gnyp": {
-      "dir": "in",
-      "amtUzs": 194174,
-      "place": "CASH TO CARD 3 PAYNET, UZ",
-      "rawBalance": 621660,
-      "date": "17.08.2026",
-      "title": "Perevod na kartu",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1786941325348
-    },
     "mswqvz45uh4": {
       "dir": "out",
       "amtUzs": 448215,
@@ -656,6 +645,11 @@
       "date": "16.08.2026",
       "dir": "in",
       "amt": 1200000
+    },
+    {
+      "date": "17.08.2026",
+      "dir": "in",
+      "amt": 194174
     }
   ],
   "lastBalances": {
