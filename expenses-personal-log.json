@@ -1037,5 +1037,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-08-17T04:46:07.283Z"
+  },
+  {
+    "date": "17.08.2026",
+    "note": "💳 Бензин",
+    "amount_uzs": 292500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO UNG PETRO BASHLIK 24, UZ",
+    "ts": "2026-08-17T13:14:00.529Z"
   }
 ]
