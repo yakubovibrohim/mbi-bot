@@ -1,17 +1,17 @@
 {
-  "updated": "2026-08-17T04:29:45.453Z",
+  "updated": "2026-08-17T04:46:16.283Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 126314624,
+  "balance_uzs": 125866409,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 101432634,
+    "chiqim": 101880849,
     "by_category": {
       "office": 16005880,
-      "personal": 47197999,
+      "personal": 47646214,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 21362835,
@@ -2108,6 +2108,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 710288,
       "name": "💳 Hadicha",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "17.08.2026",
+      "time": "09:46",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 448215,
+      "name": "💳 Пропан",
       "pay": "karta",
       "src": "personal"
     }
