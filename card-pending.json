@@ -13,18 +13,6 @@
       "askedAt": 1786801761150,
       "remindedAt": 1786967425729
     },
-    "mswrfx1mvo6": {
-      "dir": "in",
-      "amtUzs": 198020,
-      "place": "NBU POPOL PK CHEREZ ADM, UZ",
-      "rawBalance": 371465,
-      "date": "17.08.2026",
-      "title": "Perevod na kartu",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1786942525450,
-      "remindedAt": 1786971355932
-    },
     "mswrfy88qms": {
       "dir": "out",
       "amtUzs": 292500,
@@ -704,6 +692,11 @@
       "date": "17.08.2026",
       "dir": "out",
       "amt": 448215
+    },
+    {
+      "date": "17.08.2026",
+      "dir": "in",
+      "amt": 198020
     }
   ],
   "lastBalances": {
