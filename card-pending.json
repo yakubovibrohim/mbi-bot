@@ -12,18 +12,6 @@
       "step": "type",
       "askedAt": 1786801761150,
       "remindedAt": 1786938624230
-    },
-    "mswqvz45uh4": {
-      "dir": "out",
-      "amtUzs": 448215,
-      "place": "PAYME OPLATA, UZ",
-      "rawBalance": 173445,
-      "date": "17.08.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1786941595013,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -651,6 +639,11 @@
       "date": "17.08.2026",
       "dir": "in",
       "amt": 194174
+    },
+    {
+      "date": "17.08.2026",
+      "dir": "out",
+      "amt": 448215
     }
   ],
   "lastBalances": {
