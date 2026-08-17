@@ -1027,5 +1027,15 @@
     "pay_method": "card",
     "place": "IYB UZCARD 2 HUMO, UZ",
     "ts": "2026-08-15T11:16:29.307Z"
+  },
+  {
+    "date": "17.08.2026",
+    "note": "💳 Пропан",
+    "amount_uzs": 448215,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-08-17T04:46:07.283Z"
   }
 ]
