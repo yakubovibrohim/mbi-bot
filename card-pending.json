@@ -1,5 +1,5 @@
 {
-  "lastMsgId": 99713,
+  "lastMsgId": 99759,
   "pending": {
     "msufmum6lmy": {
       "dir": "out",
@@ -11,7 +11,7 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1786801761150,
-      "remindedAt": 1786981826083
+      "remindedAt": 1786989026147
     },
     "mswtlpt2g53": {
       "dir": "out",
@@ -48,6 +48,17 @@
       "step": "type",
       "askedAt": 1786956176014,
       "remindedAt": 1786985006115
+    },
+    "msxibq56jmt": {
+      "dir": "in",
+      "amtUzs": 25000,
+      "place": "IYB P2P, UZ",
+      "rawBalance": 41315,
+      "date": "17.08.2026",
+      "title": "Perevod na kartu",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1786987679514
     }
   },
   "resolved": [
@@ -693,7 +704,7 @@
     }
   ],
   "lastBalances": {
-    "5893": 16315
+    "5893": 41315
   },
   "lastReconcileDate": "17.08.2026"
 }
