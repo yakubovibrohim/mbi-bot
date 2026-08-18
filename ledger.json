@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-18T04:34:43.927Z",
+  "updated": "2026-08-18T04:55:36.368Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 125573909,
+  "balance_uzs": 125551409,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 102173349,
+    "chiqim": 102195849,
     "by_category": {
-      "office": 16005880,
+      "office": 16028380,
       "personal": 47938714,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
@@ -2110,6 +2110,17 @@
       "name": "💳 Hadicha",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "17.08.2026",
+      "time": "09:55",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 22500,
+      "name": "💳 Сув",
+      "pay": "karta",
+      "src": "office"
     },
     {
       "date": "17.08.2026",
