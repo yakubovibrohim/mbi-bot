@@ -828,6 +828,10 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкам 🙌 Раҳмат! Мебел керак бўлса — ошхона, шкаф ёки ётоқхона — шахсийга (DM) ёзинг, ёрдам берамиз 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "(Bo'sh qator — suhbatda hech qanday aniq mavzu yo'q, eslatma yozish uchun asos yo'q.)"
    }
   ],
   "3626302274177684": [
@@ -1033,7 +1037,7 @@
   },
   "1781951409631105": {
    "lastClientAt": 1787012822291,
-   "followedUp": false
+   "followedUp": true
   },
   "3626302274177684": {
    "lastClientAt": 1787020735654,
