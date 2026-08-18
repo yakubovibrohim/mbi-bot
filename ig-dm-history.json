@@ -835,6 +835,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкум 🙌 Ёқдими? Шахсийга (DM) ёзинг, барча маълумот берамиз 👍🏻"
    }
+  ],
+  "5279460812192869": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Ishilaga omad 🔥🔥🔥\" deb postga komment yozdi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Раҳмат 🙏 Ошхона, шкаф ёки ётоқхона режалаштиряпсизми?"
+   }
   ]
  },
  "activity": {
@@ -1013,6 +1023,10 @@
   },
   "3626302274177684": {
    "lastClientAt": 1787020735654,
+   "followedUp": false
+  },
+  "5279460812192869": {
+   "lastClientAt": 1787024739942,
    "followedUp": false
   }
  }
