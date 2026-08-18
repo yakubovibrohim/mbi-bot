@@ -48,6 +48,17 @@
       "step": "type",
       "askedAt": 1786987679514,
       "remindedAt": 1787059707078
+    },
+    "msyt4d6v1p1": {
+      "dir": "out",
+      "amtUzs": 9990,
+      "place": "PAYME OPLATA, UZ",
+      "rawBalance": 31325,
+      "date": "18.08.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1787066278087
     }
   },
   "resolved": [
