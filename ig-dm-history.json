@@ -842,6 +842,10 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкум 🙌 Ёқдими? Шахсийга (DM) ёзинг, барча маълумот берамиз 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "(bo'sh qator)"
    }
   ],
   "5279460812192869": [
@@ -1041,7 +1045,7 @@
   },
   "3626302274177684": {
    "lastClientAt": 1787020735654,
-   "followedUp": false
+   "followedUp": true
   },
   "5279460812192869": {
    "lastClientAt": 1787024739942,
