@@ -845,6 +845,16 @@
     "role": "assistant",
     "content": "Раҳмат 🙏 Ошхона, шкаф ёки ётоқхона режалаштиряпсизми?"
    }
+  ],
+  "2115613319333578": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"ENDI MANGA BERSELA JANCHILARIM TEZ YECHIB BERISHADI 😂😂\" deb postga komment yozdi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 😄 Шахсийга (DM) ёзинг, барча маълумотни бериб, ёрдам берамиз 👍🏻"
+   }
   ]
  },
  "activity": {
@@ -1027,6 +1037,10 @@
   },
   "5279460812192869": {
    "lastClientAt": 1787024739942,
+   "followedUp": false
+  },
+  "2115613319333578": {
+   "lastClientAt": 1787029003728,
    "followedUp": false
   }
  }
