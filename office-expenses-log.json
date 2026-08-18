@@ -336,5 +336,15 @@
     "rate": 12000,
     "note": "MCHJ NOMDOR PALOV, Toshkent, Yakkasaroy t",
     "pay_method": "card"
+  },
+  {
+    "id": "msy6vt86nof",
+    "date": "17.08.2026",
+    "ts": "2026-08-18T04:55:27.414Z",
+    "name": "💳 Сув",
+    "amount_uzs": 22500,
+    "rate": 12000,
+    "note": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
+    "pay_method": "card"
   }
 ]
