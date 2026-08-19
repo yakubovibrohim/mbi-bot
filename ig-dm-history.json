@@ -838,6 +838,14 @@
    {
     "role": "assistant",
     "content": "Раҳмат 🙏 Мебел керак бўлса, шахсийга ёзинг — ёрдам берамиз 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz \"👏👏👏\" deb postga komment yozdi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Раҳмат 🙏"
    }
   ],
   "2115613319333578": [
@@ -1030,7 +1038,7 @@
    "followedUp": true
   },
   "5279460812192869": {
-   "lastClientAt": 1787156121359,
+   "lastClientAt": 1787159440405,
    "followedUp": false
   },
   "2115613319333578": {
