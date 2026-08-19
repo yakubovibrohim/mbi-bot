@@ -108,6 +108,17 @@
       "step": "type",
       "askedAt": 1787141911418,
       "remindedAt": 1787156341595
+    },
+    "mt0bm9fxt32": {
+      "dir": "out",
+      "amtUzs": 220990,
+      "place": "IP OOO YANDEX EATS, UZ",
+      "rawBalance": 15835,
+      "date": "19.08.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1787157812301
     }
   },
   "resolved": [
