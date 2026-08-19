@@ -830,6 +830,14 @@
    {
     "role": "assistant",
     "content": "Раҳмат 🙏 Ошхона, шкаф ёки ётоқхона режалаштиряпсизми?"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz \"👏👏👏👏\" deb postga komment yozdi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Раҳмат 🙏 Мебел керак бўлса, шахсийга ёзинг — ёрдам берамиз 👍🏻"
    }
   ],
   "2115613319333578": [
@@ -1022,8 +1030,8 @@
    "followedUp": true
   },
   "5279460812192869": {
-   "lastClientAt": 1787024739942,
-   "followedUp": true
+   "lastClientAt": 1787156121359,
+   "followedUp": false
   },
   "2115613319333578": {
    "lastClientAt": 1787029003728,
