@@ -120,6 +120,17 @@
       "step": "type",
       "askedAt": 1787157812301,
       "remindedAt": 1787201041844
+    },
+    "mt12gppk4qw": {
+      "dir": "in",
+      "amtUzs": 3000000,
+      "place": "IPAK YOLI YAKKASAROY FILIA, UZ",
+      "rawBalance": 3015835,
+      "date": "20.08.2026",
+      "title": "Perevod na kartu",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1787202903080
     }
   },
   "resolved": [
