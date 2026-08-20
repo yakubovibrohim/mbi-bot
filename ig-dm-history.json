@@ -818,6 +818,10 @@
    {
     "role": "assistant",
     "content": "Раҳмат 🙏"
+   },
+   {
+    "role": "assistant",
+    "content": "(Bo'sh qator — suhbatda hech qanday mahsulot muhokamasi bo'lmagan, eslatma yozish uchun asos yo'q.)"
    }
   ]
  },
@@ -989,7 +993,7 @@
   },
   "5279460812192869": {
    "lastClientAt": 1787159440405,
-   "followedUp": false
+   "followedUp": true
   }
  }
 }
