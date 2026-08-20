@@ -142,7 +142,8 @@
       "title": "Spisanie c karty",
       "card4": "5893",
       "step": "type",
-      "askedAt": 1787203202784
+      "askedAt": 1787203202784,
+      "remindedAt": 1787210432036
     }
   },
   "resolved": [
