@@ -144,6 +144,17 @@
       "step": "type",
       "askedAt": 1787203202784,
       "remindedAt": 1787224832400
+    },
+    "mt1g04d9wl3": {
+      "dir": "in",
+      "amtUzs": 2380000,
+      "place": "OPENBANK P2P O2O UZCARD, UZ",
+      "rawBalance": 2398523,
+      "date": "20.08.2026",
+      "title": "Perevod na kartu",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1787225643549
     }
   },
   "resolved": [
