@@ -819,20 +819,6 @@
     "role": "assistant",
     "content": "Раҳмат 🙏"
    }
-  ],
-  "2115613319333578": [
-   {
-    "role": "user",
-    "content": "[Mijoz \"ENDI MANGA BERSELA JANCHILARIM TEZ YECHIB BERISHADI 😂😂\" deb postga komment yozdi]"
-   },
-   {
-    "role": "assistant",
-    "content": "Ассалому Алейкум 😄 Шахсийга (DM) ёзинг, барча маълумотни бериб, ёрдам берамиз 👍🏻"
-   },
-   {
-    "role": "assistant",
-    "content": "Qiziqish qolmadimi, yoki savol bor edi? 😊"
-   }
   ]
  },
  "activity": {
@@ -1004,10 +990,6 @@
   "5279460812192869": {
    "lastClientAt": 1787159440405,
    "followedUp": false
-  },
-  "2115613319333578": {
-   "lastClientAt": 1787029003728,
-   "followedUp": true
   }
  }
 }
