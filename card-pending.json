@@ -166,6 +166,17 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1787229003528
+    },
+    "mt1k40iyd81": {
+      "dir": "in",
+      "amtUzs": 680000,
+      "place": "OPERU  ASIA ALLIANCE BANK AT BANKI, UZ",
+      "rawBalance": 1651123,
+      "date": "20.08.2026",
+      "title": "Perevod na kartu",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1787232543659
     }
   },
   "resolved": [
