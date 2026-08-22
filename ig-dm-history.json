@@ -899,6 +899,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкум 🙌 Раҳмат! Шахсийга (DM) ёзинг, ошхонами шкафми — барча маълумот берамиз 👍🏻"
    }
+  ],
+  "945169904534137": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Zo’rakan!\" deb postga komment yozdi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Rahmat! 🙌 Шахсийга (DM) ёзинг — нима керак, ошхона ё шкаф, барча маълумот берамиз."
+   }
   ]
  },
  "activity": {
@@ -1101,6 +1111,10 @@
   },
   "4425885031019657": {
    "lastClientAt": 1787387622032,
+   "followedUp": false
+  },
+  "945169904534137": {
+   "lastClientAt": 1787388629470,
    "followedUp": false
   }
  }
