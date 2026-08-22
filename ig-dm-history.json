@@ -859,6 +859,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкым 🙌 Шахсийга (DM) ёзинг, барча маълумот берамиз 👍🏻"
    }
+  ],
+  "1061411556634919": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"👏👏\" deb postga komment yozdi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Раҳмат 🙌 Шахсийга (DM) ёзинг, барча маълумотни берамиз 👍🏻"
+   }
   ]
  },
  "activity": {
@@ -1045,6 +1055,10 @@
   },
   "2836977193329360": {
    "lastClientAt": 1787384750351,
+   "followedUp": false
+  },
+  "1061411556634919": {
+   "lastClientAt": 1787386780771,
    "followedUp": false
   }
  }
