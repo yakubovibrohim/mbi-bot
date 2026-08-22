@@ -358,6 +358,14 @@
         "total_uzs": 700000,
         "rate": 12000,
         "pay_method": "card"
+      },
+      {
+        "date": "20.08.2026",
+        "ts": "2026-08-22T07:40:19.016Z",
+        "name": "💳 IYM UZCARD2VISA S KOMISS, UZ",
+        "total_uzs": 2997313,
+        "rate": 12000,
+        "pay_method": "card"
       }
     ],
     "finished_date": null,
