@@ -947,6 +947,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкум 🙌 Раҳмат! Шахсийга (DM) ёзинг, ишларимиз ҳақида тўлиқ маълумот берамиз 👍🏻"
    }
+  ],
+  "2115613319333578": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"MEBIL LEGENDASI BOBTIKU\" deb postga komment yozdi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 🙌 Раҳмат илиқ сўзингиз учун!\n\nЎзингизга мебел режалаштиряпсизми — ошхонами, шкафми?"
+   }
   ]
  },
  "activity": {
@@ -1165,6 +1175,10 @@
   },
   "5279460812192869": {
    "lastClientAt": 1787404330352,
+   "followedUp": false
+  },
+  "2115613319333578": {
+   "lastClientAt": 1787425921990,
    "followedUp": false
   }
  }
