@@ -908,6 +908,14 @@
    {
     "role": "assistant",
     "content": "Rahmat! 🙌 Шахсийга (DM) ёзинг — нима керак, ошхона ё шкаф, барча маълумот берамиз."
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz \"@mbi_mebel shuni pulini pir-chirtinga qilib bering😂\" deb postga komment yozdi]"
+   },
+   {
+    "role": "assistant",
+    "content": "🤣🤣 Хоп, бемалол — DM'га ёзинг, ўлчам ва материални айтсангиз, оптимал нархда ҳисоблаб берамиз 👍🏻"
    }
   ]
  },
@@ -1114,7 +1122,7 @@
    "followedUp": false
   },
   "945169904534137": {
-   "lastClientAt": 1787388629470,
+   "lastClientAt": 1787391968150,
    "followedUp": false
   }
  }
