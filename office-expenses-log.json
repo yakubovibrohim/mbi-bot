@@ -346,5 +346,15 @@
     "rate": 12000,
     "note": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
     "pay_method": "card"
+  },
+  {
+    "id": "mt42i72lo1f",
+    "date": "20.08.2026",
+    "ts": "2026-08-22T07:39:30.765Z",
+    "name": "💳 Capcut",
+    "amount_uzs": 237900,
+    "rate": 12000,
+    "note": "IYB MOBILE EXCHANGE, UZ",
+    "pay_method": "card"
   }
 ]
