@@ -1,17 +1,17 @@
 {
-  "updated": "2026-08-22T08:41:20.802Z",
+  "updated": "2026-08-22T08:46:26.897Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 120888796,
+  "balance_uzs": 120667806,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 106858462,
+    "chiqim": 107079452,
     "by_category": {
       "office": 17693680,
-      "personal": 47938714,
+      "personal": 48159704,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 24360148,
@@ -2141,6 +2141,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 292500,
       "name": "💳 Бензин",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "19.08.2026",
+      "time": "13:46",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 220990,
+      "name": "💳 Ujin",
       "pay": "karta",
       "src": "personal"
     },
