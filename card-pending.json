@@ -121,18 +121,6 @@
       "askedAt": 1787202903080,
       "remindedAt": 1787382967704
     },
-    "mt12n4yozi8": {
-      "dir": "out",
-      "amtUzs": 2997313,
-      "place": "IYM UZCARD2VISA S KOMISS, UZ",
-      "rawBalance": 18523,
-      "date": "20.08.2026",
-      "title": "Spisanie c karty",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1787203202784,
-      "remindedAt": 1787383237660
-    },
     "mt1i04y0r44": {
       "dir": "out",
       "amtUzs": 1427400,
@@ -822,6 +810,11 @@
       "date": "17.08.2026",
       "dir": "in",
       "amt": 25000
+    },
+    {
+      "date": "20.08.2026",
+      "dir": "out",
+      "amt": 2997313
     }
   ],
   "lastBalances": {
