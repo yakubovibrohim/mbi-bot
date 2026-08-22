@@ -1,17 +1,17 @@
 {
-  "updated": "2026-08-22T13:00:24.486Z",
+  "updated": "2026-08-22T13:17:31.118Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 120667806,
+  "balance_uzs": 120628806,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 107079452,
+    "chiqim": 107118452,
     "by_category": {
       "office": 17693680,
-      "personal": 48159704,
+      "personal": 48198704,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 24360148,
@@ -2187,6 +2187,17 @@
       "name": "💳 Claude ai",
       "pay": "karta",
       "src": "office"
+    },
+    {
+      "date": "22.08.2026",
+      "time": "18:17",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 39000,
+      "name": "💳 Blmiman",
+      "pay": "karta",
+      "src": "personal"
     }
   ]
 }
