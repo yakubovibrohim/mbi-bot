@@ -1,20 +1,20 @@
 {
-  "updated": "2026-08-22T07:39:40.056Z",
+  "updated": "2026-08-22T07:40:27.732Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 125313509,
+  "balance_uzs": 122316196,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 102433749,
+    "chiqim": 105431062,
     "by_category": {
       "office": 16266280,
       "personal": 47938714,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
-      "deal_expense": 21362835,
+      "deal_expense": 24360148,
       "debt_in": 26400000,
       "card_income": 2180000,
       "debt_paid": 2332000
@@ -2143,6 +2143,17 @@
       "name": "💳 Бензин",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "20.08.2026",
+      "time": "12:40",
+      "dir": "out",
+      "category": "deal_expense",
+      "category_uz": "Buyurtma xarajati",
+      "amount_uzs": 2997313,
+      "name": "Sevara opa Taqachi: 💳 IYM UZCARD2VISA S KOMISS, UZ",
+      "pay": "karta",
+      "src": "deals"
     },
     {
       "date": "20.08.2026",
