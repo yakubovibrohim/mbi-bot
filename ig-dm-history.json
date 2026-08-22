@@ -917,6 +917,16 @@
     "role": "assistant",
     "content": "🤣🤣 Хоп, бемалол — DM'га ёзинг, ўлчам ва материални айтсангиз, оптимал нархда ҳисоблаб берамиз 👍🏻"
    }
+  ],
+  "2521651191659380": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Judayam chiroyli chiqibti alloh hayrli qisin ishilani rivojini bersin.\" deb postga komment yozdi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Rahmat, xush kelibsiz 🙌 Iliq gapingiz uchun katta rahmat, alloh rozi bo'lsin.\n\nSizga ham mebel kerak bo'lsa — oshxona, shkaf yoki yotoqxonami — yozing, yordam beramiz."
+   }
   ]
  },
  "activity": {
@@ -1123,6 +1133,10 @@
   },
   "945169904534137": {
    "lastClientAt": 1787391968150,
+   "followedUp": false
+  },
+  "2521651191659380": {
+   "lastClientAt": 1787393203075,
    "followedUp": false
   }
  }
