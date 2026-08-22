@@ -1067,5 +1067,15 @@
     "pay_method": "card",
     "place": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
     "ts": "2026-08-22T13:17:22.101Z"
+  },
+  {
+    "date": "19.08.2026",
+    "note": "💳 Suv",
+    "amount_uzs": 24000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "YATT SALIXOV IBROXIM ABDURAXIM, TOSHKENT, NOZANIN --3-11",
+    "ts": "2026-08-22T13:17:52.555Z"
   }
 ]
