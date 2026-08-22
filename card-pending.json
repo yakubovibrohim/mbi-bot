@@ -73,19 +73,6 @@
       "askedAt": 1787141131287,
       "remindedAt": 1787400368296
     },
-    "mt025g8qvmy": {
-      "dir": "out",
-      "amtUzs": 24000,
-      "place": "YATT SALIXOV IBROXIM ABDURAXIM, TOSHKENT, NOZANIN --3-11",
-      "rawBalance": 236825,
-      "date": "19.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1787141911418,
-      "remindedAt": 1787401208335,
-      "kind": "personal"
-    },
     "mt3zujt4oss": {
       "dir": "out",
       "amtUzs": 37000,
@@ -799,6 +786,11 @@
       "date": "22.08.2026",
       "dir": "out",
       "amt": 7000
+    },
+    {
+      "date": "19.08.2026",
+      "dir": "out",
+      "amt": 24000
     }
   ],
   "lastBalances": {
