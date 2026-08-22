@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-22T07:40:27.732Z",
+  "updated": "2026-08-22T08:41:20.802Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 122316196,
+  "balance_uzs": 120888796,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 105431062,
+    "chiqim": 106858462,
     "by_category": {
-      "office": 16266280,
+      "office": 17693680,
       "personal": 47938714,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
@@ -2163,6 +2163,17 @@
       "category_uz": "Ishxona",
       "amount_uzs": 237900,
       "name": "💳 Capcut",
+      "pay": "karta",
+      "src": "office"
+    },
+    {
+      "date": "20.08.2026",
+      "time": "13:41",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 1427400,
+      "name": "💳 Claude ai",
       "pay": "karta",
       "src": "office"
     }
