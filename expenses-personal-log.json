@@ -1047,5 +1047,15 @@
     "pay_method": "card",
     "place": "OOO UNG PETRO BASHLIK 24, UZ",
     "ts": "2026-08-17T13:14:00.529Z"
+  },
+  {
+    "date": "19.08.2026",
+    "note": "💳 Ujin",
+    "amount_uzs": 220990,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IP OOO YANDEX EATS, UZ",
+    "ts": "2026-08-22T08:46:17.798Z"
   }
 ]
