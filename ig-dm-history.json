@@ -927,6 +927,16 @@
     "role": "assistant",
     "content": "Rahmat, xush kelibsiz 🙌 Iliq gapingiz uchun katta rahmat, alloh rozi bo'lsin.\n\nSizga ham mebel kerak bo'lsa — oshxona, shkaf yoki yotoqxonami — yozing, yordam beramiz."
    }
+  ],
+  "1094883039743805": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"udar gapyoo jonon chiqibti\" deb postga komment yozdi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 🙌 Раҳмат илиқ фикрингиз учун! Ўзингизга ҳам шунақа мебел кераk бўлса, шахсийга (DM) ёзинг — ёрдам берамиз 👍🏻"
+   }
   ]
  },
  "activity": {
@@ -1137,6 +1147,10 @@
   },
   "2521651191659380": {
    "lastClientAt": 1787393203075,
+   "followedUp": false
+  },
+  "1094883039743805": {
+   "lastClientAt": 1787395642790,
    "followedUp": false
   }
  }
