@@ -129,9 +129,10 @@
       "date": "20.08.2026",
       "title": "Platezh",
       "card4": "5893",
-      "step": "type",
+      "step": "note",
       "askedAt": 1787229003528,
-      "remindedAt": 1787387437810
+      "remindedAt": 1787387437810,
+      "kind": "office"
     },
     "mt3zujt4oss": {
       "dir": "out",
