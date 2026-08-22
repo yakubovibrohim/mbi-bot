@@ -356,5 +356,15 @@
     "rate": 12000,
     "note": "IYB MOBILE EXCHANGE, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mt44pit6je0",
+    "date": "20.08.2026",
+    "ts": "2026-08-22T08:41:11.802Z",
+    "name": "💳 Claude ai",
+    "amount_uzs": 1427400,
+    "rate": 12000,
+    "note": "IYB MOBILE EXCHANGE, UZ",
+    "pay_method": "card"
   }
 ]
