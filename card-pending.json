@@ -118,7 +118,8 @@
       "title": "Pokupka",
       "card4": "5893",
       "step": "type",
-      "askedAt": 1787394548714
+      "askedAt": 1787394548714,
+      "remindedAt": 1787401778337
     }
   },
   "resolved": [
