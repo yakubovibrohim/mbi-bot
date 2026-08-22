@@ -85,18 +85,6 @@
       "askedAt": 1787141911418,
       "remindedAt": 1787386807791
     },
-    "mt12gppk4qw": {
-      "dir": "in",
-      "amtUzs": 3000000,
-      "place": "IPAK YOLI YAKKASAROY FILIA, UZ",
-      "rawBalance": 3015835,
-      "date": "20.08.2026",
-      "title": "Perevod na kartu",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1787202903080,
-      "remindedAt": 1787390167878
-    },
     "mt3zujt4oss": {
       "dir": "out",
       "amtUzs": 37000,
@@ -806,6 +794,11 @@
       "date": "19.08.2026",
       "dir": "in",
       "amt": 500000
+    },
+    {
+      "date": "20.08.2026",
+      "dir": "in",
+      "amt": 3000000
     }
   ],
   "lastBalances": {
