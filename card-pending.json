@@ -107,6 +107,17 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1787387618649
+    },
+    "mt48kcfesok": {
+      "dir": "out",
+      "amtUzs": 7000,
+      "place": "BINKET SERVIS MCHJ,  , KATTA DOMBROBOD MFY, DOMBROBOD",
+      "rawBalance": 1330223,
+      "date": "22.08.2026",
+      "title": "Pokupka",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1787394548714
     }
   },
   "resolved": [
