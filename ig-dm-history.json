@@ -846,6 +846,10 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкум 🙌 Ёқдими? 👍🏻\n\nНима режалаштиряпсиз — ошхонами, шкафми?"
+   },
+   {
+    "role": "assistant",
+    "content": "Нима бўлди, давом этамизми? 😊"
    }
   ],
   "1940353133303763": [
@@ -856,6 +860,10 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкум 🙌 Раҳмат илиқ фикрингиз учун!\n\nЎзингизга мебель режалаштиряпсизми — ошхона, шкаф ёки ётоқхона?"
+   },
+   {
+    "role": "assistant",
+    "content": "Нима бўлди, давом этамизми? 😊"
    }
   ],
   "2836977193329360": [
@@ -866,6 +874,10 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкым 🙌 Шахсийга (DM) ёзинг, барча маълумот берамиз 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Qiziqtirgan narsa haqida gaplashaylikmi? 😊"
    }
   ],
   "1061411556634919": [
@@ -1143,15 +1155,15 @@
   },
   "3626302274177684": {
    "lastClientAt": 1787383404095,
-   "followedUp": false
+   "followedUp": true
   },
   "1940353133303763": {
    "lastClientAt": 1787383692509,
-   "followedUp": false
+   "followedUp": true
   },
   "2836977193329360": {
    "lastClientAt": 1787384750351,
-   "followedUp": false
+   "followedUp": true
   },
   "1061411556634919": {
    "lastClientAt": 1787386780771,
