@@ -109,17 +109,6 @@
       "askedAt": 1787495742403,
       "remindedAt": 1787510171910
     },
-    "mt65zs9kcte": {
-      "dir": "out",
-      "amtUzs": 370800,
-      "place": "PAYME OPLATA MUNIS, UZ",
-      "rawBalance": 1376423,
-      "date": "23.08.2026",
-      "title": "Platezh",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1787511162584
-    },
     "mt662ctiwjq": {
       "dir": "out",
       "amtUzs": 192000,
@@ -842,6 +831,11 @@
       "date": "23.08.2026",
       "dir": "in",
       "amt": 565000
+    },
+    {
+      "date": "23.08.2026",
+      "dir": "out",
+      "amt": 370800
     }
   ],
   "lastBalances": {
