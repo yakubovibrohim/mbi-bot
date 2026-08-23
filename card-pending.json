@@ -96,6 +96,17 @@
       "step": "type",
       "askedAt": 1787415039587,
       "remindedAt": 1787494271816
+    },
+    "mt5wt9z775d": {
+      "dir": "out",
+      "amtUzs": 83000,
+      "place": "MCHJ OCEAN MARKET 1986, toshkent, PARVONA MFY, PARVONA, 2 TOR KOC",
+      "rawBalance": 1182223,
+      "date": "23.08.2026",
+      "title": "Pokupka",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1787495742403
     }
   },
   "resolved": [
