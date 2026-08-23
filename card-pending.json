@@ -119,6 +119,17 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1787511012949
+    },
+    "mt65zs9kcte": {
+      "dir": "out",
+      "amtUzs": 370800,
+      "place": "PAYME OPLATA MUNIS, UZ",
+      "rawBalance": 1376423,
+      "date": "23.08.2026",
+      "title": "Platezh",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1787511162584
     }
   },
   "resolved": [
