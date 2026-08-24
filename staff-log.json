@@ -88,6 +88,14 @@
         "ts": "2026-07-18T13:23:41.653Z",
         "amount_usd": 200,
         "entered_by": "admin"
+      },
+      {
+        "id": "mt7jv40cvrqq",
+        "date": "24.08.2026",
+        "ts": "2026-08-24T18:08:45.324Z",
+        "amount_usd": 349.5,
+        "entered_by": "admin",
+        "pending": true
       }
     ],
     "attendance": [
