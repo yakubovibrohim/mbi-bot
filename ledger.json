@@ -1,17 +1,17 @@
 {
-  "updated": "2026-08-23T19:00:46.799Z",
+  "updated": "2026-08-24T03:21:12.100Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 120514806,
+  "balance_uzs": 120504816,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 107232452,
+    "chiqim": 107242442,
     "by_category": {
       "office": 17700680,
-      "personal": 48305704,
+      "personal": 48315694,
       "staff_advance": 14533920,
       "deal_payment": 24000000,
       "deal_expense": 24360148,
@@ -2141,6 +2141,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 292500,
       "name": "💳 Бензин",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "18.08.2026",
+      "time": "08:21",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 9990,
+      "name": "💳 Vv",
       "pay": "karta",
       "src": "personal"
     },
