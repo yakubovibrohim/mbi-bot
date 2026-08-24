@@ -1,18 +1,18 @@
 {
-  "updated": "2026-08-24T12:59:24.607Z",
+  "updated": "2026-08-24T18:08:54.414Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 120504816,
+  "balance_uzs": 116310816,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 107242442,
+    "chiqim": 111436442,
     "by_category": {
       "office": 17700680,
       "personal": 48315694,
-      "staff_advance": 14533920,
+      "staff_advance": 18727920,
       "deal_payment": 24000000,
       "deal_expense": 24360148,
       "debt_in": 26400000,
@@ -2242,6 +2242,17 @@
       "name": "💳 сув",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "24.08.2026",
+      "time": "23:08",
+      "dir": "out",
+      "category": "staff_advance",
+      "category_uz": "Xodim avansi",
+      "amount_uzs": 4194000,
+      "name": "Diyor",
+      "pay": "naqd",
+      "src": "staff"
     }
   ]
 }
