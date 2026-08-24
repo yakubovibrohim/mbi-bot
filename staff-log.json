@@ -94,8 +94,7 @@
         "date": "24.08.2026",
         "ts": "2026-08-24T18:08:45.324Z",
         "amount_usd": 349.5,
-        "entered_by": "admin",
-        "pending": true
+        "entered_by": "admin"
       }
     ],
     "attendance": [
