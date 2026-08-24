@@ -1093,7 +1093,8 @@
         "in": "09:33",
         "out": "17:58",
         "late": true,
-        "early": true
+        "early": true,
+        "out_reason": "Shifokor"
       }
     ],
     "tg_chat_id": "6586787202",
