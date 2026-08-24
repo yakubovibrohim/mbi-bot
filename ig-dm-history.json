@@ -794,34 +794,6 @@
     "content": "Здравствуйт��! Зависит от фасада: ЛМДФ и акрил — до 14 рабочих дней, крашеный и шпон — до 30 дней. Стараемся закончить раньше, а за каждый день опоздания платим штраф.\n\nА что планируете — кухню или шкаф?"
    }
   ],
-  "945169904534137": [
-   {
-    "role": "user",
-    "content": "[Mijoz \"Zo’rakan!\" deb postga komment yozdi]"
-   },
-   {
-    "role": "assistant",
-    "content": "Rahmat! 🙌 Шахсийга (DM) ёзинг — нима керак, ошхона ё шкаф, барча маълумот берамиз."
-   },
-   {
-    "role": "user",
-    "content": "[Mijoz \"@mbi_mebel shuni pulini pir-chirtinga qilib bering😂\" deb postga komment yozdi]"
-   },
-   {
-    "role": "assistant",
-    "content": "🤣🤣 Хоп, бемалол — DM'га ёзинг, ўлчам ва материални айтсангиз, оптимал нархда ҳисоблаб берамиз 👍🏻"
-   }
-  ],
-  "2521651191659380": [
-   {
-    "role": "user",
-    "content": "[Mijoz \"Judayam chiroyli chiqibti alloh hayrli qisin ishilani rivojini bersin.\" deb postga komment yozdi]"
-   },
-   {
-    "role": "assistant",
-    "content": "Rahmat, xush kelibsiz 🙌 Iliq gapingiz uchun katta rahmat, alloh rozi bo'lsin.\n\nSizga ham mebel kerak bo'lsa — oshxona, shkaf yoki yotoqxonami — yozing, yordam beramiz."
-   }
-  ],
   "1094883039743805": [
    {
     "role": "user",
@@ -1026,14 +998,6 @@
   "1346683367430121": {
    "lastClientAt": 1783921543043,
    "followedUp": false
-  },
-  "945169904534137": {
-   "lastClientAt": 1787391968150,
-   "followedUp": true
-  },
-  "2521651191659380": {
-   "lastClientAt": 1787393203075,
-   "followedUp": true
   },
   "1094883039743805": {
    "lastClientAt": 1787480761922,
