@@ -1087,5 +1087,15 @@
     "pay_method": "card",
     "place": "MCHJ OCEAN MARKET 1986, toshkent, PARVONA MFY, PARVONA, 2 TOR KOC",
     "ts": "2026-08-23T19:00:37.825Z"
+  },
+  {
+    "date": "18.08.2026",
+    "note": "💳 Vv",
+    "amount_uzs": 9990,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-08-24T03:21:03.053Z"
   }
 ]
