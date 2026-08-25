@@ -143,6 +143,17 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1787647787619
+    },
+    "mt8htiegkmg": {
+      "dir": "out",
+      "amtUzs": 48000,
+      "place": "PAYME EDIN QR, UZ",
+      "rawBalance": 806994,
+      "date": "25.08.2026",
+      "title": "Platezh",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1787651957608
     }
   },
   "resolved": [
