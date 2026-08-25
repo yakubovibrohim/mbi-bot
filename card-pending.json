@@ -120,6 +120,17 @@
       "step": "type",
       "askedAt": 1787632277314,
       "remindedAt": 1787639506612
+    },
+    "mt8auqkckyw": {
+      "dir": "out",
+      "amtUzs": 102500,
+      "place": "PAYME UZCARD NA VISA, UZ",
+      "rawBalance": 886335,
+      "date": "25.08.2026",
+      "title": "Platezh",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1787640257532
     }
   },
   "resolved": [
