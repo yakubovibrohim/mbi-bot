@@ -376,5 +376,15 @@
     "rate": 12000,
     "note": "BINKET SERVIS MCHJ,  , KATTA DOMBROBOD MFY, DOMBROBOD",
     "pay_method": "card"
+  },
+  {
+    "id": "mt88e0didkw",
+    "date": "24.08.2026",
+    "ts": "2026-08-25T05:35:17.862Z",
+    "name": "💳 Абет",
+    "amount_uzs": 113158,
+    "rate": 12000,
+    "note": "IP OOO ANGLESEY FOOD, GUL, Olmos MFY Yakkatol pr 3 kuchasi",
+    "pay_method": "card"
   }
 ]
