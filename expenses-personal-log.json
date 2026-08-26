@@ -1227,5 +1227,15 @@
     "pay_method": "card",
     "place": "OOO KOURI, TOSHKENT, DOSTOBOD MFY KORASUV BOYI KOChA",
     "ts": "2026-08-26T09:23:58.158Z"
+  },
+  {
+    "date": "26.08.2026",
+    "note": "💳 Свет",
+    "amount_uzs": 300000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PL DOMO TOLOV, UZ",
+    "ts": "2026-08-26T10:27:38.302Z"
   }
 ]
