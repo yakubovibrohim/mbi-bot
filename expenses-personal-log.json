@@ -1107,5 +1107,15 @@
     "pay_method": "card",
     "place": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
     "ts": "2026-08-26T06:35:11.092Z"
+  },
+  {
+    "date": "25.08.2026",
+    "note": "💳 Blmiman",
+    "amount_uzs": 102500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME UZCARD NA VISA, UZ",
+    "ts": "2026-08-26T06:36:05.873Z"
   }
 ]
