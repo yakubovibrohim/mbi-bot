@@ -1,19 +1,6 @@
 {
   "lastMsgId": 100661,
   "pending": {
-    "mt01oqafz0v": {
-      "dir": "out",
-      "amtUzs": 240000,
-      "place": "IP OOO ZARREZ PS GROUP, toshkent, yunusobod tumani AMIR TEMUR",
-      "rawBalance": 260825,
-      "date": "19.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1787141131287,
-      "remindedAt": 1787731638919,
-      "kind": "personal"
-    },
     "mt8htiegkmg": {
       "dir": "out",
       "amtUzs": 48000,
@@ -837,6 +824,11 @@
       "date": "25.08.2026",
       "dir": "out",
       "amt": 20220
+    },
+    {
+      "date": "19.08.2026",
+      "dir": "out",
+      "amt": 240000
     }
   ],
   "lastBalances": {
