@@ -1187,5 +1187,15 @@
     "pay_method": "card",
     "place": "PAYME P2P, UZ",
     "ts": "2026-08-26T07:03:15.629Z"
+  },
+  {
+    "date": "15.08.2026",
+    "note": "💳 Blmiman",
+    "amount_uzs": 73000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME EDIN QR, UZ",
+    "ts": "2026-08-26T07:54:37.849Z"
   }
 ]
