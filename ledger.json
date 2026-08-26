@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-26T07:59:37.648Z",
+  "updated": "2026-08-26T08:16:05.399Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 111312237,
+  "balance_uzs": 111292017,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 116435021,
+    "chiqim": 116455241,
     "by_category": {
-      "office": 17853838,
+      "office": 17874058,
       "personal": 48835815,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
@@ -2341,6 +2341,17 @@
       "name": "Diyor",
       "pay": "naqd",
       "src": "staff"
+    },
+    {
+      "date": "25.08.2026",
+      "time": "13:15",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 20220,
+      "name": "💳 Suv",
+      "pay": "karta",
+      "src": "office"
     },
     {
       "date": "25.08.2026",
