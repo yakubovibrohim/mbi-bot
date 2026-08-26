@@ -406,5 +406,15 @@
     "rate": 12000,
     "note": "PAYME P2P, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mt9y8l4s49v",
+    "date": "25.08.2026",
+    "ts": "2026-08-26T10:26:41.020Z",
+    "name": "💳 Абет",
+    "amount_uzs": 48000,
+    "rate": 12000,
+    "note": "PAYME EDIN QR, UZ",
+    "pay_method": "card"
   }
 ]
