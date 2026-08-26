@@ -13,19 +13,6 @@
       "askedAt": 1787141131287,
       "remindedAt": 1787731638919
     },
-    "mt84zttv7q5": {
-      "dir": "out",
-      "amtUzs": 20220,
-      "place": "PAYME P2P, UZ",
-      "rawBalance": 1001965,
-      "date": "25.08.2026",
-      "title": "Platezh",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1787630417348,
-      "remindedAt": 1787731248902,
-      "kind": "office"
-    },
     "mt8htiegkmg": {
       "dir": "out",
       "amtUzs": 48000,
@@ -844,6 +831,11 @@
       "date": "17.08.2026",
       "dir": "out",
       "amt": 40000
+    },
+    {
+      "date": "25.08.2026",
+      "dir": "out",
+      "amt": 20220
     }
   ],
   "lastBalances": {
