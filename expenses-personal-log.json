@@ -1237,5 +1237,15 @@
     "pay_method": "card",
     "place": "PL DOMO TOLOV, UZ",
     "ts": "2026-08-26T10:27:38.302Z"
+  },
+  {
+    "date": "26.08.2026",
+    "note": "💳 Benzin",
+    "amount_uzs": 101200,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-08-26T15:40:37.287Z"
   }
 ]
