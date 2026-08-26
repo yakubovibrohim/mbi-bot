@@ -69,9 +69,10 @@
       "date": "22.08.2026",
       "title": "Pokupka",
       "card4": "5893",
-      "step": "type",
+      "step": "note",
       "askedAt": 1787379908296,
-      "remindedAt": 1787725578674
+      "remindedAt": 1787725578674,
+      "kind": "personal"
     },
     "mt4krjab7o0": {
       "dir": "out",
