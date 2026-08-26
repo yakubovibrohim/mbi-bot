@@ -383,6 +383,23 @@
         "rate": 12000,
         "note": "",
         "source": "manual"
+      },
+      {
+        "id": "mt9sfa1uwu35",
+        "date": "26.08.2026",
+        "ts": "2026-08-26T07:43:55.554Z",
+        "products": [
+          {
+            "name": "Hettich furnitura",
+            "qty": 1,
+            "price_uzs": 365300,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 365300,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
       }
     ],
     "finished_date": null,
