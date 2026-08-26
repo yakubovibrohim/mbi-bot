@@ -1,20 +1,6 @@
 {
   "lastMsgId": 100731,
-  "pending": {
-    "mt8htiegkmg": {
-      "dir": "out",
-      "amtUzs": 48000,
-      "place": "PAYME EDIN QR, UZ",
-      "rawBalance": 806994,
-      "date": "25.08.2026",
-      "title": "Platezh",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1787651957608,
-      "remindedAt": 1787738389227,
-      "kind": "office"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -835,6 +821,11 @@
       "date": "26.08.2026",
       "dir": "out",
       "amt": 255000
+    },
+    {
+      "date": "25.08.2026",
+      "dir": "out",
+      "amt": 48000
     }
   ],
   "lastBalances": {
