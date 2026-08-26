@@ -1,17 +1,17 @@
 {
-  "updated": "2026-08-26T07:44:04.579Z",
+  "updated": "2026-08-26T07:54:46.953Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 111455737,
+  "balance_uzs": 111382737,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 116291521,
+    "chiqim": 116364521,
     "by_category": {
       "office": 17813838,
-      "personal": 48732315,
+      "personal": 48805315,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
       "deal_expense": 28685448,
@@ -2108,6 +2108,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 710288,
       "name": "💳 Hadicha",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "15.08.2026",
+      "time": "12:54",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 73000,
+      "name": "💳 Blmiman",
       "pay": "karta",
       "src": "personal"
     },
