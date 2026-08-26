@@ -1111,6 +1111,12 @@
         "late": true,
         "early": true,
         "out_reason": "Shifokor"
+      },
+      {
+        "date": "26.08.2026",
+        "in": "09:12",
+        "out": null,
+        "late": false
       }
     ],
     "tg_chat_id": "6586787202",
