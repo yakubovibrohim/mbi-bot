@@ -1157,5 +1157,15 @@
     "pay_method": "card",
     "place": "OCTOBANK YANDEXPLUS OPLATA, UZ",
     "ts": "2026-08-26T06:36:59.373Z"
+  },
+  {
+    "date": "26.08.2026",
+    "note": "💳 Suv",
+    "amount_uzs": 15500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-08-26T07:02:47.406Z"
   }
 ]
