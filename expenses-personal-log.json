@@ -1097,5 +1097,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-08-24T03:21:03.053Z"
+  },
+  {
+    "date": "22.08.2026",
+    "note": "💳 Blmiman",
+    "amount_uzs": 37000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
+    "ts": "2026-08-26T06:35:11.092Z"
   }
 ]
