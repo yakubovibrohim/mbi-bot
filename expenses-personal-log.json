@@ -1197,5 +1197,15 @@
     "pay_method": "card",
     "place": "PAYME EDIN QR, UZ",
     "ts": "2026-08-26T07:54:37.849Z"
+  },
+  {
+    "date": "18.08.2026",
+    "note": "💳 Viza",
+    "amount_uzs": 30500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME UZCARD NA VISA, UZ",
+    "ts": "2026-08-26T07:54:53.704Z"
   }
 ]
