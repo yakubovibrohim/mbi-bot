@@ -61,19 +61,6 @@
       "askedAt": 1787630417348,
       "remindedAt": 1787724048610
     },
-    "mt8fc4tfzi0": {
-      "dir": "out",
-      "amtUzs": 31341,
-      "place": "PAYME P2P, UZ",
-      "rawBalance": 854994,
-      "date": "25.08.2026",
-      "title": "Spisanie c karty",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1787647787619,
-      "remindedAt": 1787727018774,
-      "kind": "personal"
-    },
     "mt8htiegkmg": {
       "dir": "out",
       "amtUzs": 48000,
@@ -872,6 +859,11 @@
       "date": "25.08.2026",
       "dir": "out",
       "amt": 100000
+    },
+    {
+      "date": "25.08.2026",
+      "dir": "out",
+      "amt": 31341
     }
   ],
   "lastBalances": {
