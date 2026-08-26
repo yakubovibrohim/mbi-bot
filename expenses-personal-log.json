@@ -1217,5 +1217,15 @@
     "pay_method": "card",
     "place": "IP OOO ZARREZ PS GROUP, toshkent, yunusobod tumani AMIR TEMUR",
     "ts": "2026-08-26T08:16:13.268Z"
+  },
+  {
+    "date": "26.08.2026",
+    "note": "💳 Sigaret",
+    "amount_uzs": 255000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO KOURI, TOSHKENT, DOSTOBOD MFY KORASUV BOYI KOChA",
+    "ts": "2026-08-26T09:23:58.158Z"
   }
 ]
