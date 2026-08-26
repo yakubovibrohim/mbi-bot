@@ -1137,5 +1137,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-08-26T06:36:33.718Z"
+  },
+  {
+    "date": "22.08.2026",
+    "note": "💳 Suv",
+    "amount_uzs": 65000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-08-26T06:36:44.482Z"
   }
 ]
