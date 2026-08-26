@@ -366,6 +366,23 @@
         "total_uzs": 2997313,
         "rate": 12000,
         "pay_method": "card"
+      },
+      {
+        "id": "mt9sccnmcudw",
+        "date": "26.08.2026",
+        "ts": "2026-08-26T07:41:38.962Z",
+        "products": [
+          {
+            "name": "Furnitura",
+            "qty": 1,
+            "price_uzs": 3960000,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 3960000,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
       }
     ],
     "finished_date": null,
