@@ -1,19 +1,6 @@
 {
   "lastMsgId": 100765,
-  "pending": {
-    "mt9y8s2kbyu": {
-      "dir": "out",
-      "amtUzs": 300000,
-      "place": "PL DOMO TOLOV, UZ",
-      "rawBalance": 136494,
-      "date": "26.08.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1787740010012,
-      "kind": "personal"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -839,6 +826,11 @@
       "date": "25.08.2026",
       "dir": "out",
       "amt": 48000
+    },
+    {
+      "date": "26.08.2026",
+      "dir": "out",
+      "amt": 300000
     }
   ],
   "lastBalances": {
