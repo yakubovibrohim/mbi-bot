@@ -1167,5 +1167,15 @@
     "pay_method": "card",
     "place": "OOO YANDEXGO UB, UZ",
     "ts": "2026-08-26T07:02:47.406Z"
+  },
+  {
+    "date": "25.08.2026",
+    "note": "💳 Tok",
+    "amount_uzs": 100000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-08-26T07:02:57.760Z"
   }
 ]
