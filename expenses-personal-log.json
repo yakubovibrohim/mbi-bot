@@ -1147,5 +1147,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-08-26T06:36:44.482Z"
+  },
+  {
+    "date": "17.08.2026",
+    "note": "💳 Yandex",
+    "amount_uzs": 150,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OCTOBANK YANDEXPLUS OPLATA, UZ",
+    "ts": "2026-08-26T06:36:59.373Z"
   }
 ]
