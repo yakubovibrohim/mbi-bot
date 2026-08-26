@@ -1207,5 +1207,15 @@
     "pay_method": "card",
     "place": "PAYME UZCARD NA VISA, UZ",
     "ts": "2026-08-26T07:54:53.704Z"
+  },
+  {
+    "date": "19.08.2026",
+    "note": "💳 Sigaret",
+    "amount_uzs": 240000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IP OOO ZARREZ PS GROUP, toshkent, yunusobod tumani AMIR TEMUR",
+    "ts": "2026-08-26T08:16:13.268Z"
   }
 ]
