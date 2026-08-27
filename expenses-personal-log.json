@@ -1247,5 +1247,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-08-26T15:40:37.287Z"
+  },
+  {
+    "date": "27.08.2026",
+    "note": "💳 Propan",
+    "amount_uzs": 466532,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-08-27T09:54:11.351Z"
   }
 ]
