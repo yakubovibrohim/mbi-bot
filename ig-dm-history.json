@@ -803,6 +803,16 @@
     "role": "assistant",
     "content": "😊 Нима керак — ошхона, шкаф ёки ётоқхонами? Ёрдам берай."
    }
+  ],
+  "1513460954153332": [
+   {
+    "role": "user",
+    "content": "Assalomu alekum"
+   },
+   {
+    "role": "assistant",
+    "content": "Va Aleykum Assalom, yaxshimisiz 👍🏻 Ismingiz nima?"
+   }
   ]
  },
  "activity": {
@@ -973,6 +983,10 @@
   },
   "4606094962996480": {
    "lastClientAt": 1787820152959,
+   "followedUp": false
+  },
+  "1513460954153332": {
+   "lastClientAt": 1787863169512,
    "followedUp": false
   }
  }
