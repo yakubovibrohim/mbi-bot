@@ -1,5 +1,5 @@
 {
-  "lastMsgId": 100828,
+  "lastMsgId": 100882,
   "pending": {
     "mtb1vnnuziv": {
       "dir": "out",
@@ -857,7 +857,7 @@
     }
   ],
   "lastBalances": {
-    "5893": 68762
+    "5893": 35262
   },
   "lastReconcileDate": "26.08.2026"
 }
