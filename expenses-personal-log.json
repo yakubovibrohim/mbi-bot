@@ -1257,5 +1257,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-08-27T09:54:11.351Z"
+  },
+  {
+    "date": "27.08.2026",
+    "note": "💳 Taxi",
+    "amount_uzs": 33500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-08-27T09:54:18.756Z"
   }
 ]
