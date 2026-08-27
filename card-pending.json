@@ -1,6 +1,18 @@
 {
   "lastMsgId": 100814,
-  "pending": {},
+  "pending": {
+    "mtb0y8cn6nj": {
+      "dir": "in",
+      "amtUzs": 500000,
+      "place": "XAZNA P2P UZCARD XB UZCARD OTHER, UZ",
+      "rawBalance": 535294,
+      "date": "27.08.2026",
+      "title": "Perevod na kartu",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1787805022919
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
