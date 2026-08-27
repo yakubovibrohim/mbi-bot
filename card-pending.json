@@ -1,6 +1,18 @@
 {
   "lastMsgId": 100991,
-  "pending": {},
+  "pending": {
+    "mtbfra75e61": {
+      "dir": "out",
+      "amtUzs": 35000,
+      "place": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
+      "rawBalance": 262,
+      "date": "27.08.2026",
+      "title": "Pokupka",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1787829892961
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
