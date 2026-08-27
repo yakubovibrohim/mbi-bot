@@ -416,5 +416,15 @@
     "rate": 12000,
     "note": "PAYME EDIN QR, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mtbgy7hgr27",
+    "date": "27.08.2026",
+    "ts": "2026-08-27T11:58:15.652Z",
+    "name": "💳 Suv",
+    "amount_uzs": 35000,
+    "rate": 12000,
+    "note": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
+    "pay_method": "card"
   }
 ]
