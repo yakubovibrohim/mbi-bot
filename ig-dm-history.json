@@ -803,6 +803,16 @@
     "role": "assistant",
     "content": "Va Aleykum Assalom, yaxshimisiz 👍🏻 Ismingiz nima?"
    }
+  ],
+  "1005674849034541": [
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"Bita like❤️ bosib keting #instagram #instagood\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум, яхшимисиз 👍🏻 Исмингиз нима?\n\nБу мебелдан қизиқдингизми — ошхонами ёки шкаф, нима режалаштиряпсиз?"
+   }
   ]
  },
  "activity": {
@@ -974,6 +984,10 @@
   "1513460954153332": {
    "lastClientAt": 1787863169512,
    "followedUp": true
+  },
+  "1005674849034541": {
+   "lastClientAt": 1788008632010,
+   "followedUp": false
   }
  }
 }
