@@ -1,19 +1,6 @@
 {
   "lastMsgId": 101144,
-  "pending": {
-    "mtdcfq2cb5h": {
-      "dir": "in",
-      "amtUzs": 1180000,
-      "place": "OPERU  ASIA ALLIANCE BANK AT BANKI, UZ",
-      "rawBalance": 1180262,
-      "date": "29.08.2026",
-      "title": "Perevod na kartu",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1787945247156,
-      "remindedAt": 1787988476487
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -869,6 +856,11 @@
       "date": "27.08.2026",
       "dir": "out",
       "amt": 35000
+    },
+    {
+      "date": "29.08.2026",
+      "dir": "in",
+      "amt": 1180000
     }
   ],
   "lastBalances": {
