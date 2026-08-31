@@ -12,19 +12,6 @@
       "step": "type",
       "askedAt": 1788017127513,
       "remindedAt": 1788161161678
-    },
-    "mtfzfxzqjhq": {
-      "dir": "out",
-      "amtUzs": 41000,
-      "place": "OOO OTA BOLA HOLDING, Toshkent, Uzbekiston Mustakilligi MFY  15",
-      "rawBalance": 929262,
-      "date": "30.08.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1788104820950,
-      "remindedAt": 1788162451647,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -892,6 +879,11 @@
       "date": "31.08.2026",
       "dir": "out",
       "amt": 29000
+    },
+    {
+      "date": "30.08.2026",
+      "dir": "out",
+      "amt": 41000
     }
   ],
   "lastBalances": {
