@@ -1277,5 +1277,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-08-31T08:08:07.384Z"
+  },
+  {
+    "date": "30.08.2026",
+    "note": "💳 Suv",
+    "amount_uzs": 41000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO OTA BOLA HOLDING, Toshkent, Uzbekiston Mustakilligi MFY  15",
+    "ts": "2026-08-31T08:08:15.834Z"
   }
 ]
