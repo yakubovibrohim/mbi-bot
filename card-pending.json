@@ -1,20 +1,6 @@
 {
   "lastMsgId": 101455,
-  "pending": {
-    "mtej8daxku3": {
-      "dir": "out",
-      "amtUzs": 210000,
-      "place": "PAYME OPLATA MUNIS, UZ",
-      "rawBalance": 970262,
-      "date": "29.08.2026",
-      "title": "Platezh",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1788017127513,
-      "remindedAt": 1788161161678,
-      "kind": "personal"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -885,6 +871,11 @@
       "date": "30.08.2026",
       "dir": "out",
       "amt": 41000
+    },
+    {
+      "date": "29.08.2026",
+      "dir": "out",
+      "amt": 210000
     }
   ],
   "lastBalances": {
