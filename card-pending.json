@@ -154,6 +154,17 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1788855526907
+    },
+    "mtsee92qmcs": {
+      "dir": "in",
+      "amtUzs": 2925000,
+      "place": "PAYME P2P, UZ",
+      "rawBalance": 3182262,
+      "date": "05.09.2026",
+      "title": "Perevod na kartu",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1788855530354
     }
   },
   "resolved": [
