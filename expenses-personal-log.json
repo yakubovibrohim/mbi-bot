@@ -1417,5 +1417,15 @@
     "pay_method": "card",
     "place": "MADAMINOVA RISOLAT OOO, Toshkent, ZARAFSHON OKDARYO BOTANOSH",
     "ts": "2026-09-08T14:24:20.981Z"
+  },
+  {
+    "date": "06.09.2026",
+    "note": "💳 Paynet",
+    "amount_uzs": 110000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-09-08T14:24:32.052Z"
   }
 ]
