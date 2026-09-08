@@ -1,16 +1,16 @@
 {
-  "updated": "2026-09-08T10:23:34.599Z",
+  "updated": "2026-09-08T10:24:00.911Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 101823323,
+  "balance_uzs": 101124468,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 125923935,
+    "chiqim": 126622790,
     "by_category": {
-      "office": 18121028,
+      "office": 18819883,
       "personal": 52657539,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
@@ -2550,6 +2550,17 @@
       "name": "💳 Itv",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "04.09.2026",
+      "time": "15:23",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 698855,
+      "name": "💳 Vizaga",
+      "pay": "karta",
+      "src": "office"
     },
     {
       "date": "06.09.2026",
