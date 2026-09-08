@@ -109,19 +109,6 @@
       "askedAt": 1788855511875,
       "remindedAt": 1788862737655
     },
-    "mtsedwlhrxr": {
-      "dir": "out",
-      "amtUzs": 698855,
-      "place": "IYB MOBILE EXCHANGE, UZ",
-      "rawBalance": 143262,
-      "date": "04.09.2026",
-      "title": "Platezh",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1788855514181,
-      "remindedAt": 1788862737655,
-      "kind": "office"
-    },
     "mtsee022et2": {
       "dir": "out",
       "amtUzs": 50000,
@@ -1131,6 +1118,11 @@
       "date": "06.09.2026",
       "dir": "out",
       "amt": 78600
+    },
+    {
+      "date": "04.09.2026",
+      "dir": "out",
+      "amt": 698855
     }
   ],
   "lastBalances": {
