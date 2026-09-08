@@ -44,6 +44,17 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1788855496020
+    },
+    "mtsedkul06d": {
+      "dir": "out",
+      "amtUzs": 154800,
+      "place": "UB SPISANIE NASIYA, UZ",
+      "rawBalance": 453412,
+      "date": "02.09.2026",
+      "title": "Platezh",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1788855498957
     }
   },
   "resolved": [
