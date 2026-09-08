@@ -240,19 +240,6 @@
       "step": "type",
       "askedAt": 1788855544715,
       "remindedAt": 1788862767741
-    },
-    "mtseem65c2v": {
-      "dir": "out",
-      "amtUzs": 1621892,
-      "place": "FAYZ SUPER OPTOM MCHJ, TOSHKENT, ZANGIOTA MFY  SAMARKAND DARVOZA",
-      "rawBalance": 624520,
-      "date": "06.09.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1788855547325,
-      "remindedAt": 1788862767741,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -1145,6 +1132,11 @@
       "date": "07.09.2026",
       "dir": "out",
       "amt": 163970
+    },
+    {
+      "date": "06.09.2026",
+      "dir": "out",
+      "amt": 1621892
     }
   ],
   "lastBalances": {
