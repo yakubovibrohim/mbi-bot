@@ -5577,7 +5577,7 @@ http.createServer((req, res) => {
   }
   if (req.method==='POST' && req.url==='/webhook') {
     let b=''; req.on('data',c=>b+=c);
-    req.on('end', async ()=>{ try{await handle(JSON.parse(b));}catch(e){} res.writeHead(200);res.end('OK'); });
+    req.on('end', async ()=>{ try{await handle(JSON.parse(b));}catch(e){ console.error('webhook handle:', (e && e.stack) || e); } res.writeHead(200);res.end('OK'); });
   } else if (req.method==='POST' && req.url==='/notify') {
     let b=''; req.on('data',c=>b+=c);
     req.on('end', async ()=>{
