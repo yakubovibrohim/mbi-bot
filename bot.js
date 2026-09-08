@@ -8,6 +8,10 @@ let BOT = process.env.BOT_TOKEN || '';  // secrets'dan yuklanadi
 const ADMIN    = '1487569442';
 const GROQ_KEY = process.env.GROQ_API_KEY;
 const GH_TOKEN = process.env.GITHUB_TOKEN;
+// Instagram/Meta ilova kaliti — koddan olib tashlandi (repo ochiq).
+// Manba: env IG_APP_SECRET yoki mbi-secrets/keys.json -> "ig_app_secret"
+const IG_APP_ID = process.env.IG_APP_ID || '1689794002143625';
+let IG_APP_SECRET = process.env.IG_APP_SECRET || '';
 
 // Tizim xatolari jurnali (Botir o'qiydi) — oxirgi 100 ta
 const sysErrors = [];
@@ -2810,15 +2814,16 @@ Vazifang: render g'oyalari, dizayn maslahatlari, rang va material tanlovi, Bazis
 let secretsReady = (async function loadSecrets() {
   try {
     const get = (name) => getSecretKey(name);
-    const [bt, az, sd, bo, di] = await Promise.all([
-      get('bot_token'), get('aziza_token'), get('sardor_token'), get('botir_token'), get('dilshod_token')
+    const [bt, az, sd, bo, di, igs] = await Promise.all([
+      get('bot_token'), get('aziza_token'), get('sardor_token'), get('botir_token'), get('dilshod_token'), get('ig_app_secret')
     ]);
     if (!BOT && bt) BOT = bt;
     if (az) AGENTS.aziza.token = az;
     if (sd) AGENTS.sardor.token = sd;
     if (bo) AGENTS.botir.token = bo;
     if (di) AGENTS.dilshod.token = di;
-    console.log('Secrets loaded. BOT:', BOT ? 'ok' : 'MISSING');
+    if (!IG_APP_SECRET && igs) IG_APP_SECRET = igs;
+    console.log('Secrets loaded. BOT:', BOT ? 'ok' : 'MISSING', '| IG_APP_SECRET:', IG_APP_SECRET ? 'ok' : 'MISSING');
     try {
       if (cardMon) {
         const sess = await getSecretKey('telegram_user_session');
@@ -5669,10 +5674,11 @@ http.createServer((req, res) => {
     const u = new URL(req.url, 'http://localhost');
     const authCode = u.searchParams.get('code');
     if (!authCode) { res.writeHead(400); res.end('no code'); return; }
+    if (!IG_APP_SECRET) { res.writeHead(500); res.end('IG_APP_SECRET sozlanmagan'); return; }
     
     const postData = new URLSearchParams({
-      client_id: '1689794002143625',
-      client_secret: 'eb2d0afff6b0845abf068abf8bb7e248',
+      client_id: IG_APP_ID,
+      client_secret: IG_APP_SECRET,
       grant_type: 'authorization_code',
       redirect_uri: 'https://yakubovibrohim.github.io/mbi-bot/callback.html',
       code: authCode
@@ -5692,7 +5698,7 @@ http.createServer((req, res) => {
             // Long-lived token olish
             const llReq = https.request({
               hostname: 'graph.instagram.com',
-              path: '/access_token?grant_type=ig_exchange_token&client_secret=eb2d0afff6b0845abf068abf8bb7e248&access_token=' + encodeURIComponent(shortToken),
+              path: '/access_token?grant_type=ig_exchange_token&client_secret=' + encodeURIComponent(IG_APP_SECRET) + '&access_token=' + encodeURIComponent(shortToken),
               method: 'GET'
             }, llRes => {
               let llData = '';
