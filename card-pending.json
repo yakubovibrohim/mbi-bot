@@ -1,20 +1,6 @@
 {
   "lastMsgId": 102412,
-  "pending": {
-    "mtseebmbd3h": {
-      "dir": "out",
-      "amtUzs": 592250,
-      "place": "IYB MOBILE EXCHANGE, UZ",
-      "rawBalance": 2590012,
-      "date": "05.09.2026",
-      "title": "Platezh",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1788855533651,
-      "remindedAt": 1788884374190,
-      "kind": "office"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -1005,6 +991,11 @@
       "date": "06.09.2026",
       "dir": "out",
       "amt": 110000
+    },
+    {
+      "date": "05.09.2026",
+      "dir": "out",
+      "amt": 592250
     }
   ],
   "lastBalances": {
