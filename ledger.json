@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-08T12:40:15.862Z",
+  "updated": "2026-09-08T12:41:10.359Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 86536168,
+  "balance_uzs": 86250168,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 141211090,
+    "chiqim": 141497090,
     "by_category": {
       "office": 19145683,
-      "personal": 52764039,
+      "personal": 53050039,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
       "deal_expense": 45841448,
@@ -2572,6 +2572,17 @@
       "name": "💳 Wifi",
       "pay": "karta",
       "src": "office"
+    },
+    {
+      "date": "02.09.2026",
+      "time": "17:41",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 286000,
+      "name": "💳 socials restoran",
+      "pay": "karta",
+      "src": "personal"
     },
     {
       "date": "04.09.2026",
