@@ -446,5 +446,15 @@
     "rate": 12000,
     "note": "IYB MOBILE EXCHANGE, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mtsivr8ubez",
+    "date": "02.09.2026",
+    "ts": "2026-09-08T10:24:25.518Z",
+    "name": "💳 Wifi",
+    "amount_uzs": 154800,
+    "rate": 12000,
+    "note": "UB SPISANIE NASIYA, UZ",
+    "pay_method": "card"
   }
 ]
