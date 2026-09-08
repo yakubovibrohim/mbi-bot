@@ -1337,5 +1337,15 @@
     "pay_method": "card",
     "place": "OOO FAYZ KOLBASA, TASHKENT, SUGDIYONA MFY OBIHAYOT KOCHASI",
     "ts": "2026-09-08T10:23:24.633Z"
+  },
+  {
+    "date": "01.09.2026",
+    "note": "💳 Paynet",
+    "amount_uzs": 101500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-09-08T10:24:38.948Z"
   }
 ]
