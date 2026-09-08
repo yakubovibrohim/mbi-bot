@@ -22,6 +22,17 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1788855489328
+    },
+    "mtsedgenxco": {
+      "dir": "out",
+      "amtUzs": 120000,
+      "place": "SAHAR KELAJAK MCHJ, Toshkent, KORATOSh MFY  KORATOSh MAVZESI",
+      "rawBalance": 709712,
+      "date": "01.09.2026",
+      "title": "Pokupka",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1788855493199
     }
   },
   "resolved": [
