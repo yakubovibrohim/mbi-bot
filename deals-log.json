@@ -417,6 +417,23 @@
         "rate": 12000,
         "note": "",
         "source": "manual"
+      },
+      {
+        "id": "mtsix8141dks",
+        "date": "08.09.2026",
+        "ts": "2026-09-08T10:25:33.929Z",
+        "products": [
+          {
+            "name": "Kraska",
+            "qty": 1,
+            "price_uzs": 1644000,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 1644000,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
       }
     ],
     "finished_date": null,
