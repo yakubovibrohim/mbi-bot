@@ -250,7 +250,8 @@
       "title": "Pokupka",
       "card4": "5893",
       "step": "type",
-      "askedAt": 1788855547325
+      "askedAt": 1788855547325,
+      "remindedAt": 1788862767741
     },
     "mtseeo3izdn": {
       "dir": "out",
