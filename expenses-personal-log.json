@@ -1407,5 +1407,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-09-08T14:24:00.180Z"
+  },
+  {
+    "date": "05.09.2026",
+    "note": "💳 Blmiman",
+    "amount_uzs": 150000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "MADAMINOVA RISOLAT OOO, Toshkent, ZARAFSHON OKDARYO BOTANOSH",
+    "ts": "2026-09-08T14:24:20.981Z"
   }
 ]
