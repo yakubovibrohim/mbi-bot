@@ -426,5 +426,15 @@
     "rate": 12000,
     "note": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
     "pay_method": "card"
+  },
+  {
+    "id": "mtsitsiq9qs",
+    "date": "07.09.2026",
+    "ts": "2026-09-08T10:22:53.858Z",
+    "name": "💳 Abet",
+    "amount_uzs": 163970,
+    "rate": 12000,
+    "note": "IP OOO YANDEX EATS, UZ",
+    "pay_method": "card"
   }
 ]
