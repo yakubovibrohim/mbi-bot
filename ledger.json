@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-08T10:22:40.133Z",
+  "updated": "2026-09-08T10:22:53.295Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 103692785,
+  "balance_uzs": 103687785,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 124054473,
+    "chiqim": 124059473,
     "by_category": {
       "office": 17957058,
-      "personal": 50952047,
+      "personal": 50957047,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
       "deal_expense": 31685448,
@@ -2570,6 +2570,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 440000,
       "name": "💳 Qzil pasport",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "08.09.2026",
+      "time": "15:22",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 5000,
+      "name": "💳 Paynet",
       "pay": "karta",
       "src": "personal"
     },
