@@ -1317,5 +1317,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-09-08T10:22:43.316Z"
+  },
+  {
+    "date": "06.09.2026",
+    "note": "💳 Uyga rozgor",
+    "amount_uzs": 1621892,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "FAYZ SUPER OPTOM MCHJ, TOSHKENT, ZANGIOTA MFY  SAMARKAND DARVOZA",
+    "ts": "2026-09-08T10:23:07.662Z"
   }
 ]
