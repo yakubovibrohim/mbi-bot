@@ -13,19 +13,6 @@
       "askedAt": 1788855533651,
       "remindedAt": 1788877174063
     },
-    "mtseedk05c9": {
-      "dir": "out",
-      "amtUzs": 150000,
-      "place": "MADAMINOVA RISOLAT OOO, Toshkent, ZARAFSHON OKDARYO BOTANOSH",
-      "rawBalance": 2440012,
-      "date": "05.09.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1788855536160,
-      "remindedAt": 1788877174063,
-      "kind": "personal"
-    },
     "mtseehzssi2": {
       "dir": "out",
       "amtUzs": 110000,
@@ -1019,6 +1006,11 @@
       "date": "05.09.2026",
       "dir": "in",
       "amt": 2925000
+    },
+    {
+      "date": "05.09.2026",
+      "dir": "out",
+      "amt": 150000
     }
   ],
   "lastBalances": {
