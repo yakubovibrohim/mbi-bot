@@ -436,5 +436,15 @@
     "rate": 12000,
     "note": "IP OOO YANDEX EATS, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mtsiv0k8iz0",
+    "date": "04.09.2026",
+    "ts": "2026-09-08T10:23:50.936Z",
+    "name": "💳 Vizaga",
+    "amount_uzs": 698855,
+    "rate": 12000,
+    "note": "IYB MOBILE EXCHANGE, UZ",
+    "pay_method": "card"
   }
 ]
