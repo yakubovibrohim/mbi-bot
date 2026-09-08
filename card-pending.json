@@ -38,19 +38,6 @@
       "askedAt": 1788855493199,
       "remindedAt": 1788869931196
     },
-    "mtsednyyg86": {
-      "dir": "out",
-      "amtUzs": 286000,
-      "place": "OOO SOTSIALS, TOSHKENT, TAAChI MFY  ATOIY KOChASI   uy",
-      "rawBalance": 167412,
-      "date": "02.09.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1788855503002,
-      "remindedAt": 1788869931196,
-      "kind": "personal"
-    },
     "mtsedq6ysze": {
       "dir": "out",
       "amtUzs": 5075,
@@ -1076,6 +1063,11 @@
       "date": "04.09.2026",
       "dir": "out",
       "amt": 5000
+    },
+    {
+      "date": "02.09.2026",
+      "dir": "out",
+      "amt": 286000
     }
   ],
   "lastBalances": {
