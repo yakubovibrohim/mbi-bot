@@ -1,6 +1,18 @@
 {
   "lastMsgId": 102455,
-  "pending": {},
+  "pending": {
+    "mtt43v52ne4": {
+      "dir": "out",
+      "amtUzs": 15000,
+      "place": "PAYME OPLATA, UZ",
+      "rawBalance": 550,
+      "date": "09.09.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1788898715750
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
