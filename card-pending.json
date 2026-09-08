@@ -158,19 +158,6 @@
       "askedAt": 1788855536160,
       "remindedAt": 1788862737655
     },
-    "mtseefbta0p": {
-      "dir": "out",
-      "amtUzs": 5000,
-      "place": "PLUM OPLATA, UZ",
-      "rawBalance": 2435012,
-      "date": "06.09.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1788855538457,
-      "remindedAt": 1788862767741,
-      "kind": "personal"
-    },
     "mtseehzssi2": {
       "dir": "out",
       "amtUzs": 110000,
@@ -1104,6 +1091,11 @@
       "date": "01.09.2026",
       "dir": "out",
       "amt": 101500
+    },
+    {
+      "date": "06.09.2026",
+      "dir": "out",
+      "amt": 5000
     }
   ],
   "lastBalances": {
