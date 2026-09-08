@@ -143,6 +143,17 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1788855523954
+    },
+    "mtsee6ezzd0": {
+      "dir": "out",
+      "amtUzs": 171000,
+      "place": "EVOS DELIVERY, UZ",
+      "rawBalance": 257262,
+      "date": "05.09.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1788855526907
     }
   },
   "resolved": [
