@@ -176,6 +176,17 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1788855533651
+    },
+    "mtseedk05c9": {
+      "dir": "out",
+      "amtUzs": 150000,
+      "place": "MADAMINOVA RISOLAT OOO, Toshkent, ZARAFSHON OKDARYO BOTANOSH",
+      "rawBalance": 2440012,
+      "date": "05.09.2026",
+      "title": "Pokupka",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1788855536160
     }
   },
   "resolved": [
