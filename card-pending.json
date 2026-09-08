@@ -228,19 +228,6 @@
       "step": "type",
       "askedAt": 1788855541912,
       "remindedAt": 1788862767741
-    },
-    "mtseek5nmmh": {
-      "dir": "out",
-      "amtUzs": 78600,
-      "place": "OOO FAYZ KOLBASA, TASHKENT, SUGDIYONA MFY OBIHAYOT KOCHASI",
-      "rawBalance": 2246412,
-      "date": "06.09.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1788855544715,
-      "remindedAt": 1788862767741,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -1138,6 +1125,11 @@
       "date": "06.09.2026",
       "dir": "out",
       "amt": 1621892
+    },
+    {
+      "date": "06.09.2026",
+      "dir": "out",
+      "amt": 78600
     }
   ],
   "lastBalances": {
