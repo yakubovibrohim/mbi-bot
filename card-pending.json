@@ -1,19 +1,6 @@
 {
   "lastMsgId": 102412,
   "pending": {
-    "mtseddf4u5j": {
-      "dir": "out",
-      "amtUzs": 20000,
-      "place": "HGT DOMO, UZ",
-      "rawBalance": 829712,
-      "date": "01.09.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1788855489328,
-      "remindedAt": 1788877144071,
-      "kind": "personal"
-    },
     "mtsedq6ysze": {
       "dir": "out",
       "amtUzs": 5075,
@@ -1054,6 +1041,11 @@
       "date": "01.09.2026",
       "dir": "out",
       "amt": 120000
+    },
+    {
+      "date": "01.09.2026",
+      "dir": "out",
+      "amt": 20000
     }
   ],
   "lastBalances": {
