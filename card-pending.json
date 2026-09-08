@@ -110,19 +110,6 @@
       "askedAt": 1788855523954,
       "remindedAt": 1788869961222
     },
-    "mtsee6ezzd0": {
-      "dir": "out",
-      "amtUzs": 171000,
-      "place": "EVOS DELIVERY, UZ",
-      "rawBalance": 257262,
-      "date": "05.09.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1788855526907,
-      "remindedAt": 1788869961222,
-      "kind": "office"
-    },
     "mtsee92qmcs": {
       "dir": "in",
       "amtUzs": 2925000,
@@ -1097,6 +1084,11 @@
       "date": "06.09.2026",
       "dir": "out",
       "amt": 5000
+    },
+    {
+      "date": "05.09.2026",
+      "dir": "out",
+      "amt": 171000
     }
   ],
   "lastBalances": {
