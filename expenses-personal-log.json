@@ -1387,5 +1387,15 @@
     "pay_method": "card",
     "place": "SAHAR KELAJAK MCHJ, Toshkent, KORATOSh MFY  KORATOSh MAVZESI",
     "ts": "2026-09-08T12:42:04.197Z"
+  },
+  {
+    "date": "01.09.2026",
+    "note": "💳 HGT DOMO, UZ",
+    "amount_uzs": 20000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "HGT DOMO, UZ",
+    "ts": "2026-09-08T14:23:31.611Z"
   }
 ]
