@@ -98,18 +98,6 @@
       "askedAt": 1788855521184,
       "remindedAt": 1788869961222
     },
-    "mtsee44ymb9": {
-      "dir": "in",
-      "amtUzs": 340000,
-      "place": "IYB P2P, UZ",
-      "rawBalance": 428262,
-      "date": "04.09.2026",
-      "title": "Perevod na kartu",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1788855523954,
-      "remindedAt": 1788869961222
-    },
     "mtsee92qmcs": {
       "dir": "in",
       "amtUzs": 2925000,
@@ -1089,6 +1077,11 @@
       "date": "05.09.2026",
       "dir": "out",
       "amt": 171000
+    },
+    {
+      "date": "04.09.2026",
+      "dir": "in",
+      "amt": 340000
     }
   ],
   "lastBalances": {
