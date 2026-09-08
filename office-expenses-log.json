@@ -466,5 +466,15 @@
     "rate": 12000,
     "note": "EVOS DELIVERY, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mtswry7vrno",
+    "date": "05.09.2026",
+    "ts": "2026-09-08T16:53:22.555Z",
+    "name": "💳 Viza",
+    "amount_uzs": 592250,
+    "rate": 12000,
+    "note": "IYB MOBILE EXCHANGE, UZ",
+    "pay_method": "card"
   }
 ]
