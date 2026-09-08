@@ -456,5 +456,15 @@
     "rate": 12000,
     "note": "UB SPISANIE NASIYA, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mtsnq85wrt3",
+    "date": "05.09.2026",
+    "ts": "2026-09-08T12:40:05.588Z",
+    "name": "💳 abet",
+    "amount_uzs": 171000,
+    "rate": 12000,
+    "note": "EVOS DELIVERY, UZ",
+    "pay_method": "card"
   }
 ]
