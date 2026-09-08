@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-08T10:23:04.914Z",
+  "updated": "2026-09-08T10:23:17.634Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 103523815,
+  "balance_uzs": 101901923,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 124223443,
+    "chiqim": 125845335,
     "by_category": {
       "office": 18121028,
-      "personal": 50957047,
+      "personal": 52578939,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
       "deal_expense": 31685448,
@@ -2548,6 +2548,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 29000,
       "name": "💳 Itv",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "06.09.2026",
+      "time": "15:23",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 1621892,
+      "name": "💳 Uyga rozgor",
       "pay": "karta",
       "src": "personal"
     },
