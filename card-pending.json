@@ -242,6 +242,17 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1788855549822
+    },
+    "mtseeq9yzg3": {
+      "dir": "out",
+      "amtUzs": 5000,
+      "place": "PAYME OPLATA, UZ",
+      "rawBalance": 455550,
+      "date": "08.09.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1788855552646
     }
   },
   "resolved": [
