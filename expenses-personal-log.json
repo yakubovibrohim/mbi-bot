@@ -1367,5 +1367,15 @@
     "pay_method": "card",
     "place": "OOO SOTSIALS, TOSHKENT, TAAChI MFY  ATOIY KOChASI   uy",
     "ts": "2026-09-08T12:41:00.372Z"
+  },
+  {
+    "date": "31.08.2026",
+    "note": "💳 blmiman",
+    "amount_uzs": 50550,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-09-08T12:41:40.480Z"
   }
 ]
