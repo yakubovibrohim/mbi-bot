@@ -1,16 +1,16 @@
 {
-  "updated": "2026-09-08T10:24:00.911Z",
+  "updated": "2026-09-08T10:24:35.851Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 101124468,
+  "balance_uzs": 100969668,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 126622790,
+    "chiqim": 126777590,
     "by_category": {
-      "office": 18819883,
+      "office": 18974683,
       "personal": 52657539,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
@@ -2550,6 +2550,17 @@
       "name": "💳 Itv",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "02.09.2026",
+      "time": "15:24",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 154800,
+      "name": "💳 Wifi",
+      "pay": "karta",
+      "src": "office"
     },
     {
       "date": "04.09.2026",
