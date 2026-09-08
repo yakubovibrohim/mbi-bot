@@ -13,9 +13,17 @@
     "dir": "out",
     "name": "Rustam aka mebel usta",
     "amount_uzs": 10800000,
-    "paid_uzs": 0,
+    "paid_uzs": 2400000,
     "date": "17.06.2026",
-    "note": "obshiy hamasi bo’lib"
+    "note": "obshiy hamasi bo’lib",
+    "payments": [
+      {
+        "date": "08.09.2026",
+        "ts": "2026-09-08T10:09:32.650Z",
+        "amount_uzs": 2400000
+      }
+    ],
+    "pay_date": "08.09.2026"
   },
   {
     "id": "mqi2726u7odo",
