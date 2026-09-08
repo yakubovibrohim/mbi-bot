@@ -37,19 +37,6 @@
       "askedAt": 1788855493199,
       "remindedAt": 1788862707843
     },
-    "mtsedil0nok": {
-      "dir": "out",
-      "amtUzs": 101500,
-      "place": "PAYME OPLATA, UZ",
-      "rawBalance": 608212,
-      "date": "01.09.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1788855496020,
-      "remindedAt": 1788862707843,
-      "kind": "personal"
-    },
     "mtsednyyg86": {
       "dir": "out",
       "amtUzs": 286000,
@@ -1110,6 +1097,11 @@
       "date": "02.09.2026",
       "dir": "out",
       "amt": 154800
+    },
+    {
+      "date": "01.09.2026",
+      "dir": "out",
+      "amt": 101500
     }
   ],
   "lastBalances": {
