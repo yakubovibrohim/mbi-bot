@@ -434,6 +434,23 @@
         "rate": 12000,
         "note": "",
         "source": "manual"
+      },
+      {
+        "id": "mtsiyrsk5pcx",
+        "date": "08.09.2026",
+        "ts": "2026-09-08T10:26:46.197Z",
+        "products": [
+          {
+            "name": "Gruntovka",
+            "qty": 1,
+            "price_uzs": 1812000,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 1812000,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
       }
     ],
     "finished_date": null,
