@@ -1357,5 +1357,15 @@
     "pay_method": "card",
     "place": "PLUM OPLATA, UZ",
     "ts": "2026-09-08T11:19:31.398Z"
+  },
+  {
+    "date": "02.09.2026",
+    "note": "💳 socials restoran",
+    "amount_uzs": 286000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO SOTSIALS, TOSHKENT, TAAChI MFY  ATOIY KOChASI   uy",
+    "ts": "2026-09-08T12:41:00.372Z"
   }
 ]
