@@ -165,6 +165,16 @@
     "role": "assistant",
     "content": "Rahmat izohingiz uchun 🙌 Bu neoklassika oshxona bo'yicha aniq ma'lumotни Ibrohim aka beради.\n\nЎзингиз учун ошхона режалаштиряпсизми? Нима керак — ошхона, шкаф?"
    }
+  ],
+  "1545049940342191": [
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"Qaysi biri yaxshi Ozinikimi Yoki OzLider mi Fikringizni kamentga yozib ketin #diska #tuning #saka #rek\"]\nDiskaga baho ber"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu Aleykum 👍🏻 Bu video mebel bilan bog'liq emasga o'xshaydi, disklar/tюning haqida.\n\nBiz MBI Mebel — 2014-yildan buyurtma oshxona, shkaf, yotoqxona ясаймiz. Agar shu bo'yicha savolingiz bo'lsa, bemalol yozing 😊"
+   }
   ]
  },
  "activity": {
@@ -194,6 +204,10 @@
   },
   "1536822627857850": {
    "lastClientAt": 1788961697894,
+   "followedUp": false
+  },
+  "1545049940342191": {
+   "lastClientAt": 1788977411309,
    "followedUp": false
   }
  }
