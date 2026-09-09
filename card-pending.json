@@ -9,8 +9,9 @@
       "date": "09.09.2026",
       "title": "Platezh",
       "card4": "5893",
-      "step": "type",
-      "askedAt": 1788970309958
+      "step": "note",
+      "askedAt": 1788970309958,
+      "kind": "personal"
     },
     "mtubcvk7lkw": {
       "dir": "out",
