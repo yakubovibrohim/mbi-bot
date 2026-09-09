@@ -1427,5 +1427,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-09-08T14:24:32.052Z"
+  },
+  {
+    "date": "09.09.2026",
+    "note": "💳 Kino",
+    "amount_uzs": 15000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-09-09T05:03:38.601Z"
   }
 ]
