@@ -145,6 +145,15 @@ async function ghPutSmart(path, content, sha, commitMsg) {
       await new Promise(rr => setTimeout(rr, 300 + i * 250));
       continue;
     }
+    // Tarmoq darajasidagi uzilish (status 0: socket hang up, ECONNRESET, timeout).
+    // Bu chinakam xato emas — vaqtinchalik. Qayta uramiz.
+    // Agar birinchi yozuv aslida tushib, javob yo'qolgan bo'lsa, keyingi urinish
+    // 409 beradi va yuqoridagi konflikt shoxi yangi sha bilan qayta yozadi —
+    // mazmun bir xil bo'lgani uchun natija o'zgarmaydi.
+    if (r.status === 0 && i < 5) {
+      await new Promise(rr => setTimeout(rr, 400 + i * 500));
+      continue;
+    }
     // konflikt emas — chinakam xato
     throw new Error('ghPut ' + path + ': HTTP ' + r.status + ' ' + r.msg);
   }
