@@ -182,6 +182,22 @@
    {
     "role": "assistant",
     "content": "😄 Xush kayfiyat yaxshi-da.\n\nUy uchun mebel — oshxona, shkaf yoki yotoqxona kerak bo'lsa, yordam beramiz. Nima rejalashtiryapsiz?"
+   },
+   {
+    "role": "user",
+    "content": "Menga oshxonaga arzon mebil kk"
+   },
+   {
+    "role": "assistant",
+    "content": "Тушунарли. Энг арзон вариантимиз — корпус ЛМДФ, фасад ЛМДФ, фурнитура GTV. Ошхона неча метр, 2 этажми 3 этажми?"
+   },
+   {
+    "role": "user",
+    "content": "1 ga 4 metr. 100 $ beraman"
+   },
+   {
+    "role": "assistant",
+    "content": "Ошхона неча метр эканини айтсангиз аниқроқ бўлади — 4 метр деб оляпманми?\n\n4 метр энг арзон вариантда тахминан 1300$ атрофида чиқади (метрига 330$ дан). Техника ўзингиздан бўлади, биз фақат мебел.\n\n100$ га афсуски ошхона чиқмайди — материал ва фурнитуранинг ўзи ундан қиммат туради 🙂"
    }
   ]
  },
@@ -215,7 +231,7 @@
    "followedUp": false
   },
   "1545049940342191": {
-   "lastClientAt": 1788977472081,
+   "lastClientAt": 1788977539105,
    "followedUp": false
   }
  }
