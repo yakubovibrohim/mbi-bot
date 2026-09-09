@@ -1,6 +1,18 @@
 {
   "lastMsgId": 102523,
-  "pending": {},
+  "pending": {
+    "mtuaqdl2qw0": {
+      "dir": "out",
+      "amtUzs": 150000,
+      "place": "PAYME OPLATA MUNIS, UZ",
+      "rawBalance": 2200550,
+      "date": "09.09.2026",
+      "title": "Platezh",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1788970309958
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
