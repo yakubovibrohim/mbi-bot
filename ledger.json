@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-08T16:53:32.940Z",
+  "updated": "2026-09-09T05:03:48.593Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 85157368,
+  "balance_uzs": 85142368,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 142589890,
+    "chiqim": 142604890,
     "by_category": {
       "office": 19737933,
-      "personal": 53550589,
+      "personal": 53565589,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
       "deal_expense": 45841448,
@@ -2803,6 +2803,17 @@
       "name": "Rustam aka mebel usta",
       "pay": "naqd",
       "src": "debts"
+    },
+    {
+      "date": "09.09.2026",
+      "time": "10:03",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 15000,
+      "name": "💳 Kino",
+      "pay": "karta",
+      "src": "personal"
     }
   ]
 }
