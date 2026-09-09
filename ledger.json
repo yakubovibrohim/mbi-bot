@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-09T16:29:41.342Z",
+  "updated": "2026-09-09T16:29:57.559Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 84992368,
+  "balance_uzs": 84777368,
   "totals_after_opening": {
     "kirim": 52580000,
-    "chiqim": 142754890,
+    "chiqim": 142969890,
     "by_category": {
       "office": 19737933,
-      "personal": 53715589,
+      "personal": 53930589,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
       "deal_expense": 45841448,
@@ -2823,6 +2823,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 150000,
       "name": "💳 Зарядка",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "09.09.2026",
+      "time": "21:29",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 215000,
+      "name": "💳 Интернет уй",
       "pay": "karta",
       "src": "personal"
     }
