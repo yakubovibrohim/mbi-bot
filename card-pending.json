@@ -1,6 +1,18 @@
 {
   "lastMsgId": 102527,
-  "pending": {},
+  "pending": {
+    "mtug2n55bov": {
+      "dir": "in",
+      "amtUzs": 1200000,
+      "place": "TBC EDIN EPOS H2U, UZ",
+      "rawBalance": 3185550,
+      "date": "09.09.2026",
+      "title": "Perevod na kartu",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1788979280297
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
