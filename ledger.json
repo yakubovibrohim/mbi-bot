@@ -1,16 +1,16 @@
 {
-  "updated": "2026-09-10T16:05:35.050Z",
+  "updated": "2026-09-10T16:07:50.484Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 84722368,
+  "balance_uzs": 84130118,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 144224890,
+    "chiqim": 144817140,
     "by_category": {
-      "office": 19737933,
+      "office": 20330183,
       "personal": 55185589,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
@@ -2847,6 +2847,17 @@
       "name": "💳 TBC EDIN EPOS H2U, UZ",
       "pay": "karta",
       "src": "card"
+    },
+    {
+      "date": "10.09.2026",
+      "time": "21:07",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 592250,
+      "name": "💳 Target",
+      "pay": "karta",
+      "src": "office"
     },
     {
       "date": "10.09.2026",
