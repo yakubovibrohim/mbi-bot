@@ -3,6 +3,7 @@ const http = require('http');
 const crypto = require('crypto');
 const FormData = require('form-data');
 let cardMon = null; try { cardMon = require('./card-monitor'); } catch (e) { console.error('card-monitor yuklanmadi:', e.message); }
+let adsWatch = null; try { adsWatch = require('./ads-watch'); } catch (e) { console.error('ads-watch yuklanmadi:', e.message); }
 
 let BOT = process.env.BOT_TOKEN || '';  // secrets'dan yuklanadi
 const ADMIN    = '1487569442';
@@ -3580,6 +3581,7 @@ async function sendDailyBriefing(chatId) {
 let lastMorningBriefing = '';
 let lastEveningReminder = '';
 let lastDailySummary = '';
+let lastAdsSundayReport = '';
 async function checkReminders() {
   try {
     const now = nowTZ();
@@ -3690,8 +3692,15 @@ async function checkReminders() {
           if (rec.out_reason) txt += `   └ ${rec.out_reason}\n`;
         }
         txt += `\n📊 Jami ishlangan: *${totalH.toFixed(1)} soat*`;
+        txt += '\n\n' + await adsSectionSafe();
         await msg(ADMIN, txt);
       } catch (e) { console.error('daily summary:', e.message); }
+    }
+
+    // Yakshanba: davomat xulosasi yo'q, lekin reklama yakshanba ham ishlaydi — holati baribir yuboriladi
+    if (hhmm === '18:30' && now.getDay() === 0 && lastAdsSundayReport !== today) {
+      lastAdsSundayReport = today;
+      try { await msg(ADMIN, `🌆 *Kunlik xulosa — ${today}*\n\n` + await adsSectionSafe()); } catch (e) { console.error('ads sunday:', e.message); }
     }
 
     // Meeting reminders
@@ -3730,6 +3739,13 @@ async function windsorAds(preset) {
   if (!WINDSOR_KEY) return [];
   const j = await httpsGetJson(`https://connectors.windsor.ai/facebook?api_key=${WINDSOR_KEY}&date_preset=${preset || 'last_7d'}&fields=date,campaign,spend,clicks,actions_onsite_conversion_messaging_conversation_started_7d`);
   return (j && j.data) || [];
+}
+
+// 18:30 kunlik xulosa uchun reklama holati bo'limi (ads-watch.js). Hech qachon throw qilmaydi.
+async function adsSectionSafe() {
+  if (!adsWatch) return "📣 *Reklama:* ⚠️ tekshirib bo'lmadi — ads-watch moduli yuklanmadi.";
+  try { return await adsWatch.adsDailySection({ windsorKey: WINDSOR_KEY, getJson: httpsGetJson }); }
+  catch (e) { return "📣 *Reklama:* ⚠️ tekshirishda xato."; }
 }
 
 // ─── Oxirgi o'zgarishlar (GitHub commitlar) ───
