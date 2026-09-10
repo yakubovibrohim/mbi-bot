@@ -1467,5 +1467,15 @@
     "pay_method": "card",
     "place": "OOO KOURI, TOSHKENT, DOSTOBOD MFY KORASUV BOYI KOChA",
     "ts": "2026-09-10T11:05:02.076Z"
+  },
+  {
+    "date": "10.09.2026",
+    "note": "💳 Svet",
+    "amount_uzs": 1000000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "HGT PAYNET, UZ",
+    "ts": "2026-09-10T11:15:52.345Z"
   }
 ]
