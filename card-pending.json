@@ -1,6 +1,18 @@
 {
   "lastMsgId": 102572,
-  "pending": {},
+  "pending": {
+    "mtvfgfvt8mg": {
+      "dir": "out",
+      "amtUzs": 1000000,
+      "place": "HGT PAYNET, UZ",
+      "rawBalance": 1930550,
+      "date": "10.09.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1789038710633
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
