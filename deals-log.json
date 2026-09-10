@@ -256,7 +256,7 @@
     "deadline_date": "12.08.2026",
     "note": "",
     "stage": "Yangi buyurtma",
-    "status": "active",
+    "status": "done",
     "payments": [
       {
         "id": "mqv2a7hxp3wx",
@@ -470,8 +470,9 @@
         "source": "manual"
       }
     ],
-    "finished_date": null,
+    "finished_date": "10.09.2026",
     "cancelled_date": null,
-    "cancel_reason": ""
+    "cancel_reason": "",
+    "finished_workdays": 65
   }
 ]
