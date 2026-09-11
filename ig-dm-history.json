@@ -205,6 +205,20 @@
     "role": "assistant",
     "content": "Ассалому Алейкум, раҳмат 🙌 Бу премиум крашенный ошхона — фасадлари 4 босқичли бўялган, фурнитура Blum, столешница сунъий акрил тош.\n\nШахсийга ёзинг, барча маълумот берамиз. Ўзингизга ошхона режалаштиряпсизми?"
    }
+  ],
+  "1014561978303798": [
+   {
+    "role": "user",
+    "content": "[Mijoz ovozli xabar yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu Aleykum, yaxshimisiz 👍🏻 Ovozli xabaringizni eshitolmadim, shu yerga yozib qoldirsangiz — nima kerak edi, oshxonami, shkafmi?"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz ovozli xabar yubordi]"
+   }
   ]
  },
  "activity": {
@@ -250,6 +264,10 @@
   },
   "2881784172186364": {
    "lastClientAt": 1789134040373,
+   "followedUp": false
+  },
+  "1014561978303798": {
+   "lastClientAt": 1789136566469,
    "followedUp": false
   }
  }
