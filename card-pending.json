@@ -1,19 +1,6 @@
 {
   "lastMsgId": 102596,
-  "pending": {
-    "mtwhecd5iq6": {
-      "dir": "out",
-      "amtUzs": 462000,
-      "place": "BARAKATULLO INVEST, Toshkent, Shaykhantaurskiy  mas Beltepa",
-      "rawBalance": 876300,
-      "date": "11.09.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1789102438169,
-      "kind": "personal"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -1049,6 +1036,11 @@
       "date": "10.09.2026",
       "dir": "out",
       "amt": 592250
+    },
+    {
+      "date": "11.09.2026",
+      "dir": "out",
+      "amt": 462000
     }
   ],
   "lastBalances": {
