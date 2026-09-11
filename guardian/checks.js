@@ -291,6 +291,19 @@ async function checkSystem() {
 }
 
 // ── UptimeRobot (tashqi kuzatuv) ──
+// v2 API dagi alert contact `status` yangi dashboard'dagi yoqish tugmachalarini aks ettirmaydi:
+// 11.09.2026 da E-mail va Push dashboard'da YOQILGAN bo'lsa ham API ikkalasiga status=1 qaytardi.
+// Shuning uchun 1 "pauza" deb hisoblanmaydi (aks holda har kuni yolg'on ogohlantirish chiqardi).
+// Faqat kontakt umuman yo'q yoki hammasi faollashtirilmagan (0) bo'lsa ogohlantiriladi.
+function uptimeContactsItem(contacts) {
+  const nc = 'UptimeRobot ogohlantirishlari';
+  const list = Array.isArray(contacts) ? contacts : [];
+  if (!list.length) return item('ur:contacts', nc, WARN, "birorta ogohlantirish kontakti yo'q — server o'chsa sizga xabar kelmaydi");
+  const usable = list.filter((c) => String(c.status) !== '0');
+  if (!usable.length) return item('ur:contacts', nc, WARN, "kontaktlar faollashtirilmagan (tasdiqlanmagan) — server o'chsa sizga xabar kelmaydi");
+  const kinds = [...new Set(usable.map((c) => (Number(c.type) === 2 ? 'email' : Number(c.type) === 12 ? 'push' : 'turi ' + c.type)))];
+  return item('ur:contacts', nc, OK, `${usable.length} ta kontakt (${kinds.join(', ')})`);
+}
 async function checkUptimeRobot(ctx) {
   const key = ctx.keys.uptimerobot_api_key;
   const nm = 'UptimeRobot monitorlari', nc = 'UptimeRobot ogohlantirishlari';
@@ -317,12 +330,7 @@ async function checkUptimeRobot(ctx) {
   }
   const ac = await post('getAlertContacts');
   if (!good(ac)) out.push(item('ur:contacts', nc, WARN, "o'qib bo'lmadi (" + why(ac) + ')'));
-  else {
-    const active = (ac.json.alert_contacts || []).filter((c) => String(c.status) === '2').length;
-    out.push(active
-      ? item('ur:contacts', nc, OK, `${active} ta kontakt faol`)
-      : item('ur:contacts', nc, WARN, "hamma kontaktlar pauzada — server o'chsa sizga xabar kelmaydi"));
-  }
+  else out.push(uptimeContactsItem(ac.json.alert_contacts));
   return out;
 }
 
@@ -342,5 +350,5 @@ module.exports = {
   http, why,
   checkProcesses, checkLocal, checkPublic, checkTelegram, checkGitHub, checkInstagram,
   checkAI, checkWindsor, checkLogs, checkSystem, checkUptimeRobot, checkMeta,
-  _internal: { lineTime, within, keyStatus, dmy },
+  _internal: { lineTime, within, keyStatus, dmy, uptimeContactsItem },
 };
