@@ -11,6 +11,17 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1789139361391
+    },
+    "mtx3i8oec4z": {
+      "dir": "out",
+      "amtUzs": 12490,
+      "place": "IVI UZBEKISTAN, UZ",
+      "rawBalance": 846623,
+      "date": "11.09.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1789139571566
     }
   },
   "resolved": [
