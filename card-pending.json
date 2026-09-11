@@ -9,8 +9,9 @@
       "date": "11.09.2026",
       "title": "Spisanie c karty",
       "card4": "5893",
-      "step": "type",
-      "askedAt": 1789139361391
+      "step": "note",
+      "askedAt": 1789139361391,
+      "kind": "personal"
     },
     "mtx3i8oec4z": {
       "dir": "out",
