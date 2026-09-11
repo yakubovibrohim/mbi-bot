@@ -218,6 +218,10 @@
    {
     "role": "user",
     "content": "[Mijoz ovozli xabar yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Kechirasiz, ovozli xabar bu yerda ochilmayapti. Iltimos, kerakli narsani matn qilib yozing — oshxona, shkaf yoki yotoqxonami, o'lchami bormi?"
    }
   ]
  },
@@ -267,7 +271,7 @@
    "followedUp": false
   },
   "1014561978303798": {
-   "lastClientAt": 1789136566469,
+   "lastClientAt": 1789136598782,
    "followedUp": false
   }
  }
