@@ -172,6 +172,14 @@
    {
     "role": "assistant",
     "content": "Kechirasiz, ovozli xabar bu yerda ochilmayapti. Iltimos, kerakli narsani matn qilib yozing — oshxona, shkaf yoki yotoqxonami, o'lchami bormi?"
+   },
+   {
+    "role": "user",
+    "content": "Assalomu alekum yaxshi m isiz"
+   },
+   {
+    "role": "assistant",
+    "content": "Va Aleykum Assalom, yaxshi, rahmat 👍🏻 O'zingiz yaxshimisiz? Nima kerak edi — oshxona, shkaf yoki yotoqxonami?"
    }
   ],
   "1744141400124648": [
@@ -245,7 +253,7 @@
    "followedUp": false
   },
   "1014561978303798": {
-   "lastClientAt": 1789136598782,
+   "lastClientAt": 1789138449890,
    "followedUp": false
   },
   "1744141400124648": {
