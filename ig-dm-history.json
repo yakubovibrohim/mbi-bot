@@ -1,55 +1,5 @@
 {
  "histories": {
-  "1545049940342191": [
-   {
-    "role": "user",
-    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"Qaysi biri yaxshi Ozinikimi Yoki OzLider mi Fikringizni kamentga yozib ketin #diska #tuning #saka #rek\"]\nDiskaga baho ber"
-   },
-   {
-    "role": "assistant",
-    "content": "Assalomu Aleykum 👍🏻 Bu video mebel bilan bog'liq emasga o'xshaydi, disklar/tюning haqida.\n\nBiz MBI Mebel — 2014-yildan buyurtma oshxona, shkaf, yotoqxona ясаймiz. Agar shu bo'yicha savolingiz bo'lsa, bemalol yozing 😊"
-   },
-   {
-    "role": "user",
-    "content": "Qiseeee\nVahahaha"
-   },
-   {
-    "role": "assistant",
-    "content": "😄 Xush kayfiyat yaxshi-da.\n\nUy uchun mebel — oshxona, shkaf yoki yotoqxona kerak bo'lsa, yordam beramiz. Nima rejalashtiryapsiz?"
-   },
-   {
-    "role": "user",
-    "content": "Menga oshxonaga arzon mebil kk"
-   },
-   {
-    "role": "assistant",
-    "content": "Тушунарли. Энг арзон вариантимиз — корпус ЛМДФ, фасад ЛМДФ, фурнитура GTV. Ошхона неча метр, 2 этажми 3 этажми?"
-   },
-   {
-    "role": "user",
-    "content": "1 ga 4 metr. 100 $ beraman"
-   },
-   {
-    "role": "assistant",
-    "content": "Ошхона неча метр эканини айтсангиз аниқроқ бўлади — 4 метр деб оляпманми?\n\n4 метр энг арзон вариантда тахминан 1300$ атрофида чиқади (метрига 330$ дан). Техника ўзингиздан бўлади, биз фақат мебел.\n\n100$ га афсуски ошхона чиқмайди — материал ва фурнитуранинг ўзи ундан қиммат туради 🙂"
-   },
-   {
-    "role": "user",
-    "content": "3 etaj"
-   },
-   {
-    "role": "assistant",
-    "content": "3 этаж бўлса, 4 метр энг арзон вариантда (ЛМДФ, GTV) тахминан 1500$ атрофида чиқади.\n\nХоҳласангиз хонангиз учун Bazis дастурида бепул аниқ лойиҳа чизиб берамиз — ўз ошхонангизни олдиндан кўрасиз. Телефон рақамингизни қолдирсангиз, Иброхим ака ўзи аниқ ҳисоблаб қўнғироқ қилади 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Farqi yoq 100$ beraman boladimi\nVahahahah\nIbo"
-   },
-   {
-    "role": "assistant",
-    "content": "😄 Иброхим аканинг ҳазилини тушундим.\n\nЖиддий гаплашсак — арзон вариантни ҳам сифатли қиламиз, лекин 100$ га фақат битта тортма чиқади холос 🙂\n\nРостдан ошхона режалаштиряпсизми? Ундай бўлса рақамингизни ёзиб қолдиринг, аниқ ҳисоблаб берамиз."
-   }
-  ],
   "1336388148315646": [
    {
     "role": "user",
@@ -254,10 +204,6 @@
   ]
  },
  "activity": {
-  "1545049940342191": {
-   "lastClientAt": 1788977634552,
-   "followedUp": true
-  },
   "1336388148315646": {
    "lastClientAt": 1789052767207,
    "followedUp": true
