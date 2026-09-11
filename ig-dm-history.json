@@ -241,6 +241,16 @@
     "role": "assistant",
     "content": "Спасибо 🙌 Эта кухня — премиум крашеный фасад, краска Genc, фурнитура Blum с гарантией 20 лет, столешница из искусственного акрилового камня без стыков.\n\nЧто планируете для себя — кухню?"
    }
+  ],
+  "909667618580297": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Канчадан мкв\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 🙌 Шахсийга (DM) ёзинг, барча маълумот берамиз"
+   }
   ]
  },
  "activity": {
@@ -294,6 +304,10 @@
   },
   "1778583256675959": {
    "lastClientAt": 1789137261017,
+   "followedUp": false
+  },
+  "909667618580297": {
+   "lastClientAt": 1789144924668,
    "followedUp": false
   }
  }
