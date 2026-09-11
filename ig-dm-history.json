@@ -223,6 +223,16 @@
     "role": "assistant",
     "content": "Kechirasiz, ovozli xabar bu yerda ochilmayapti. Iltimos, kerakli narsani matn qilib yozing — oshxona, shkaf yoki yotoqxonami, o'lchami bormi?"
    }
+  ],
+  "1744141400124648": [
+   {
+    "role": "user",
+    "content": "Сколько стоит дизайн интерьера?\nЗдравствуйте ассалому алейкум"
+   },
+   {
+    "role": "assistant",
+    "content": "Ва Алейкум Ассалом, здравствуйте! 👍🏻 Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%.\n\nА что планируете — кухню или шкаф?"
+   }
   ]
  },
  "activity": {
@@ -272,6 +282,10 @@
   },
   "1014561978303798": {
    "lastClientAt": 1789136598782,
+   "followedUp": false
+  },
+  "1744141400124648": {
+   "lastClientAt": 1789137155655,
    "followedUp": false
   }
  }
