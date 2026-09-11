@@ -132,15 +132,20 @@ async function checkTelegram(ctx) {
   const expected = ctx.env.WEBHOOK_BASE + '/webhook';
   const res = await http('https://api.telegram.org/bot' + ctx.keys.bot_token + '/getWebhookInfo', { timeoutMs: 15000 });
   const i = res.json && res.json.ok && res.json.result;
-  if (!i) out.push(item('tg:webhook', wn, WARN, "holatini o'qib bo'lmadi (" + why(res) + ')'));
-  else if (i.url !== expected) out.push(item('tg:webhook', wn, CRIT, `manzil noto'g'ri: "${i.url || "bo'sh"}" — bot xabarlarni olmaydi`));
-  else {
-    const errMin = i.last_error_date ? Math.round((ctx.now / 1000 - i.last_error_date) / 60) : null;
-    if (errMin != null && errMin <= 60) out.push(item('tg:webhook', wn, WARN, `${errMin} daqiqa oldin xato: ${String(i.last_error_message || '').slice(0, 80)}`));
-    else if (i.pending_update_count > 100) out.push(item('tg:webhook', wn, WARN, `${i.pending_update_count} ta xabar navbatda — bot qayta ishlay olmayapti`));
-    else out.push(item('tg:webhook', wn, OK, `joyida, navbatda ${i.pending_update_count}`));
-  }
+  out.push(i ? webhookItem(i, expected, ctx.now) : item('tg:webhook', wn, WARN, "holatini o'qib bo'lmadi (" + why(res) + ')'));
   return out;
+}
+// Manzil noto'g'ri (bo'sh yoki boshqa joy) bo'lsa meta.fixable — guardian (remedy.js) uni o'zi qayta o'rnatadi.
+// Yetkazishdagi xato va navbat — faqat ogohlantirish (webhook'ni qayta o'rnatish ularni tuzatmaydi).
+function webhookItem(i, expected, now) {
+  const wn = 'Telegram webhook (@mbi_mebel_bot)';
+  if (i.url !== expected) {
+    return item('tg:webhook', wn, CRIT, `manzil noto'g'ri: "${i.url || "bo'sh"}" — bot xabarlarni olmaydi`, { fixable: 'webhook', expected, current: i.url || '' });
+  }
+  const errMin = i.last_error_date ? Math.round((now / 1000 - i.last_error_date) / 60) : null;
+  if (errMin != null && errMin <= 60) return item('tg:webhook', wn, WARN, `${errMin} daqiqa oldin xato: ${String(i.last_error_message || '').slice(0, 80)}`);
+  if (i.pending_update_count > 100) return item('tg:webhook', wn, WARN, `${i.pending_update_count} ta xabar navbatda — bot qayta ishlay olmayapti`);
+  return item('tg:webhook', wn, OK, `joyida, navbatda ${i.pending_update_count || 0}`);
 }
 
 // ── GitHub tokeni va mbi-secrets/keys.json ──
@@ -346,9 +351,38 @@ async function checkMeta(ctx) {
   return out;
 }
 
+// ── Caddy (HTTPS server) — systemd unit'da Restart=no, o'lsa o'zi ko'tarilmaydi ──
+function caddyItem(state) {
+  const n = 'Caddy (HTTPS server)';
+  if (state === 'active') return item('sys:caddy', n, OK, 'faol');
+  if (state == null) return item('sys:caddy', n, WARN, "holatini o'qib bo'lmadi");
+  return item('sys:caddy', n, CRIT, `faol emas (${state}) — tashqi HTTPS, Telegram va Instagram xabarlari ishlamaydi`);
+}
+async function checkCaddy() {
+  const bin = ['/usr/bin/systemctl', '/bin/systemctl'].find((p) => fs.existsSync(p));
+  if (!bin) return [caddyItem(null)];
+  const state = await new Promise((resolve) => {
+    execFile(bin, ['is-active', 'caddy'], { timeout: 15000 }, (err, stdout) => resolve(String(stdout || '').trim() || null));
+  });
+  return [caddyItem(state)];
+}
+
+// ── Avtomatik tuzatish yoqilganmi (autofix.off fayli — texnik ish paytida) ──
+function autofixItem(offSinceMs, now) {
+  const n = 'Avtomatik tuzatish';
+  if (offSinceMs == null) return item('autofix', n, OK, "yoqilgan (to'xtagan bot, Caddy, webhook)");
+  const h = Math.max(0, Math.floor((now - offSinceMs) / 3600000));
+  return item('autofix', n, WARN, `o'chirilgan (${h} soatdan beri, autofix.off fayli) — guardian hech narsani o'zi tuzatmaydi`);
+}
+async function checkAutofix(ctx) {
+  let since = null;
+  try { since = fs.statSync(ctx.cfg.autofixOffFile).mtimeMs; } catch (e) {}
+  return [autofixItem(since, ctx.now)];
+}
+
 module.exports = {
   http, why,
-  checkProcesses, checkLocal, checkPublic, checkTelegram, checkGitHub, checkInstagram,
-  checkAI, checkWindsor, checkLogs, checkSystem, checkUptimeRobot, checkMeta,
-  _internal: { lineTime, within, keyStatus, dmy, uptimeContactsItem },
+  checkProcesses, checkLocal, checkPublic, checkCaddy, checkTelegram, checkGitHub, checkInstagram,
+  checkAI, checkWindsor, checkLogs, checkSystem, checkUptimeRobot, checkMeta, checkAutofix,
+  _internal: { lineTime, within, keyStatus, dmy, uptimeContactsItem, webhookItem, caddyItem, autofixItem },
 };

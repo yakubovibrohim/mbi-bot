@@ -62,5 +62,32 @@ function t(name, cond, detail) {
   t('dmy: kun.oy.yil formati', dmy(Date.parse('2026-12-06T13:14:17Z')) === '06.12.2026');
 }
 
+// ── Webhook, Caddy va avtomatik tuzatish holati ──
+{
+  const { webhookItem, caddyItem, autofixItem } = require('../checks')._internal;
+  const EXP = 'https://65.21.147.238.nip.io/webhook';
+  const now = Date.parse('2026-09-11T12:00:00Z');
+  let r = webhookItem({ url: '', pending_update_count: 0 }, EXP, now);
+  t("webhook bo'sh -> crit, avto-tuzatish belgisi bilan", r.level === 'crit' && r.msg.includes("bo'sh") && r.meta.fixable === 'webhook' && r.meta.expected === EXP && r.meta.current === '', JSON.stringify(r));
+  r = webhookItem({ url: 'https://mbi-bot-yw9q.onrender.com/webhook', pending_update_count: 0 }, EXP, now);
+  t("webhook boshqa manzilda -> crit, hozirgi manzil meta'da", r.level === 'crit' && r.meta.current.includes('onrender'));
+  r = webhookItem({ url: EXP, pending_update_count: 2 }, EXP, now);
+  t("webhook joyida -> ok, tuzatish belgisi yo'q", r.level === 'ok' && r.msg.includes('navbatda 2') && !r.meta);
+  r = webhookItem({ url: EXP, pending_update_count: 0, last_error_date: now / 1000 - 600, last_error_message: 'Wrong response from the webhook: 502 Bad Gateway' }, EXP, now);
+  t('10 daqiqa oldingi yetkazish xatosi -> warn (webhook tuzatilmaydi)', r.level === 'warn' && r.msg.includes('502') && !r.meta);
+  r = webhookItem({ url: EXP, pending_update_count: 0, last_error_date: now / 1000 - 7200, last_error_message: 'x' }, EXP, now);
+  t('2 soat oldingi xato -> ok', r.level === 'ok');
+  r = webhookItem({ url: EXP, pending_update_count: 150 }, EXP, now);
+  t('150 ta xabar navbatda -> warn', r.level === 'warn' && r.msg.includes('150'));
+
+  t('Caddy active -> ok', caddyItem('active').level === 'ok');
+  t('Caddy failed / inactive -> crit, holati matnda', caddyItem('failed').level === 'crit' && caddyItem('inactive').msg.includes('inactive'));
+  t("Caddy holati o'qilmadi -> warn", caddyItem(null).level === 'warn');
+
+  t("autofix.off yo'q -> ok (yoqilgan)", autofixItem(null, now).level === 'ok');
+  const off = autofixItem(now - 5 * 3600 * 1000, now);
+  t("autofix.off 5 soatdan beri -> warn (18:30 da ko'rinadi, unutilmasin)", off.level === 'warn' && off.msg.includes('5 soatdan'), JSON.stringify(off));
+}
+
 console.log('\n' + pass + '/' + (pass + fail) + " o'tdi");
 process.exit(fail ? 1 : 0);

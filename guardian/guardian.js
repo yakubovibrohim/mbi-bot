@@ -1,31 +1,39 @@
 'use strict';
 // ─── MBI Guardian — tizim nazoratchisi ───
-// 3-versiya: tekshiruvlar FAQAT O'QIYDI + ruxsat etilgan amallar (actions.js):
+// 4-versiya: tekshiruvlar FAQAT O'QIYDI + ruxsat etilgan amallar (actions.js):
 //   • IG_TOKEN ni muddatidan oldin yangilash;
-//   • token o'lsa — bir bosishli qayta ulash (reauth.js, 127.0.0.1:3003/ig-callback).
+//   • token o'lsa — bir bosishli qayta ulash (reauth.js, 127.0.0.1:3003/ig-callback);
+//   • avtomatik tuzatish (remedy.js qaror qiladi): to'xtagan yoki qotib qolgan mbi-bot / mbi-tannarx-bot,
+//     faol bo'lmagan Caddy, bo'shab qolgan yoki o'zgargan @mbi_mebel_bot webhook.
 // Alohida PM2 jarayoni (mbi-guardian): mbi-bot qulasa ham ishlayveradi va Telegram orqali yozadi.
 //
 // Har 15 daqiqada:
 //   1) checks.js — hamma tekshiruvlar; natija status.json ga yoziladi,
 //      mbi-bot 18:30 xulosada shu fayldan "🛡 Tizim" qatorini chiqaradi (section.js);
-//   2) alerting.js — xabar kerakmi hal qiladi;
-//   3) actions.js — IG_TOKEN yangilash vaqti kelganmi (45 kun qolganda tungi 03–05, 7 kunda darhol);
+//   2) remedy.js — tasdiqlangan nosozlikni o'zi tuzatish kerakmi (limitlar bilan), actions.js bajaradi;
+//      tuzatilgan qism qayta tekshiriladi — ogohlantirishlar tuzatishdan KEYINGI holatga qarab chiqadi;
+//   3) alerting.js — xabar kerakmi hal qiladi;
+//   4) actions.js — IG_TOKEN yangilash vaqti kelganmi (45 kun qolganda tungi 03–05, 7 kunda darhol);
 //   token o'lik bo'lsa xabarga bir martalik qayta ulash havolasi qo'shiladi;
 //   xabarlar ADMIN ga ODDIY MATN (Markdown yo'q — tashqi matn uni buzib, xabar jimgina yo'qolmasin).
 // Kalitlar har safar /root/.mbi.env dan qayta o'qiladi — token almashsa guardianni qayta ishga tushirish shart emas.
 // Kalit qiymatlari hech qachon logga yoki xabarga tushmaydi (redact).
 //
 // Qo'lda:
-//   node guardian.js --once --dry-run          hamma tekshiruv; hech narsa yubormaydi, yozmaydi
+//   node guardian.js --once --dry-run          hamma tekshiruv; hech narsa yubormaydi, yozmaydi, tuzatmaydi
 //   node guardian.js --refresh-ig --dry-run    IG_TOKEN yangilash qarorini ko'rsatadi, bajarmaydi
 //   node guardian.js --refresh-ig --force      IG_TOKEN ni hozir yangilaydi (xabar + jurnal bilan)
 //   node guardian.js --reauth-link             bir martalik qayta ulash havolasini Telegram'ga yuboradi
+// Texnik ish paytida avtomatik tuzatishni to'xtatish:  touch /var/lib/mbi-guardian/autofix.off
+//                                     qayta yoqish:  rm /var/lib/mbi-guardian/autofix.off
+//   (o'chiq tursa 18:30 xulosada ⚠️ bilan ko'rinadi — unutilib qolmasin)
 
 const fs = require('fs');
 const path = require('path');
 const C = require('./checks');
 const A = require('./actions');
 const R = require('./reauth');
+const REM = require('./remedy');
 const { planAlerts } = require('./alerting');
 
 const CFG = {
@@ -34,16 +42,19 @@ const CFG = {
   statusFile: process.env.GUARDIAN_STATUS_FILE || '/var/lib/mbi-guardian/status.json',
   actionsLog: process.env.GUARDIAN_ACTIONS_LOG || '/var/lib/mbi-guardian/actions.log',
   lockFile: process.env.GUARDIAN_LOCK_FILE || '/var/lib/mbi-guardian/run.lock',
+  autofixOffFile: process.env.GUARDIAN_AUTOFIX_OFF_FILE || '/var/lib/mbi-guardian/autofix.off',
   envFile: process.env.GUARDIAN_ENV_FILE || '/root/.mbi.env',
   ecosystemFile: '/opt/mbi/ecosystem.config.js',
   adminChat: '1487569442',
   secretsRepo: 'yakubovibrohim/mbi-secrets',
   publicHost: '65.21.147.238.nip.io',
-  processes: ['mbi-bot', 'mbi-tannarx-bot'],
+  processes: ['mbi-bot', 'mbi-tannarx-bot'],           // avtomatik qayta ishga tushirish FAQAT shularga
   localEndpoints: [
-    ['local:bot', 'mbi-bot (ichki port 3000)', 'http://127.0.0.1:3000/', 'MBI Bot running'],
-    ['local:tannarx', 'Tannarx bot (ichki port 3002)', 'http://127.0.0.1:3002/', 'Tan Narx'],
+    // [id, nomi, url, javobda bo'lishi kerak, PM2 jarayoni]
+    ['local:bot', 'mbi-bot (ichki port 3000)', 'http://127.0.0.1:3000/', 'MBI Bot running', 'mbi-bot'],
+    ['local:tannarx', 'Tannarx bot (ichki port 3002)', 'http://127.0.0.1:3002/', 'Tan Narx', 'mbi-tannarx-bot'],
   ],
+  remedy: { confirmRuns: 2, minGapMs: 25 * 60000, windowMs: 6 * 3600000, maxRestarts: 3, maxWebhookFixes: 2 },
   requiredKeys: ['bot_token', 'aziza_token', 'sardor_token', 'botir_token', 'dilshod_token', 'telegram_user_session', 'ig_app_secret', 'uptimerobot_api_key'],
   logs: { botOut: '/var/log/mbi/mbi-bot.out.log', botErr: '/var/log/mbi/mbi-bot.err.log' },
   igTokenSeedObtainedAt: '2026-09-08T12:40:00Z',   // IG_TOKEN 08.09.2026 da OAuth orqali olingan (60 kunlik)
@@ -141,8 +152,8 @@ const makeReauthLink = (state, now) => R.buildAuthorizeUrl(CFG, R.newReauthState
 const reauthLine = (url) => `🔑 Instagram'ni qayta ulash uchun bosing va "Allow" (Ruxsat berish) ni tanlang — havola 24 soat, bir marta ishlaydi, qolganini guardian o'zi qiladi:\n${url}`;
 
 const CHECKS = [
-  C.checkProcesses, C.checkLocal, C.checkPublic, C.checkTelegram, C.checkGitHub, C.checkInstagram,
-  C.checkAI, C.checkWindsor, C.checkLogs, C.checkSystem, C.checkUptimeRobot, C.checkMeta,
+  C.checkProcesses, C.checkLocal, C.checkPublic, C.checkCaddy, C.checkTelegram, C.checkGitHub, C.checkInstagram,
+  C.checkAI, C.checkWindsor, C.checkLogs, C.checkSystem, C.checkUptimeRobot, C.checkMeta, C.checkAutofix,
 ];
 
 async function runOnce(opts) {
@@ -153,6 +164,54 @@ async function runOnce(opts) {
   }
   try { return await runOnceLocked(opts); }
   finally { A.releaseLock(CFG.lockFile); }
+}
+
+// Tasdiqlangan nosozliklarni tuzatadi; tuzatilgan qismlarni qayta tekshirib results ni yangilaydi.
+async function applyRemedies({ ctx, results, keys, now }) {
+  const paused = results.some((r) => r.id === 'autofix' && r.level !== 'ok');
+  const plan = REM.planRemedies({ issues: ctx.state.issues, remedyState: ctx.state.remedy, results, now, cfg: CFG, paused });
+  const texts = [];
+  if (DRY) {
+    for (const a of plan.actions) console.log(`[dry-run] avto-tuzatish bo'lardi: ${a.type} ${a.target}${a.reason ? ' — ' + a.reason : ''}`);
+    for (const b of plan.blocked) console.log('[dry-run] ' + redact(b.text));
+    return { plan, texts };
+  }
+  ctx.state.remedy = plan.state;
+
+  const rechecks = new Set();
+  for (const a of plan.actions) {
+    let out;
+    try {
+      if (a.type === 'restart') out = await A.recreateProcess({ cfg: CFG, http: C.http, name: a.target });
+      else if (a.type === 'caddy') out = await A.startCaddy();
+      else if (a.type === 'webhook') out = await A.setTelegramWebhook({ http: C.http, token: keys && keys.bot_token, url: a.url });
+      else out = { ok: false, error: "noma'lum amal" };
+    } catch (e) { out = { ok: false, error: 'ichki xato: ' + String(e && e.message).slice(0, 100) }; }
+    out.error = out.error ? redact(out.error) : out.error;
+    A.audit(CFG.actionsLog, {
+      action: 'autofix_' + a.type, target: a.target, reason: a.reason ? redact(a.reason) : null,
+      from: a.type === 'webhook' ? redact(a.current) : undefined, ok: !!out.ok, error: out.ok ? null : out.error,
+    });
+    texts.push(redact(REM.remedyMessage(a, out)));
+    (REM.RECHECKS[a.type] || []).forEach((n) => rechecks.add(n));
+    console.log(`[guardian] avto-tuzatish ${a.type} ${a.target}: ${out.ok ? 'OK' : 'XATO — ' + out.error}`);
+  }
+  for (const b of plan.blocked) {
+    A.audit(CFG.actionsLog, { action: 'autofix_blocked', type: b.type, target: b.target, attempts: b.count });
+    texts.push(redact(b.text));
+    console.log(`[guardian] avto-tuzatish to'xtatildi: ${b.type} ${b.target} (${b.count} urinish)`);
+  }
+
+  for (const n of rechecks) {
+    let fresh;
+    try { fresh = await C[n](ctx); } catch (e) { continue; }
+    for (const f of fresh) {
+      f.msg = redact(f.msg); f.name = redact(f.name);
+      const i = results.findIndex((r) => r.id === f.id);
+      if (i >= 0) results[i] = f; else results.push(f);
+    }
+  }
+  return { plan, texts };
 }
 
 async function runOnceLocked({ forceIg = false } = {}) {
@@ -172,6 +231,9 @@ async function runOnceLocked({ forceIg = false } = {}) {
   }
   for (const r of results) { r.msg = redact(r.msg); r.name = redact(r.name); }
 
+  // ── Ruxsat etilgan amal: avtomatik tuzatish (ogohlantirishlardan OLDIN) ──
+  const { plan, texts: remedyTexts } = await applyRemedies({ ctx, results, keys, now });
+
   const { messages, state } = planAlerts(ctx.state, results, now);
   const actionTexts = [];
   let reauthLink = null;
@@ -189,8 +251,10 @@ async function runOnceLocked({ forceIg = false } = {}) {
     tokenDead: !!(igRes && igRes.meta && igRes.meta.dead),
     force: forceIg, now, cfg: CFG.igRefresh,
   });
+  const botJustRestarted = !DRY && plan.actions.some((a) => a.type === 'restart' && a.target === 'mbi-bot');
   if (REFRESH_IG_CLI || decision.run) console.log(`[guardian] IG_TOKEN yangilash qarori: ${decision.run ? 'HA' : "yo'q"} — ${decision.reason}${DRY && decision.run ? ' (dry-run: bajarilmaydi)' : ''}`);
-  if (decision.run && !DRY) {
+  if (decision.run && botJustRestarted) console.log('[guardian] IG_TOKEN yangilash keyingi tekshiruvga qoldirildi — mbi-bot hozirgina qayta ishga tushirildi');
+  if (decision.run && !DRY && !botJustRestarted) {
     let out;
     try { out = await A.refreshInstagramToken({ cfg: CFG, state, now, http: C.http }); }
     catch (e) { out = { ok: false, error: 'ichki xato: ' + String(e && e.message).slice(0, 100) }; }
@@ -206,6 +270,7 @@ async function runOnceLocked({ forceIg = false } = {}) {
   }
 
   const lines = [
+    ...remedyTexts,
     ...messages.map((m) => m.text + (m.kind === 'problem' ? ` (birinchi aniqlangan: ${tashkent(m.firstSeen)}${m.repeat ? ', takroriy eslatma' : ''})` : '')),
     ...actionTexts,
   ];
@@ -239,7 +304,7 @@ async function runOnceLocked({ forceIg = false } = {}) {
     writeJsonAtomic(CFG.stateFile, state);
   }
   const count = (lv) => results.filter((r) => r.level === lv).length;
-  console.log(`[guardian] ${results.length} tekshiruv: ${count('crit')} crit, ${count('warn')} warn, ${count('info')} info | xabar: ${lines.length}${sent === false ? ' (YUBORILMADI)' : ''}`);
+  console.log(`[guardian] ${results.length} tekshiruv: ${count('crit')} crit, ${count('warn')} warn, ${count('info')} info | tuzatish: ${plan.actions.length}${plan.blocked.length ? ` (+${plan.blocked.length} to'xtatilgan)` : ''} | xabar: ${lines.length}${sent === false ? ' (YUBORILMADI)' : ''}`);
   return { results, messages };
 }
 
@@ -295,7 +360,7 @@ const printTable = (results) => results.forEach((r) => console.log(`${ICON[r.lev
     printTable(results);
     process.exit(0);
   }
-  console.log(`[guardian] ishga tushdi — har ${CFG.intervalMin} daqiqada; ruxsat etilgan amallar: IG_TOKEN yangilash, bir bosishli qayta ulash`);
+  console.log(`[guardian] ishga tushdi — har ${CFG.intervalMin} daqiqada; ruxsat etilgan amallar: IG_TOKEN yangilash, bir bosishli qayta ulash, avto-tuzatish (mbi-bot, mbi-tannarx-bot, Caddy, webhook)`);
   startReauthServer();
   let running = false;
   const tick = async () => {

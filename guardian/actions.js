@@ -9,8 +9,14 @@
 //   • token satri o'zgarsa: /root/.mbi.env dagi FAQAT IG_TOKEN qatori almashtiriladi
 //     (oldin zaxira, 600 ruxsat, guardian zaxiralaridan oxirgi 3 tasi saqlanadi),
 //     mbi-bot toza muhitdan qayta yaratiladi va bot yangi tokenni olgani PM2 env izidan tekshiriladi.
+//   autofix_restart  — mbi-bot / mbi-tannarx-bot ni ecosystem'dan toza muhit bilan qayta yaratish (recreateProcess);
+//                      faqat cfg.processes dagi nomlar, mbi-guardian o'zi emas.
+//   autofix_caddy    — faol bo'lmagan Caddy'ni `systemctl start caddy` (startCaddy); konfiguratsiyaga tegmaydi.
+//   autofix_webhook  — @mbi_mebel_bot webhook'ini WEBHOOK_BASE/webhook ga qayta o'rnatish (setTelegramWebhook);
+//                      faqat url yuboriladi — kutilayotgan xabarlar o'chirilmaydi.
+//   Qachon va necha marta — remedy.js hal qiladi (tasdiq, 25 daqiqa oraliq, 6 soatlik limit, autofix.off).
 // Har amal actions.log ga yoziladi (kalit qiymatlarisiz) va ADMIN ga xabar qilinadi.
-// Buxgalteriya ma'lumotlari, pul, kod, boshqa kalitlar — HECH QACHON.
+// Buxgalteriya ma'lumotlari, pul, kod, boshqa kalitlar, Render — HECH QACHON.
 
 const fs = require('fs');
 const path = require('path');
@@ -20,6 +26,7 @@ const { execFile } = require('child_process');
 const DAY = 86400000;
 const fp = (tok) => crypto.createHash('sha256').update(String(tok)).digest('hex').slice(0, 12);
 const dmy = (ms) => new Date(ms).toLocaleDateString('en-GB', { timeZone: 'Asia/Tashkent' }).split('/').join('.');
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // ── .env matni bilan ishlash (sof funksiyalar) ──
 const unquote = (v) => ((v.startsWith("'") && v.endsWith("'")) || (v.startsWith('"') && v.endsWith('"')) ? v.slice(1, -1) : v);
@@ -81,20 +88,27 @@ function run(bin, args, timeoutMs) {
     }, (err, stdout) => resolve({ ok: !err, out: String(stdout || '') }));
   });
 }
-async function recreateBot(cfg, http) {
+// pm2 delete → start --only → save, keyin jarayonning ichki porti (cfg.localEndpoints[4] === name) javobini kutadi.
+async function recreateProcess({ cfg, http, name, run: exec = run, sleep = wait, waitMs = 90000, pollMs = 3000 }) {
+  if (!(cfg.processes || []).includes(name)) return { ok: false, error: `${name} ruxsat ro'yxatida yo'q — tegilmadi` };
   const pm2 = pm2Bin();
-  await run(pm2, ['delete', 'mbi-bot'], 60000);                       // yo'q bo'lsa ham davom etadi
-  const st = await run(pm2, ['start', cfg.ecosystemFile, '--only', 'mbi-bot'], 90000);
+  await exec(pm2, ['delete', name], 60000);                           // yo'q bo'lsa ham davom etadi
+  const st = await exec(pm2, ['start', cfg.ecosystemFile, '--only', name], 90000);
   if (!st.ok) return { ok: false, error: 'pm2 start muvaffaqiyatsiz' };
-  await run(pm2, ['save'], 60000);
-  const deadline = Date.now() + 90000;
+  await exec(pm2, ['save'], 60000);
+  const ep = (cfg.localEndpoints || []).find((e) => e[4] === name);
+  if (!ep) return { ok: true };
+  const [, , url, needle] = ep;
+  const deadline = Date.now() + waitMs;
   while (Date.now() < deadline) {
-    await new Promise((r) => setTimeout(r, 3000));
-    const res = await http('http://127.0.0.1:3000/', { timeoutMs: 3000 });
-    if (res.status === 200 && String(res.text).includes('MBI Bot running')) return { ok: true };
+    await sleep(pollMs);
+    const res = await http(url, { timeoutMs: 3000 });
+    if (res.status === 200 && (!needle || String(res.text).includes(needle))) return { ok: true };
   }
-  return { ok: false, error: '90 soniyada javob bermadi' };
+  return { ok: false, error: `${Math.round(waitMs / 1000)} soniyada javob bermadi` };
 }
+const recreateBot = (cfg, http) => recreateProcess({ cfg, http, name: 'mbi-bot' });
+
 async function botEnvFingerprint(cfg, key) {
   const r = await run(pm2Bin(), ['jlist'], 30000);
   if (!r.ok) return null;
@@ -104,6 +118,34 @@ async function botEnvFingerprint(cfg, key) {
     const v = p && p.pm2_env && (p.pm2_env[key] || (p.pm2_env.env && p.pm2_env.env[key]));
     return v ? fp(v) : null;
   } catch (e) { return null; }
+}
+
+// ── Caddy: faqat ishga tushirish (konfiguratsiya o'zgarmaydi) ──
+async function startCaddy({ run: exec = run, sleep = wait, settleMs = 3000 } = {}) {
+  const bin = ['/usr/bin/systemctl', '/bin/systemctl'].find((p) => fs.existsSync(p)) || 'systemctl';
+  const st = await exec(bin, ['start', 'caddy'], 60000);
+  await sleep(settleMs);
+  const act = await exec(bin, ['is-active', 'caddy'], 15000);
+  const state = String(act.out || '').trim();
+  if (state === 'active') return { ok: true };
+  return { ok: false, error: `systemctl start ${st.ok ? 'bajarildi' : 'xato berdi'}, holati: ${state || "noma'lum"}` };
+}
+
+// ── Telegram webhook: faqat url (allowed_updates avvalgicha qoladi, kutilayotgan xabarlar o'chirilmaydi) ──
+async function setTelegramWebhook({ http, token, url }) {
+  if (!token) return { ok: false, error: "bot_token yo'q" };
+  const base = 'https://api.telegram.org/bot' + token;
+  const res = await http(base + '/setWebhook', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, timeoutMs: 20000, body: JSON.stringify({ url }),
+  });
+  if (!(res.json && res.json.ok)) {
+    const d = res.json && res.json.description;
+    return { ok: false, error: d ? String(d).slice(0, 120) : (res.status === 0 ? res.error : 'HTTP ' + res.status) };
+  }
+  const info = await http(base + '/getWebhookInfo', { timeoutMs: 15000 });
+  const got = info.json && info.json.ok && info.json.result && info.json.result.url;
+  if (got !== url) return { ok: false, error: "o'rnatildi, lekin tekshiruvda manzil mos kelmadi" };
+  return { ok: true };
 }
 
 function pruneBackups(envFile, keep) {
@@ -223,6 +265,7 @@ const releaseLock = (file) => { try { fs.unlinkSync(file); } catch (e) {} };
 
 module.exports = {
   refreshInstagramToken, installInstagramToken, igRefreshMessage, shouldRefreshIg,
+  recreateProcess, startCaddy, setTelegramWebhook,
   parseEnvFile, readEnvValue, replaceEnvLine,
   audit, acquireLock, releaseLock,
   _internal: { fp, pruneBackups },
