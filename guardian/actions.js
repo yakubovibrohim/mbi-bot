@@ -1,0 +1,214 @@
+'use strict';
+// ─── MBI Guardian: RUXSAT ETILGAN yozuv amallari ───
+// Guardian "faqat o'qish" rejimidan chiqadigan YAGONA joy. Bu fayldan tashqarida hech narsa o'zgartirilmaydi.
+//
+// Ruxsat ro'yxati (hozircha bitta amal):
+//   ig_token_refresh — IG_TOKEN ni muddati tugashidan oldin yangilash.
+//     • yangi token /me bilan tekshirilmaguncha HECH NARSA yozilmaydi;
+//     • token satri o'zgarsa: /root/.mbi.env dagi FAQAT IG_TOKEN qatori almashtiriladi
+//       (oldin zaxira, 600 ruxsat, guardian zaxiralaridan oxirgi 3 tasi saqlanadi),
+//       mbi-bot toza muhitdan qayta yaratiladi va bot yangi tokenni olgani PM2 env izidan tekshiriladi.
+// Har amal actions.log ga yoziladi (kalit qiymatlarisiz) va ADMIN ga xabar qilinadi.
+// Buxgalteriya ma'lumotlari, pul, kod, boshqa kalitlar — HECH QACHON.
+
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
+const { execFile } = require('child_process');
+
+const DAY = 86400000;
+const fp = (tok) => crypto.createHash('sha256').update(String(tok)).digest('hex').slice(0, 12);
+const dmy = (ms) => new Date(ms).toLocaleDateString('en-GB', { timeZone: 'Asia/Tashkent' }).split('/').join('.');
+
+// ── .env matni bilan ishlash (sof funksiyalar) ──
+const unquote = (v) => ((v.startsWith("'") && v.endsWith("'")) || (v.startsWith('"') && v.endsWith('"')) ? v.slice(1, -1) : v);
+
+function parseEnvFile(text) {
+  const out = {};
+  for (const line of String(text).split('\n')) {
+    const t = line.trim();
+    if (!t || t.startsWith('#')) continue;
+    const i = t.indexOf('=');
+    if (i < 1) continue;
+    out[t.slice(0, i).trim()] = unquote(t.slice(i + 1).trim());
+  }
+  return out;
+}
+function readEnvValue(text, key) {
+  const v = parseEnvFile(text)[key];
+  return v === undefined ? null : v;
+}
+// Faqat bitta KEY=... qatorini almashtiradi; izohlar, tartib va boshqa qatorlar o'zgarmaydi.
+function replaceEnvLine(text, key, value) {
+  if (!/^[A-Za-z0-9_.-]+$/.test(String(value))) throw new Error("token kutilmagan belgilarga ega — yozilmadi");
+  let hits = 0;
+  const next = String(text).split('\n').map((line) => {
+    if (line.trim().startsWith(key + '=')) { hits++; return `${key}='${value}'`; }
+    return line;
+  });
+  if (hits !== 1) throw new Error(`${key} qatori ${hits} ta topildi (1 kutilgan) — yozilmadi`);
+  return next.join('\n');
+}
+
+// ── Qachon yangilash (sof funksiya) ──
+function shouldRefreshIg({ daysLeft, tokenAgeMs, tashkentHour, lastAttemptAt, lastAttemptOk, tokenDead, force, now, cfg }) {
+  if (tokenDead) return { run: false, reason: "token o'lik — yangilab bo'lmaydi, qayta ruxsat kerak" };
+  if (force) return { run: true, reason: "qo'lda majburiy (--force)" };
+  if (daysLeft == null || !Number.isFinite(daysLeft)) return { run: false, reason: "muddati noma'lum" };
+  if (tokenAgeMs != null && tokenAgeMs < cfg.minTokenAgeMs) return { run: false, reason: 'token 24 soatdan yosh — Instagram hali yangilashga ruxsat bermaydi' };
+  if (lastAttemptAt && lastAttemptOk === false && now - lastAttemptAt < cfg.retryAfterMs) {
+    return { run: false, reason: "oxirgi urinish muvaffaqiyatsiz — qayta urinish vaqti kelmagan" };
+  }
+  if (daysLeft <= cfg.urgentDaysLeft) return { run: true, reason: `shoshilinch: ${daysLeft} kun qoldi` };
+  if (daysLeft <= cfg.refreshDaysLeft) {
+    const quiet = tashkentHour >= cfg.quietFromHour && tashkentHour < cfg.quietToHour;
+    return quiet
+      ? { run: true, reason: `${daysLeft} kun qoldi, tungi soat` }
+      : { run: false, reason: `${daysLeft} kun qoldi — tungi ${cfg.quietFromHour}:00–${cfg.quietToHour}:00 kutilyapti` };
+  }
+  return { run: false, reason: `${daysLeft} kun qoldi — hali erta (${cfg.refreshDaysLeft} kun qolganda yangilanadi)` };
+}
+
+// ── PM2 (toza muhit bilan — BOT_TOKEN merosi tuzog'i takrorlanmasin) ──
+const PM2_CANDIDATES = ['/usr/bin/pm2', '/usr/local/bin/pm2'];
+const pm2Bin = () => PM2_CANDIDATES.find((p) => fs.existsSync(p)) || 'pm2';
+function run(bin, args, timeoutMs) {
+  return new Promise((resolve) => {
+    execFile(bin, args, {
+      timeout: timeoutMs, maxBuffer: 16 * 1024 * 1024,
+      env: { HOME: '/root', PATH: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' },
+    }, (err, stdout) => resolve({ ok: !err, out: String(stdout || '') }));
+  });
+}
+async function recreateBot(cfg, http) {
+  const pm2 = pm2Bin();
+  await run(pm2, ['delete', 'mbi-bot'], 60000);                       // yo'q bo'lsa ham davom etadi
+  const st = await run(pm2, ['start', cfg.ecosystemFile, '--only', 'mbi-bot'], 90000);
+  if (!st.ok) return { ok: false, error: 'pm2 start muvaffaqiyatsiz' };
+  await run(pm2, ['save'], 60000);
+  const deadline = Date.now() + 90000;
+  while (Date.now() < deadline) {
+    await new Promise((r) => setTimeout(r, 3000));
+    const res = await http('http://127.0.0.1:3000/', { timeoutMs: 3000 });
+    if (res.status === 200 && String(res.text).includes('MBI Bot running')) return { ok: true };
+  }
+  return { ok: false, error: '90 soniyada javob bermadi' };
+}
+async function botEnvFingerprint(cfg, key) {
+  const r = await run(pm2Bin(), ['jlist'], 30000);
+  if (!r.ok) return null;
+  try {
+    const list = JSON.parse(r.out.slice(r.out.indexOf('[')));
+    const p = list.find((x) => x.name === 'mbi-bot');
+    const v = p && p.pm2_env && (p.pm2_env[key] || (p.pm2_env.env && p.pm2_env.env[key]));
+    return v ? fp(v) : null;
+  } catch (e) { return null; }
+}
+
+function pruneBackups(envFile, keep) {
+  try {
+    const dir = path.dirname(envFile);
+    const base = path.basename(envFile) + '.bak.guardian.';
+    const files = fs.readdirSync(dir).filter((f) => f.startsWith(base))
+      .sort((a, b) => Number(b.slice(base.length)) - Number(a.slice(base.length)));
+    for (const f of files.slice(keep)) fs.unlinkSync(path.join(dir, f));
+  } catch (e) {}
+}
+
+// ── Amalning o'zi ──
+async function refreshInstagramToken({ cfg, state, now, http, deps = {} }) {
+  const recreate = deps.recreateBot || recreateBot;
+  const botFp = deps.botEnvFingerprint || botEnvFingerprint;
+
+  const envText = fs.readFileSync(cfg.envFile, 'utf8');
+  const oldTok = readEnvValue(envText, 'IG_TOKEN');
+  if (!oldTok) return { ok: false, error: '.mbi.env da IG_TOKEN topilmadi' };
+
+  const res = await http('https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=' + encodeURIComponent(oldTok), { timeoutMs: 30000 });
+  const j = res.json;
+  if (!(res.status === 200 && j && j.access_token && Number(j.expires_in) > 0)) {
+    const code = j && j.error && j.error.code;
+    const msg = j && j.error && j.error.message ? String(j.error.message).slice(0, 120) : (res.status === 0 ? res.error : 'HTTP ' + res.status);
+    return { ok: false, dead: code === 190, error: msg };
+  }
+  const newTok = String(j.access_token);
+  const expiresAt = now + Number(j.expires_in) * 1000;
+
+  // Yangi token haqiqatan ishlaydimi — hech narsa yozishdan OLDIN
+  const me = await http('https://graph.instagram.com/v21.0/me?fields=username&access_token=' + encodeURIComponent(newTok), { timeoutMs: 20000 });
+  if (!(me.json && me.json.username)) return { ok: false, error: "yangi token tekshiruvdan o'tmadi — hech narsa yozilmadi" };
+
+  const newState = { fp: fp(newTok), obtainedAt: new Date(now).toISOString(), expiresAt: new Date(expiresAt).toISOString(), source: 'refresh' };
+  const changed = newTok !== oldTok;
+  if (!changed) {
+    state.igToken = newState;
+    return { ok: true, changed: false, restarted: false, expiresAt, username: me.json.username };
+  }
+
+  let nextText;
+  try { nextText = replaceEnvLine(envText, 'IG_TOKEN', newTok); }
+  catch (e) { return { ok: false, error: e.message }; }
+
+  const bak = cfg.envFile + '.bak.guardian.' + now;
+  fs.copyFileSync(cfg.envFile, bak);
+  fs.chmodSync(bak, 0o600);
+  const tmp = cfg.envFile + '.tmp.guardian';
+  fs.writeFileSync(tmp, nextText, { mode: 0o600 });
+  fs.renameSync(tmp, cfg.envFile);
+  fs.chmodSync(cfg.envFile, 0o600);
+  pruneBackups(cfg.envFile, 3);
+  if (readEnvValue(fs.readFileSync(cfg.envFile, 'utf8'), 'IG_TOKEN') !== newTok) {
+    return { ok: false, changed: true, error: ".mbi.env ga yozish tasdiqlanmadi (zaxira: " + path.basename(bak) + ')' };
+  }
+  state.igToken = newState;   // faylda endi yangi token turibdi
+
+  const rb = await recreate(cfg, http);
+  if (!rb.ok) return { ok: false, changed: true, botDown: true, error: 'mbi-bot qayta ko’tarilmadi: ' + rb.error, expiresAt };
+  const got = await botFp(cfg, 'IG_TOKEN');
+  if (got !== newState.fp) return { ok: false, changed: true, restarted: true, error: "mbi-bot yangi tokenni olmadi (PM2 env izi mos emas)", expiresAt };
+  return { ok: true, changed: true, restarted: true, expiresAt, username: me.json.username };
+}
+
+function igRefreshMessage(out, cfg, now) {
+  if (out.ok) {
+    const days = Math.floor((out.expiresAt - now) / DAY);
+    const head = `🔄 Instagram tokeni yangilandi: endi ${days} kun amal qiladi (${dmy(out.expiresAt)} gacha).`;
+    return out.changed
+      ? head + ' Yangi token .mbi.env ga yozildi, mbi-bot qayta ishga tushirildi va yangi tokenni oldi.'
+      : head + " Token satri o'zgarmadi — bot qayta ishga tushirilmadi.";
+  }
+  if (out.botDown) return `❌ Instagram tokeni yangilandi, lekin ${out.error}. Darhol tekshiring!`;
+  if (out.dead) return `❌ Instagram tokenini yangilab bo'lmadi — token o'lik (${out.error}). Qayta ruxsat bering: ${cfg.igReauthUrl}`;
+  return `⚠️ Instagram tokenini yangilashda xato: ${out.error}. ${Math.round(cfg.igRefresh.retryAfterMs / 3600000)} soatdan keyin qayta uriniladi.`;
+}
+
+// ── Jurnal va qulf ──
+function audit(file, entry) {
+  try {
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    fs.appendFileSync(file, JSON.stringify({ ts: new Date().toISOString(), ...entry }) + '\n', { mode: 0o600 });
+  } catch (e) {}
+}
+function acquireLock(file, staleMs = 10 * 60000, retried = false) {
+  try {
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    const fd = fs.openSync(file, 'wx');
+    fs.writeSync(fd, String(process.pid));
+    fs.closeSync(fd);
+    return true;
+  } catch (e) {
+    if (retried) return false;
+    try {
+      if (Date.now() - fs.statSync(file).mtimeMs > staleMs) { fs.unlinkSync(file); return acquireLock(file, staleMs, true); }
+    } catch (e2) {}
+    return false;
+  }
+}
+const releaseLock = (file) => { try { fs.unlinkSync(file); } catch (e) {} };
+
+module.exports = {
+  refreshInstagramToken, igRefreshMessage, shouldRefreshIg,
+  parseEnvFile, readEnvValue, replaceEnvLine,
+  audit, acquireLock, releaseLock,
+  _internal: { fp, pruneBackups },
+};

@@ -170,8 +170,8 @@ async function checkGitHub(ctx) {
 }
 
 // ── Instagram tokeni ──
-// Instagram Login tokenining aniq muddatini tokenni o'zgartirmasdan bilish yo'li yo'q,
-// shuning uchun olingan sana saqlanadi (token o'zgarsa — izidan bilinadi) va +60 kun hisoblanadi.
+// Aniq muddat faqat yangilash (refresh) javobidan ma'lum — actions.js uni state.igToken.expiresAt ga yozadi.
+// Undan oldin (yoki token qo'lda almashtirilsa) olingan sana saqlanadi va +60 kun taxminan hisoblanadi.
 async function checkInstagram(ctx) {
   const name = 'Instagram tokeni (IG_TOKEN)';
   const tok = ctx.env.IG_TOKEN;
@@ -179,14 +179,16 @@ async function checkInstagram(ctx) {
   const fp = crypto.createHash('sha256').update(tok).digest('hex').slice(0, 12);
   const prev = ctx.state.igToken;
   if (!prev || prev.fp !== fp) ctx.state.igToken = { fp, obtainedAt: prev ? new Date(ctx.now).toISOString() : ctx.cfg.igTokenSeedObtainedAt };
-  const expMs = Date.parse(ctx.state.igToken.obtainedAt) + 60 * DAY;
+  const exact = !!ctx.state.igToken.expiresAt;
+  const expMs = exact ? Date.parse(ctx.state.igToken.expiresAt) : Date.parse(ctx.state.igToken.obtainedAt) + 60 * DAY;
   const days = daysUntil(expMs, ctx.now);
+  const when = exact ? `${days} kun qoldi (${dmy(expMs)} gacha)` : `taxminan ${days} kun qoldi (~${dmy(expMs)})`;
   const res = await http('https://graph.instagram.com/v21.0/me?fields=username&access_token=' + encodeURIComponent(tok));
   if (res.json && res.json.username) {
-    return [item('ig:token', name, days <= 3 ? CRIT : days <= 14 ? WARN : OK, `ishlaydi (@${res.json.username}), taxminan ${days} kun qoldi (~${dmy(expMs)})`, { expiry: true, days })];
+    return [item('ig:token', name, days <= 3 ? CRIT : days <= 14 ? WARN : OK, `ishlaydi (@${res.json.username}), ${when}, avtomatik yangilanadi`, { expiry: true, days })];
   }
   if (res.json && res.json.error && res.json.error.code === 190) {
-    return [item('ig:token', name, CRIT, 'muddati tugagan yoki bekor qilingan — Instagram DM va izohlar ishlamaydi')];
+    return [item('ig:token', name, CRIT, "muddati tugagan yoki bekor qilingan — Instagram DM va izohlar ishlamaydi, qayta ruxsat kerak", { dead: true })];
   }
   return [item('ig:token', name, WARN, "tekshirib bo'lmadi (" + why(res) + ')')];
 }
