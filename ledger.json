@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-11T13:12:03.205Z",
+  "updated": "2026-09-11T15:18:46.240Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 83668118,
+  "balance_uzs": 83638441,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 145279140,
+    "chiqim": 145308817,
     "by_category": {
       "office": 20330183,
-      "personal": 55647589,
+      "personal": 55677266,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
       "deal_expense": 45841448,
@@ -2889,6 +2889,28 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 462000,
       "name": "💳 Propan",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "11.09.2026",
+      "time": "20:18",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 17187,
+      "name": "💳 Suv",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "11.09.2026",
+      "time": "20:18",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 12490,
+      "name": "💳 Kino",
       "pay": "karta",
       "src": "personal"
     }
