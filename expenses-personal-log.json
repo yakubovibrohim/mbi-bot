@@ -1497,5 +1497,15 @@
     "pay_method": "card",
     "place": "PAYME P2P, UZ",
     "ts": "2026-09-11T15:18:30.563Z"
+  },
+  {
+    "date": "11.09.2026",
+    "note": "💳 Kino",
+    "amount_uzs": 12490,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IVI UZBEKISTAN, UZ",
+    "ts": "2026-09-11T15:18:36.065Z"
   }
 ]
