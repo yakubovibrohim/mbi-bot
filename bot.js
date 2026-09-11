@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const FormData = require('form-data');
 let cardMon = null; try { cardMon = require('./card-monitor'); } catch (e) { console.error('card-monitor yuklanmadi:', e.message); }
 let adsWatch = null; try { adsWatch = require('./ads-watch'); } catch (e) { console.error('ads-watch yuklanmadi:', e.message); }
+let guardianSection = null; try { guardianSection = require('./guardian/section'); } catch (e) { console.error('guardian/section yuklanmadi:', e.message); }
 
 let BOT = process.env.BOT_TOKEN || '';  // secrets'dan yuklanadi
 const ADMIN    = '1487569442';
@@ -3692,7 +3693,7 @@ async function checkReminders() {
           if (rec.out_reason) txt += `   └ ${rec.out_reason}\n`;
         }
         txt += `\n📊 Jami ishlangan: *${totalH.toFixed(1)} soat*`;
-        txt += '\n\n' + await adsSectionSafe();
+        txt += '\n\n' + await adsSectionSafe() + '\n\n' + guardianSectionSafe();
         await msg(ADMIN, txt);
       } catch (e) { console.error('daily summary:', e.message); }
     }
@@ -3700,7 +3701,7 @@ async function checkReminders() {
     // Yakshanba: davomat xulosasi yo'q, lekin reklama yakshanba ham ishlaydi — holati baribir yuboriladi
     if (hhmm === '18:30' && now.getDay() === 0 && lastAdsSundayReport !== today) {
       lastAdsSundayReport = today;
-      try { await msg(ADMIN, `🌆 *Kunlik xulosa — ${today}*\n\n` + await adsSectionSafe()); } catch (e) { console.error('ads sunday:', e.message); }
+      try { await msg(ADMIN, `🌆 *Kunlik xulosa — ${today}*\n\n` + await adsSectionSafe() + '\n\n' + guardianSectionSafe()); } catch (e) { console.error('ads sunday:', e.message); }
     }
 
     // Meeting reminders
@@ -3739,6 +3740,13 @@ async function windsorAds(preset) {
   if (!WINDSOR_KEY) return [];
   const j = await httpsGetJson(`https://connectors.windsor.ai/facebook?api_key=${WINDSOR_KEY}&date_preset=${preset || 'last_7d'}&fields=date,campaign,spend,clicks,actions_onsite_conversion_messaging_conversation_started_7d`);
   return (j && j.data) || [];
+}
+
+// 18:30 kunlik xulosa uchun tizim holati — mbi-guardian yozgan status.json dan. Hech qachon throw qilmaydi.
+function guardianSectionSafe() {
+  if (!guardianSection) return "🛡 *Tizim:* ⚠️ guardian bo'limi yuklanmadi.";
+  try { return guardianSection.guardianDailySection({ file: process.env.GUARDIAN_STATUS_FILE || '/var/lib/mbi-guardian/status.json' }); }
+  catch (e) { return "🛡 *Tizim:* ⚠️ holatni o'qishda xato."; }
 }
 
 // 18:30 kunlik xulosa uchun reklama holati bo'limi (ads-watch.js). Hech qachon throw qilmaydi.
