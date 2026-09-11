@@ -1477,5 +1477,15 @@
     "pay_method": "card",
     "place": "HGT PAYNET, UZ",
     "ts": "2026-09-10T11:15:52.345Z"
+  },
+  {
+    "date": "11.09.2026",
+    "note": "💳 Propan",
+    "amount_uzs": 462000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "BARAKATULLO INVEST, Toshkent, Shaykhantaurskiy  mas Beltepa",
+    "ts": "2026-09-11T05:20:43.209Z"
   }
 ]
