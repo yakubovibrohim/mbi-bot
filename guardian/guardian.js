@@ -1,6 +1,8 @@
 'use strict';
 // ─── MBI Guardian — tizim nazoratchisi ───
-// 2-versiya: tekshiruvlar FAQAT O'QIYDI + bitta ruxsat etilgan amal (actions.js: IG_TOKEN yangilash).
+// 3-versiya: tekshiruvlar FAQAT O'QIYDI + ruxsat etilgan amallar (actions.js):
+//   • IG_TOKEN ni muddatidan oldin yangilash;
+//   • token o'lsa — bir bosishli qayta ulash (reauth.js, 127.0.0.1:3003/ig-callback).
 // Alohida PM2 jarayoni (mbi-guardian): mbi-bot qulasa ham ishlayveradi va Telegram orqali yozadi.
 //
 // Har 15 daqiqada:
@@ -8,6 +10,7 @@
 //      mbi-bot 18:30 xulosada shu fayldan "🛡 Tizim" qatorini chiqaradi (section.js);
 //   2) alerting.js — xabar kerakmi hal qiladi;
 //   3) actions.js — IG_TOKEN yangilash vaqti kelganmi (45 kun qolganda tungi 03–05, 7 kunda darhol);
+//   token o'lik bo'lsa xabarga bir martalik qayta ulash havolasi qo'shiladi;
 //   xabarlar ADMIN ga ODDIY MATN (Markdown yo'q — tashqi matn uni buzib, xabar jimgina yo'qolmasin).
 // Kalitlar har safar /root/.mbi.env dan qayta o'qiladi — token almashsa guardianni qayta ishga tushirish shart emas.
 // Kalit qiymatlari hech qachon logga yoki xabarga tushmaydi (redact).
@@ -16,11 +19,13 @@
 //   node guardian.js --once --dry-run          hamma tekshiruv; hech narsa yubormaydi, yozmaydi
 //   node guardian.js --refresh-ig --dry-run    IG_TOKEN yangilash qarorini ko'rsatadi, bajarmaydi
 //   node guardian.js --refresh-ig --force      IG_TOKEN ni hozir yangilaydi (xabar + jurnal bilan)
+//   node guardian.js --reauth-link             bir martalik qayta ulash havolasini Telegram'ga yuboradi
 
 const fs = require('fs');
 const path = require('path');
 const C = require('./checks');
 const A = require('./actions');
+const R = require('./reauth');
 const { planAlerts } = require('./alerting');
 
 const CFG = {
@@ -50,11 +55,21 @@ const CFG = {
     retryAfterMs: 6 * 3600 * 1000,
     minTokenAgeMs: 24 * 3600 * 1000,
   },
+  // Bir bosishli qayta ulash
+  callbackHost: '127.0.0.1',
+  callbackPort: Number(process.env.GUARDIAN_CALLBACK_PORT || 3003),
+  reauthTtlMs: 24 * 3600 * 1000,
+  igClientId: '1689794002143625',
+  igRedirectUri: 'https://yakubovibrohim.github.io/mbi-bot/callback.html',
+  igScopes: 'instagram_business_basic,instagram_business_manage_messages,instagram_business_manage_comments',
+  igExpectedUserId: '17841464753251739',   // @mbi_mebel (BUSINESS) — faqat shu akkaunt qabul qilinadi
+  igExpectedUsername: 'mbi_mebel',
   igReauthUrl: 'https://www.instagram.com/oauth/authorize?client_id=1689794002143625&redirect_uri=https://yakubovibrohim.github.io/mbi-bot/callback.html&response_type=code&scope=instagram_business_basic,instagram_business_manage_messages,instagram_business_manage_comments',
 };
 
 const args = new Set(process.argv.slice(2));
 const REFRESH_IG_CLI = args.has('--refresh-ig');
+const REAUTH_CLI = args.has('--reauth-link');
 const ONCE = args.has('--once') || REFRESH_IG_CLI;
 const DRY = args.has('--dry-run');
 const FORCE_IG = REFRESH_IG_CLI && args.has('--force');
@@ -68,6 +83,10 @@ function writeJsonAtomic(file, obj) {
 }
 const tashkent = (ms) => new Date(ms).toLocaleString('en-GB', { timeZone: 'Asia/Tashkent', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).split('/').join('.');
 const tashkentHour = (ms) => Number(new Date(ms).toLocaleString('en-GB', { timeZone: 'Asia/Tashkent', hour: '2-digit', hourCycle: 'h23' }));
+function fileEnv() {
+  try { return { ...process.env, ...A.parseEnvFile(fs.readFileSync(CFG.envFile, 'utf8')) }; }
+  catch (e) { return { ...process.env }; }
+}
 
 // ── Kalit qiymatlarini yashirish ──
 let SECRETS = [];
@@ -100,6 +119,26 @@ async function sendTelegram(token, text) {
   });
   return !!(res.json && res.json.ok);
 }
+async function notifyAdmin(text) {
+  const env = fileEnv();
+  const { keys } = await loadKeys(env);
+  SECRETS = collectSecrets(env, keys);
+  if (!(keys && keys.bot_token)) return false;
+  return sendTelegram(keys.bot_token, redact(['🛡 MBI Guardian', text].join('\n')));
+}
+
+// ── Qulf (qo'lda, fondagi tekshiruv va /ig-callback bir-biriga xalaqit bermasin) ──
+async function withLock(fn, maxWaitMs = 150000) {
+  const until = Date.now() + maxWaitMs;
+  while (!A.acquireLock(CFG.lockFile)) {
+    if (Date.now() > until) throw new Error('qulf band — boshqa amal hali tugamagan');
+    await new Promise((r) => setTimeout(r, 2000));
+  }
+  try { return await fn(); }
+  finally { A.releaseLock(CFG.lockFile); }
+}
+const makeReauthLink = (state, now) => R.buildAuthorizeUrl(CFG, R.newReauthState(state, now, CFG.reauthTtlMs));
+const reauthLine = (url) => `🔑 Instagram'ni qayta ulash uchun bosing va "Allow" (Ruxsat berish) ni tanlang — havola 24 soat, bir marta ishlaydi, qolganini guardian o'zi qiladi:\n${url}`;
 
 const CHECKS = [
   C.checkProcesses, C.checkLocal, C.checkPublic, C.checkTelegram, C.checkGitHub, C.checkInstagram,
@@ -109,7 +148,7 @@ const CHECKS = [
 async function runOnce(opts) {
   if (DRY) return runOnceLocked(opts);
   if (!A.acquireLock(CFG.lockFile)) {
-    console.log("[guardian] boshqa tekshiruv hozir ishlayapti — bu safar o'tkazib yuborildi");
+    console.log("[guardian] boshqa amal hozir ishlayapti — bu tekshiruv o'tkazib yuborildi");
     return { results: [], messages: [] };
   }
   try { return await runOnceLocked(opts); }
@@ -118,9 +157,7 @@ async function runOnce(opts) {
 
 async function runOnceLocked({ forceIg = false } = {}) {
   const now = Date.now();
-  let fileEnv = {};
-  try { fileEnv = A.parseEnvFile(fs.readFileSync(CFG.envFile, 'utf8')); } catch (e) {}
-  const env = { ...process.env, ...fileEnv };
+  const env = fileEnv();
   const prevState = readJson(CFG.stateFile, {});
   const ctx = { env, now, cfg: CFG, state: JSON.parse(JSON.stringify(prevState)) };
   const { keys, error } = await loadKeys(env);
@@ -137,8 +174,9 @@ async function runOnceLocked({ forceIg = false } = {}) {
 
   const { messages, state } = planAlerts(ctx.state, results, now);
   const actionTexts = [];
+  let reauthLink = null;
 
-  // ── Ruxsat etilgan yagona amal: IG_TOKEN yangilash ──
+  // ── Ruxsat etilgan amal: IG_TOKEN yangilash ──
   const igRes = results.find((r) => r.id === 'ig:token');
   const it = state.igToken;
   const expMs = it ? (it.expiresAt ? Date.parse(it.expiresAt) : Date.parse(it.obtainedAt) + 60 * 86400000) : null;
@@ -162,15 +200,22 @@ async function runOnceLocked({ forceIg = false } = {}) {
       action: 'ig_token_refresh', reason: decision.reason, ok: !!out.ok, changed: !!out.changed,
       restartedBot: !!out.restarted, expiresAt: out.expiresAt ? new Date(out.expiresAt).toISOString() : null, error: out.ok ? null : out.error,
     });
-    actionTexts.push(A.igRefreshMessage(out, CFG, now));
+    if (out.dead) reauthLink = makeReauthLink(state, now);
+    actionTexts.push(A.igRefreshMessage(out, CFG, now, { reauthUrl: reauthLink || undefined }));
     console.log(`[guardian] IG_TOKEN yangilash natijasi: ${out.ok ? 'OK' : 'XATO — ' + out.error}${out.changed ? " (token satri o'zgardi)" : ''}`);
   }
 
-  let sent = null;
   const lines = [
     ...messages.map((m) => m.text + (m.kind === 'problem' ? ` (birinchi aniqlangan: ${tashkent(m.firstSeen)}${m.repeat ? ', takroriy eslatma' : ''})` : '')),
     ...actionTexts,
   ];
+  // Token o'likligi haqida ogohlantirish ketayotgan bo'lsa — bir martalik qayta ulash havolasini qo'shamiz
+  if (!reauthLink && messages.some((m) => m.id === 'ig:token' && m.kind === 'problem')) {
+    if (DRY) lines.push("🔑 [dry-run] shu yerda bir martalik qayta ulash havolasi bo'lardi");
+    else { reauthLink = makeReauthLink(state, now); lines.push(reauthLine(reauthLink)); }
+  }
+
+  let sent = null;
   if (lines.length) {
     const text = redact(['🛡 MBI Guardian', ...lines].join('\n'));
     if (DRY) { console.log('[dry-run] yuborilmaydi:\n' + text); }
@@ -198,16 +243,60 @@ async function runOnceLocked({ forceIg = false } = {}) {
   return { results, messages };
 }
 
+function startReauthServer() {
+  const deps = {
+    withLock,
+    loadState: () => readJson(CFG.stateFile, {}),
+    saveState: (st) => writeJsonAtomic(CFG.stateFile, st),
+    getAppSecret: async () => {
+      const env = fileEnv();
+      const { keys } = await loadKeys(env);
+      return (keys && keys.ig_app_secret) || env.IG_APP_SECRET || null;
+    },
+    install: ({ state, newTok, expiresIn, now }) => A.installInstagramToken({ cfg: CFG, state, now, http: C.http, newTok, expiresIn, source: 'reauth' }),
+    notify: notifyAdmin,
+    audit: (entry) => A.audit(CFG.actionsLog, { ...entry, error: entry.error ? redact(entry.error) : entry.error }),
+  };
+  R.startCallbackServer({
+    host: CFG.callbackHost,
+    port: CFG.callbackPort,
+    onCallback: async (query) => {
+      const out = await R.handleCallback({ query, cfg: CFG, http: C.http, deps });
+      console.log(`[guardian] /ig-callback so'rovi: HTTP ${out.status}`);   // kod/state/token logga yozilmaydi
+      return out;
+    },
+  });
+  console.log(`[guardian] bir bosishli qayta ulash: ${CFG.callbackHost}:${CFG.callbackPort}/ig-callback tinglanmoqda`);
+}
+
 const ICON = { ok: '✅', info: 'ℹ️', warn: '⚠️', crit: '❌' };
 const printTable = (results) => results.forEach((r) => console.log(`${ICON[r.level] || '?'} ${r.level.padEnd(4)} ${r.name}: ${r.msg}`));
 
 (async () => {
+  if (REAUTH_CLI) {
+    if (DRY) {
+      console.log('[dry-run] havola namunasi (saqlanmaydi va ishlamaydi):\n' + R.buildAuthorizeUrl(CFG, 'DRYRUN_STATE_namuna_ishlamaydi_0000'));
+      process.exit(0);
+    }
+    const now = Date.now();
+    const url = await withLock(async () => {
+      const st = readJson(CFG.stateFile, {});
+      const link = makeReauthLink(st, now);
+      writeJsonAtomic(CFG.stateFile, st);
+      return link;
+    });
+    const ok = await notifyAdmin(reauthLine(url));
+    A.audit(CFG.actionsLog, { action: 'ig_reauth_link', ok, via: 'cli' });
+    console.log(`[guardian] qayta ulash havolasi ${ok ? "Telegram'ga yuborildi" : 'YUBORILMADI'} (havola logga yozilmaydi)`);
+    process.exit(ok ? 0 : 1);
+  }
   if (ONCE) {
     const { results } = await runOnce({ forceIg: FORCE_IG });
     printTable(results);
     process.exit(0);
   }
-  console.log(`[guardian] ishga tushdi — har ${CFG.intervalMin} daqiqada; yagona ruxsat etilgan amal: IG_TOKEN yangilash`);
+  console.log(`[guardian] ishga tushdi — har ${CFG.intervalMin} daqiqada; ruxsat etilgan amallar: IG_TOKEN yangilash, bir bosishli qayta ulash`);
+  startReauthServer();
   let running = false;
   const tick = async () => {
     if (running) return;

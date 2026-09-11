@@ -1,34 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="uz">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
 <title>MBI Token Callback</title>
 <style>
-  body { font-family: Arial; max-width: 600px; margin: 50px auto; padding: 20px; }
+  body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
   .token { background: #f0f0f0; padding: 15px; word-break: break-all; font-size: 12px; }
   button { background: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer; margin-top: 10px; }
 </style>
 </head>
 <body>
-<h2>MBI Mebel — Token</h2>
+<h2>MBI Mebel — Instagram</h2>
 <div id="result">Yuklanmoqda...</div>
 
 <script>
-// URL dan code ni olish
+// Instagram OAuth qaytish sahifasi (Meta ilovasida redirect_uri sifatida shu manzil turibdi).
+//
+// 1) Bir bosishli oqim: mbi-guardian yuborgan havola "state" bilan qaytadi — kod serverga
+//    AVTOMATIK uzatiladi. Server bir martalik state'ni va akkauntni tekshiradi, tokenni o'zi
+//    saqlaydi va natijani Telegram'ga yuboradi. Hech narsani nusxalash shart emas.
+// 2) Eski qo'lda oqim (state yo'q): kod ekranda ko'rsatiladi.
+// Sahifa referrer yubormaydi — kod boshqa saytga sizib chiqmasin. Matnlar textContent bilan (XSS yo'q).
+const SERVER_CALLBACK = 'https://65.21.147.238.nip.io/ig-callback';
 const params = new URLSearchParams(window.location.search);
 const code = params.get('code');
 const error = params.get('error');
+const state = params.get('state');
+const result = document.getElementById('result');
+
+function line(text, color) {
+  const p = document.createElement('p');
+  p.textContent = text;
+  if (color) p.style.color = color;
+  return p;
+}
 
 if (error) {
-  document.getElementById('result').innerHTML = '<p style="color:red">Xato: ' + error + '</p>';
+  result.replaceChildren(line('Xato: ' + (params.get('error_description') || error), 'red'));
+} else if (code && state) {
+  result.replaceChildren(line('Serverga ulanmoqda, bir soniya...'));
+  window.location.replace(SERVER_CALLBACK + '?code=' + encodeURIComponent(code) + '&state=' + encodeURIComponent(state));
 } else if (code) {
-  document.getElementById('result').innerHTML = 
-    '<p style="color:green">✅ Authorization code olindi!</p>' +
-    '<p>Quyidagi kodni nusxalab Claude ga yuboring:</p>' +
-    '<div class="token" id="code">' + code + '</div>' +
-    '<button onclick="navigator.clipboard.writeText(document.getElementById(\'code\').innerText); alert(\'Nusxalandi!\')">Nusxalash</button>';
+  const box = document.createElement('div');
+  box.className = 'token';
+  box.textContent = code;
+  const btn = document.createElement('button');
+  btn.textContent = 'Nusxalash';
+  btn.onclick = () => { navigator.clipboard.writeText(code); alert('Nusxalandi!'); };
+  result.replaceChildren(line('Authorization code olindi!', 'green'), line('Quyidagi kodni nusxalab Claude ga yuboring:'), box, btn);
 } else {
-  document.getElementById('result').innerHTML = '<p>Kod topilmadi. URL: ' + window.location.href + '</p>';
+  result.replaceChildren(line('Kod topilmadi.'));
 }
 </script>
 </body>

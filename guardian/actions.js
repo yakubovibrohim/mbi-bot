@@ -2,12 +2,13 @@
 // ─── MBI Guardian: RUXSAT ETILGAN yozuv amallari ───
 // Guardian "faqat o'qish" rejimidan chiqadigan YAGONA joy. Bu fayldan tashqarida hech narsa o'zgartirilmaydi.
 //
-// Ruxsat ro'yxati (hozircha bitta amal):
-//   ig_token_refresh — IG_TOKEN ni muddati tugashidan oldin yangilash.
-//     • yangi token /me bilan tekshirilmaguncha HECH NARSA yozilmaydi;
-//     • token satri o'zgarsa: /root/.mbi.env dagi FAQAT IG_TOKEN qatori almashtiriladi
-//       (oldin zaxira, 600 ruxsat, guardian zaxiralaridan oxirgi 3 tasi saqlanadi),
-//       mbi-bot toza muhitdan qayta yaratiladi va bot yangi tokenni olgani PM2 env izidan tekshiriladi.
+// Ruxsat ro'yxati:
+//   ig_token_refresh — IG_TOKEN ni muddati tugashidan oldin yangilash (refreshInstagramToken).
+//   ig_reauth        — bir bosishli qayta ulashdan kelgan tokenni o'rnatish (reauth.js -> installInstagramToken).
+// Ikkalasi ham bitta tekshirilgan yo'ldan o'tadi — installInstagramToken:
+//   • token satri o'zgarsa: /root/.mbi.env dagi FAQAT IG_TOKEN qatori almashtiriladi
+//     (oldin zaxira, 600 ruxsat, guardian zaxiralaridan oxirgi 3 tasi saqlanadi),
+//     mbi-bot toza muhitdan qayta yaratiladi va bot yangi tokenni olgani PM2 env izidan tekshiriladi.
 // Har amal actions.log ga yoziladi (kalit qiymatlarisiz) va ADMIN ga xabar qilinadi.
 // Buxgalteriya ma'lumotlari, pul, kod, boshqa kalitlar — HECH QACHON.
 
@@ -115,34 +116,20 @@ function pruneBackups(envFile, keep) {
   } catch (e) {}
 }
 
-// ── Amalning o'zi ──
-async function refreshInstagramToken({ cfg, state, now, http, deps = {} }) {
+// ── Tekshirilgan tokenni o'rnatish (yangilash ham, qayta ulash ham shu yerdan o'tadi) ──
+// Chaqiruvchi yangi token ishlashini OLDINDAN tasdiqlagan bo'lishi shart.
+async function installInstagramToken({ cfg, state, now, http, newTok, expiresIn, source = 'refresh', deps = {} }) {
   const recreate = deps.recreateBot || recreateBot;
   const botFp = deps.botEnvFingerprint || botEnvFingerprint;
 
   const envText = fs.readFileSync(cfg.envFile, 'utf8');
   const oldTok = readEnvValue(envText, 'IG_TOKEN');
-  if (!oldTok) return { ok: false, error: '.mbi.env da IG_TOKEN topilmadi' };
+  const expiresAt = now + Number(expiresIn) * 1000;
+  const newState = { fp: fp(newTok), obtainedAt: new Date(now).toISOString(), expiresAt: new Date(expiresAt).toISOString(), source };
 
-  const res = await http('https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=' + encodeURIComponent(oldTok), { timeoutMs: 30000 });
-  const j = res.json;
-  if (!(res.status === 200 && j && j.access_token && Number(j.expires_in) > 0)) {
-    const code = j && j.error && j.error.code;
-    const msg = j && j.error && j.error.message ? String(j.error.message).slice(0, 120) : (res.status === 0 ? res.error : 'HTTP ' + res.status);
-    return { ok: false, dead: code === 190, error: msg };
-  }
-  const newTok = String(j.access_token);
-  const expiresAt = now + Number(j.expires_in) * 1000;
-
-  // Yangi token haqiqatan ishlaydimi — hech narsa yozishdan OLDIN
-  const me = await http('https://graph.instagram.com/v21.0/me?fields=username&access_token=' + encodeURIComponent(newTok), { timeoutMs: 20000 });
-  if (!(me.json && me.json.username)) return { ok: false, error: "yangi token tekshiruvdan o'tmadi — hech narsa yozilmadi" };
-
-  const newState = { fp: fp(newTok), obtainedAt: new Date(now).toISOString(), expiresAt: new Date(expiresAt).toISOString(), source: 'refresh' };
-  const changed = newTok !== oldTok;
-  if (!changed) {
+  if (newTok === oldTok) {
     state.igToken = newState;
-    return { ok: true, changed: false, restarted: false, expiresAt, username: me.json.username };
+    return { ok: true, changed: false, restarted: false, expiresAt };
   }
 
   let nextText;
@@ -166,19 +153,47 @@ async function refreshInstagramToken({ cfg, state, now, http, deps = {} }) {
   if (!rb.ok) return { ok: false, changed: true, botDown: true, error: 'mbi-bot qayta ko’tarilmadi: ' + rb.error, expiresAt };
   const got = await botFp(cfg, 'IG_TOKEN');
   if (got !== newState.fp) return { ok: false, changed: true, restarted: true, error: "mbi-bot yangi tokenni olmadi (PM2 env izi mos emas)", expiresAt };
-  return { ok: true, changed: true, restarted: true, expiresAt, username: me.json.username };
+  return { ok: true, changed: true, restarted: true, expiresAt };
 }
 
-function igRefreshMessage(out, cfg, now) {
+// ── Muddatidan oldin yangilash ──
+async function refreshInstagramToken({ cfg, state, now, http, deps = {} }) {
+  const envText = fs.readFileSync(cfg.envFile, 'utf8');
+  const oldTok = readEnvValue(envText, 'IG_TOKEN');
+  if (!oldTok) return { ok: false, error: '.mbi.env da IG_TOKEN topilmadi' };
+
+  const res = await http('https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=' + encodeURIComponent(oldTok), { timeoutMs: 30000 });
+  const j = res.json;
+  if (!(res.status === 200 && j && j.access_token && Number(j.expires_in) > 0)) {
+    const code = j && j.error && j.error.code;
+    const msg = j && j.error && j.error.message ? String(j.error.message).slice(0, 120) : (res.status === 0 ? res.error : 'HTTP ' + res.status);
+    return { ok: false, dead: code === 190, error: msg };
+  }
+  const newTok = String(j.access_token);
+
+  // Yangi token haqiqatan ishlaydimi — hech narsa yozishdan OLDIN
+  const me = await http('https://graph.instagram.com/v21.0/me?fields=username&access_token=' + encodeURIComponent(newTok), { timeoutMs: 20000 });
+  if (!(me.json && me.json.username)) return { ok: false, error: "yangi token tekshiruvdan o'tmadi — hech narsa yozilmadi" };
+
+  const out = await installInstagramToken({ cfg, state, now, http, newTok, expiresIn: Number(j.expires_in), source: 'refresh', deps });
+  return { ...out, username: me.json.username };
+}
+
+// opts.kind: 'refresh' | 'reauth'; opts.reauthUrl: bir martalik qayta ulash havolasi (bo'lmasa cfg.igReauthUrl)
+function igRefreshMessage(out, cfg, now, opts = {}) {
+  const reauth = opts.kind === 'reauth';
   if (out.ok) {
     const days = Math.floor((out.expiresAt - now) / DAY);
-    const head = `🔄 Instagram tokeni yangilandi: endi ${days} kun amal qiladi (${dmy(out.expiresAt)} gacha).`;
+    const head = reauth
+      ? `🔑 Instagram qayta ulandi: token ${days} kun amal qiladi (${dmy(out.expiresAt)} gacha).`
+      : `🔄 Instagram tokeni yangilandi: endi ${days} kun amal qiladi (${dmy(out.expiresAt)} gacha).`;
     return out.changed
       ? head + ' Yangi token .mbi.env ga yozildi, mbi-bot qayta ishga tushirildi va yangi tokenni oldi.'
       : head + " Token satri o'zgarmadi — bot qayta ishga tushirilmadi.";
   }
-  if (out.botDown) return `❌ Instagram tokeni yangilandi, lekin ${out.error}. Darhol tekshiring!`;
-  if (out.dead) return `❌ Instagram tokenini yangilab bo'lmadi — token o'lik (${out.error}). Qayta ruxsat bering: ${cfg.igReauthUrl}`;
+  if (out.botDown) return `❌ Instagram tokeni yozildi, lekin ${out.error}. Darhol tekshiring!`;
+  if (out.dead) return `❌ Instagram tokenini yangilab bo'lmadi — token o'lik (${out.error}). Qayta ulash uchun bosing (havola 24 soat, bir marta ishlaydi): ${opts.reauthUrl || cfg.igReauthUrl}`;
+  if (reauth) return `⚠️ Instagram'ni qayta ulashda xato: ${out.error}.`;
   return `⚠️ Instagram tokenini yangilashda xato: ${out.error}. ${Math.round(cfg.igRefresh.retryAfterMs / 3600000)} soatdan keyin qayta uriniladi.`;
 }
 
@@ -207,7 +222,7 @@ function acquireLock(file, staleMs = 10 * 60000, retried = false) {
 const releaseLock = (file) => { try { fs.unlinkSync(file); } catch (e) {} };
 
 module.exports = {
-  refreshInstagramToken, igRefreshMessage, shouldRefreshIg,
+  refreshInstagramToken, installInstagramToken, igRefreshMessage, shouldRefreshIg,
   parseEnvFile, readEnvValue, replaceEnvLine,
   audit, acquireLock, releaseLock,
   _internal: { fp, pruneBackups },
