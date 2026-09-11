@@ -1,19 +1,6 @@
 {
   "lastMsgId": 102663,
-  "pending": {
-    "mtx3i8oec4z": {
-      "dir": "out",
-      "amtUzs": 12490,
-      "place": "IVI UZBEKISTAN, UZ",
-      "rawBalance": 846623,
-      "date": "11.09.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1789139571566,
-      "kind": "personal"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -1059,6 +1046,11 @@
       "date": "11.09.2026",
       "dir": "out",
       "amt": 17187
+    },
+    {
+      "date": "11.09.2026",
+      "dir": "out",
+      "amt": 12490
     }
   ],
   "lastBalances": {
