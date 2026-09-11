@@ -3,7 +3,8 @@
   "description": "MBI Mebel Telegram Bot",
   "main": "bot.js",
   "scripts": {
-    "start": "node bot.js"
+    "start": "node bot.js",
+    "test": "node test/run-all.js"
   },
   "engines": {
     "node": ">=18"
