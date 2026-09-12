@@ -648,6 +648,14 @@
    {
     "role": "assistant",
     "content": "Хоп, эрталаб 9да боғланамиз 👍🏻 Раҳмат, Жалолиддин!"
+   },
+   {
+    "role": "user",
+    "content": "Ок"
+   },
+   {
+    "role": "assistant",
+    "content": "👍🏻"
    }
   ],
   "839081762565168": [
@@ -807,7 +815,7 @@
    "followedUp": false
   },
   "1082561121137609": {
-   "lastClientAt": 1789237802088,
+   "lastClientAt": 1789238583085,
    "followedUp": false
   },
   "839081762565168": {
