@@ -1,15 +1,5 @@
 {
  "histories": {
-  "1336388148315646": [
-   {
-    "role": "user",
-    "content": "Ассалому алеком"
-   },
-   {
-    "role": "assistant",
-    "content": "Ва Алейкум Ассалом, яхшимисиз тузумисз 👍🏻 Исмингиз нима??"
-   }
-  ],
   "1343145170962630": [
    {
     "role": "user",
@@ -550,10 +540,6 @@
   ]
  },
  "activity": {
-  "1336388148315646": {
-   "lastClientAt": 1789052767207,
-   "followedUp": true
-  },
   "1343145170962630": {
    "lastClientAt": 1789056713727,
    "followedUp": true
@@ -592,11 +578,11 @@
   },
   "1014561978303798": {
    "lastClientAt": 1789138449890,
-   "followedUp": false
+   "followedUp": true
   },
   "1744141400124648": {
    "lastClientAt": 1789140323515,
-   "followedUp": false
+   "followedUp": true
   },
   "1778583256675959": {
    "lastClientAt": 1789137261017,
