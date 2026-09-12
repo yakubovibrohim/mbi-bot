@@ -557,6 +557,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкум 🙌 Бу премиум крашенный ошхона, погонаж метри тахминан 800$ атрофида, лекин бюджетга қараб арзонроғини ҳам қиламиз.\n\nОшхонангиз неча метр? Шахсийга ёзсангиз, аниқроқ айтаман."
    }
+  ],
+  "1725323591916663": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Ортаси нмекан\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu Alaykum 🙌 Bu premium krashenniy oshxona, погони метри taxminan 800$ atrofida. Byudjetga qarab arzonroq variantlari ham bor. Shaxsiyga (DM) yozing, batafsil aytamiz 👍🏻"
+   }
   ]
  },
  "activity": {
@@ -666,6 +676,10 @@
   },
   "840607725739946": {
    "lastClientAt": 1789228992552,
+   "followedUp": false
+  },
+  "1725323591916663": {
+   "lastClientAt": 1789234150919,
    "followedUp": false
   }
  }
