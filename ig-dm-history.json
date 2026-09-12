@@ -537,6 +537,16 @@
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Что планируете?"
    }
+  ],
+  "1399381118457965": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Неччи метр шу пулга ?\" deb postga komment yozdi. Post tavsifi: \"[REEL:DdHLm78gp2F] Oq Neoklassika oshxona — sokin, toza va uzoq yillarga. Qora marmar fartuk va tilla detallar bilan uyg’unlik. Har bir shkaf, har bir tortma o’lchov bo’yicha, aynan shu xonaga moslab yasalgan. Ichki to’ldirmalarni ham ko’rsatdim — chunki oshxonaning qulayligi aynan shu yerda bilinadi. Sizning uyingiz\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu Alaykum 🙌 Batafsil narx va o'lcham uchun shaxsiyга (DM) yozing, hammasini tushuntiramiz."
+   }
   ]
  },
  "activity": {
@@ -638,6 +648,10 @@
   },
   "3515615788599789": {
    "lastClientAt": 1789218743082,
+   "followedUp": false
+  },
+  "1399381118457965": {
+   "lastClientAt": 1789224677434,
    "followedUp": false
   }
  }
