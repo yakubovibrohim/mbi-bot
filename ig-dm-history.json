@@ -547,6 +547,16 @@
     "role": "assistant",
     "content": "Assalomu Alaykum 🙌 Batafsil narx va o'lcham uchun shaxsiyга (DM) yozing, hammasini tushuntiramiz."
    }
+  ],
+  "840607725739946": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Price\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 🙌 Бу премиум крашенный ошхона, погонаж метри тахминан 800$ атрофида, лекин бюджетга қараб арзонроғини ҳам қиламиз.\n\nОшхонангиз неча метр? Шахсийга ёзсангиз, аниқроқ айтаман."
+   }
   ]
  },
  "activity": {
@@ -652,6 +662,10 @@
   },
   "1399381118457965": {
    "lastClientAt": 1789224677434,
+   "followedUp": false
+  },
+  "840607725739946": {
+   "lastClientAt": 1789228992552,
    "followedUp": false
   }
  }
