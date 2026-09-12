@@ -574,6 +574,14 @@
    {
     "role": "assistant",
     "content": "Shaxsiyga (Direct) yozib qo'ying, hamma ma'lumotni yuboramiz 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz \"@mbi_mebel чикмади,этищ кийнмасдур\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Hozir o'zimiz Directga yozamiz, o'sha yerdan gaplashamiz 👍🏻"
    }
   ]
  },
@@ -687,7 +695,7 @@
    "followedUp": false
   },
   "1725323591916663": {
-   "lastClientAt": 1789234252172,
+   "lastClientAt": 1789234317369,
    "followedUp": false
   }
  }
