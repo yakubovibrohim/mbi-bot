@@ -583,6 +583,16 @@
     "role": "assistant",
     "content": "Hozir o'zimiz Directga yozamiz, o'sha yerdan gaplashamiz 👍🏻"
    }
+  ],
+  "1082561121137609": [
+   {
+    "role": "user",
+    "content": "Сколько стоит дизайн интерьера?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Кухни выходят примерно от $1000. Что планируете?"
+   }
   ]
  },
  "activity": {
@@ -696,6 +706,10 @@
   },
   "1725323591916663": {
    "lastClientAt": 1789234317369,
+   "followedUp": false
+  },
+  "1082561121137609": {
+   "lastClientAt": 1789236657246,
    "followedUp": false
   }
  }
