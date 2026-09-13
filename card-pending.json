@@ -1,6 +1,18 @@
 {
   "lastMsgId": 102726,
-  "pending": {},
+  "pending": {
+    "mtzkz3rx3cn": {
+      "dir": "out",
+      "amtUzs": 160510,
+      "place": "IP OOO ANGLESEY FOOD, UZ",
+      "rawBalance": 686113,
+      "date": "13.09.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1789289844189
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
