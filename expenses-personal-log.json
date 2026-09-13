@@ -1507,5 +1507,15 @@
     "pay_method": "card",
     "place": "IVI UZBEKISTAN, UZ",
     "ts": "2026-09-11T15:18:36.065Z"
+  },
+  {
+    "date": "13.09.2026",
+    "note": "💳 Korzinka",
+    "amount_uzs": 160510,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IP OOO ANGLESEY FOOD, UZ",
+    "ts": "2026-09-13T10:01:43.559Z"
   }
 ]
