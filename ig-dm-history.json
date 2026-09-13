@@ -745,6 +745,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкум 🤲 Иншааллох орзуингиз рўёбга чиқади. Бу премиум крашенный ошхонамиз — фасадлари Турция «Genc» краскаси билан 4 этапда бўялган, фурнитура Blum, столешница акрил тош 👍🏻\n\nЯнги уй қачонга режалашгансиз?"
    }
+  ],
+  "1414287143996612": [
+   {
+    "role": "user",
+    "content": "✨ MAHSULOTINGIZNI ZAMONAVIY REKLAMA BILAN YANGI DARAJAGA OLIB CHIQING! ✨\nAssalomu alaykum! 👋\nMahsulotlaringizni chiroyli va professional tarzda reklama qilishni xohlaysizmi?\n🤖 Sun’iy intellekt yordamida mahsulotlaringiz uchun: 📸 Kreativ va sifatli reklama rasmlari\n🎬 Professional AI video reklamalar\n✨ Zamonaviy va kreativ dizaynlar\n💫 Mahsulotingizga mos original reklama g‘oyalari\ntayyorlab beraman!\nSiz mahsulotingizni yuborasiz — men esa uni e’tiborni tortadigan chiroyli reklamaga aylantiraman. 🚀\n📩 Murojaat uchun: DM"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu alaykum! Rahmat taklif uchun, lekin biz o'zimiz mebel ishlab chiqaramiz — reklama xizmati kerak bo'lsa keyinroq bog'lanamiz 👍🏻"
+   }
   ]
  },
  "activity": {
@@ -878,6 +888,10 @@
   },
   "2122052365058102": {
    "lastClientAt": 1789282902035,
+   "followedUp": false
+  },
+  "1414287143996612": {
+   "lastClientAt": 1789288358137,
    "followedUp": false
   }
  }
