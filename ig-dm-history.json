@@ -26,58 +26,6 @@
     "content": "Арзимайди 🙌 Аниқ ҳисоб-китоб ва бепул лойиҳа учун телефон рақамингизни қолдиринг — Иброхим ака ўзи ҳисоблаб қўнғироқ қилади."
    }
   ],
-  "1014561978303798": [
-   {
-    "role": "user",
-    "content": "[Mijoz ovozli xabar yubordi]"
-   },
-   {
-    "role": "assistant",
-    "content": "Assalomu Aleykum, yaxshimisiz 👍🏻 Ovozli xabaringizni eshitolmadim, shu yerga yozib qoldirsangiz — nima kerak edi, oshxonami, shkafmi?"
-   },
-   {
-    "role": "user",
-    "content": "[Mijoz ovozli xabar yubordi]"
-   },
-   {
-    "role": "assistant",
-    "content": "Kechirasiz, ovozli xabar bu yerda ochilmayapti. Iltimos, kerakli narsani matn qilib yozing — oshxona, shkaf yoki yotoqxonami, o'lchami bormi?"
-   },
-   {
-    "role": "user",
-    "content": "Assalomu alekum yaxshi m isiz"
-   },
-   {
-    "role": "assistant",
-    "content": "Va Aleykum Assalom, yaxshi, rahmat 👍🏻 O'zingiz yaxshimisiz? Nima kerak edi — oshxona, shkaf yoki yotoqxonami?"
-   }
-  ],
-  "1744141400124648": [
-   {
-    "role": "user",
-    "content": "Сколько стоит дизайн интерьера?\nЗдравствуйте ассалому алейкум"
-   },
-   {
-    "role": "assistant",
-    "content": "Ва Алейкум Ассалом, здравствуйте! 👍🏻 Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%.\n\nА что планируете — кухню или шкаф?"
-   },
-   {
-    "role": "user",
-    "content": "Я пишу вам с целью сотрудичества"
-   },
-   {
-    "role": "assistant",
-    "content": "Здравствуйте! Понял вас. По вопросам сотрудничества лучше напрямую с Иброхимом — он сам всё обсудит.\n\nОставьте номер телефона, он свяжется с вами. Или можете написать ему: +998 91 135 44 66 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Спасибо"
-   },
-   {
-    "role": "assistant",
-    "content": "Пожалуйста! 🙌 Будем на связи."
-   }
-  ],
   "909667618580297": [
    {
     "role": "user",
@@ -756,14 +704,6 @@
  "activity": {
   "38189695470676814": {
    "lastClientAt": 1789143158440,
-   "followedUp": true
-  },
-  "1014561978303798": {
-   "lastClientAt": 1789138449890,
-   "followedUp": true
-  },
-  "1744141400124648": {
-   "lastClientAt": 1789140323515,
    "followedUp": true
   },
   "909667618580297": {
