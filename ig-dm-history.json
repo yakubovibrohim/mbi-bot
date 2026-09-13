@@ -26,16 +26,6 @@
     "content": "Арзимайди 🙌 Аниқ ҳисоб-китоб ва бепул лойиҳа учун телефон рақамингизни қолдиринг — Иброхим ака ўзи ҳисоблаб қўнғироқ қилади."
    }
   ],
-  "2239297523502158": [
-   {
-    "role": "user",
-    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"Yigit mebelchi boladi qiz………..? #uzbekistan #me #memes ##homedecor\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Ассалому Алейкум 👍🏻 Яхшимисиз? Мебел бўйича савол бор эди-да?\n\nНима режалаштиряпсиз — ошхонами, шкафми? Исмингиз нима?"
-   }
-  ],
   "4345973068957013": [
    {
     "role": "user",
@@ -686,10 +676,6 @@
  "activity": {
   "38189695470676814": {
    "lastClientAt": 1789143158440,
-   "followedUp": true
-  },
-  "2239297523502158": {
-   "lastClientAt": 1789102558913,
    "followedUp": true
   },
   "4345973068957013": {
