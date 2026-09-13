@@ -675,6 +675,16 @@
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%.\n\nЧто планируете — кухню или шкаф?"
    }
+  ],
+  "28474436065485080": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Нархи\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 🙌 Шахсийга (DM) ёзинг, барча маълумотни берамиз"
+   }
   ]
  },
  "activity": {
@@ -812,6 +822,10 @@
   },
   "1067056209497161": {
    "lastClientAt": 1789307926886,
+   "followedUp": false
+  },
+  "28474436065485080": {
+   "lastClientAt": 1789308234388,
    "followedUp": false
   }
  }
