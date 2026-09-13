@@ -725,6 +725,16 @@
     "role": "assistant",
     "content": "Здравствуйте! Заказ мы оформляем по-другому — сначала бесплатно замеряем и делаем точный 3D-проект в программе Bazis, вы заранее видите свою мебель, а потом уже договор.\n\nЧто планируете — кухню, шкаф или спальню?"
    }
+  ],
+  "1398915981746916": [
+   {
+    "role": "user",
+    "content": "ZOʻR. NIYYAT QILDIK"
+   },
+   {
+    "role": "assistant",
+    "content": "Zoʻr! Xudo xohlasa, chiroyli chiqadi 👍🏻\n\nNima rejalashtiryapsiz — oshxonami, shkafmi yoki yotoqxona?"
+   }
   ]
  },
  "activity": {
@@ -850,6 +860,10 @@
   },
   "847552588447588": {
    "lastClientAt": 1789274679505,
+   "followedUp": false
+  },
+  "1398915981746916": {
+   "lastClientAt": 1789277845983,
    "followedUp": false
   }
  }
