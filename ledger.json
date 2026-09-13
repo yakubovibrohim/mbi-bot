@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-12T13:13:08.465Z",
+  "updated": "2026-09-13T10:01:56.977Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 83638441,
+  "balance_uzs": 83477931,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 145308817,
+    "chiqim": 145469327,
     "by_category": {
       "office": 20330183,
-      "personal": 55677266,
+      "personal": 55837776,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
       "deal_expense": 45841448,
@@ -2911,6 +2911,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 12490,
       "name": "💳 Kino",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "13.09.2026",
+      "time": "15:01",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 160510,
+      "name": "💳 Korzinka",
       "pay": "karta",
       "src": "personal"
     }
