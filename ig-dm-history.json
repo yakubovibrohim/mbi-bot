@@ -735,6 +735,16 @@
     "role": "assistant",
     "content": "Zoʻr! Xudo xohlasa, chiroyli chiqadi 👍🏻\n\nNima rejalashtiryapsiz — oshxonami, shkafmi yoki yotoqxona?"
    }
+  ],
+  "2122052365058102": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Иншаоллох янги уй курсак ошхонам шунака бусин🤲\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 🤲 Иншааллох орзуингиз рўёбга чиқади. Бу премиум крашенный ошхонамиз — фасадлари Турция «Genc» краскаси билан 4 этапда бўялган, фурнитура Blum, столешница акрил тош 👍🏻\n\nЯнги уй қачонга режалашгансиз?"
+   }
   ]
  },
  "activity": {
@@ -864,6 +874,10 @@
   },
   "1398915981746916": {
    "lastClientAt": 1789277845983,
+   "followedUp": false
+  },
+  "2122052365058102": {
+   "lastClientAt": 1789282902035,
    "followedUp": false
   }
  }
