@@ -1,15 +1,5 @@
 {
  "histories": {
-  "909667618580297": [
-   {
-    "role": "user",
-    "content": "[Mijoz \"Канчадан мкв\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Ассалому Алейкум 🙌 Шахсийга (DM) ёзинг, барча маълумот берамиз"
-   }
-  ],
   "1014204704999392": [
    {
     "role": "user",
@@ -706,10 +696,6 @@
   ]
  },
  "activity": {
-  "909667618580297": {
-   "lastClientAt": 1789144924668,
-   "followedUp": true
-  },
   "1014204704999392": {
    "lastClientAt": 1789147654666,
    "followedUp": true
