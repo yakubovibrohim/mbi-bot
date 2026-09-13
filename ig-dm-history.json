@@ -729,6 +729,16 @@
     "role": "assistant",
     "content": "Тушундим — газ ёнидаги ва тепа-пастки шкафлар, тўлиқ комплект. 2 метрга акрил + GTV бўлса тахминан 800–900$ атрофида, ЛМДФ бўлса 700$ атрофида чиқади.\n\nАниқ ўлчаб, бепул лойиҳа қилиб берамиз. Телефон рақамингизни ёзиб қолдиринг, Иброхим ака ўзи боғланиб аниқ ҳисоблаб беради 😊"
    }
+  ],
+  "2568617993568092": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Juda ajoyib Fargonaga bormi shunday chiroyli ishlarizdan namuna\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Rahmat izohingiz uchun 🙌 Hozircha faqat Toshkentda ishlaymiz, Farg'onaga afsuski bora olmaymiz.\n\nShaxsiyga (DM) yozing, tayyor ishlarimizdan namunalar ko'rsataman."
+   }
   ]
  },
  "activity": {
@@ -878,6 +888,10 @@
   },
   "1487609459809470": {
    "lastClientAt": 1789316063660,
+   "followedUp": false
+  },
+  "2568617993568092": {
+   "lastClientAt": 1789318562057,
    "followedUp": false
   }
  }
