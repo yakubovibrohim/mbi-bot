@@ -755,6 +755,16 @@
     "role": "assistant",
     "content": "Assalomu alaykum! Rahmat taklif uchun, lekin biz o'zimiz mebel ishlab chiqaramiz — reklama xizmati kerak bo'lsa keyinroq bog'lanamiz 👍🏻"
    }
+  ],
+  "2230942884430422": [
+   {
+    "role": "user",
+    "content": "Какой срок выполнения проекта?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Зависит от фасада: ЛМДФ и акрил — до 14 рабочих дней, крашеный и шпон — до 30 дней, стараемся закончить раньше. За каждый день опоздания платим штраф.\n\nА что планируете — кухню, шкаф или спальню?"
+   }
   ]
  },
  "activity": {
@@ -892,6 +902,10 @@
   },
   "1414287143996612": {
    "lastClientAt": 1789288358137,
+   "followedUp": false
+  },
+  "2230942884430422": {
+   "lastClientAt": 1789293017627,
    "followedUp": false
   }
  }
