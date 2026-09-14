@@ -1,15 +1,5 @@
 {
  "histories": {
-  "2164085681123340": [
-   {
-    "role": "user",
-    "content": "[Mijoz \"Аллохга осон. Хаммагаям насиб этсин. МашаАллох\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Раҳмат, иншааллох ҳаммага насиб этсин 🙌 Бу премиум ошхонамиз эди. Ўзингизга ҳам мебел режалаштиряпсизми — ошхонами, шкафми?"
-   }
-  ],
   "1025134133863079": [
    {
     "role": "user",
@@ -430,10 +420,6 @@
   ]
  },
  "activity": {
-  "2164085681123340": {
-   "lastClientAt": 1789261671055,
-   "followedUp": true
-  },
   "1025134133863079": {
    "lastClientAt": 1789263604865,
    "followedUp": true
