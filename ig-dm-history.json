@@ -1,31 +1,5 @@
 {
  "histories": {
-  "1725323591916663": [
-   {
-    "role": "user",
-    "content": "[Mijoz \"Ортаси нмекан\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Assalomu Alaykum 🙌 Bu premium krashenniy oshxona, погони метри taxminan 800$ atrofida. Byudjetga qarab arzonroq variantlari ham bor. Shaxsiyga (DM) yozing, batafsil aytamiz 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "[Mijoz \"@mbi_mebel чикмади,этиш км\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Shaxsiyga (Direct) yozib qo'ying, hamma ma'lumotni yuboramiz 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "[Mijoz \"@mbi_mebel чикмади,этищ кийнмасдур\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Hozir o'zimiz Directga yozamiz, o'sha yerdan gaplashamiz 👍🏻"
-   }
-  ],
   "1082561121137609": [
    {
     "role": "user",
@@ -566,10 +540,6 @@
   ]
  },
  "activity": {
-  "1725323591916663": {
-   "lastClientAt": 1789234317369,
-   "followedUp": true
-  },
   "1082561121137609": {
    "lastClientAt": 1789238583085,
    "followedUp": true
@@ -672,7 +642,7 @@
   },
   "38651288141153166": {
    "lastClientAt": 1789319789961,
-   "followedUp": false
+   "followedUp": true
   },
   "989672080831606": {
    "lastClientAt": 1789335228002,
