@@ -358,6 +358,14 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Что планируете?"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz video yubordi]\nТочно такой же и цвет и мебель"
+   },
+   {
+    "role": "assistant",
+    "content": "[Video tavsifi ko'rinmayapti, aniq loyihani aniqlab bo'lmaydi]\n\nХорошо, сделаем так же. А куда планируете — кухня или шкаф? И какие размеры примерно?"
    }
   ],
   "4443864929261355": [
@@ -533,7 +541,7 @@
    "followedUp": false
   },
   "1375961824518419": {
-   "lastClientAt": 1789363272271,
+   "lastClientAt": 1789400261182,
    "followedUp": false
   },
   "4443864929261355": {
