@@ -366,6 +366,14 @@
    {
     "role": "assistant",
     "content": "[Video tavsifi ko'rinmayapti, aniq loyihani aniqlab bo'lmaydi]\n\nХорошо, сделаем так же. А куда планируете — кухня или шкаф? И какие размеры примерно?"
+   },
+   {
+    "role": "user",
+    "content": "Нет можно сначала цену сколько"
+   },
+   {
+    "role": "assistant",
+    "content": "Понял. Скажите длину кухни в метрах и сколько ярусов — 2 или 3, тогда прикину примерно 👍🏻"
    }
   ],
   "4443864929261355": [
@@ -541,7 +549,7 @@
    "followedUp": false
   },
   "1375961824518419": {
-   "lastClientAt": 1789400261182,
+   "lastClientAt": 1789400312997,
    "followedUp": false
   },
   "4443864929261355": {
