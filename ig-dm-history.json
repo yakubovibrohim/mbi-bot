@@ -1,15 +1,5 @@
 {
  "histories": {
-  "1399381118457965": [
-   {
-    "role": "user",
-    "content": "[Mijoz \"Неччи метр шу пулга ?\" deb postga komment yozdi. Post tavsifi: \"[REEL:DdHLm78gp2F] Oq Neoklassika oshxona — sokin, toza va uzoq yillarga. Qora marmar fartuk va tilla detallar bilan uyg’unlik. Har bir shkaf, har bir tortma o’lchov bo’yicha, aynan shu xonaga moslab yasalgan. Ichki to’ldirmalarni ham ko’rsatdim — chunki oshxonaning qulayligi aynan shu yerda bilinadi. Sizning uyingiz\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Assalomu Alaykum 🙌 Batafsil narx va o'lcham uchun shaxsiyга (DM) yozing, hammasini tushuntiramiz."
-   }
-  ],
   "840607725739946": [
    {
     "role": "user",
@@ -586,10 +576,6 @@
   ]
  },
  "activity": {
-  "1399381118457965": {
-   "lastClientAt": 1789224677434,
-   "followedUp": true
-  },
   "840607725739946": {
    "lastClientAt": 1789228992552,
    "followedUp": true
@@ -684,7 +670,7 @@
   },
   "1385924179788568": {
    "lastClientAt": 1789308892373,
-   "followedUp": false
+   "followedUp": true
   },
   "1487609459809470": {
    "lastClientAt": 1789316063660,
