@@ -24,6 +24,17 @@
       "step": "type",
       "askedAt": 1789364665256,
       "remindedAt": 1789386294221
+    },
+    "mu178m6pngk": {
+      "dir": "out",
+      "amtUzs": 48528,
+      "place": "PAYME P2P, UZ",
+      "rawBalance": 564365,
+      "date": "14.09.2026",
+      "title": "Spisanie c karty",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1789387705681
     }
   },
   "resolved": [
