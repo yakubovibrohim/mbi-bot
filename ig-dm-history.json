@@ -1,15 +1,5 @@
 {
  "histories": {
-  "1556410265698691": [
-   {
-    "role": "user",
-    "content": "[Mijoz \"Прайслари буса юборила\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Ассалому Алейкум 🙌 Шахсийга (DM) ёзинг, барча нархларни батафсил берамиз"
-   }
-  ],
   "1067056209497161": [
    {
     "role": "user",
@@ -224,10 +214,6 @@
   ]
  },
  "activity": {
-  "1556410265698691": {
-   "lastClientAt": 1789304568956,
-   "followedUp": true
-  },
   "1067056209497161": {
    "lastClientAt": 1789307926886,
    "followedUp": true
