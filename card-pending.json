@@ -36,19 +36,6 @@
       "step": "type",
       "askedAt": 1789387705681,
       "remindedAt": 1789481335842
-    },
-    "mu1amsek7b3": {
-      "dir": "out",
-      "amtUzs": 450000,
-      "place": "IYB P2P, UZ",
-      "rawBalance": 114365,
-      "date": "14.09.2026",
-      "title": "Spisanie c karty",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1789393405772,
-      "remindedAt": 1789487035946,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -1106,6 +1093,11 @@
       "date": "13.09.2026",
       "dir": "out",
       "amt": 160510
+    },
+    {
+      "date": "14.09.2026",
+      "dir": "out",
+      "amt": 450000
     }
   ],
   "lastBalances": {
