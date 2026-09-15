@@ -1,33 +1,5 @@
 {
  "histories": {
-  "1010404198723640": [
-   {
-    "role": "user",
-    "content": "[Mijoz \"Ин-ша-Аллоҳ манга ҳам насиб қилсин\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Омийн, иншааллоҳ насиб қилсин 🙌 Бу премиум ошхонамиз — крашенный фасад, Blum фурнитура. Ошхона режалаштиряпсизми, ўлчами бор?"
-   }
-  ],
-  "1894124211967179": [
-   {
-    "role": "user",
-    "content": "[Mijoz \"Цену\" deb postga komment yozdi. Post tavsifi: \"[REEL:DGs6njXoUB8]\"]"
-   },
-   {
-    "role": "user",
-    "content": "[Mijoz \"Можно\" deb postga komment yozdi. Post tavsifi: \"[REEL:DGs6njXoUB8]\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Здравствуйте! По этому проекту точную цену Иброхим сам посчитает — она зависит от размеров.\n\nНапишите, пожалуйста, какая длина кухни и сколько ярусов — 2 или 3?"
-   },
-   {
-    "role": "assistant",
-    "content": "Здравствуйте! По этому проекту точную цену Иброхим сам посчитает 👍🏻 Подскажите, что планируете — кухню, шкаф? И какие примерно размеры?"
-   }
-  ],
   "1050361204483322": [
    {
     "role": "user",
@@ -292,14 +264,6 @@
   ]
  },
  "activity": {
-  "1010404198723640": {
-   "lastClientAt": 1789295576961,
-   "followedUp": true
-  },
-  "1894124211967179": {
-   "lastClientAt": 1789296917832,
-   "followedUp": true
-  },
   "1050361204483322": {
    "lastClientAt": 1789297875900,
    "followedUp": true
