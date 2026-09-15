@@ -1,15 +1,5 @@
 {
  "histories": {
-  "1398915981746916": [
-   {
-    "role": "user",
-    "content": "ZOʻR. NIYYAT QILDIK"
-   },
-   {
-    "role": "assistant",
-    "content": "Zoʻr! Xudo xohlasa, chiroyli chiqadi 👍🏻\n\nNima rejalashtiryapsiz — oshxonami, shkafmi yoki yotoqxona?"
-   }
-  ],
   "2122052365058102": [
    {
     "role": "user",
@@ -342,10 +332,6 @@
   ]
  },
  "activity": {
-  "1398915981746916": {
-   "lastClientAt": 1789277845983,
-   "followedUp": true
-  },
   "2122052365058102": {
    "lastClientAt": 1789282902035,
    "followedUp": true
@@ -436,7 +422,7 @@
   },
   "4443864929261355": {
    "lastClientAt": 1789363449742,
-   "followedUp": false
+   "followedUp": true
   },
   "2165304794027178": {
    "lastClientAt": 1789366371415,
