@@ -1,25 +1,5 @@
 {
  "histories": {
-  "2230942884430422": [
-   {
-    "role": "user",
-    "content": "Какой срок выполнения проекта?"
-   },
-   {
-    "role": "assistant",
-    "content": "Здравствуйте! Зависит от фасада: ЛМДФ и акрил — до 14 рабочих дней, крашеный и шпон — до 30 дней, стараемся закончить раньше. За каждый день опоздания платим штраф.\n\nА что планируете — кухню, шкаф или спальню?"
-   }
-  ],
-  "2275041116374484": [
-   {
-    "role": "user",
-    "content": "[Mijoz \"Ассаламу алайкум ошхона мебели хамма приборлари билан 1 м нархи .\" deb postga komment yozdi. Post tavsifi: \"[REEL:DdHLm78gp2F] Oq Neoklassika oshxona — sokin, toza va uzoq yillarga. Qora marmar fartuk va tilla detallar bilan uyg’unlik. Har bir shkaf, har bir tortma o’lchov bo’yicha, aynan shu xonaga moslab yasalgan. Ichki to’ldirmalarni ham ko’rsatdim — chunki oshxonaning qulayligi aynan shu yerda bilinadi. Sizning uyingiz\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Ва Алейкум Ассалом 🙌 Шахсийга (DM) ёзинг, ошхона ўлчами ва материалига қараб аниқ ҳисоблаб берамиз."
-   }
-  ],
   "1010404198723640": [
    {
     "role": "user",
@@ -312,14 +292,6 @@
   ]
  },
  "activity": {
-  "2230942884430422": {
-   "lastClientAt": 1789293017627,
-   "followedUp": true
-  },
-  "2275041116374484": {
-   "lastClientAt": 1789294431332,
-   "followedUp": true
-  },
   "1010404198723640": {
    "lastClientAt": 1789295576961,
    "followedUp": true
