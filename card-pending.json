@@ -45,9 +45,10 @@
       "date": "14.09.2026",
       "title": "Spisanie c karty",
       "card4": "5893",
-      "step": "type",
+      "step": "note",
       "askedAt": 1789393405772,
-      "remindedAt": 1789487035946
+      "remindedAt": 1789487035946,
+      "kind": "personal"
     }
   },
   "resolved": [
