@@ -1517,5 +1517,15 @@
     "pay_method": "card",
     "place": "IP OOO ANGLESEY FOOD, UZ",
     "ts": "2026-09-13T10:01:43.559Z"
+  },
+  {
+    "date": "14.09.2026",
+    "note": "💳 Xadicha",
+    "amount_uzs": 450000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IYB P2P, UZ",
+    "ts": "2026-09-15T15:44:21.743Z"
   }
 ]
