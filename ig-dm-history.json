@@ -1,25 +1,5 @@
 {
  "histories": {
-  "2568617993568092": [
-   {
-    "role": "user",
-    "content": "[Mijoz \"Juda ajoyib Fargonaga bormi shunday chiroyli ishlarizdan namuna\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Rahmat izohingiz uchun 🙌 Hozircha faqat Toshkentda ishlaymiz, Farg'onaga afsuski bora olmaymiz.\n\nShaxsiyga (DM) yozing, tayyor ishlarimizdan namunalar ko'rsataman."
-   }
-  ],
-  "1632503148285875": [
-   {
-    "role": "user",
-    "content": "[Mijoz \"Иншаллох ошхонам мебеллари учун сизларга мурожат қиламан тез кунларда насиб қилсин аллохга осон 🤲🤲\" deb postga komment yozdi. Post tavsifi: \"[REEL:DGs6njXoUB8]\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Ва Алейкам Ассалом 🤲 Худо хохласа, ошхонангизни чиройли қилиб чиқарамиз.\n\nТайёр бўлганингизда шахсийга (DM) ёзинг, ўлчам ва материални гаплашиб оламиз 👍🏻"
-   }
-  ],
   "38651288141153166": [
    {
     "role": "user",
@@ -150,14 +130,6 @@
   ]
  },
  "activity": {
-  "2568617993568092": {
-   "lastClientAt": 1789318562057,
-   "followedUp": true
-  },
-  "1632503148285875": {
-   "lastClientAt": 1789318677430,
-   "followedUp": true
-  },
   "38651288141153166": {
    "lastClientAt": 1789319789961,
    "followedUp": true
