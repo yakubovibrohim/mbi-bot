@@ -59,18 +59,6 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1789574669395
-    },
-    "mu4cj9a0euo": {
-      "dir": "out",
-      "amtUzs": 154500,
-      "place": "IP OOO YANDEX EATS, UZ",
-      "rawBalance": 1899866,
-      "date": "16.09.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1789577998776,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -1138,6 +1126,11 @@
       "date": "16.09.2026",
       "dir": "out",
       "amt": 1184500
+    },
+    {
+      "date": "16.09.2026",
+      "dir": "out",
+      "amt": 154500
     }
   ],
   "lastBalances": {
