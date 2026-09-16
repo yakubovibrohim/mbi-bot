@@ -48,6 +48,17 @@
       "step": "type",
       "askedAt": 1789546108333,
       "remindedAt": 1789567737387
+    },
+    "mu4ajwb7jfr": {
+      "dir": "in",
+      "amtUzs": 2000000,
+      "place": "IYB P2P, UZ",
+      "rawBalance": 2054366,
+      "date": "16.09.2026",
+      "title": "Perevod na kartu",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1789574669395
     }
   },
   "resolved": [
