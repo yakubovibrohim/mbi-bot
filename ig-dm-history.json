@@ -1,15 +1,5 @@
 {
  "histories": {
-  "911166078418605": [
-   {
-    "role": "user",
-    "content": "[Mijoz \"Ваше зур ёкди\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Ассалому Алейкум 🙌 Раҳмат! Бу премиум крашенный ошхона — Blum фурнитура, столешница сунъий тошдан. Шахсийга (DM) ёзинг, ҳаммасини тушунтираман 👍🏻"
-   }
-  ],
   "1375961824518419": [
    {
     "role": "user",
@@ -100,10 +90,6 @@
   ]
  },
  "activity": {
-  "911166078418605": {
-   "lastClientAt": 1789358298999,
-   "followedUp": true
-  },
   "1375961824518419": {
    "lastClientAt": 1789400312997,
    "followedUp": true
