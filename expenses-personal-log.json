@@ -1527,5 +1527,15 @@
     "pay_method": "card",
     "place": "IYB P2P, UZ",
     "ts": "2026-09-15T15:44:21.743Z"
+  },
+  {
+    "date": "16.09.2026",
+    "note": "💳 Дисерт",
+    "amount_uzs": 154500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IP OOO YANDEX EATS, UZ",
+    "ts": "2026-09-16T17:37:47.141Z"
   }
 ]
