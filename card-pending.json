@@ -36,6 +36,17 @@
       "step": "type",
       "askedAt": 1789387705681,
       "remindedAt": 1789538966857
+    },
+    "mu3tjqgd9wo": {
+      "dir": "out",
+      "amtUzs": 59999,
+      "place": "OCTOBANK YANDEXPLUS OPLATA, UZ",
+      "rawBalance": 54366,
+      "date": "16.09.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1789546108333
     }
   },
   "resolved": [
