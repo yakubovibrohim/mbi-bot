@@ -79,8 +79,9 @@
       "date": "16.09.2026",
       "title": "Platezh",
       "card4": "5893",
-      "step": "type",
-      "askedAt": 1789579858874
+      "step": "note",
+      "askedAt": 1789579858874,
+      "kind": "office"
     }
   },
   "resolved": [
