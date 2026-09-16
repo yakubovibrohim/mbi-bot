@@ -1537,5 +1537,15 @@
     "pay_method": "card",
     "place": "IP OOO YANDEX EATS, UZ",
     "ts": "2026-09-16T17:37:47.141Z"
+  },
+  {
+    "date": "14.09.2026",
+    "note": "💳 Блмиман",
+    "amount_uzs": 48528,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-09-16T17:38:03.256Z"
   }
 ]
