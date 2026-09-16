@@ -70,18 +70,6 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1789577998776
-    },
-    "mu4dn4jeanq": {
-      "dir": "out",
-      "amtUzs": 1184500,
-      "place": "IYB MOBILE EXCHANGE, UZ",
-      "rawBalance": 715366,
-      "date": "16.09.2026",
-      "title": "Platezh",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1789579858874,
-      "kind": "office"
     }
   },
   "resolved": [
@@ -1144,6 +1132,11 @@
       "date": "14.09.2026",
       "dir": "out",
       "amt": 450000
+    },
+    {
+      "date": "16.09.2026",
+      "dir": "out",
+      "amt": 1184500
     }
   ],
   "lastBalances": {
