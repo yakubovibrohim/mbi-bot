@@ -239,6 +239,16 @@
     "role": "assistant",
     "content": "Раҳмат 🙌 Бу премиум крашенный ошхона — фасад Genc бўёғи 4 этапли, стол устки қисми сунъий тош, ҳеч қандай чок йўқ.\n\nЎзингизга ошхона режалаштиряпсизми?"
    }
+  ],
+  "1785348786026218": [
+   {
+    "role": "user",
+    "content": "Nechpulga tushdi"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu alaykum! Aytolamiz-u, avval bir-ikki narsani aniqlab olsam — qaysi mebel qiziqtiryapti, oshxonami, shkafmi, yotoqxonami? 😊"
+   }
   ]
  },
  "activity": {
@@ -288,6 +298,10 @@
   },
   "4598816777054399": {
    "lastClientAt": 1789628383065,
+   "followedUp": false
+  },
+  "1785348786026218": {
+   "lastClientAt": 1789628900945,
    "followedUp": false
   }
  }
