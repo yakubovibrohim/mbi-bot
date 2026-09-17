@@ -293,6 +293,16 @@
     "role": "assistant",
     "content": "6 metrga bu uslubdagi oshxona qilib bo'ladi 👍🏻 Narx materialга bog'liq:\n\nLMDF fasad + GTV furnitura bilan — taxminan 2000$ atrofida\nAkril fasad + Hettich bilan — taxminan 2700–3300$ atrofida\n\nRasmdagidek premium ko'rinish bo'lsa (akril/krashenniy, sensorli yoritish) narx biroz yuqoriroq chiqadi. 2 etajmi, 3 etajmi rejalashtiryapsiz?"
    }
+  ],
+  "1391250832525534": [
+   {
+    "role": "user",
+    "content": "Сколько стоит дизайн интерьера?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Кухни выходят примерно от $1000. Что планируете?"
+   }
   ]
  },
  "activity": {
@@ -354,6 +364,10 @@
   },
   "945412055286315": {
    "lastClientAt": 1789629888078,
+   "followedUp": false
+  },
+  "1391250832525534": {
+   "lastClientAt": 1789630573984,
    "followedUp": false
   }
  }
