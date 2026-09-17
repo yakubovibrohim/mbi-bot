@@ -1577,5 +1577,15 @@
     "pay_method": "card",
     "place": "OCTOBANK YANDEXPLUS OPLATA, UZ",
     "ts": "2026-09-17T07:47:44.060Z"
+  },
+  {
+    "date": "14.09.2026",
+    "note": "💳 Blmiman",
+    "amount_uzs": 20220,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-09-17T11:31:56.988Z"
   }
 ]
