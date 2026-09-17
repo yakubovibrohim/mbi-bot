@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-17T12:23:14.372Z",
+  "updated": "2026-09-17T13:54:24.238Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 80499684,
+  "balance_uzs": 80390357,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 148447574,
+    "chiqim": 148556901,
     "by_category": {
       "office": 21514683,
-      "personal": 57631523,
+      "personal": 57740850,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
       "deal_expense": 45841448,
@@ -3021,6 +3021,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 302250,
       "name": "💳 O’zimga",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "17.09.2026",
+      "time": "18:54",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 109327,
+      "name": "💳 Dostavka",
       "pay": "karta",
       "src": "personal"
     }
