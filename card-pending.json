@@ -11,18 +11,6 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1789645950709
-    },
-    "mu5h3jnc65k": {
-      "dir": "out",
-      "amtUzs": 302250,
-      "place": "IYM UZCARD2VISA S KOMISS, UZ",
-      "rawBalance": 6448539,
-      "date": "17.09.2026",
-      "title": "Spisanie c karty",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1789646129976,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -1135,6 +1123,11 @@
       "date": "14.09.2026",
       "dir": "out",
       "amt": 20220
+    },
+    {
+      "date": "17.09.2026",
+      "dir": "out",
+      "amt": 302250
     }
   ],
   "lastBalances": {
