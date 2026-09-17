@@ -527,6 +527,16 @@
     "role": "assistant",
     "content": "Assalomu Aleykum 🙌 Bu premium krashenniy oshxona — Blum furnitura, sun'iy tosh stoleshnitsa, chok yo'q. Narxi haqida shaxsiyga (DM) yozing, batafsil aytamiz 👍🏻"
    }
+  ],
+  "2066798027294828": [
+   {
+    "role": "user",
+    "content": "Сколько стоит дизайн интерьера?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект в программе Bazis показываем заранее, точность 100%. Кухни выходят примерно от $1000. Что планируете?"
+   }
   ]
  },
  "activity": {
@@ -640,6 +650,10 @@
   },
   "1558350409392452": {
    "lastClientAt": 1789654395115,
+   "followedUp": false
+  },
+  "2066798027294828": {
+   "lastClientAt": 1789654442830,
    "followedUp": false
   }
  }
