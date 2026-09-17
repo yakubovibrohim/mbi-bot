@@ -313,6 +313,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкум, раҳмат 🙌 Бу премиум крашенный ошхона, фурнитура Blum билан. Ўзингизга ошхона режалаштиряпсизми?"
    }
+  ],
+  "1071324815747611": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Assalom alaykum  nech pulga tushgan  kuxniya\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Va alaykum assalom 🙌 Шахсийга (DM) ёзинг, ҳамма маълумотни бераман"
+   }
   ]
  },
  "activity": {
@@ -382,6 +392,10 @@
   },
   "1446878070586784": {
    "lastClientAt": 1789632206364,
+   "followedUp": false
+  },
+  "1071324815747611": {
+   "lastClientAt": 1789632374691,
    "followedUp": false
   }
  }
