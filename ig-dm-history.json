@@ -284,6 +284,14 @@
    {
     "role": "assistant",
     "content": "Kechirasiz, ovozli xabarni bu yerda eshitolmayapman. Yozib qoldirsangiz — nima kerakligini (oshxona, shkaf yoki yotoqxona) va o'lchamini yozing, darrov yordam beraman 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Шу ошхона мебель йокиб колди 6 метрли жойга ценаси этворолисми"
+   },
+   {
+    "role": "assistant",
+    "content": "6 metrga bu uslubdagi oshxona qilib bo'ladi 👍🏻 Narx materialга bog'liq:\n\nLMDF fasad + GTV furnitura bilan — taxminan 2000$ atrofida\nAkril fasad + Hettich bilan — taxminan 2700–3300$ atrofida\n\nRasmdagidek premium ko'rinish bo'lsa (akril/krashenniy, sensorli yoritish) narx biroz yuqoriroq chiqadi. 2 etajmi, 3 etajmi rejalashtiryapsiz?"
    }
   ]
  },
@@ -345,7 +353,7 @@
    "followedUp": false
   },
   "945412055286315": {
-   "lastClientAt": 1789629761870,
+   "lastClientAt": 1789629888078,
    "followedUp": false
   }
  }
