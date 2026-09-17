@@ -9,11 +9,25 @@
     "role": "assistant",
     "content": "Ва Алейкум Ассалом, яхшимисиз тузумисз 👍🏻 Ошхона неча метр, 2 этажми 3 этажми?"
    }
+  ],
+  "2026006664780830": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Нархи неч пул\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 🙌 Шахсийга (DM) ёзинг, барча маълумот берамиз"
+   }
   ]
  },
  "activity": {
   "1030875976643292": {
    "lastClientAt": 1789608842355,
+   "followedUp": false
+  },
+  "2026006664780830": {
+   "lastClientAt": 1789612429110,
    "followedUp": false
   }
  }
