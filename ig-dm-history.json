@@ -364,6 +364,22 @@
    {
     "role": "assistant",
     "content": "Xop, bugun 7 gacha degandek borishga harakat qilamiz.\n\nManzilni aniqlashtirib boradigan bo'lsak, telefon raqamingizni shu yerga qoldiring — Ibrohim aka bog'lanib, aniq vaqtni kelishib oladi 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "xop raxmat kottakon\n915297900\nWaxlo"
+   },
+   {
+    "role": "assistant",
+    "content": "Rahmat, Shaxlo opa! Raqamingizni oldik. Ibrohim aka tez orada bog'lanib, bugun kelish vaqtini kelishib oladi 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Ketsinla joyida gaplawamiz"
+   },
+   {
+    "role": "assistant",
+    "content": "Xop, boradi. Joyida ko'rishguncha 👍🏻"
    }
   ]
  },
@@ -441,7 +457,7 @@
    "followedUp": false
   },
   "1575410807665427": {
-   "lastClientAt": 1789632772497,
+   "lastClientAt": 1789632838254,
    "followedUp": false
   }
  }
