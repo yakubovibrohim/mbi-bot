@@ -356,6 +356,14 @@
    {
     "role": "assistant",
     "content": "To'g'ri aytasiz, avval o'lchab olamiz, keyin material tanlaymiz — bemalol.\n\nO'lchashga o'zimiz borib, Bazis dasturida aniq loyiha chizib beramiz — bepul. Qaysi kun qulay sizga?"
+   },
+   {
+    "role": "user",
+    "content": "Iloji busa bugun keling 7 gacha\nYunus Abad 18 kvl 2 dom\nkucha yuzida"
+   },
+   {
+    "role": "assistant",
+    "content": "Xop, bugun 7 gacha degandek borishga harakat qilamiz.\n\nManzilni aniqlashtirib boradigan bo'lsak, telefon raqamingizni shu yerga qoldiring — Ibrohim aka bog'lanib, aniq vaqtni kelishib oladi 👍🏻"
    }
   ]
  },
@@ -433,7 +441,7 @@
    "followedUp": false
   },
   "1575410807665427": {
-   "lastClientAt": 1789632692496,
+   "lastClientAt": 1789632772497,
    "followedUp": false
   }
  }
