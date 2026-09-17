@@ -12,17 +12,6 @@
       "step": "type",
       "askedAt": 1789358575088,
       "remindedAt": 1789639408699
-    },
-    "mu5dq15o3bq": {
-      "dir": "in",
-      "amtUzs": 350000,
-      "place": "IYB P2P, UZ",
-      "rawBalance": 6860116,
-      "date": "17.09.2026",
-      "title": "Perevod na kartu",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1789640460636
     }
   },
   "resolved": [
@@ -1125,6 +1114,11 @@
       "date": "16.09.2026",
       "dir": "out",
       "amt": 59999
+    },
+    {
+      "date": "17.09.2026",
+      "dir": "in",
+      "amt": 350000
     }
   ],
   "lastBalances": {
