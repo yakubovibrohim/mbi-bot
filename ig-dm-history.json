@@ -323,6 +323,16 @@
     "role": "assistant",
     "content": "Va alaykum assalom 🙌 Шахсийга (DM) ёзинг, ҳамма маълумотни бераман"
    }
+  ],
+  "1575410807665427": [
+   {
+    "role": "user",
+    "content": "adres katda ekan"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu Alaykum! Manzilimiz: Toshkent, Yakkasaroy tumani, Qushbegi ko'chasi 6-uy. Kelavering, materiallarni jonli ko'rasiz 👍🏻\n\nNima rejalashtiryapsiz — oshxonami, shkafmi?"
+   }
   ]
  },
  "activity": {
@@ -396,6 +406,10 @@
   },
   "1071324815747611": {
    "lastClientAt": 1789632374691,
+   "followedUp": false
+  },
+  "1575410807665427": {
+   "lastClientAt": 1789632598866,
    "followedUp": false
   }
  }
