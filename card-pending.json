@@ -36,6 +36,17 @@
       "step": "type",
       "askedAt": 1789546108333,
       "remindedAt": 1789625338438
+    },
+    "mu57yc5umkb": {
+      "dir": "in",
+      "amtUzs": 6500000,
+      "place": "IYB VISACREDIT2UZCARD, UZ",
+      "rawBalance": 7215366,
+      "date": "17.09.2026",
+      "title": "Perevod na kartu",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1789630770450
     }
   },
   "resolved": [
