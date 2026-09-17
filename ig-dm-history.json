@@ -477,6 +477,16 @@
     "role": "assistant",
     "content": "Assalomu Alaykum! Qaysi loyiha haqida gapiryapsiz — qaysi videoni ko'rgan edingiz yoki qanday mebel kerak edi 👍🏻\n\nUmumiy hisobni aniqlab berishim uchun ozgina ma'lumot kerak — oshxonami, shkafmi, o'lchami qancha?"
    }
+  ],
+  "3572593699570992": [
+   {
+    "role": "user",
+    "content": "Сколько стоит дизайн интерьера?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%, поэтому вы видите всё до начала работы.\n\nА что планируете — кухню или шкаф?"
+   }
   ]
  },
  "activity": {
@@ -570,6 +580,10 @@
   },
   "1443738331007676": {
    "lastClientAt": 1789645181288,
+   "followedUp": false
+  },
+  "3572593699570992": {
+   "lastClientAt": 1789646799599,
    "followedUp": false
   }
  }
