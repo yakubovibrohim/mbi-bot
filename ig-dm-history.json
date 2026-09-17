@@ -276,6 +276,14 @@
    {
     "role": "assistant",
     "content": "Rasmni oldim 👍🏻 Bu qanaqa mebel — oshxonami, shkafmi, yotoqxonami? O'zingizga shunga o'xshash narsa ishlatmoqchimisiz?"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz ovozli xabar yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Kechirasiz, ovozli xabarni bu yerda eshitolmayapman. Yozib qoldirsangiz — nima kerakligini (oshxona, shkaf yoki yotoqxona) va o'lchamini yozing, darrov yordam beraman 👍🏻"
    }
   ]
  },
@@ -337,7 +345,7 @@
    "followedUp": false
   },
   "945412055286315": {
-   "lastClientAt": 1789629671723,
+   "lastClientAt": 1789629761870,
    "followedUp": false
   }
  }
