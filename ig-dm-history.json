@@ -130,6 +130,14 @@
    {
     "role": "assistant",
     "content": "Ха, бор 👍🏻\n\n[[FOTO:oshxona]]"
+   },
+   {
+    "role": "user",
+    "content": "Ташаворинг. Курайлик"
+   },
+   {
+    "role": "assistant",
+    "content": "[[FOTO:oshxona]]"
    }
   ],
   "4566545813581096": [
@@ -493,7 +501,7 @@
    "followedUp": false
   },
   "2031859767478092": {
-   "lastClientAt": 1789617849327,
+   "lastClientAt": 1789646064667,
    "followedUp": false
   },
   "4566545813581096": {
