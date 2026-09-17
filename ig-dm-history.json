@@ -28,6 +28,14 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкум 🙌 Шахсийга (DM) ёзинг, шу ошхона ҳақида барча маълумотни берамиз 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Assalomu alaykum yaxshimisiz"
+   },
+   {
+    "role": "assistant",
+    "content": "Ва Алейкум Ассалом, яхшимисиз 👍🏻 Исмингиз нима?\n\nОшхона керакми, ўлчами борми?"
    }
   ]
  },
@@ -41,7 +49,7 @@
    "followedUp": false
   },
   "943574075478205": {
-   "lastClientAt": 1789615988509,
+   "lastClientAt": 1789616050382,
    "followedUp": false
   }
  }
