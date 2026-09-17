@@ -332,6 +332,22 @@
    {
     "role": "assistant",
     "content": "Assalomu Alaykum! Manzilimiz: Toshkent, Yakkasaroy tumani, Qushbegi ko'chasi 6-uy. Kelavering, materiallarni jonli ko'rasiz 👍🏻\n\nNima rejalashtiryapsiz — oshxonami, shkafmi?"
+   },
+   {
+    "role": "user",
+    "content": "Assalomaleykum"
+   },
+   {
+    "role": "assistant",
+    "content": "Va Alaykum Assalom, yaxshimisiz 👍🏻 Nima kerak edi — oshxona, shkaf, yotoqxonami?"
+   },
+   {
+    "role": "user",
+    "content": "Da owxonaga mebel kere kuxonniy"
+   },
+   {
+    "role": "assistant",
+    "content": "Xush kelibsiz. Oshxona necha metr, 2 etajmi 3 etajmi?"
    }
   ]
  },
@@ -409,7 +425,7 @@
    "followedUp": false
   },
   "1575410807665427": {
-   "lastClientAt": 1789632598866,
+   "lastClientAt": 1789632656087,
    "followedUp": false
   }
  }
