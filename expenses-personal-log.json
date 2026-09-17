@@ -1587,5 +1587,15 @@
     "pay_method": "card",
     "place": "PAYME P2P, UZ",
     "ts": "2026-09-17T11:31:56.988Z"
+  },
+  {
+    "date": "17.09.2026",
+    "note": "💳 O’zimga",
+    "amount_uzs": 302250,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IYM UZCARD2VISA S KOMISS, UZ",
+    "ts": "2026-09-17T11:56:45.116Z"
   }
 ]
