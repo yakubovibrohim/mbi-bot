@@ -1567,5 +1567,15 @@
     "pay_method": "card",
     "place": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
     "ts": "2026-09-17T07:47:33.987Z"
+  },
+  {
+    "date": "16.09.2026",
+    "note": "💳 Блмиман",
+    "amount_uzs": 59999,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OCTOBANK YANDEXPLUS OPLATA, UZ",
+    "ts": "2026-09-17T07:47:44.060Z"
   }
 ]
