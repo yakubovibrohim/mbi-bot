@@ -257,6 +257,16 @@
     "role": "assistant",
     "content": "Oshxona bo'lsa, narxi asosan uzunlik va materialga bog'liq. Oshxona necha metr — bilasizmi?"
    }
+  ],
+  "1592630842506242": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"МаашаАллох 🤩🤩🤩🤩\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 🙌 Раҳмат илиқ сўзингиз учун! Бу премиум крашенний ошхона — фасадлар Genc бўёғи билан 4 этапда бўялган, фурнитура Blum. Ўзингизга ҳам шунақа мебел режалаштиряпсизми?"
+   }
   ]
  },
  "activity": {
@@ -310,6 +320,10 @@
   },
   "1785348786026218": {
    "lastClientAt": 1789629167320,
+   "followedUp": false
+  },
+  "1592630842506242": {
+   "lastClientAt": 1789629495500,
    "followedUp": false
   }
  }
