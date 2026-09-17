@@ -497,6 +497,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкум 👍🏻 Ошхона керакми ё шкаф, нима режалаштиряпсиз?"
    }
+  ],
+  "1998526767521334": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Maa shaaAlloh\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 🙌 Раҳмат чиройли гапингиз учун. Шахсийга (DM) ёзинг, тўлиқ маълумот берамиз — ошхона режалаштиряпсизми?"
+   }
   ]
  },
  "activity": {
@@ -598,6 +608,10 @@
   },
   "1097719346162810": {
    "lastClientAt": 1789649639532,
+   "followedUp": false
+  },
+  "1998526767521334": {
+   "lastClientAt": 1789651450366,
    "followedUp": false
   }
  }
