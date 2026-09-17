@@ -450,6 +450,14 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! 🙌 Напишите нам в личку (Директ) — всё подробно расскажем и посчитаем 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz \"нархи нечпул бу\"лди шу мебели йасатаман\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 🙌 Шахсийга (Директ) ёзинг, барча маълумотни бериб, ҳисоблаб берамиз 👍🏻"
    }
   ]
  },
@@ -539,7 +547,7 @@
    "followedUp": false
   },
   "2991090667905732": {
-   "lastClientAt": 1789643375652,
+   "lastClientAt": 1789643564430,
    "followedUp": false
   }
  }
