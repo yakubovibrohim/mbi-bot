@@ -348,6 +348,14 @@
    {
     "role": "assistant",
     "content": "Xush kelibsiz. Oshxona necha metr, 2 etajmi 3 etajmi?"
+   },
+   {
+    "role": "user",
+    "content": "Kachonga voxtiz bor avval razmer oliw kere kajetsya keyin material tanlaymiz"
+   },
+   {
+    "role": "assistant",
+    "content": "To'g'ri aytasiz, avval o'lchab olamiz, keyin material tanlaymiz — bemalol.\n\nO'lchashga o'zimiz borib, Bazis dasturida aniq loyiha chizib beramiz — bepul. Qaysi kun qulay sizga?"
    }
   ]
  },
@@ -425,7 +433,7 @@
    "followedUp": false
   },
   "1575410807665427": {
-   "lastClientAt": 1789632656087,
+   "lastClientAt": 1789632692496,
    "followedUp": false
   }
  }
