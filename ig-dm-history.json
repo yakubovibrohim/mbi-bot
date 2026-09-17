@@ -557,6 +557,16 @@
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Оформляем через нашу студию: приезжаете к нам или мы выезжаем на замер, показываем проект заранее в программе Bazis — точность 100%.\n\nПроект и замер бесплатные. Что планируете — кухню, шкаф?"
    }
+  ],
+  "1416448663798978": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Ассалому алайкум, жуда зур чикибди, газ плита ва бошка техникалар хам шу нархни ичидами\" deb postga komment yozdi. Post tavsifi: \"[REEL:DcVTlgFo25H] Oq Neoklassika oshxona — sokin, toza va uzoq yillarga. Qora marmar fartuk va tilla detallar bilan uyg’unlik. Har bir shkaf, har bir tortma o’lchov bo’yicha, aynan shu xonaga moslab yasalgan. Ichki to’ldirmalarni ham ko’rsatdim — chunki oshxonaning qulayligi aynan shu yerda bilinadi. Sizning uyingiz\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ва Алейкум Ассалом, раҳмат 🙌 Йўқ, техника (газ плита, духовка, вытяжка...) сизнинг ҳисобингиздан бўлади, биз фақат мебел қисмини қиламиз.\n\nОшхонангиз неча метр эди?"
+   }
   ]
  },
  "activity": {
@@ -682,6 +692,10 @@
   },
   "1855138765855874": {
    "lastClientAt": 1789660835054,
+   "followedUp": false
+  },
+  "1416448663798978": {
+   "lastClientAt": 1789661089970,
    "followedUp": false
   }
  }
