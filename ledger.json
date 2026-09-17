@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-17T07:47:44.437Z",
+  "updated": "2026-09-17T07:47:54.178Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 80882153,
+  "balance_uzs": 80822154,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 148065105,
+    "chiqim": 148125104,
     "by_category": {
       "office": 21514683,
-      "personal": 57249054,
+      "personal": 57309053,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
       "deal_expense": 45841448,
@@ -2977,6 +2977,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 154500,
       "name": "💳 Дисерт",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "16.09.2026",
+      "time": "12:47",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 59999,
+      "name": "💳 Блмиман",
       "pay": "karta",
       "src": "personal"
     },
