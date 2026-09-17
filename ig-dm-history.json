@@ -388,6 +388,14 @@
    {
     "role": "assistant",
     "content": "Salomat bo'ling, Shaxlo opa 🙏 Kutib turing, boramiz."
+   },
+   {
+    "role": "user",
+    "content": "ok xorowo raxmat"
+   },
+   {
+    "role": "assistant",
+    "content": "Arzimaydi 👍🏻"
    }
   ]
  },
@@ -465,7 +473,7 @@
    "followedUp": false
   },
   "1575410807665427": {
-   "lastClientAt": 1789632864670,
+   "lastClientAt": 1789633969808,
    "followedUp": false
   }
  }
