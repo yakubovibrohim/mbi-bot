@@ -1597,5 +1597,15 @@
     "pay_method": "card",
     "place": "IYM UZCARD2VISA S KOMISS, UZ",
     "ts": "2026-09-17T11:56:45.116Z"
+  },
+  {
+    "date": "17.09.2026",
+    "note": "💳 Dostavka",
+    "amount_uzs": 109327,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IP OOO YANDEX EATS, UZ",
+    "ts": "2026-09-17T13:54:13.792Z"
   }
 ]
