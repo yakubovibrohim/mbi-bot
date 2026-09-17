@@ -459,6 +459,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкум 🙌 Шахсийга (Директ) ёзинг, барча маълумотни бериб, ҳисоблаб берамиз 👍🏻"
    }
+  ],
+  "1443738331007676": [
+   {
+    "role": "user",
+    "content": "Shu obshiy xisobda nechi pulga tushdi"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu Alaykum! Qaysi loyiha haqida gapiryapsiz — qaysi videoni ko'rgan edingiz yoki qanday mebel kerak edi 👍🏻\n\nUmumiy hisobni aniqlab berishim uchun ozgina ma'lumot kerak — oshxonami, shkafmi, o'lchami qancha?"
+   }
   ]
  },
  "activity": {
@@ -548,6 +558,10 @@
   },
   "2991090667905732": {
    "lastClientAt": 1789643564430,
+   "followedUp": false
+  },
+  "1443738331007676": {
+   "lastClientAt": 1789645181288,
    "followedUp": false
   }
  }
