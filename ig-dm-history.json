@@ -131,6 +131,16 @@
     "role": "assistant",
     "content": "Ха, бор 👍🏻\n\n[[FOTO:oshxona]]"
    }
+  ],
+  "4566545813581096": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Нархи канака булди шуни?\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 🙌 Бу премиум крашенный ошхона — тахминан погонаж метри 800$ атрофида. Аниқ нархни ўлчамга қараб айтамиз.\n\nШахсийга (DM) ёзинг, батафсил маълумот берамиз 👍🏻"
+   }
   ]
  },
  "activity": {
@@ -156,6 +166,10 @@
   },
   "2031859767478092": {
    "lastClientAt": 1789617849327,
+   "followedUp": false
+  },
+  "4566545813581096": {
+   "lastClientAt": 1789621608861,
    "followedUp": false
   }
  }
