@@ -1557,5 +1557,15 @@
     "pay_method": "card",
     "place": "IYM UZCARD2VISA S KOMISS, UZ",
     "ts": "2026-09-17T07:47:21.583Z"
+  },
+  {
+    "date": "14.09.2026",
+    "note": "💳 Блмиман",
+    "amount_uzs": 53000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
+    "ts": "2026-09-17T07:47:33.987Z"
   }
 ]
