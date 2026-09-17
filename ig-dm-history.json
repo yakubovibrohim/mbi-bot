@@ -199,6 +199,16 @@
     "role": "assistant",
     "content": "Хорошо, Шакиржан, тогда завтра после обеда свяжемся 👍🏻 Хорошей дороги!"
    }
+  ],
+  "1403076268696260": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Канча булди\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 🙌 Бу премиум крашенный ошхона, шахсийга (DM) ёзинг — барча маълумотни бераман"
+   }
   ]
  },
  "activity": {
@@ -232,6 +242,10 @@
   },
   "839081762565168": {
    "lastClientAt": 1789623680851,
+   "followedUp": false
+  },
+  "1403076268696260": {
+   "lastClientAt": 1789624465467,
    "followedUp": false
   }
  }
