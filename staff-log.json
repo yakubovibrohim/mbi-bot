@@ -668,9 +668,10 @@
       {
         "date": "17.09.2026",
         "in": "09:32",
-        "out": null,
+        "out": "17:23",
         "late": true,
-        "in_reason": "Oilaviy"
+        "in_reason": "Oilaviy",
+        "early": true
       }
     ],
     "tg_chat_id": "5868770869"
