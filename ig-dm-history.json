@@ -517,6 +517,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкум 🙌 Бу премиум крашенный ошхона, погонаж метри тахминан 800$ атрофида. Батафсил маълумот учун шахсийга (DM) ёзинг 👍🏻"
    }
+  ],
+  "1558350409392452": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Nechipulga tushdi shu turishi sir bomasa\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu Aleykum 🙌 Bu premium krashenniy oshxona — Blum furnitura, sun'iy tosh stoleshnitsa, chok yo'q. Narxi haqida shaxsiyga (DM) yozing, batafsil aytamiz 👍🏻"
+   }
   ]
  },
  "activity": {
@@ -626,6 +636,10 @@
   },
   "1622446932724116": {
    "lastClientAt": 1789652096369,
+   "followedUp": false
+  },
+  "1558350409392452": {
+   "lastClientAt": 1789654395115,
    "followedUp": false
   }
  }
