@@ -218,16 +218,6 @@ async function checkAI(ctx) {
     if (!key) { out.push(item(id, name, INFO, 'kalit sozlanmagan')); continue; }
     out.push(keyStatus(id, name, await req(key)));
   }
-  if (!e.OPENROUTER_KEY) out.push(item('ai:openrouter', 'OpenRouter', INFO, 'kalit sozlanmagan'));
-  else {
-    const res = await http('https://openrouter.ai/api/v1/auth/key', { headers: { Authorization: 'Bearer ' + e.OPENROUTER_KEY } });
-    const d = res.json && res.json.data;
-    if (res.status === 200 && d) {
-      if (d.limit != null && d.limit_remaining != null && d.limit_remaining <= Math.max(1, d.limit * 0.1)) {
-        out.push(item('ai:openrouter', 'OpenRouter', WARN, `limit tugayapti: $${Number(d.limit_remaining).toFixed(2)} qoldi`));
-      } else out.push(item('ai:openrouter', 'OpenRouter', OK, `ishlaydi, jami sarflangan $${Number(d.usage || 0).toFixed(2)}`));
-    } else out.push(keyStatus('ai:openrouter', 'OpenRouter', res));
-  }
   return out;
 }
 

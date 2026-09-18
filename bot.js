@@ -2523,24 +2523,6 @@ function groqText(system, userText, maxTokens) {
   });
 }
 
-function orText(system, userText, maxTokens, model) {
-  return new Promise((resolve) => {
-    const key = process.env.OPENROUTER_KEY || process.env.OPENROUTER_API_KEY || '';
-    if (!key) return resolve(null);
-    const body = JSON.stringify({
-      model: model || 'anthropic/claude-haiku-4.5', max_tokens: maxTokens || 600,
-      messages: [{ role: 'system', content: system }, { role: 'user', content: userText }]
-    });
-    const req = https.request({
-      hostname: 'openrouter.ai', path: '/api/v1/chat/completions', method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key, 'Content-Length': Buffer.byteLength(body) }
-    }, res => {
-      let d = ''; res.on('data', c => d += c);
-      res.on('end', () => { try { resolve(JSON.parse(d).choices[0].message.content.trim()); } catch (e) { resolve(null); } });
-    });
-    req.on('error', () => resolve(null)); req.write(body); req.end();
-  });
-}
 async function aiText(system, userText, maxTokens, smart) {
   // Anthropic to'g'ridan: smart=true → Opus 4.8, aks holda Haiku 4.5 (arzon). Zaxira: GROQ.
   const model = smart ? 'claude-opus-4-8' : 'claude-haiku-4-5-20251001';
@@ -4779,7 +4761,6 @@ async function handle(upd) {
 const IG_TOKEN = (process.env.IG_TOKEN || '').trim().replace(/[\r\n]/g, '');
 const IG_USER_ID = '17841464753251739';
 const IG_VERIFY = 'mbi_secret_2024';
-const OR_KEY = process.env.OPENROUTER_KEY || process.env.OPENROUTER_API_KEY || '';
 
 // Conversation history: last 6 messages per user (3 turns)
 const igConvHistory = {};
@@ -4844,19 +4825,16 @@ async function igFollowupTick() {
         ...hist.slice(-10),
         { role: 'user', content: '[TIZIM: mijoz kechadан beri jim. Bitta yumshoq eslatma yoz.]' }
       ];
-      let fu = await orChatMessages(fuMsgs, 150, 'anthropic/claude-sonnet-4.6');
-      // OpenRouter ishlamasa (masalan kredit tugagan, 10.09.2026 dan beri shunday edi) — to'g'ridan Anthropic
-      if (fu == null) {
-        const conv = [];
-        for (const m of fuMsgs.slice(1)) {
-          if (!conv.length && m.role !== 'user') continue;          // Anthropic: birinchi xabar user bo'lishi kerak
-          const prev = conv[conv.length - 1];
-          if (prev && prev.role === m.role) prev.content += '\n\n' + m.content; // ketma-ket bir xil rollarni birlashtiramiz
-          else conv.push({ role: m.role, content: m.content });
-        }
-        fu = await anthropicChat(fuMsgs[0].content, conv, 150);
+      // To'g'ridan Anthropic (OpenRouter 18.09.2026 da o'chirildi — kredit tugab, 10.09 dan beri eslatmalar ketmagan edi)
+      const conv = [];
+      for (const m of fuMsgs.slice(1)) {
+        if (!conv.length && m.role !== 'user') continue;          // Anthropic: birinchi xabar user bo'lishi kerak
+        const prev = conv[conv.length - 1];
+        if (prev && prev.role === m.role) prev.content += '\n\n' + m.content; // ketma-ket bir xil rollarni birlashtiramiz
+        else conv.push({ role: m.role, content: m.content });
       }
-      // Ikkala AI ham javob bermasa — keyingi tekshiruvda (45 daq) qayta urinamiz
+      const fu = await anthropicChat(fuMsgs[0].content, conv, 150);
+      // AI javob bermasa — keyingi tekshiruvda (45 daq) qayta urinamiz
       if (fu == null) { console.error('Follow-up: AI javob bermadi, keyinroq qayta urinaman:', igUsernames[uid] || uid); continue; }
       act.followedUp = true;
       const fuBad = /yozmaslik|aytgandingiz|suhbat davomi|TIZIM|ko'rsatma|aksiya|акция|kolleksiya|коллекци|fiksatsiya|зафиксир/i;
@@ -5198,25 +5176,6 @@ function anthropicChat(systemText, history, maxTokens) {
     });
     req.on('error', (e) => { console.log('anthropicChat network:', e.message); resolve(null); });
     req.write(body); req.end();
-  });
-}
-
-function orChatMessages(messages, maxTokens, model) {
-  return new Promise((resolve) => {
-    const key = process.env.OPENROUTER_KEY || process.env.OPENROUTER_API_KEY || '';
-    if (!key) return resolve(null);
-    const body = JSON.stringify({ model, max_tokens: maxTokens || 400, messages });
-    const req = https.request({
-      hostname: 'openrouter.ai', path: '/api/v1/chat/completions', method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key, 'Content-Length': Buffer.byteLength(body) }
-    }, res => {
-      let d = ''; res.on('data', c => d += c);
-      res.on('end', () => {
-        try { resolve(JSON.parse(d).choices[0].message.content.trim()); }
-        catch (e) { console.log('orChatMessages xato:', d.slice(0, 200)); resolve(null); }
-      });
-    });
-    req.on('error', () => resolve(null)); req.write(body); req.end();
   });
 }
 
