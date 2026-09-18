@@ -648,6 +648,14 @@
    {
     "role": "assistant",
     "content": "Kuhnya uzunligi necha metr va nechta yarus — 2 mi 3 mi?"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz rasm yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Rasmni ko'rdim. Kuhnya qanaqa material bo'lsin — LMDF, akril yoki krashenniy? Va uzunligi necha metr?"
    }
   ]
  },
@@ -797,7 +805,7 @@
    "followedUp": false
   },
   "1071106675843916": {
-   "lastClientAt": 1789698696143,
+   "lastClientAt": 1789700940376,
    "followedUp": false
   }
  }
