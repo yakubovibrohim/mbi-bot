@@ -640,6 +640,14 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%. Кухни выходят примерно от $1000. Что планируете?"
+   },
+   {
+    "role": "user",
+    "content": "Kuhinni mebel narhi qancha"
+   },
+   {
+    "role": "assistant",
+    "content": "Kuhnya uzunligi necha metr va nechta yarus — 2 mi 3 mi?"
    }
   ]
  },
@@ -789,7 +797,7 @@
    "followedUp": false
   },
   "1071106675843916": {
-   "lastClientAt": 1789698627346,
+   "lastClientAt": 1789698696143,
    "followedUp": false
   }
  }
