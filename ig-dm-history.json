@@ -656,6 +656,14 @@
    {
     "role": "assistant",
     "content": "Rasmni ko'rdim. Kuhnya qanaqa material bo'lsin — LMDF, akril yoki krashenniy? Va uzunligi necha metr?"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz ovozli xabar yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ovozli xabarni eshitolmadim, matn qilib yozib yuborsangiz — kuhnya uzunligi va materialini aytib bering, hisoblab beraman 👍🏻"
    }
   ],
   "963772350106545": [
@@ -815,7 +823,7 @@
    "followedUp": false
   },
   "1071106675843916": {
-   "lastClientAt": 1789700940376,
+   "lastClientAt": 1789708247553,
    "followedUp": false
   },
   "963772350106545": {
