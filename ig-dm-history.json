@@ -847,6 +847,16 @@
     "role": "assistant",
     "content": "Rahmat izohingiz uchun 🙌 Bu loyiha bo'yicha aniq ma'lumotni Ibrohim aka beradi. Shaxsiyga (DM) yozing, batafsil tushuntiramiz. O'zingizga nima kerak edi — oshxona, shkaf, yotoqxonami?"
    }
+  ],
+  "1786427719173885": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Машааллох  шу мебель  канчага тушти\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 🙌 Бу премиум крашенный ошхона — фасадлар 4 этапли бўялган, фурнитура Blum, столешница акрил тош. Шахсийга (DM) ёзинг, барча маълумот берамиз"
+   }
   ]
  },
  "activity": {
@@ -1024,6 +1034,10 @@
   },
   "2380178646055342": {
    "lastClientAt": 1789723813837,
+   "followedUp": false
+  },
+  "1786427719173885": {
+   "lastClientAt": 1789725406140,
    "followedUp": false
   }
  }
