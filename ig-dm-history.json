@@ -664,6 +664,14 @@
    {
     "role": "assistant",
     "content": "Ovozli xabarni eshitolmadim, matn qilib yozib yuborsangiz — kuhnya uzunligi va materialini aytib bering, hisoblab beraman 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Telegramiz bormi"
+   },
+   {
+    "role": "assistant",
+    "content": "Ha bor, Telegram'da ham yozishingiz mumkin: +998 91 135 44 66. Shu raqamga yozsangiz Ibrohim aka o'zi javob beradi."
    }
   ],
   "963772350106545": [
@@ -841,7 +849,7 @@
    "followedUp": false
   },
   "1071106675843916": {
-   "lastClientAt": 1789708247553,
+   "lastClientAt": 1789709740576,
    "followedUp": false
   },
   "963772350106545": {
