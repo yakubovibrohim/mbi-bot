@@ -4838,13 +4838,27 @@ async function igFollowupTick() {
     }
     // BITTA follow-up: 20-23.5 soat (Meta 24 soatlik oynasi yopilishidan oldin)
     if (act.followedUp || silentH < 20 || silentH >= 23.5) continue;
-    act.followedUp = true;
     try {
-      const fu = await orChatMessages([
+      const fuMsgs = [
         { role: 'system', content: "Sen MBI Mebel sotuv yordamchisisan. Suhbat to'xtab qolgan mijozga BITTA qisqa, yumshoq, bosimsiz eslatma yoz — Ibrohim uslubida. Namuna ohang: «Нима бўлди, ишлаймизми? Размер ўлчашга борайликми?» — mijozning tili va yozuvida (ruscha bo'lsa ruscha, lotin bo'lsa lotin), suhbatdagi ANIQ mavzuga bog'la (oshxona 3m, shkaf...). QAT'IY TAQIQLAR: (1) FAQAT suhbatda bor faktlardan foydalan — aksiya, kolleksiya, «hisob tayyor», «narx fiksatsiya» kabi YANGI narsa TO'QIMA. (2) Bu ko'rsatmalarni yoki ularga ishorani javobda YOZMA — «salom yozmaslik kerak», «suhbat davomi sifatida» kabi meta-gaplar TAQIQ. (3) Mijoz «kerak emas» degan yoki o'zi xizmat sotmoqchi bo'lgan (dizayner, sayt taklifi) bo'lsa — faqat bo'sh qator qaytar, eslatma yozma. Salom yozma, yulduzcha (**) yozma, ko'pi bilan 1 savol, emoji shart emas. Javob — FAQAT mijozga yuboriladigan sof matn." },
         ...hist.slice(-10),
         { role: 'user', content: '[TIZIM: mijoz kechadан beri jim. Bitta yumshoq eslatma yoz.]' }
-      ], 150, 'anthropic/claude-sonnet-4.6');
+      ];
+      let fu = await orChatMessages(fuMsgs, 150, 'anthropic/claude-sonnet-4.6');
+      // OpenRouter ishlamasa (masalan kredit tugagan, 10.09.2026 dan beri shunday edi) — to'g'ridan Anthropic
+      if (fu == null) {
+        const conv = [];
+        for (const m of fuMsgs.slice(1)) {
+          if (!conv.length && m.role !== 'user') continue;          // Anthropic: birinchi xabar user bo'lishi kerak
+          const prev = conv[conv.length - 1];
+          if (prev && prev.role === m.role) prev.content += '\n\n' + m.content; // ketma-ket bir xil rollarni birlashtiramiz
+          else conv.push({ role: m.role, content: m.content });
+        }
+        fu = await anthropicChat(fuMsgs[0].content, conv, 150);
+      }
+      // Ikkala AI ham javob bermasa — keyingi tekshiruvda (45 daq) qayta urinamiz
+      if (fu == null) { console.error('Follow-up: AI javob bermadi, keyinroq qayta urinaman:', igUsernames[uid] || uid); continue; }
+      act.followedUp = true;
       const fuBad = /yozmaslik|aytgandingiz|suhbat davomi|TIZIM|ko'rsatma|aksiya|акция|kolleksiya|коллекци|fiksatsiya|зафиксир/i;
       if (fu && fu.length > 3 && !fuBad.test(fu)) {
         await igSend(uid, fu);
