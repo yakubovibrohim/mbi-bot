@@ -837,6 +837,16 @@
     "role": "assistant",
     "content": "Ассалому Алейким 🙌 Раҳмат! Ёқдими? Шахсийга (DM) ёзинг, барча маълумотни берамиз 👍🏻"
    }
+  ],
+  "2380178646055342": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Chiroyli chiqqan lekin nmaga ishlatsa boladi bu stolni\" deb postga komment yozdi. Post tavsifi: \"[REEL:DcJsW1XhAHA] #mebeluz #toshkent #ustalar #dizayn #yogochustasi\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Rahmat izohingiz uchun 🙌 Bu loyiha bo'yicha aniq ma'lumotni Ibrohim aka beradi. Shaxsiyga (DM) yozing, batafsil tushuntiramiz. O'zingizga nima kerak edi — oshxona, shkaf, yotoqxonami?"
+   }
   ]
  },
  "activity": {
@@ -1010,6 +1020,10 @@
   },
   "1061853313286004": {
    "lastClientAt": 1789723503034,
+   "followedUp": false
+  },
+  "2380178646055342": {
+   "lastClientAt": 1789723813837,
    "followedUp": false
   }
  }
