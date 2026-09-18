@@ -11,6 +11,17 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1789744685148
+    },
+    "mu74d5d0x1e": {
+      "dir": "out",
+      "amtUzs": 6500,
+      "place": "MULTICARD ECOM, UZ",
+      "rawBalance": 6432049,
+      "date": "18.09.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1789745675364
     }
   },
   "resolved": [
