@@ -657,6 +657,16 @@
     "role": "assistant",
     "content": "Rasmni ko'rdim. Kuhnya qanaqa material bo'lsin — LMDF, akril yoki krashenniy? Va uzunligi necha metr?"
    }
+  ],
+  "963772350106545": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"Нарх\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 🙌 Барча маълумотни шахсийга (DM) ёзиб берамиз, шу ерга ёзинг"
+   }
   ]
  },
  "activity": {
@@ -806,6 +816,10 @@
   },
   "1071106675843916": {
    "lastClientAt": 1789700940376,
+   "followedUp": false
+  },
+  "963772350106545": {
+   "lastClientAt": 1789702727948,
    "followedUp": false
   }
  }
