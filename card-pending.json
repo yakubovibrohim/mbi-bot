@@ -1,6 +1,18 @@
 {
   "lastMsgId": 103394,
-  "pending": {},
+  "pending": {
+    "mu73rxb0e4q": {
+      "dir": "out",
+      "amtUzs": 9990,
+      "place": "PAYME OPLATA, UZ",
+      "rawBalance": 6438549,
+      "date": "18.09.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1789744685148
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
