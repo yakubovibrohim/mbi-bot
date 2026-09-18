@@ -708,6 +708,22 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкум, яхшимисиз 👍🏻 Исмингиз нима, ошхонага қизиқиб турибсизми?"
+   },
+   {
+    "role": "user",
+    "content": "Ассалому алайкум. Рахмат"
+   },
+   {
+    "role": "assistant",
+    "content": "Арзимайди 🙌 Ошхона режалаштирвотган бўлсангиз, ўлчами борми — неча метр?"
+   },
+   {
+    "role": "user",
+    "content": "https://www.instagram.com/reel/DHGbB-eohGs/?stkn=MWJibmhnOTVzb3I3bw==\n[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ана шу лойиҳага қизиқдингизми 👍🏻 Бу тўлиқ крашенний фасад, Genc бўёғи 4 этапли, фурнитура Blum, столешница акрил тош — чоки йўқ, бир текис. Ўзингизга шунга ўхшаш ошхона хоҳлайсизми, ўлчами борми?"
    }
   ]
  },
@@ -865,7 +881,7 @@
    "followedUp": false
   },
   "2448833182193945": {
-   "lastClientAt": 1789709906373,
+   "lastClientAt": 1789709983947,
    "followedUp": false
   }
  }
