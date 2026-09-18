@@ -827,6 +827,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкум 🙌 Бу премиум крашенный ошхона, погонаж метри тахминан 800$ атрофида. Аниқ нархни шахсийга (DM) ёзсангиз ҳисоблаб берамиз 👍🏻"
    }
+  ],
+  "1061853313286004": [
+   {
+    "role": "user",
+    "content": "[Mijoz \"👏👏🔥\" deb postga komment yozdi. Post tavsifi: \"[REEL:C-X7PDfoAQJ] hammaga omad #mebel #reels\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейким 🙌 Раҳмат! Ёқдими? Шахсийга (DM) ёзинг, барча маълумотни берамиз 👍🏻"
+   }
   ]
  },
  "activity": {
@@ -996,6 +1006,10 @@
   },
   "855612857637878": {
    "lastClientAt": 1789714953477,
+   "followedUp": false
+  },
+  "1061853313286004": {
+   "lastClientAt": 1789723503034,
    "followedUp": false
   }
  }
