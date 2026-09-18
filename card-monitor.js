@@ -510,7 +510,15 @@ async function reconnectHard(reason) {
     const old = tgUser;
     tgUser = null;
     if (old) { try { await withTimeout(old.destroy(), 10000, 'destroy'); } catch (_) {} }
-    await withTimeout(connect(), 30000, 'connect');
+    const p = connect();
+    try {
+      await withTimeout(p, 30000, 'connect');
+    } catch (e) {
+      console.error('card: qayta ulanmadi —', e.message);
+      // Taymautdan keyin ham ulanish fonda davom etadi va kechikib muvaffaqiyatli bo'lishi mumkin
+      p.then(() => { lastPollOk = Date.now(); console.log('card: qayta ulandi (kechikib)'); }, () => {});
+      return false;
+    }
     lastPollOk = Date.now();
     console.log('card: qayta ulandi');
     return true;
@@ -537,7 +545,9 @@ async function watchdog() {
 }
 
 // ── Sessiya ochish ──
+let connGen = 0; // eng oxirgi connect() chaqiruvi; eskisi kechikib tugasa — tashlab yuboriladi
 async function connect() {
+  const gen = ++connGen;
   const sess = cardCfg.session;
   const dc = 2;
   const stringSession = new StringSession(sess);
@@ -545,8 +555,18 @@ async function connect() {
     useWSS: true, networkSocket: PromisedWebSockets, connection: ConnectionTCPObfuscated,
     connectionRetries: 3, autoReconnect: true, retryDelay: 3000,
   });
-  await client.connect();
-  const me = await client.getMe();
+  let me;
+  try {
+    await client.connect();
+    me = await client.getMe();
+  } catch (e) {
+    try { await client.destroy(); } catch (_) {}
+    throw e;
+  }
+  if (gen !== connGen) { // bu orada yangi ulanish boshlangan — ikkita client osilib qolmasin
+    try { await client.destroy(); } catch (_) {}
+    throw new Error('superseded');
+  }
   tgUser = client;
   return me;
 }
@@ -585,10 +605,12 @@ async function poll() {
 }
 
 // ── Ishga tushirish ──
+let startFails = 0;
 async function start(dependencies, cfg) {
   deps = dependencies;
   cardCfg = cfg;
   try {
+    if (tgUser) { const old = tgUser; tgUser = null; try { await old.destroy(); } catch (_) {} }
     const me = await connect();
     await restorePending(); // saqlangan pending + lastMsgId tiklanadi
     if (!lastMsgId) {
@@ -615,7 +637,10 @@ async function start(dependencies, cfg) {
     return true;
   } catch (e) {
     console.error('card-monitor start error:', e.message);
-    try { await deps.msg(deps.ADMIN, `⚠️ Karta monitoringi ulanmadi: ${e.message}`); } catch (_) {}
+    // Faqat birinchi xato haqida xabar; keyin 2 daqiqada bir qayta urinamiz
+    // (ilgari start xato bersa monitoring keyingi restartgacha butunlay o'lik qolardi)
+    if (startFails++ === 0) { try { await deps.msg(deps.ADMIN, `⚠️ Karta monitoringi ulanmadi: ${e.message}. 2 daqiqada bir qayta urinaman.`); } catch (_) {} }
+    setTimeout(() => { start(dependencies, cfg).catch(() => {}); }, 120000);
     return false;
   }
 }

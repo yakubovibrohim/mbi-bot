@@ -3873,6 +3873,8 @@ const MON = {
 };
 
 function monAlert(key, text) {
+  MON.alertSince = MON.alertSince || {};
+  if (!MON.alertSince[key]) MON.alertSince[key] = Date.now();
   const last = MON.lastAlert[key] || 0;
   if (Date.now() - last < MON.cooldown) return;
   MON.lastAlert[key] = Date.now();
@@ -3880,7 +3882,28 @@ function monAlert(key, text) {
   msg(ADMIN, text).catch(() => {});
   try { if (officeChat && String(officeChat) !== String(ADMIN)) agentMsg(officeChat, 'botir', text).catch(() => {}); } catch (e) {}
 }
-function monClear(key) { delete MON.lastAlert[key]; MON.status = MON.status || {}; MON.status[key] = { ok: true, ts: new Date().toISOString() }; }
+// Muammo tuzalganda: u haqda ogohlantirish yuborilgan bo'lsa — "tiklandi" xabari ham boradi
+const MON_LABELS = {
+  card_conn: 'Karta monitori Telegram sessiyasiga qayta ulandi',
+  card_poll: "Karta monitori xabarlarni yana o'qiyapti",
+  card_recon: 'Karta solishtiruvi bajarildi',
+  mbi_ig: 'Instagram yana ishlayapti',
+  mbi_ig_toggle: 'Instagram DM yana ochiq',
+  mbi_wh: "mbi-bot webhook to'g'ri",
+  mbi_pending: 'mbi-bot webhook navbati tozalandi',
+};
+function monClear(key) {
+  MON.alertSince = MON.alertSince || {};
+  const since = MON.alertSince[key];
+  const alerted = !!MON.lastAlert[key];
+  delete MON.lastAlert[key]; delete MON.alertSince[key];
+  MON.status = MON.status || {}; MON.status[key] = { ok: true, ts: new Date().toISOString() };
+  if (!alerted) return;
+  const daq = since ? Math.max(1, Math.round((Date.now() - since) / 60000)) : 0;
+  const text = `✅ *Tiklandi:* ${MON_LABELS[key] || key + ' muammosi tuzaldi'} (${monTime()}${daq ? `, ~${daq} daq davom etdi` : ''}).`;
+  msg(ADMIN, text).catch(() => {});
+  try { if (officeChat && String(officeChat) !== String(ADMIN)) agentMsg(officeChat, 'botir', text).catch(() => {}); } catch (e) {}
+}
 function monTime() {
   const d = nowTZ();
   return ('0'+d.getDate()).slice(-2)+'.'+('0'+(d.getMonth()+1)).slice(-2)+' '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
@@ -4053,14 +4076,20 @@ async function monCheckSelf() {
       msg(ADMIN, `🔧 mbi-bot webhook noto'g'ri edi — qayta o'rnatdim (${monTime()}).`).catch(() => {});
     else
       monAlert('mbi_wh', `⚠️ mbi-bot webhook noto'g'ri: \`${wh.url.slice(0, 60)}\``);
-  }
+  } else if (wh.url) monClear('mbi_wh');
   if (wh.pending > 50)
     monAlert('mbi_pending', `⚠️ mbi-bot webhook'da ${wh.pending} ta kutilayotgan yangilanish. Bot sekinlashgan bo'lishi mumkin.`);
+  else if (wh.url) monClear('mbi_pending');
 
   // Instagram
   const ig = await monIG();
   if (!ig.ok && ig.err !== 'skip') {
     const e = ig.err.toLowerCase();
+    // Tarmoq xatosi (fetch failed / timeout) bir martalik bo'lishi mumkin — ketma-ket 2 marta bo'lsagina ogohlantiramiz
+    if (/fetch failed|abort|timeout|econn|enotfound|eai_again/.test(e)) {
+      MON.fail.ig_net = (MON.fail.ig_net || 0) + 1;
+      if (MON.fail.ig_net < 2) return;
+    }
     if (e.includes('disabled access') || e.includes('code 200') || e.includes('(#200)')) {
       // Avval avtomatik tuzatishga urinamiz — ba'zan toggle emas, obuna uzilgan bo'ladi (API tuzata oladi)
       const fixed = await monFixIG();
@@ -4082,7 +4111,7 @@ async function monCheckSelf() {
       else
         monAlert('mbi_ig', `⚠️ mbi-bot Instagram muammo: \`${ig.err}\``);
     }
-  } else { monClear('mbi_ig'); monClear('mbi_ig_toggle'); }
+  } else { MON.fail.ig_net = 0; monClear('mbi_ig'); monClear('mbi_ig_toggle'); }
 }
 
 // ── Karta monitori nazorati (Botir) ──
