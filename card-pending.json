@@ -13,18 +13,6 @@
       "askedAt": 1789744685148,
       "remindedAt": 1789816706910
     },
-    "mu89z748020": {
-      "dir": "out",
-      "amtUzs": 310000,
-      "place": "OOO IBR ECO PETROL, Tashkent, 0",
-      "rawBalance": 5336574,
-      "date": "19.09.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1789815568328,
-      "kind": "personal"
-    },
     "mu8aq78ggfa": {
       "dir": "out",
       "amtUzs": 60000,
@@ -1172,6 +1160,11 @@
       "date": "18.09.2026",
       "dir": "out",
       "amt": 6500
+    },
+    {
+      "date": "19.09.2026",
+      "dir": "out",
+      "amt": 310000
     }
   ],
   "lastBalances": {
