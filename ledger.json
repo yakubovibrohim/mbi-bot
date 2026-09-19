@@ -1,20 +1,20 @@
 {
-  "updated": "2026-09-19T06:51:49.551Z",
+  "updated": "2026-09-19T06:54:20.473Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 80340357,
+  "balance_uzs": 76740357,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 148606901,
+    "chiqim": 152206901,
     "by_category": {
       "office": 21514683,
       "personal": 57740850,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
-      "deal_expense": 45891448,
+      "deal_expense": 49491448,
       "debt_in": 26400000,
       "card_income": 3380000,
       "debt_paid": 4732000
@@ -3044,6 +3044,17 @@
       "amount_uzs": 50000,
       "name": "Nodira opa olmazor: 💳 IYB P2P, UZ",
       "pay": "karta",
+      "src": "deals"
+    },
+    {
+      "date": "19.09.2026",
+      "time": "11:54",
+      "dir": "out",
+      "category": "deal_expense",
+      "category_uz": "Buyurtma xarajati",
+      "amount_uzs": 3600000,
+      "name": "Nodira opa olmazor: xarajat",
+      "pay": "naqd",
       "src": "deals"
     }
   ]
