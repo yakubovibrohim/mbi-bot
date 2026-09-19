@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-19T07:29:37.408Z",
+  "updated": "2026-09-19T08:23:04.859Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 76004882,
+  "balance_uzs": 75998382,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 152942376,
+    "chiqim": 152948876,
     "by_category": {
       "office": 21514683,
-      "personal": 57740850,
+      "personal": 57747350,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
       "deal_expense": 50226923,
@@ -3032,6 +3032,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 109327,
       "name": "💳 Dostavka",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "18.09.2026",
+      "time": "13:22",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 6500,
+      "name": "💳 MULTICARD ECOM, UZ",
       "pay": "karta",
       "src": "personal"
     },
