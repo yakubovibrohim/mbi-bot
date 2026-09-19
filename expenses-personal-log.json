@@ -1627,5 +1627,15 @@
     "pay_method": "card",
     "place": "OOO IBR ECO PETROL, Tashkent, 0",
     "ts": "2026-09-19T11:25:22.827Z"
+  },
+  {
+    "date": "19.09.2026",
+    "note": "💳 Sigaret",
+    "amount_uzs": 60000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "MMS HADICHA OK, TASHKENT, UCHTEPA TUMAN KATTA KANI 8 UY",
+    "ts": "2026-09-19T11:25:29.444Z"
   }
 ]
