@@ -1019,6 +1019,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкам 🙌 Бу премиум крашенный ошхона, тахминан 1 метри 800$ атрофида. Аниқ нархни билиш учун шахсийга (DM) ёзинг, ўлчамингизни айтсангиз ҳисоблаб берамиз 👍🏻"
    }
+  ],
+  "1644835010546831": [
+   {
+    "role": "user",
+    "content": "Nech pulakan"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu alaykum. Nima kerak edi — oshxonami, shkaf, yoki yotoqxona? \n\nOshxona bo'lsa pogonaj metri 380$ dan boshlanadi, material va etajga qarab. Qaysi mebel kerak, o'lchami bormi?"
+   }
   ]
  },
  "activity": {
@@ -1204,6 +1214,10 @@
   },
   "1123638440182918": {
    "lastClientAt": 1789798863883,
+   "followedUp": false
+  },
+  "1644835010546831": {
+   "lastClientAt": 1789800916820,
    "followedUp": false
   }
  }
