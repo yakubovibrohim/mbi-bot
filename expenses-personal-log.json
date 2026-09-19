@@ -1617,5 +1617,15 @@
     "pay_method": "card",
     "place": "MULTICARD ECOM, UZ",
     "ts": "2026-09-19T08:22:54.759Z"
+  },
+  {
+    "date": "19.09.2026",
+    "note": "💳 Benzin",
+    "amount_uzs": 310000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO IBR ECO PETROL, Tashkent, 0",
+    "ts": "2026-09-19T11:25:22.827Z"
   }
 ]
