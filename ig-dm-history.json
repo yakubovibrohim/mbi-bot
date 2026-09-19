@@ -58,62 +58,6 @@
     "content": "[[FOTO:oshxona]]"
    }
   ],
-  "945412055286315": [
-   {
-    "role": "user",
-    "content": "[Mijoz rasm yubordi]"
-   },
-   {
-    "role": "assistant",
-    "content": "Rasmni oldim 👍🏻 Bu qanaqa mebel — oshxonami, shkafmi, yotoqxonami? O'zingizga shunga o'xshash narsa ishlatmoqchimisiz?"
-   },
-   {
-    "role": "user",
-    "content": "[Mijoz ovozli xabar yubordi]"
-   },
-   {
-    "role": "assistant",
-    "content": "Kechirasiz, ovozli xabarni bu yerda eshitolmayapman. Yozib qoldirsangiz — nima kerakligini (oshxona, shkaf yoki yotoqxona) va o'lchamini yozing, darrov yordam beraman 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Шу ошхона мебель йокиб колди 6 метрли жойга ценаси этворолисми"
-   },
-   {
-    "role": "assistant",
-    "content": "6 metrga bu uslubdagi oshxona qilib bo'ladi 👍🏻 Narx materialга bog'liq:\n\nLMDF fasad + GTV furnitura bilan — taxminan 2000$ atrofida\nAkril fasad + Hettich bilan — taxminan 2700–3300$ atrofida\n\nRasmdagidek premium ko'rinish bo'lsa (akril/krashenniy, sensorli yoritish) narx biroz yuqoriroq chiqadi. 2 etajmi, 3 etajmi rejalashtiryapsiz?"
-   }
-  ],
-  "1391250832525534": [
-   {
-    "role": "user",
-    "content": "Сколько стоит дизайн интерьера?"
-   },
-   {
-    "role": "assistant",
-    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Кухни выходят примерно от $1000. Что планируете?"
-   }
-  ],
-  "1446878070586784": [
-   {
-    "role": "user",
-    "content": "[Mijoz \"Жуда гозал\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Ассалому Алейкум, раҳмат 🙌 Бу премиум крашенный ошхона, фурнитура Blum билан. Ўзингизга ошхона режалаштиряпсизми?"
-   }
-  ],
-  "1071324815747611": [
-   {
-    "role": "user",
-    "content": "[Mijoz \"Assalom alaykum  nech pulga tushgan  kuxniya\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Va alaykum assalom 🙌 Шахсийга (DM) ёзинг, ҳамма маълумотни бераман"
-   }
-  ],
   "1575410807665427": [
    {
     "role": "user",
@@ -1102,22 +1046,6 @@
  "activity": {
   "2031859767478092": {
    "lastClientAt": 1789646064667,
-   "followedUp": true
-  },
-  "945412055286315": {
-   "lastClientAt": 1789629888078,
-   "followedUp": true
-  },
-  "1391250832525534": {
-   "lastClientAt": 1789630573984,
-   "followedUp": true
-  },
-  "1446878070586784": {
-   "lastClientAt": 1789632206364,
-   "followedUp": true
-  },
-  "1071324815747611": {
-   "lastClientAt": 1789632374691,
    "followedUp": true
   },
   "1575410807665427": {
