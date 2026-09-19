@@ -4803,6 +4803,7 @@ function saveIgHistoryDebounced() {
 
 // ── Follow-up: mijoz 20 soat jim bo'lsa, 24 soatlik oyna yopilishidan oldin 1 marta yumshoq eslatma ──
 async function igFollowupTick() {
+  if (igAutoOff()) return;
   const now = Date.now();
   for (const [uid, act] of Object.entries(igActivity)) {
     const silentH = (now - act.lastClientAt) / 3600000;
@@ -4855,6 +4856,10 @@ setInterval(igFollowupTick, 45 * 60 * 1000); // har 45 daqiqada tekshiradi
 const igManualMode = {};
 const igUsernames = {}; // from_id -> @username (best effort)
 const IG_PAUSE_HOURS = 24; // hours to pause after manual reply
+// Umumiy o'chirgich: fayl mavjud bo'lsa Instagram'da HECH QANDAY avto javob yo'q (DM, komment, follow-up).
+// Restartsiz: o'chirish — `touch`, yoqish — `rm` (Ibrohim 19.09.2026 da to'xtatishni so'ragan).
+const IG_AUTO_OFF_FILE = '/var/lib/mbi-bot/ig-auto.off';
+function igAutoOff() { try { return require('fs').existsSync(IG_AUTO_OFF_FILE); } catch (e) { return false; } }
 
 // Debounce: collect split messages from a user, reply once after they stop typing
 const igDebounce = {}; // userId -> { timer, parts: [] }
@@ -5284,6 +5289,8 @@ async function handleIG(body) {
         console.log('IG DM from:', from, 'text:', text);
         if (m.sender?.username) igUsernames[from] = '@' + m.sender.username;
 
+        if (igAutoOff()) { console.log('IG avto javob o\'chiq — javob yozilmaydi:', from); continue; }
+
         // If bot is paused for this user (manual mode), skip entirely
         if (igManualMode[from]) {
           const hoursPassed = (Date.now() - igManualMode[from]) / (1000 * 3600);
@@ -5323,6 +5330,7 @@ async function handleIG(body) {
 // Handle a single incoming Instagram comment
 async function handleIGComment(c) {
   if (!c) return;
+  if (igAutoOff()) return;
   const commentId = c.id;
   const text = (c.text || '').trim();
   const commenterId = c.from?.id;
@@ -5447,7 +5455,7 @@ function igReplyToComment(commentId, message) {
 let igPollStarted = 0;          // birinchi tick vaqti — eski komentlarni o'tkazib yuborish uchun
 const IG_POLL_MAX_AGE_MS = 24 * 3600 * 1000;  // faqat oxirgi 24 soatlik komentlarga javob
 async function pollIGComments() {
-  if (!IG_TOKEN) return;
+  if (!IG_TOKEN || igAutoOff()) return;
   if (!igPollStarted) igPollStarted = Date.now();
   const tok = encodeURIComponent(IG_TOKEN);
   try {
