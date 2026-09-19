@@ -58,54 +58,6 @@
     "content": "[[FOTO:oshxona]]"
    }
   ],
-  "1822587825400102": [
-   {
-    "role": "user",
-    "content": "Можно ли заказать мебель на сайте?"
-   },
-   {
-    "role": "assistant",
-    "content": "Здравствуйте! Заказ оформляем не через сайт, а напрямую — мы делаем мебель на заказ по вашим размерам. Сначала бесплатно замеряем и рисуем точный 3D-проект в программе Bazis, вы видите будущую мебель заранее.\n\nЧто планируете — кухню, шкаф или спальню?"
-   }
-  ],
-  "4598816777054399": [
-   {
-    "role": "user",
-    "content": "[Mijoz \"Чиройли\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Раҳмат 🙌 Бу премиум крашенный ошхона — фасад Genc бўёғи 4 этапли, стол устки қисми сунъий тош, ҳеч қандай чок йўқ.\n\nЎзингизга ошхона режалаштиряпсизми?"
-   }
-  ],
-  "1785348786026218": [
-   {
-    "role": "user",
-    "content": "Nechpulga tushdi"
-   },
-   {
-    "role": "assistant",
-    "content": "Assalomu alaykum! Aytolamiz-u, avval bir-ikki narsani aniqlab olsam — qaysi mebel qiziqtiryapti, oshxonami, shkafmi, yotoqxonami? 😊"
-   },
-   {
-    "role": "user",
-    "content": "Oshxona"
-   },
-   {
-    "role": "assistant",
-    "content": "Oshxona bo'lsa, narxi asosan uzunlik va materialga bog'liq. Oshxona necha metr — bilasizmi?"
-   }
-  ],
-  "1592630842506242": [
-   {
-    "role": "user",
-    "content": "[Mijoz \"МаашаАллох 🤩🤩🤩🤩\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Ассалому Алейкум 🙌 Раҳмат илиқ сўзингиз учун! Бу премиум крашенний ошхона — фасадлар Genc бўёғи билан 4 этапда бўялган, фурнитура Blum. Ўзингизга ҳам шунақа мебел режалаштиряпсизми?"
-   }
-  ],
   "945412055286315": [
    {
     "role": "user",
@@ -670,6 +622,10 @@
    {
     "role": "assistant",
     "content": "Раҳмат, кўзингиз тор бўлмасин 🙌 Бу лойиҳа тахминан погонаж метри 800$ атрофида чиққан — фасади крашенный, столешницаси акрил тош.\n\nБюджетга қараб арзонроғини ҳам қиламиз — акрил ёки EGGER фасад билан анча тушади. Ўзингизнинг ошхона неча метр?"
+   },
+   {
+    "role": "assistant",
+    "content": "Ошхонангиз неча метр эди — ўлчаб, тахминий нархни айтиб берайми?"
    }
   ],
   "855612857637878": [
@@ -680,6 +636,10 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкум 🙌 Бу премиум крашенный ошхона, погонаж метри тахминан 800$ атрофида. Аниқ нархни шахсийга (DM) ёзсангиз ҳисоблаб берамиз 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Ошхона бўйича нима қарорга келдингиз? Ўлчамларни юборсангиз аниқ нархини айтиб берай."
    }
   ],
   "1061853313286004": [
@@ -1134,22 +1094,6 @@
    "lastClientAt": 1789646064667,
    "followedUp": true
   },
-  "1822587825400102": {
-   "lastClientAt": 1789627220975,
-   "followedUp": true
-  },
-  "4598816777054399": {
-   "lastClientAt": 1789628383065,
-   "followedUp": true
-  },
-  "1785348786026218": {
-   "lastClientAt": 1789629167320,
-   "followedUp": true
-  },
-  "1592630842506242": {
-   "lastClientAt": 1789629495500,
-   "followedUp": true
-  },
   "945412055286315": {
    "lastClientAt": 1789629888078,
    "followedUp": true
@@ -1256,11 +1200,11 @@
   },
   "1727175948517112": {
    "lastClientAt": 1789714942804,
-   "followedUp": false
+   "followedUp": true
   },
   "855612857637878": {
    "lastClientAt": 1789714953477,
-   "followedUp": false
+   "followedUp": true
   },
   "1061853313286004": {
    "lastClientAt": 1789723503034,
