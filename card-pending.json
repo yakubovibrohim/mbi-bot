@@ -12,18 +12,6 @@
       "step": "type",
       "askedAt": 1789744685148,
       "remindedAt": 1789816706910
-    },
-    "mu8aq78ggfa": {
-      "dir": "out",
-      "amtUzs": 60000,
-      "place": "MMS HADICHA OK, TASHKENT, UCHTEPA TUMAN KATTA KANI 8 UY",
-      "rawBalance": 5276574,
-      "date": "19.09.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1789816828192,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -1166,6 +1154,11 @@
       "date": "19.09.2026",
       "dir": "out",
       "amt": 310000
+    },
+    {
+      "date": "19.09.2026",
+      "dir": "out",
+      "amt": 60000
     }
   ],
   "lastBalances": {
