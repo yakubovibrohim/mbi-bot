@@ -12,19 +12,6 @@
       "step": "type",
       "askedAt": 1789744685148,
       "remindedAt": 1789802306599
-    },
-    "mu74d5d0x1e": {
-      "dir": "out",
-      "amtUzs": 6500,
-      "place": "MULTICARD ECOM, UZ",
-      "rawBalance": 6432049,
-      "date": "18.09.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1789745675364,
-      "remindedAt": 1789803296633,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -1157,6 +1144,11 @@
       "date": "19.09.2026",
       "dir": "out",
       "amt": 735475
+    },
+    {
+      "date": "18.09.2026",
+      "dir": "out",
+      "amt": 6500
     }
   ],
   "lastBalances": {
