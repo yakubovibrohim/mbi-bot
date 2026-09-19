@@ -58,16 +58,6 @@
     "content": "[[FOTO:oshxona]]"
    }
   ],
-  "1694534454974963": [
-   {
-    "role": "user",
-    "content": "Сколько стоит дизайн интерьера?"
-   },
-   {
-    "role": "assistant",
-    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Кухни выходят примерно от $1000. Что планируете?"
-   }
-  ],
   "2991090667905732": [
    {
     "role": "user",
@@ -530,6 +520,10 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейким 🙌 Раҳмат! Ёқдими? Шахсийга (DM) ёзинг, барча маълумотни берамиз 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Мебел бўйича режалар қандай, ишлаймизми?"
    }
   ],
   "2380178646055342": [
@@ -540,6 +534,10 @@
    {
     "role": "assistant",
     "content": "Rahmat izohingiz uchun 🙌 Bu loyiha bo'yicha aniq ma'lumotni Ibrohim aka beradi. Shaxsiyga (DM) yozing, batafsil tushuntiramiz. O'zingizga nima kerak edi — oshxona, shkaf, yotoqxonami?"
+   },
+   {
+    "role": "assistant",
+    "content": "Ҳалиги стол ҳақида ўйлаб кўрдингизми? Ўзингизга нима керак эди — уй учунми ёки бошқа жойга?"
    }
   ],
   "1786427719173885": [
@@ -984,10 +982,6 @@
    "lastClientAt": 1789646064667,
    "followedUp": true
   },
-  "1694534454974963": {
-   "lastClientAt": 1789637134893,
-   "followedUp": true
-  },
   "2991090667905732": {
    "lastClientAt": 1789643564430,
    "followedUp": true
@@ -1074,11 +1068,11 @@
   },
   "1061853313286004": {
    "lastClientAt": 1789723503034,
-   "followedUp": false
+   "followedUp": true
   },
   "2380178646055342": {
    "lastClientAt": 1789723813837,
-   "followedUp": false
+   "followedUp": true
   },
   "1786427719173885": {
    "lastClientAt": 1789725406140,
