@@ -1,6 +1,18 @@
 {
   "lastMsgId": 103567,
-  "pending": {},
+  "pending": {
+    "mu8mil5poc6": {
+      "dir": "out",
+      "amtUzs": 1188500,
+      "place": "IYB MOBILE EXCHANGE, UZ",
+      "rawBalance": 4088074,
+      "date": "19.09.2026",
+      "title": "Platezh",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1789836628381
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
