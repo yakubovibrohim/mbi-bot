@@ -1607,5 +1607,15 @@
     "pay_method": "card",
     "place": "IP OOO YANDEX EATS, UZ",
     "ts": "2026-09-17T13:54:13.792Z"
+  },
+  {
+    "date": "18.09.2026",
+    "note": "💳 MULTICARD ECOM, UZ",
+    "amount_uzs": 6500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "MULTICARD ECOM, UZ",
+    "ts": "2026-09-19T08:22:54.759Z"
   }
 ]
