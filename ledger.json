@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-19T08:23:04.859Z",
+  "updated": "2026-09-19T11:25:39.592Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 75998382,
+  "balance_uzs": 75628382,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 152948876,
+    "chiqim": 153318876,
     "by_category": {
       "office": 21514683,
-      "personal": 57747350,
+      "personal": 58117350,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
       "deal_expense": 50226923,
@@ -3078,6 +3078,28 @@
       "name": "Nodira opa olmazor: 💳 IYM UZCARD2VISA S KOMISS, UZ",
       "pay": "karta",
       "src": "deals"
+    },
+    {
+      "date": "19.09.2026",
+      "time": "16:25",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 310000,
+      "name": "💳 Benzin",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "19.09.2026",
+      "time": "16:25",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 60000,
+      "name": "💳 Sigaret",
+      "pay": "karta",
+      "src": "personal"
     }
   ]
 }
