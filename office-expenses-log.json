@@ -496,5 +496,15 @@
     "rate": 12000,
     "note": "IYB MOBILE EXCHANGE, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mu9gqduus3u",
+    "date": "19.09.2026",
+    "ts": "2026-09-20T06:56:20.646Z",
+    "name": "💳 Target",
+    "amount_uzs": 1188500,
+    "rate": 12000,
+    "note": "IYB MOBILE EXCHANGE, UZ",
+    "pay_method": "card"
   }
 ]
