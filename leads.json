@@ -317,7 +317,8 @@
    "телефон қолдирди"
   ],
   "msg": "97 7783002\nШакиржан",
-  "status": "new"
+  "status": "new",
+  "reminded": true
  },
  {
   "ts": "2026-09-17T08:10:04.629Z",
@@ -353,7 +354,8 @@
    "телефон қолдирди"
   ],
   "msg": "xop raxmat kottakon\n915297900\nWaxlo",
-  "status": "new"
+  "status": "new",
+  "reminded": true
  },
  {
   "ts": "2026-09-18T13:09:45.545Z",
