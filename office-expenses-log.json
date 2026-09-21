@@ -506,5 +506,15 @@
     "rate": 12000,
     "note": "IYB MOBILE EXCHANGE, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mubgk8sgprd",
+    "date": "21.09.2026",
+    "ts": "2026-09-21T16:27:06.496Z",
+    "name": "💳 Claude",
+    "amount_uzs": 1188500,
+    "rate": 12000,
+    "note": "IYB MOBILE EXCHANGE, UZ",
+    "pay_method": "card"
   }
 ]
