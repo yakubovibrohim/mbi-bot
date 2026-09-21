@@ -1,17 +1,6 @@
 {
   "lastMsgId": 103732,
   "pending": {
-    "mubg2ruha0y": {
-      "dir": "out",
-      "amtUzs": 1176615,
-      "place": "IYB MOBILE EXCHANGE, UZ",
-      "rawBalance": 4085459,
-      "date": "21.09.2026",
-      "title": "Platezh",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1790007211385
-    },
     "mubg5zjyoz0": {
       "dir": "out",
       "amtUzs": 1188500,
@@ -1184,6 +1173,11 @@
       "date": "21.09.2026",
       "dir": "in",
       "amt": 1174000
+    },
+    {
+      "date": "21.09.2026",
+      "dir": "out",
+      "amt": 1176615
     }
   ],
   "lastBalances": {
