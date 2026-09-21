@@ -1,17 +1,6 @@
 {
   "lastMsgId": 103732,
   "pending": {
-    "mubfwcpcjlg": {
-      "dir": "in",
-      "amtUzs": 1174000,
-      "place": "SQB MOBILE UZCARD P2P UZCARD, UZ",
-      "rawBalance": 5262074,
-      "date": "21.09.2026",
-      "title": "Perevod na kartu",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1790006911824
-    },
     "mubg2ruha0y": {
       "dir": "out",
       "amtUzs": 1176615,
@@ -1190,6 +1179,11 @@
       "date": "19.09.2026",
       "dir": "out",
       "amt": 1188500
+    },
+    {
+      "date": "21.09.2026",
+      "dir": "in",
+      "amt": 1174000
     }
   ],
   "lastBalances": {
