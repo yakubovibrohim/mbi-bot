@@ -1,20 +1,6 @@
 {
   "lastMsgId": 103783,
-  "pending": {
-    "muc9z6pbw9i": {
-      "dir": "out",
-      "amtUzs": 70000,
-      "place": "PAYME OPLATA, UZ",
-      "rawBalance": 2826959,
-      "date": "22.09.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1790057432496,
-      "remindedAt": 1790064661109,
-      "kind": "personal"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -1185,6 +1171,11 @@
       "date": "21.09.2026",
       "dir": "out",
       "amt": 1188500
+    },
+    {
+      "date": "22.09.2026",
+      "dir": "out",
+      "amt": 70000
     }
   ],
   "lastBalances": {
