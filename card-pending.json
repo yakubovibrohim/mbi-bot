@@ -1,6 +1,18 @@
 {
   "lastMsgId": 103794,
-  "pending": {},
+  "pending": {
+    "muchw1gf6mr": {
+      "dir": "out",
+      "amtUzs": 27000,
+      "place": "OOO MAKHAMAT KARVON, Tashkent, ESKI ShAKHAR MFY  LANGAR  KOK T",
+      "rawBalance": 2544959,
+      "date": "22.09.2026",
+      "title": "Pokupka",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1790070722655
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
