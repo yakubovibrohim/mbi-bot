@@ -697,8 +697,9 @@
       {
         "date": "22.09.2026",
         "in": "09:06",
-        "out": null,
-        "late": false
+        "out": "18:02",
+        "late": false,
+        "early": false
       }
     ],
     "tg_chat_id": "5868770869"
