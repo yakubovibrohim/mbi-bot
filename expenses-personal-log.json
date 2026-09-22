@@ -1657,5 +1657,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-09-22T09:43:30.916Z"
+  },
+  {
+    "date": "22.09.2026",
+    "note": "💳 Сигареты",
+    "amount_uzs": 255000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO KOURI, TOSHKENT, DOSTOBOD MFY KORASUV BOYI KOChA",
+    "ts": "2026-09-22T09:50:08.379Z"
   }
 ]
