@@ -1,6 +1,18 @@
 {
   "lastMsgId": 103793,
-  "pending": {},
+  "pending": {
+    "muchs6dwho6": {
+      "dir": "out",
+      "amtUzs": 255000,
+      "place": "OOO KOURI, TOSHKENT, DOSTOBOD MFY KORASUV BOYI KOChA",
+      "rawBalance": 2571959,
+      "date": "22.09.2026",
+      "title": "Pokupka",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1790070542420
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
