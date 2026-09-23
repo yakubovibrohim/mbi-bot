@@ -361,6 +361,23 @@
         "rate": 12000,
         "note": "",
         "source": "manual"
+      },
+      {
+        "id": "mue09tnna4kf",
+        "date": "23.09.2026",
+        "ts": "2026-09-23T11:14:24.995Z",
+        "products": [
+          {
+            "name": "ЛМДФ белый гладкий назиф 8мм",
+            "qty": 3,
+            "price_uzs": 470000,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 1410000,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
       }
     ],
     "finished_date": null,
