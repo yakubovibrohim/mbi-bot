@@ -1,18 +1,6 @@
 {
   "lastMsgId": 104173,
-  "pending": {
-    "mue0hqjeune": {
-      "dir": "out",
-      "amtUzs": 161000,
-      "place": "OOO FOREX MEBEL, UZ",
-      "rawBalance": 1480355,
-      "date": "23.09.2026",
-      "title": "Platezh",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1790162434202
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -1218,6 +1206,11 @@
       "date": "23.09.2026",
       "dir": "out",
       "amt": 335104
+    },
+    {
+      "date": "23.09.2026",
+      "dir": "out",
+      "amt": 161000
     }
   ],
   "lastBalances": {
