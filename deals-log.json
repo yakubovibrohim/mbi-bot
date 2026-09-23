@@ -344,6 +344,23 @@
         "rate": 12000,
         "note": "",
         "source": "manual"
+      },
+      {
+        "id": "mue0940acw7o",
+        "date": "23.09.2026",
+        "ts": "2026-09-23T11:13:51.754Z",
+        "products": [
+          {
+            "name": "ЛМДФ белый гладкий назиф 16мм",
+            "qty": 10,
+            "price_uzs": 603000,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 6030000,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
       }
     ],
     "finished_date": null,
