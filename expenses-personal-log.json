@@ -1687,5 +1687,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-09-23T05:54:26.309Z"
+  },
+  {
+    "date": "23.09.2026",
+    "note": "💳 Страховка",
+    "amount_uzs": 192000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-09-23T07:27:26.290Z"
   }
 ]
