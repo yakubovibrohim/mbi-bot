@@ -420,6 +420,23 @@
         "total_uzs": 161000,
         "rate": 12000,
         "pay_method": "card"
+      },
+      {
+        "id": "mue1mhe5mah6",
+        "date": "23.09.2026",
+        "ts": "2026-09-23T11:52:15.245Z",
+        "products": [
+          {
+            "name": "Aluframe fasad",
+            "qty": 1,
+            "price_uzs": 2160000,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 2160000,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
       }
     ],
     "finished_date": null,
