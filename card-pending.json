@@ -1,18 +1,6 @@
 {
   "lastMsgId": 104064,
-  "pending": {
-    "mudyd7ru9rp": {
-      "dir": "out",
-      "amtUzs": 335104,
-      "place": "OOO  CHIN WOOD SERVICE, UZ",
-      "rawBalance": 1641355,
-      "date": "23.09.2026",
-      "title": "Platezh",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1790158864026
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -1213,6 +1201,11 @@
       "date": "23.09.2026",
       "dir": "out",
       "amt": 192000
+    },
+    {
+      "date": "23.09.2026",
+      "dir": "out",
+      "amt": 335104
     }
   ],
   "lastBalances": {
