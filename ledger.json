@@ -1,20 +1,20 @@
 {
-  "updated": "2026-09-23T11:24:37.569Z",
+  "updated": "2026-09-23T11:52:24.950Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 32006248,
+  "balance_uzs": 29846248,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 196941010,
+    "chiqim": 199101010,
     "by_category": {
       "office": 23918683,
       "personal": 59020840,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
-      "deal_expense": 90541567,
+      "deal_expense": 92701567,
       "debt_in": 26400000,
       "card_income": 3380000,
       "debt_paid": 4732000
@@ -3264,6 +3264,17 @@
       "amount_uzs": 161000,
       "name": "Nodira opa olmazor: 💳 OOO FOREX MEBEL, UZ",
       "pay": "karta",
+      "src": "deals"
+    },
+    {
+      "date": "23.09.2026",
+      "time": "16:52",
+      "dir": "out",
+      "category": "deal_expense",
+      "category_uz": "Buyurtma xarajati",
+      "amount_uzs": 2160000,
+      "name": "Nodira opa olmazor: xarajat",
+      "pay": "naqd",
       "src": "deals"
     },
     {
