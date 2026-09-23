@@ -478,6 +478,29 @@
         "rate": 12000,
         "note": "",
         "source": "manual"
+      },
+      {
+        "id": "mue33d6d2lvo",
+        "date": "23.09.2026",
+        "ts": "2026-09-23T12:33:22.550Z",
+        "products": [
+          {
+            "name": "Mesan ношка 104.39.02",
+            "qty": 16,
+            "price_uzs": 33000,
+            "rate": 12000
+          },
+          {
+            "name": "Mesan полкадержател",
+            "qty": 50,
+            "price_uzs": 1320,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 594000,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
       }
     ],
     "finished_date": null,
