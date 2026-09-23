@@ -1,20 +1,20 @@
 {
-  "updated": "2026-09-23T11:14:01.717Z",
+  "updated": "2026-09-23T11:14:34.717Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 37998248,
+  "balance_uzs": 36588248,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 190949010,
+    "chiqim": 192359010,
     "by_category": {
       "office": 23918683,
       "personal": 59020840,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
-      "deal_expense": 84549567,
+      "deal_expense": 85959567,
       "debt_in": 26400000,
       "card_income": 3380000,
       "debt_paid": 4732000
@@ -3218,6 +3218,17 @@
       "category": "deal_expense",
       "category_uz": "Buyurtma xarajati",
       "amount_uzs": 6030000,
+      "name": "Nodira opa olmazor: xarajat",
+      "pay": "naqd",
+      "src": "deals"
+    },
+    {
+      "date": "23.09.2026",
+      "time": "16:14",
+      "dir": "out",
+      "category": "deal_expense",
+      "category_uz": "Buyurtma xarajati",
+      "amount_uzs": 1410000,
       "name": "Nodira opa olmazor: xarajat",
       "pay": "naqd",
       "src": "deals"
