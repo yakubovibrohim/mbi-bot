@@ -297,6 +297,53 @@
         "rate": 12000,
         "note": "",
         "source": "manual"
+      },
+      {
+        "id": "mue07c1dphmi",
+        "date": "23.09.2026",
+        "ts": "2026-09-23T11:12:28.850Z",
+        "products": [
+          {
+            "name": "kromka 19/1 белый премиум",
+            "qty": 151,
+            "price_uzs": 7500,
+            "rate": 12000
+          },
+          {
+            "name": "Кромка 19/1 белый гладкий",
+            "qty": 272.2,
+            "price_uzs": 4200,
+            "rate": 12000
+          },
+          {
+            "name": "Кромка 21/1 P001",
+            "qty": 153.8,
+            "price_uzs": 6000,
+            "rate": 12000
+          },
+          {
+            "name": "Акрил p001 evogloss",
+            "qty": 6,
+            "price_uzs": 777000,
+            "rate": 12000
+          },
+          {
+            "name": "ЛДСП EGGER белый премиум st9",
+            "qty": 5,
+            "price_uzs": 717000,
+            "rate": 12000
+          },
+          {
+            "name": "ЛМДФ каствмону белый гладкий о/с",
+            "qty": 6,
+            "price_uzs": 892000,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 16797540,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
       }
     ],
     "finished_date": null,
