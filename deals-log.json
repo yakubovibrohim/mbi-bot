@@ -437,6 +437,47 @@
         "rate": 12000,
         "note": "",
         "source": "manual"
+      },
+      {
+        "id": "mue2uns1solp",
+        "date": "23.09.2026",
+        "ts": "2026-09-23T12:26:36.385Z",
+        "products": [
+          {
+            "name": "GTV Направляющая, шариковая, h-45, L-450 мм, Пуш",
+            "qty": 3,
+            "price_uzs": 74400,
+            "rate": 12000
+          },
+          {
+            "name": "GTV Направл. Модерн Эд, 3D, с доводчиком, полное выдви",
+            "qty": 3,
+            "price_uzs": 132000,
+            "rate": 12000
+          },
+          {
+            "name": "GTV Ручка кнопка RING, цвет инокс",
+            "qty": 10,
+            "price_uzs": 24000,
+            "rate": 12000
+          },
+          {
+            "name": "GTV Сушка для посуды GTV MOVIX, 800 мм, с доводчиком, без направ…",
+            "qty": 2,
+            "price_uzs": 696000,
+            "rate": 12000
+          },
+          {
+            "name": "GTV Направляющая для стекла MOVIX OC-SZD нижнего монтажа",
+            "qty": 2,
+            "price_uzs": 156000,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 2563200,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
       }
     ],
     "finished_date": null,
