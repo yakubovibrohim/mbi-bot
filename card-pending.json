@@ -1,19 +1,6 @@
 {
   "lastMsgId": 103884,
-  "pending": {
-    "mudorx2uccy": {
-      "dir": "out",
-      "amtUzs": 353500,
-      "place": "PAYME OPLATA, UZ",
-      "rawBalance": 2168459,
-      "date": "23.09.2026",
-      "title": "Platezh",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1790142753846,
-      "kind": "personal"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -1204,6 +1191,11 @@
       "date": "22.09.2026",
       "dir": "out",
       "amt": 23000
+    },
+    {
+      "date": "23.09.2026",
+      "dir": "out",
+      "amt": 353500
     }
   ],
   "lastBalances": {
