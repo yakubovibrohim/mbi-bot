@@ -1677,5 +1677,15 @@
     "pay_method": "card",
     "place": "OOO YANDEXGO UB, UZ",
     "ts": "2026-09-22T12:07:54.735Z"
+  },
+  {
+    "date": "23.09.2026",
+    "note": "💳 Bogcha",
+    "amount_uzs": 353500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-09-23T05:54:26.309Z"
   }
 ]
