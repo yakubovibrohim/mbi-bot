@@ -412,6 +412,14 @@
         "rate": 12000,
         "note": "",
         "source": "manual"
+      },
+      {
+        "date": "23.09.2026",
+        "ts": "2026-09-23T11:24:27.963Z",
+        "name": "💳 OOO FOREX MEBEL, UZ",
+        "total_uzs": 161000,
+        "rate": 12000,
+        "pay_method": "card"
       }
     ],
     "finished_date": null,
