@@ -4715,7 +4715,10 @@ async function handle(upd) {
         const userId = t.split(' ')[1];
         if (userId) {
           igManualMode[userId] = Date.now();
+          const act = igActivity[userId] || (igActivity[userId] = {});
+          act.manual = true; act.manualAt = Date.now();
           delete igConvHistory[userId];
+          saveIgHistoryDebounced();
           await msg(c, `⏸ Bot to'xtatildi: ${userId}\n/igstart ${userId} bilan qayta yoqing.`);
         } else {
           const paused = Object.keys(igManualMode).join(', ') || 'yo\'q';
@@ -4727,6 +4730,8 @@ async function handle(upd) {
         const userId = t.split(' ')[1];
         if (userId) {
           delete igManualMode[userId];
+          if (igActivity[userId]) { delete igActivity[userId].manual; delete igActivity[userId].manualAt; }
+          saveIgHistoryDebounced();
           await msg(c, `▶️ Bot qayta yondi: ${userId}`);
         }
         return;
@@ -4777,7 +4782,12 @@ async function loadIgHistory() {
     if (parsed && parsed.histories) {
       Object.assign(igConvHistory, parsed.histories);
       Object.assign(igActivity, parsed.activity || {});
-      console.log('IG tarix yuklandi:', Object.keys(igConvHistory).length, 'suhbat');
+      // Qo'lda rejim restartdan keyin ham saqlanib qolsin
+      let man = 0;
+      for (const [uid, act] of Object.entries(igActivity)) {
+        if (act && act.manual) { igManualMode[uid] = act.manualAt || Date.now(); man++; }
+      }
+      console.log('IG tarix yuklandi:', Object.keys(igConvHistory).length, 'suhbat,', man, 'ta qo\'lda rejimda');
     }
   } catch (e) { console.log('IG tarix topilmadi (birinchi ishga tushish):', e.message); }
 }
@@ -4792,6 +4802,8 @@ function saveIgHistoryDebounced() {
       const cutoff = Date.now() - 60 * 24 * 3600 * 1000;
       const histories = {}, activity = {};
       for (const [uid, act] of Object.entries(igActivity)) {
+        // Qo'lda rejim belgisi tarix o'chirilgan bo'lsa ham saqlanadi (aks holda restartdan keyin bot yana yozib yuboradi)
+        if (act.manual) { activity[uid] = act; if (igConvHistory[uid]) histories[uid] = igConvHistory[uid]; continue; }
         if (act.lastClientAt > cutoff && igConvHistory[uid]) { histories[uid] = igConvHistory[uid]; activity[uid] = act; }
       }
       const payload = JSON.stringify({ histories, activity }, null, 1);
@@ -5260,7 +5272,60 @@ async function aiReply(text, userId) {
   return reply;
 }
 
+// Bot yuborgan xabarlar ro'yxati — echo qaytganda "buni bot yozdimi yoki Ibrohim o'zimi?" ni ajratish uchun
+const igBotSent = {}; // uid -> [{ t: normalizatsiya qilingan matn, ts }]
+const igNorm = (s) => String(s || '').replace(/\s+/g, ' ').trim().toLowerCase().slice(0, 60);
+function igRememberSent(to, text) {
+  const arr = (igBotSent[to] = (igBotSent[to] || []).filter(x => Date.now() - x.ts < 15 * 60 * 1000));
+  arr.push({ t: igNorm(text), ts: Date.now() });
+  if (arr.length > 20) arr.splice(0, arr.length - 20);
+}
+function igWasSentByBot(to, text) {
+  const arr = igBotSent[to] || [];
+  const n = igNorm(text);
+  return arr.some(x => x.t && n && (x.t === n || x.t.startsWith(n.slice(0, 30)) || n.startsWith(x.t.slice(0, 30))));
+}
+
+// ─── Ibrohim qo'lda javob bera boshlaganini aniqlash ───
+// Instagram Login API'da "message_echoes" webhook yo'q (24.09.2026 da tekshirildi — ruxsat etilgan
+// maydonlar ro'yxatida yo'q), shuning uchun suhbatlarni o'zimiz tekshiramiz: agar akkauntimizdan
+// ketgan xabarni bot yozmagan bo'lsa — demak Ibrohim o'zi javob bergan, bot bu mijozga endi yozmaydi.
+let igTakeoverLast = Date.now(); // restartdan OLDINGI xabarlarni tekshirmaymiz (botning o’z xabarlari ro’yxati xotirada, restartda yo’qoladi)
+async function igDetectManualTakeover() {
+  if (!IG_TOKEN || igAutoOff()) return;
+  const since = igTakeoverLast || (Date.now() - 15 * 60 * 1000);
+  igTakeoverLast = Date.now();
+  try {
+    const list = await httpsGetJson(`https://graph.instagram.com/v21.0/me/conversations?platform=instagram&fields=id,updated_time&limit=25&access_token=${IG_TOKEN}`);
+    for (const c of ((list && list.data) || [])) {
+      const upd = Date.parse(c.updated_time || '') || 0;
+      if (upd < since - 60 * 1000) continue; // bu suhbatda yangilik yo'q
+      const conv = await httpsGetJson(`https://graph.instagram.com/v21.0/${c.id}?fields=messages.limit(6){from,to,message,created_time}&access_token=${IG_TOKEN}`);
+      const msgs = ((conv && conv.messages && conv.messages.data) || []);
+      for (const m of msgs) {
+        const ts = Date.parse(m.created_time || '') || 0;
+        if (ts < since - 60 * 1000) continue;
+        if (!m.from || m.from.id !== IG_USER_ID) continue;      // mijozning xabari — bizga kerak emas
+        const other = ((m.to && m.to.data) || []).find(x => x.id !== IG_USER_ID);
+        const uid = other && other.id;
+        if (!uid || igManualMode[uid]) continue;
+        if (igWasSentByBot(uid, m.message)) continue;           // buni bot yozgan
+        igManualMode[uid] = Date.now();
+        const act = igActivity[uid] || (igActivity[uid] = {});
+        act.manual = true; act.manualAt = Date.now();
+        if (igDebounce[uid]) { clearTimeout(igDebounce[uid].timer); delete igDebounce[uid]; }
+        saveIgHistoryDebounced();
+        const name = other.username ? '@' + other.username : uid;
+        console.log('IG: qo\'lda javob aniqlandi —', name, '| bot bu mijozga endi yozmaydi');
+        msg(ADMIN, `✋ *Qo'lda javob berdingiz:* ${name}\nBot bu mijozga endi javob yozmaydi.\nQaytarish: /igstart ${uid}`).catch(() => {});
+      }
+    }
+  } catch (e) { console.error('qo\'lda javob tekshiruvi:', e.message); }
+}
+setInterval(() => { igDetectManualTakeover().catch(() => {}); }, 2 * 60 * 1000);
+
 async function igSend(to, text) {
+  igRememberSent(to, text);
   return new Promise((res) => {
     const body = JSON.stringify({ recipient: { id: to }, message: { text } });
     console.log('igSend to:', to, '| text:', text.slice(0,50));
@@ -5308,23 +5373,35 @@ async function handleIG(body) {
         } catch (e) { console.error('IG attachment:', e.message); }
         if (!from || !text) continue;
 
-        // Skip echo messages (our own sent messages coming back)
-        if (m.message?.is_echo) continue;
+        // O'z akkauntimizdan ketgan xabar (echo). Agar buni BOT yozmagan bo'lsa — demak Ibrohim
+        // o'zi qo'lda javob bera boshlagan. Shundan keyin bu mijozga AI BOSHQA YOZMAYDI
+        // (Ibrohim talabi, 24.09.2026). Qaytarish: Telegram'da /igstart <id>.
+        if (m.message?.is_echo) {
+          const to = m.recipient?.id;
+          if (to && text && !igWasSentByBot(to, text)) {
+            if (!igManualMode[to]) {
+              igManualMode[to] = Date.now();
+              const act = igActivity[to] || (igActivity[to] = {});
+              act.manual = true; act.manualAt = Date.now();
+              saveIgHistoryDebounced();
+              if (igDebounce[to]) { clearTimeout(igDebounce[to].timer); delete igDebounce[to]; } // navbatdagi javob ham yuborilmasin
+              console.log('IG: qo\'lda javob aniqlandi, bot bu mijozga endi yozmaydi —', igUsernames[to] || to);
+              msg(ADMIN, `✋ *Qo'lda javob berdingiz* — @${(igUsernames[to] || to).replace('@', '')} mijoziga bot endi javob yozmaydi.\nQayta yoqish: /igstart ${to}`).catch(() => {});
+            }
+          }
+          continue;
+        }
 
         console.log('IG DM from:', from, 'text:', text);
         if (m.sender?.username) igUsernames[from] = '@' + m.sender.username;
 
         if (igAutoOff()) { console.log('IG avto javob o\'chiq — javob yozilmaydi:', from); continue; }
 
-        // If bot is paused for this user (manual mode), skip entirely
+        // Qo'lda rejim — MUDDATSIZ: Ibrohim bir marta o'zi yozgan bo'lsa, bot bu mijozga boshqa yozmaydi.
+        // Faqat Telegram'dagi /igstart <id> buyrug'i qaytaradi.
         if (igManualMode[from]) {
-          const hoursPassed = (Date.now() - igManualMode[from]) / (1000 * 3600);
-          if (hoursPassed < IG_PAUSE_HOURS) {
-            console.log('Bot paused for user:', from, '- skipping');
-            continue;
-          } else {
-            delete igManualMode[from];
-          }
+          console.log('Bot qo\'lda rejimda, javob yozilmaydi:', from);
+          continue;
         }
 
         // Debounce: client may send message in several pieces.
@@ -5391,6 +5468,7 @@ async function handleIGComment(c) {
     if (!busy) igReplying[commenterId] = Date.now();
     try {
       if (busy) throw new Error('mijozga hozir javob yozilyapti');
+      if (igManualMode[commenterId]) throw new Error('mijoz qo\'lda rejimda — DM yozilmadi');
       // MUHIM: bu xabar mijozning SHAXSIY (Direct) yozishmasiga boradi. Ilgari model buni
       // izoh javobi deb o'ylab, DM ichida "Шахсийга (DM) ёзинг" deb yozardi (30+ marta).
       const seed = `[SHAXSIY XABAR (Direct). Mijoz "${text}" deb postga komment yozdi${mediaCap ? '. Post tavsifi: "' + mediaCap + '"' : ''}. Sen unga Direct'da BIRINCHI bo'lib yozyapsan — u allaqachon shu yerda, shuning uchun «DM/Директ/шахсийга ёзинг» деб ЁЗМА, савол-жавобни шу ерда давом эттир.]`;
@@ -5401,6 +5479,7 @@ async function handleIGComment(c) {
       let r = await igSend(commenterId, oneMsg);
       if (r.error) {
         console.log('IG comment DM xato, private reply bilan urinamiz:', JSON.stringify(r.error).slice(0, 120));
+        igRememberSent(commenterId, oneMsg); // bu ham bot xabari — "qo'lda javob" deb hisoblanmasin
         r = await igSendPrivateReply(commentId, oneMsg);
         if (r.error) {
           console.log('IG private reply ham xato:', JSON.stringify(r.error).slice(0, 120));
@@ -5572,15 +5651,10 @@ async function igFlush(from) {
 }
 async function igFlushInner(from, combined) {
 
-  // Re-check pause (client may have been picked up manually during the wait)
+  // Kutish paytida Ibrohim o'zi yozgan bo'lishi mumkin — u holda javob yubormaymiz
   if (igManualMode[from]) {
-    const hoursPassed = (Date.now() - igManualMode[from]) / (1000 * 3600);
-    if (hoursPassed < IG_PAUSE_HOURS) {
-      console.log('Bot paused for user:', from, '- skipping flush');
-      return;
-    } else {
-      delete igManualMode[from];
-    }
+    console.log('Bot qo\'lda rejimda, javob yuborilmadi:', from);
+    return;
   }
 
   // Get AI reply
