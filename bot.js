@@ -4888,6 +4888,30 @@ const IG_DEBOUNCE_MS = 15000; // 15 seconds
 // ─── Instagram COMMENTS auto-reply ───────────────────────────
 // Keywords that signal an intent worth replying to (sales OR praise).
 // To add more later, just append to this array (lowercase).
+// Izoh yozgan HAMMAGA Direct yozilmaydi (Ibrohim, 24.09.2026) — faqat narx yoki ma'lumot so'raganlarga.
+// Maqtov, emoji, duo, "zo'r chiqibdi" kabi izohlarga faqat ochiq javob yoziladi.
+const IG_COMMENT_INFO_RE = new RegExp([
+  'narx', 'narh', 'нарх', 'qanch', 'qanca', 'канча', 'қанча', 'nech', 'неч', 'пул', 'pul',
+  'price', 'цена', 'ценаси', 'сколько', 'почем', 'почём', 'stoit', 'стоит',
+  'metr', 'метр', 'metir', 'razmer', 'размер', 'o\'lcham', 'улчам', 'ўлчам', 'olcham',
+  'zakaz', 'заказ', 'buyurtma', 'буюртма', 'kerak', 'керак', 'kere', 'кере', 'yasat', 'ясат',
+  'manzil', 'манзил', 'adres', 'адрес', 'qayer', 'кайер', 'қаер', 'где', 'lokatsiya', 'локация',
+  'malumot', 'маълумот', 'ma\'lumot', 'info', 'информац', 'telefon', 'телефон', 'raqam', 'рақам',
+  'srok', 'срок', 'muddat', 'муддат', 'kun', 'material', 'материал', 'fasad', 'фасад',
+  'dostavka', 'доставка', 'yetkaz', 'етказ', 'viloyat', 'вилоят', 'olib kel', 'olaman', 'олмокчи'
+].join('|'), 'i');
+function igCommentWantsInfo(text) {
+  const t = String(text || '').trim();
+  if (!t) return false;
+  if (t === '+' || /^\+\s*$/.test(t)) return true;         // "+" — narx so'rashning qisqa shakli
+  if (IG_COMMENT_INFO_RE.test(t)) return true;
+  if (/\?|؟/.test(t) && t.replace(/[^\p{L}\p{N}]/gu, '').length >= 4) return true; // savol belgisi bor
+  // O'zbekcha savollar ko'pincha savol belgisisiz yoziladi
+  if (/(^|\s)(nima|нима|нма|nega|нега|nechta|qanday|қандай|канday|qanaqa|канака|қанақа|qachon|качон|қачон|qayer|кайер|қаер|bormi|борми|qilasiz|киласиз|қиласиз|mumkinmi|мумкинми)/i.test(t)) return true;
+  if (/(ми|mi)\s*[.!]*$/i.test(t) && t.replace(/[^\p{L}\p{N}]/gu, '').length >= 6) return true; // "...қиласизми", "...boladimi"
+  return false;
+}
+
 const IG_COMMENT_KEYWORDS = [
   // narx / sotib olish niyati
   '+', 'narx', 'narxi', 'narxlari', 'narhi', 'narhini', 'qancha', 'qanca', 'qiymat',
@@ -5459,11 +5483,16 @@ async function handleIGComment(c) {
   } catch(e) {
     console.log('aiCommentReply xato, fallback:', e.message);
   }
-  if (!pub) pub = 'Shaxsiyingizga (DM) batafsil yozdik, qarang 😊';
+  // Direct faqat narx/ma'lumot so'raganlarga yoziladi — ochiq javob matni ham shunga qarab
+  const wantsInfo = igCommentWantsInfo(text);
+  if (!pub) pub = wantsInfo ? 'Shaxsiyingizga (DM) batafsil yozdik, qarang 😊' : 'Rahmat! 🙌';
   await igReplyToComment(commentId, pub);
 
-  // 2) Private DM with full sales conversation (seed via aiReply)
-  if (commenterId) {
+  // 2) Private DM with full sales conversation (seed via aiReply) — faqat so'ragan bo'lsa
+  if (commenterId && !wantsInfo) {
+    console.log('IG komment: maqtov/oddiy izoh — DM yozilmadi:', commenterName, '|', text.slice(0, 40));
+  }
+  if (commenterId && wantsInfo) {
     const busy = !!igReplying[commenterId]; // shu mijozga hozir DM yozilyapti — ustiga yozmaymiz
     if (!busy) igReplying[commenterId] = Date.now();
     try {
@@ -5491,7 +5520,10 @@ async function handleIGComment(c) {
     } finally {
       if (!busy) delete igReplying[commenterId]; // band bo'lsa qulf boshqa oqimniki — tegmaymiz
     }
-    // Kommentning o'zida telefon/tayyor-mijoz signali bo'lsa — leads.json + admin xabar
+  }
+  // Kommentning o'zida telefon/tayyor-mijoz signali bo'lsa — leads.json + admin xabar
+  // (DM yozilmagan bo'lsa ham tekshiriladi: maqtov izohida telefon qoldirgan mijoz yo'qolmasin)
+  if (commenterId) {
     try {
       const sig = igDetectHotLead(text);
       if (sig.length && !isJobSeekerConv(commenterId, text)) await igNotifyHotLead(commenterId, text, sig);
