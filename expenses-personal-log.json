@@ -1707,5 +1707,15 @@
     "pay_method": "card",
     "place": "MCHJ EDELROCK ENERGY, Toshkent, NAMUNA MFY  ChUVALAChI  MIRZACh",
     "ts": "2026-09-24T04:55:00.905Z"
+  },
+  {
+    "date": "24.09.2026",
+    "note": "💳 Bogcha",
+    "amount_uzs": 60660,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-09-24T17:19:30.329Z"
   }
 ]
