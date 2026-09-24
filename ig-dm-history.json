@@ -1073,6 +1073,16 @@
     "role": "assistant",
     "content": "+998 91 135 44 66 — Иброхим ака. Қўнғироқ қилсангиз, ҳаммасини аниқ келишасиз 👍🏻"
    }
+  ],
+  "1802125877484992": [
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"Siz farzandiz bn birga uhlaysizmi?\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум, яхшимисиз 👍🏻 Исмингиз нима? Нима керак — ошхона, шкаф, ётоқхонами?"
+   }
   ]
  },
  "activity": {
@@ -1270,6 +1280,10 @@
   },
   "2316460989171355": {
    "lastClientAt": 1790227585575,
+   "followedUp": false
+  },
+  "1802125877484992": {
+   "lastClientAt": 1790229430728,
    "followedUp": false
   }
  }
