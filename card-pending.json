@@ -1,6 +1,18 @@
 {
   "lastMsgId": 104352,
-  "pending": {},
+  "pending": {
+    "mufr9a700uf": {
+      "dir": "out",
+      "amtUzs": 60660,
+      "place": "PAYME P2P, UZ",
+      "rawBalance": 934723,
+      "date": "24.09.2026",
+      "title": "Platezh",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1790267855580
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
