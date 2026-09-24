@@ -1697,5 +1697,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-09-23T07:27:26.290Z"
+  },
+  {
+    "date": "24.09.2026",
+    "note": "💳 Пропан",
+    "amount_uzs": 484972,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "MCHJ EDELROCK ENERGY, Toshkent, NAMUNA MFY  ChUVALAChI  MIRZACh",
+    "ts": "2026-09-24T04:55:00.905Z"
   }
 ]
