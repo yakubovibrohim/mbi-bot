@@ -1029,6 +1029,16 @@
     "role": "assistant",
     "content": "Assalomu alaykum. Nima kerak edi — oshxonami, shkaf, yoki yotoqxona? \n\nOshxona bo'lsa pogonaj metri 380$ dan boshlanadi, material va etajga qarab. Qaysi mebel kerak, o'lchami bormi?"
    }
+  ],
+  "2266689517596663": [
+   {
+    "role": "user",
+    "content": "Куриб танлаб куйдим"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 👍🏻 Қайси видеони кўрдингиз, ошхонами ёки шкаф?"
+   }
   ]
  },
  "activity": {
@@ -1218,6 +1228,10 @@
   },
   "1644835010546831": {
    "lastClientAt": 1789800916820,
+   "followedUp": false
+  },
+  "2266689517596663": {
+   "lastClientAt": 1790227262321,
    "followedUp": false
   }
  }
