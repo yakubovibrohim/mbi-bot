@@ -1,19 +1,6 @@
 {
   "lastMsgId": 104303,
-  "pending": {
-    "muf1ipfvvs0": {
-      "dir": "out",
-      "amtUzs": 484972,
-      "place": "MCHJ EDELROCK ENERGY, Toshkent, NAMUNA MFY  ChUVALAChI  MIRZACh",
-      "rawBalance": 995383,
-      "date": "24.09.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1790224625227,
-      "kind": "personal"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -1224,6 +1211,11 @@
       "date": "23.09.2026",
       "dir": "out",
       "amt": 161000
+    },
+    {
+      "date": "24.09.2026",
+      "dir": "out",
+      "amt": 484972
     }
   ],
   "lastBalances": {
