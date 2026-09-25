@@ -1753,5 +1753,15 @@
     "pay_method": "card",
     "place": "MCHJ SUPER GLASS FURNITURE,  , SOBIR RAHIMOV TUMANI MASSIV SEB",
     "ts": "2026-09-25T11:55:36.792Z"
+  },
+  {
+    "date": "25.09.2026",
+    "note": "💳 OOO YANDEXGO UB, UZ",
+    "amount_uzs": 50000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-09-25T14:12:09.507Z"
   }
 ]
