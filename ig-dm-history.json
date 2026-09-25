@@ -1305,6 +1305,16 @@
     "role": "assistant",
     "content": "Iloji bo'lsa, xayr-ehson ishlarida qo'shni-qarindoshlar yoki mahalladan so'rab ko'ring. Alloh yordam bersin 🤲"
    }
+  ],
+  "1616912043512105": [
+   {
+    "role": "user",
+    "content": "Shu kuxnya nech pul bilan chiqdi opshi? Adashmasam 4metrli"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu Aleykum 👍🏻 Qaysi videoni ko'rdingiz? Undagi kuxnyani aniqlab beray.\n\nUmuman olganda 4 metrli kuxnya materialga qarab: LMDF+GTV bilan taxminan 1500-1550$, akril+Hettich bilan 1800-2200$ atrofida chiqadi. Bu taxminiy narx."
+   }
   ]
  },
  "activity": {
@@ -1526,6 +1536,10 @@
   },
   "27164963133203098": {
    "lastClientAt": 1790322152820,
+   "followedUp": false
+  },
+  "1616912043512105": {
+   "lastClientAt": 1790326600027,
    "followedUp": false
   }
  }
