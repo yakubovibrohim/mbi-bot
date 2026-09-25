@@ -1477,6 +1477,16 @@
     "role": "assistant",
     "content": "Rahmat 😊 Sizga qanaqa mebel kerak — oshxona, shkaf yoki yotoqxona?"
    }
+  ],
+  "1743450896707885": [
+   {
+    "role": "user",
+    "content": "Сколько стоит дизайн интерьера?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Кухни выходят примерно от $350 за погонный метр, зависит от материала. Что планируете?"
+   }
   ]
  },
  "activity": {
@@ -1730,6 +1740,10 @@
   },
   "1827500491929722": {
    "lastClientAt": 1790359382070,
+   "followedUp": false
+  },
+  "1743450896707885": {
+   "lastClientAt": 1790363332682,
    "followedUp": false
   }
  }
