@@ -1467,6 +1467,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкум 🙌 Бу лойиҳа обкладной услубда, крашенный MDF фасад, ички қисми ЛМДФ, фурнитура Blum — 20 йил кафолат.\n\nТахминан 1700$ атрофида қилинган, бу тахминий нарх. Ошхонангиз неча метр, ўлчами борми?"
    }
+  ],
+  "1827500491929722": [
+   {
+    "role": "user",
+    "content": "Daxshat zorku"
+   },
+   {
+    "role": "assistant",
+    "content": "Rahmat 😊 Sizga qanaqa mebel kerak — oshxona, shkaf yoki yotoqxona?"
+   }
   ]
  },
  "activity": {
@@ -1716,6 +1726,10 @@
   },
   "1110534931630453": {
    "lastClientAt": 1790353689746,
+   "followedUp": false
+  },
+  "1827500491929722": {
+   "lastClientAt": 1790359382070,
    "followedUp": false
   }
  }
