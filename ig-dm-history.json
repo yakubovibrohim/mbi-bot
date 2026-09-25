@@ -1423,6 +1423,16 @@
     "role": "assistant",
     "content": "3 этажли бўлса, крашенный премиум вариантда тахминан 3600–4000$ атрофида. Акрил ёки EGGER'га алмаштирсак — 2000–2500$ атрофида тушади.\n\nБулар тахминий нарх. Аниғини Иброхим ака айтади — +998 91 135 44 66 га алоқага чиқинг ёки рақамингизни қолдиринг, ўзи боғланади 👍🏻"
    }
+  ],
+  "28402905329330113": [
+   {
+    "role": "user",
+    "content": "[SHAXSIY XABAR (Direct). Mijoz \"Шу кухонный мебел нечпулдан чиквотти\" deb postga komment yozdi. Post tavsifi: \"[REEL:C3xwseIozs0] Assalomu aleykum biz endi instagramdamiz\". Sen unga Direct'da BIRINCHI bo'lib yozyapsan — u allaqachon shu yerda, shuning uchun «DM/Директ/шахсийга ёзинг» деб ЁЗМА, савол-жавобни шу ерда давом эттир.]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум, яхшимисиз 👍🏻 Бу видеодаги лойиҳа бўйича Иброхим ака аниқ маълумот беради. Ошхонангиз неча метр, 2 этажми 3 этажми?"
+   }
   ]
  },
  "activity": {
@@ -1664,6 +1674,10 @@
   },
   "1774005613649097": {
    "lastClientAt": 1790339866628,
+   "followedUp": false
+  },
+  "28402905329330113": {
+   "lastClientAt": 1790344583172,
    "followedUp": false
   }
  }
