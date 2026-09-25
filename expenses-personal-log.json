@@ -1733,5 +1733,15 @@
     "rate": 12000,
     "type": "personal",
     "ts": "2026-09-25T03:29:58.436Z"
+  },
+  {
+    "date": "25.09.2026",
+    "note": "💳 PAYME P2P, UZ",
+    "amount_uzs": 13143,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-09-25T11:55:22.460Z"
   }
 ]
