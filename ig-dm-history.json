@@ -1338,6 +1338,14 @@
    {
     "role": "assistant",
     "content": "Ва Алейкум Ассалом, яхшимисиз 👍🏻 Исмингиз нима? Нима ясатмоқчисиз — ошхона, шкаф ёки ётоқхонами?"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz rasm yubordi]\n[Mijoz rasm yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Расмларни кўрдим 👍🏻 Бу ошхонами ёки шкаф? Ўлчами борми — неча метр?"
    }
   ]
  },
@@ -1571,7 +1579,7 @@
    "followedUp": false
   },
   "1461625905783045": {
-   "lastClientAt": 1790331434369,
+   "lastClientAt": 1790331481493,
    "followedUp": false
   }
  }
