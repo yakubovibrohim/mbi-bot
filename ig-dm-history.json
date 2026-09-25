@@ -954,6 +954,14 @@
    {
     "role": "assistant",
     "content": "Va Aleykum Assalom, yaxshimisiz 👍🏻\n\nAkril fasad, korpus LMDF bo'lsa — GTV furnitura bilan pogonaj metri 380$ dan boshlanadi. Furniturani Hettich yoki Blum qilsak, biroz oshadi.\n\nOshxonangiz necha metr, 2 etajmi 3 etajmi?"
+   },
+   {
+    "role": "user",
+    "content": "3x3  ikki etaj mebel qilinsa"
+   },
+   {
+    "role": "assistant",
+    "content": "3 metr, 2 etaj, akril fasad bo'lsa:\n\n- GTV furnitura bilan — taxminan 1150$ atrofida\n- Hettich bilan — taxminan 1350$ atrofida\n\nBu taxminiy narx. Aniq nархни Ibrohim aka aytadi — +998 91 135 44 66 ga aloqaga chiqing yoki raqamingizni qoldiring 👍🏻"
    }
   ]
  },
@@ -1139,7 +1147,7 @@
    "followedUp": false
   },
   "1492543486004153": {
-   "lastClientAt": 1790299255273,
+   "lastClientAt": 1790299331822,
    "followedUp": false
   }
  }
