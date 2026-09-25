@@ -1,19 +1,6 @@
 {
   "lastMsgId": 104436,
-  "pending": {
-    "muh82ogay3k": {
-      "dir": "out",
-      "amtUzs": 52550,
-      "place": "MCHJ DARVOZA SAVDO M116 FAMILY,  , XAMIDXONOBOD 38",
-      "rawBalance": 268077,
-      "date": "25.09.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1790356567114,
-      "kind": "personal"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -1259,6 +1246,11 @@
       "date": "25.09.2026",
       "dir": "out",
       "amt": 31000
+    },
+    {
+      "date": "25.09.2026",
+      "dir": "out",
+      "amt": 52550
     }
   ],
   "lastBalances": {
