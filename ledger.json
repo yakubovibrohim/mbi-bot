@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-25T06:26:11.664Z",
+  "updated": "2026-09-25T11:55:32.430Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 21343416,
+  "balance_uzs": 21330273,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 207603842,
+    "chiqim": 207616985,
     "by_category": {
       "office": 23918683,
-      "personal": 64366472,
+      "personal": 64379615,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
       "deal_expense": 95858767,
@@ -3363,6 +3363,17 @@
       "amount_uzs": 1200000,
       "name": "xotinga",
       "pay": "naqd",
+      "src": "personal"
+    },
+    {
+      "date": "25.09.2026",
+      "time": "16:55",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 13143,
+      "name": "💳 PAYME P2P, UZ",
+      "pay": "karta",
       "src": "personal"
     }
   ]
