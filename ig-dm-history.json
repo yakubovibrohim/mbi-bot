@@ -1228,6 +1228,14 @@
    {
     "role": "assistant",
     "content": "Rahmat, ko'rdim. Lekin biz mebel ishlab chiqaramiz, moddiy yordam bera olmaymiz, uzr.\n\nQizingizga Alloh shifo bersin, tez sog'ayib ketsin."
+   },
+   {
+    "role": "user",
+    "content": "Hop"
+   },
+   {
+    "role": "assistant",
+    "content": "Iloji bo'lsa, xayr-ehson ishlarida qo'shni-qarindoshlar yoki mahalladan so'rab ko'ring. Alloh yordam bersin 🤲"
    }
   ]
  },
@@ -1449,7 +1457,7 @@
    "followedUp": false
   },
   "27164963133203098": {
-   "lastClientAt": 1790322120810,
+   "lastClientAt": 1790322152820,
    "followedUp": false
   }
  }
