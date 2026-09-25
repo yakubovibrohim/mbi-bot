@@ -1783,5 +1783,15 @@
     "pay_method": "card",
     "place": "OOO YANDEXGO UB, UZ",
     "ts": "2026-09-25T14:12:40.693Z"
+  },
+  {
+    "date": "25.09.2026",
+    "note": "💳 MCHJ DARVOZA SAVDO M116 FAMILY,  , XAMIDXONOBOD 38",
+    "amount_uzs": 52550,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "MCHJ DARVOZA SAVDO M116 FAMILY,  , XAMIDXONOBOD 38",
+    "ts": "2026-09-25T18:09:30.557Z"
   }
 ]
