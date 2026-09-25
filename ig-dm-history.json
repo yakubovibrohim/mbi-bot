@@ -812,6 +812,14 @@
    {
     "role": "assistant",
     "content": "Танлаган вариантингиз бўйича давом этамизми?"
+   },
+   {
+    "role": "user",
+    "content": "Xudoxolasa"
+   },
+   {
+    "role": "assistant",
+    "content": "Худо хохласа 😀 Исмингиз нима?\n\nОшхона керакми ёки бошқа мебел, ўлчами борми?"
    }
   ],
   "2316460989171355": [
@@ -1119,8 +1127,8 @@
    "followedUp": false
   },
   "2266689517596663": {
-   "lastClientAt": 1790227262321,
-   "followedUp": true
+   "lastClientAt": 1790302108771,
+   "followedUp": false
   },
   "2316460989171355": {
    "lastClientAt": 1790227585575,
