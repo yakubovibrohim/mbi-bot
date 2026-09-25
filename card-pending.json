@@ -24,19 +24,6 @@
       "step": "type",
       "askedAt": 1790327436544,
       "remindedAt": 1790334665247
-    },
-    "mugs71749l6": {
-      "dir": "out",
-      "amtUzs": 350750,
-      "place": "MCHJ SUPER GLASS FURNITURE,  , SOBIR RAHIMOV TUMANI MASSIV SEB",
-      "rawBalance": 489830,
-      "date": "25.09.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1790329896400,
-      "remindedAt": 1790337125290,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -1264,6 +1251,11 @@
       "date": "25.09.2026",
       "dir": "out",
       "amt": 13143
+    },
+    {
+      "date": "25.09.2026",
+      "dir": "out",
+      "amt": 350750
     }
   ],
   "lastBalances": {
