@@ -945,6 +945,16 @@
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%. Кухни выходят примерно от 350$ за погонный метр. Что планируете?"
    }
+  ],
+  "1492543486004153": [
+   {
+    "role": "user",
+    "content": "Assalomu alekum oshxona mebeli Akril MDF dan pogonniy metri qancha"
+   },
+   {
+    "role": "assistant",
+    "content": "Va Aleykum Assalom, yaxshimisiz 👍🏻\n\nAkril fasad, korpus LMDF bo'lsa — GTV furnitura bilan pogonaj metri 380$ dan boshlanadi. Furniturani Hettich yoki Blum qilsak, biroz oshadi.\n\nOshxonangiz necha metr, 2 etajmi 3 etajmi?"
+   }
   ]
  },
  "activity": {
@@ -1126,6 +1136,10 @@
   },
   "1994626524553082": {
    "lastClientAt": 1790279897548,
+   "followedUp": false
+  },
+  "1492543486004153": {
+   "lastClientAt": 1790299255273,
    "followedUp": false
   }
  }
