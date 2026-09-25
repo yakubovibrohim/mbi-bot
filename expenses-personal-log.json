@@ -1773,5 +1773,15 @@
     "pay_method": "card",
     "place": "IP OOO YANDEX EATS, UZ",
     "ts": "2026-09-25T14:12:21.065Z"
+  },
+  {
+    "date": "25.09.2026",
+    "note": "💳 OOO YANDEXGO UB, UZ",
+    "amount_uzs": 31000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-09-25T14:12:40.693Z"
   }
 ]
