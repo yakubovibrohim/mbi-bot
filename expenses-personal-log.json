@@ -1743,5 +1743,15 @@
     "pay_method": "card",
     "place": "PAYME P2P, UZ",
     "ts": "2026-09-25T11:55:22.460Z"
+  },
+  {
+    "date": "25.09.2026",
+    "note": "💳 Abet",
+    "amount_uzs": 350750,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "MCHJ SUPER GLASS FURNITURE,  , SOBIR RAHIMOV TUMANI MASSIV SEB",
+    "ts": "2026-09-25T11:55:36.792Z"
   }
 ]
