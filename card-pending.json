@@ -1,20 +1,6 @@
 {
   "lastMsgId": 104420,
-  "pending": {
-    "mugna7eg3qt": {
-      "dir": "out",
-      "amtUzs": 31000,
-      "place": "OOO YANDEXGO UB, UZ",
-      "rawBalance": 890580,
-      "date": "25.09.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1790321646329,
-      "remindedAt": 1790343275400,
-      "kind": "personal"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -1255,6 +1241,11 @@
       "date": "25.09.2026",
       "dir": "out",
       "amt": 169203
+    },
+    {
+      "date": "25.09.2026",
+      "dir": "out",
+      "amt": 31000
     }
   ],
   "lastBalances": {
