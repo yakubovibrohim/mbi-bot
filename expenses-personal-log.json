@@ -1717,5 +1717,13 @@
     "pay_method": "card",
     "place": "PAYME P2P, UZ",
     "ts": "2026-09-24T17:19:30.329Z"
+  },
+  {
+    "date": "25.09.2026",
+    "note": "Onamga",
+    "amount_uzs": 3600000,
+    "rate": 12000,
+    "type": "personal",
+    "ts": "2026-09-25T03:29:45.321Z"
   }
 ]
