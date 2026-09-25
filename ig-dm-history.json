@@ -820,6 +820,22 @@
    {
     "role": "assistant",
     "content": "Худо хохласа 😀 Исмингиз нима?\n\nОшхона керакми ёки бошқа мебел, ўлчами борми?"
+   },
+   {
+    "role": "user",
+    "content": "Moxigul"
+   },
+   {
+    "role": "assistant",
+    "content": "Хуш келибсиз, Мохигул 👍🏻 Нима керак — ошхона, шкаф ёки ётоқхонами?"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz rasm yubordi]\n[Mijoz rasm yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Расмларни кўрдим. Бу ошхонами, ўлчами борми — неча метр?"
    }
   ],
   "2316460989171355": [
@@ -979,6 +995,16 @@
     "role": "assistant",
     "content": "3 metr, 2 etaj, akril fasad bo'lsa:\n\n- GTV furnitura bilan — taxminan 1150$ atrofida\n- Hettich bilan — taxminan 1350$ atrofida\n\nBu taxminiy narx. Aniq nархни Ibrohim aka aytadi — +998 91 135 44 66 ga aloqaga chiqing yoki raqamingizni qoldiring 👍🏻"
    }
+  ],
+  "2048670692480962": [
+   {
+    "role": "user",
+    "content": "Неч пул"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 👍🏻 Айтинг, нима қизиқтирди — ошхонами, шкафми ёки ётоқхона?\n\nОшхона погонаж метри 350$ дан бошланади, шкаф м² 110$ дан, ётоқхона комплект 1300$ дан. Ўлчамини айтсангиз, тахминий нархни ҳисоблаб бераман."
+   }
   ]
  },
  "activity": {
@@ -1127,7 +1153,7 @@
    "followedUp": false
   },
   "2266689517596663": {
-   "lastClientAt": 1790302108771,
+   "lastClientAt": 1790302436227,
    "followedUp": false
   },
   "2316460989171355": {
@@ -1164,6 +1190,10 @@
   },
   "1492543486004153": {
    "lastClientAt": 1790299331822,
+   "followedUp": false
+  },
+  "2048670692480962": {
+   "lastClientAt": 1790302444624,
    "followedUp": false
   }
  }
