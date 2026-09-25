@@ -1028,6 +1028,14 @@
    {
     "role": "assistant",
     "content": "Как ваши дела, определились по мебели? Может, размеры замерим?"
+   },
+   {
+    "role": "user",
+    "content": "[SHAXSIY XABAR (Direct). Mijoz \"Нкч пул кетган\" deb postga komment yozdi. Post tavsifi: \"[REEL:DZkxBJ6oYo0] +998 91 135 44 66 +998 95 190 44 66\". Sen unga Direct'da BIRINCHI bo'lib yozyapsan — u allaqachon shu yerda, shuning uchun «DM/Директ/шахсийга ёзинг» деб ЁЗМА, савол-жавобни шу ерда давом эттир.]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 👍🏻 Бу видеодаги ошхона — премиум AGT акрил фасад, қўл изи қолмайди. Фурнитура Blum, ҳар тортмада сенсорли ёритиш. Столешница ва фартук қуйма тошдан.\n\nБу тахминан 1 метри 650-750$ атрофида чиққан. Оддий акрил + GTV қилсак анча арзонлашади, кўриниш барибир замонавий.\n\nОшхонангиз неча метр бўлади?"
    }
   ],
   "1408536241472140": [
@@ -1405,8 +1413,8 @@
    "followedUp": true
   },
   "949588774289825": {
-   "lastClientAt": 1790249831526,
-   "followedUp": true
+   "lastClientAt": 1790324549400,
+   "followedUp": false
   },
   "1408536241472140": {
    "lastClientAt": 1790258375169,
