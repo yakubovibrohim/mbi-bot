@@ -21,9 +21,10 @@
       "date": "25.09.2026",
       "title": "E-Com oplata",
       "card4": "5893",
-      "step": "type",
+      "step": "note",
       "askedAt": 1790327436544,
-      "remindedAt": 1790341865393
+      "remindedAt": 1790341865393,
+      "kind": "personal"
     },
     "mugzze452pi": {
       "dir": "out",
