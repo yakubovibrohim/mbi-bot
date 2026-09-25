@@ -1,17 +1,17 @@
 {
-  "updated": "2026-09-24T17:19:40.669Z",
+  "updated": "2026-09-25T03:29:55.101Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 26143416,
+  "balance_uzs": 22543416,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 202803842,
+    "chiqim": 206403842,
     "by_category": {
       "office": 23918683,
-      "personal": 59566472,
+      "personal": 63166472,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
       "deal_expense": 95858767,
@@ -3341,6 +3341,17 @@
       "amount_uzs": 60660,
       "name": "💳 Bogcha",
       "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "25.09.2026",
+      "time": "08:29",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 3600000,
+      "name": "Onamga",
+      "pay": "naqd",
       "src": "personal"
     }
   ]
