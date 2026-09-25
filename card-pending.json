@@ -1,5 +1,5 @@
 {
-  "lastMsgId": 104380,
+  "lastMsgId": 104392,
   "pending": {
     "mugjc3ptdmy": {
       "dir": "out",
@@ -1248,7 +1248,7 @@
     }
   ],
   "lastBalances": {
-    "5893": 890580
+    "5893": 840580
   },
   "lastReconcileDate": "24.09.2026"
 }
