@@ -1203,6 +1203,16 @@
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Кухни выходят примерно от 350$ за погонный метр, зависит от материала.\n\nПо срокам: ЛМДФ и акрил — до 14 рабочих дней, крашеный и шпон — до 30 дней. За каждый день опоздания платим штраф.\n\nЧто планируете — кухню или шкаф?"
    }
+  ],
+  "27164963133203098": [
+   {
+    "role": "user",
+    "content": "Asslomu alkum\nSizdan iltmosm bor\nJuma ayyomiz muborak bolsin"
+   },
+   {
+    "role": "assistant",
+    "content": "Va Alейkum Assalom, jumangiz muborak bo'lsin 🙌 Aytavering, qanday yordam bera olaman?"
+   }
   ]
  },
  "activity": {
@@ -1420,6 +1430,10 @@
   },
   "1717514190376997": {
    "lastClientAt": 1790321805333,
+   "followedUp": false
+  },
+  "27164963133203098": {
+   "lastClientAt": 1790322035700,
    "followedUp": false
   }
  }
