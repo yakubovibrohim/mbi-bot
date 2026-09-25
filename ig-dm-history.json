@@ -892,6 +892,14 @@
    {
     "role": "assistant",
     "content": "Хоп, Мохигул 👍🏻 Уй битганда ёзинг, кутиб қоламиз."
+   },
+   {
+    "role": "user",
+    "content": "Xop insho ollox xudoxolasa ozlariz korib chiroyli qiberasilar"
+   },
+   {
+    "role": "assistant",
+    "content": "Иншааллох, худо хохласа энг чиройлисини қилиб берамиз 😀 Раҳмат, Мохигул. Уй битганда алоқага чиқасиз 👍🏻"
    }
   ],
   "2316460989171355": [
@@ -1209,7 +1217,7 @@
    "followedUp": false
   },
   "2266689517596663": {
-   "lastClientAt": 1790302667887,
+   "lastClientAt": 1790302735463,
    "followedUp": false
   },
   "2316460989171355": {
