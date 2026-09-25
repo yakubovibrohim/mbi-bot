@@ -836,6 +836,14 @@
    {
     "role": "assistant",
     "content": "Расмларни кўрдим. Бу ошхонами, ўлчами борми — неча метр?"
+   },
+   {
+    "role": "user",
+    "content": "Oshxonaga shunaqa"
+   },
+   {
+    "role": "assistant",
+    "content": "Тушунарли, Мохигул. Ошхона неча метр ва 2 этажми, 3 этажми?"
    }
   ],
   "2316460989171355": [
@@ -1153,7 +1161,7 @@
    "followedUp": false
   },
   "2266689517596663": {
-   "lastClientAt": 1790302436227,
+   "lastClientAt": 1790302468036,
    "followedUp": false
   },
   "2316460989171355": {
