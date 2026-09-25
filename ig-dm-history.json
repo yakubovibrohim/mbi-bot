@@ -1212,6 +1212,22 @@
    {
     "role": "assistant",
     "content": "Va Alейkum Assalom, jumangiz muborak bo'lsin 🙌 Aytavering, qanday yordam bera olaman?"
+   },
+   {
+    "role": "user",
+    "content": "Qizmga moddy yordam berolsizm ikkyusmin som tashab\nYaqinda qizmni kozni apperza qildi Homiy odam qilib berdila yunsoboda\nOzim ubursa bolib ishlimann"
+   },
+   {
+    "role": "assistant",
+    "content": "Aytganingizni tushundim. Lekin biz mebel ustaxonasimiz — moddiy yordam masalasida yordam bera olmaymiz, uzr.\n\nQizingizga tezroq shifo tilayman, Alloh sog'lik bersin."
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz rasm yubordi]\n[Mijoz rasm yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Rahmat, ko'rdim. Lekin biz mebel ishlab chiqaramiz, moddiy yordam bera olmaymiz, uzr.\n\nQizingizga Alloh shifo bersin, tez sog'ayib ketsin."
    }
   ]
  },
@@ -1433,7 +1449,7 @@
    "followedUp": false
   },
   "27164963133203098": {
-   "lastClientAt": 1790322035700,
+   "lastClientAt": 1790322120810,
    "followedUp": false
   }
  }
