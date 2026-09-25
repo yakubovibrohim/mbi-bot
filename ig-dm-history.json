@@ -1162,6 +1162,10 @@
    {
     "role": "assistant",
     "content": "3 metr, 2 etaj, akril fasad bo'lsa:\n\n- GTV furnitura bilan — taxminan 1150$ atrofida\n- Hettich bilan — taxminan 1350$ atrofida\n\nBu taxminiy narx. Aniq nархни Ibrohim aka aytadi — +998 91 135 44 66 ga aloqaga chiqing yoki raqamingizni qoldiring 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Nima bo'ldi, oshxonaga qaror qildingizmi? 3x3 ikki etaj o'lchashga borib kelaylikmi?"
    }
   ],
   "2048670692480962": [
@@ -1672,7 +1676,7 @@
   },
   "1492543486004153": {
    "lastClientAt": 1790299331822,
-   "followedUp": false
+   "followedUp": true
   },
   "2048670692480962": {
    "lastClientAt": 1790308185820,
