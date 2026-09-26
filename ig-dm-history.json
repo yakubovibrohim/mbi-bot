@@ -802,22 +802,6 @@
   ],
   "2266689517596663": [
    {
-    "role": "assistant",
-    "content": "Арзимайди, Мохигул 👍🏻 Соғ бўлинг, уй битганда кутамиз 😀"
-   },
-   {
-    "role": "user",
-    "content": "Xop"
-   },
-   {
-    "role": "assistant",
-    "content": "👍🏻"
-   },
-   {
-    "role": "assistant",
-    "content": "Мохигул, уй қуриш ишлари қандай кетяпти? Битай деб қолдими?"
-   },
-   {
     "role": "user",
     "content": "Xa xudoxolasa oz qoldi\nAssalomu alaykum yaxshimisiz\nXayrli tong\nYaxshi dam oldizmi"
    },
@@ -920,6 +904,22 @@
    {
     "role": "assistant",
     "content": "👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Boloradi"
+   },
+   {
+    "role": "assistant",
+    "content": "👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "😊"
+   },
+   {
+    "role": "assistant",
+    "content": "😊"
    }
   ],
   "2316460989171355": [
@@ -1647,7 +1647,7 @@
    "followedUp": false
   },
   "2266689517596663": {
-   "lastClientAt": 1790382452268,
+   "lastClientAt": 1790382496367,
    "followedUp": false
   },
   "2316460989171355": {
