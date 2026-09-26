@@ -501,6 +501,23 @@
         "rate": 12000,
         "note": "",
         "source": "manual"
+      },
+      {
+        "id": "muhzf4axycg0",
+        "date": "26.09.2026",
+        "ts": "2026-09-26T06:01:37.162Z",
+        "products": [
+          {
+            "name": "Rover",
+            "qty": 1,
+            "price_uzs": 1510000,
+            "rate": 12000
+          }
+        ],
+        "total_uzs": 1510000,
+        "rate": 12000,
+        "note": "",
+        "source": "manual"
       }
     ],
     "finished_date": null,
