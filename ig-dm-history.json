@@ -802,18 +802,6 @@
   ],
   "2266689517596663": [
    {
-    "role": "user",
-    "content": "Xa bardoviy boladi rangi"
-   },
-   {
-    "role": "assistant",
-    "content": "Бордовий ранг чиройли чиқади 👍🏻 Ошхона неча метр — узунлигини айтсангиз, тахминий нархни ҳисоблаб бераман."
-   },
-   {
-    "role": "user",
-    "content": "Uy bitvosin\nXa"
-   },
-   {
     "role": "assistant",
     "content": "Хоп, уй битса ўлчаб оламиз. Тахминан неча метр бўлади ошхона?"
    },
@@ -920,6 +908,18 @@
    {
     "role": "user",
     "content": "Xop"
+   },
+   {
+    "role": "assistant",
+    "content": "👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Xop boladi"
+   },
+   {
+    "role": "assistant",
+    "content": "👍🏻 Уй хайрли битсин, Мохигул 😀"
    }
   ],
   "2316460989171355": [
@@ -1643,7 +1643,7 @@
    "followedUp": false
   },
   "2266689517596663": {
-   "lastClientAt": 1790382070833,
+   "lastClientAt": 1790382124781,
    "followedUp": false
   },
   "2316460989171355": {
