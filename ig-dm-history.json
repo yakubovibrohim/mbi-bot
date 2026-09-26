@@ -1603,6 +1603,16 @@
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Кухни выходят примерно от $1000, зависит от материала. Что планируете?"
    }
+  ],
+  "1091846313211662": [
+   {
+    "role": "user",
+    "content": "[SHAXSIY XABAR (Direct). Mijoz \"Narxi qanchadan\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\". Sen unga Direct'da BIRINCHI bo'lib yozyapsan — u allaqachon shu yerda, shuning uchun «DM/Директ/шахсийга ёзинг» деб ЁЗМА, савол-жавобни шу ерда давом эттир.]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 🙌 Бу видеодаги ошхона премиум крашенный — фасадлар Италия «SIRCA» краскаси билан 4 этапда бўялган, фурнитура Blum (20 йил гарантия). Погонаж метри тахминан 800$ атрофида.\n\nАммо бюджетга қараб арзонроқ ҳам қиламиз — фасадни акрил ёки EGGER қилсак сезиларли тушади. Ошхонангиз неча метр?"
+   }
   ]
  },
  "activity": {
@@ -1885,6 +1895,10 @@
   },
   "1400456608231596": {
    "lastClientAt": 1790422500502,
+   "followedUp": false
+  },
+  "1091846313211662": {
+   "lastClientAt": 1790429114430,
    "followedUp": false
   }
  }
