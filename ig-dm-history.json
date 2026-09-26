@@ -803,22 +803,6 @@
   "2266689517596663": [
    {
     "role": "assistant",
-    "content": "Иншааллох, худо хохласа энг чиройлисини қилиб берамиз 😀 Раҳмат, Мохигул. Уй битганда алоқага чиқасиз 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Raxmat ishlarizga omad 🤝"
-   },
-   {
-    "role": "assistant",
-    "content": "Раҳмат, Мохигул 🤝 Сизга ҳам омад, уй хайрли битсин иншааллох 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Boldi xop raxmat"
-   },
-   {
-    "role": "assistant",
     "content": "Арзимайди, Мохигул 👍🏻 Соғ бўлинг, уй битганда кутамиз 😀"
    },
    {
@@ -920,6 +904,22 @@
    {
     "role": "assistant",
     "content": "Хоп 👍🏻 Ошхона ўлчами аниқ бўлганда ёзинг, Мохигул — арзонроқ вариантда ҳисоблаб берамиз 😀"
+   },
+   {
+    "role": "user",
+    "content": "Sorab aytvoraman"
+   },
+   {
+    "role": "assistant",
+    "content": "Хоп, Мохигул 👍🏻 Сўраб, ўлчами билан ёзинг — кутиб қоламиз 😀"
+   },
+   {
+    "role": "user",
+    "content": "Xop boladi"
+   },
+   {
+    "role": "assistant",
+    "content": "👍🏻"
    }
   ],
   "2316460989171355": [
@@ -1647,7 +1647,7 @@
    "followedUp": false
   },
   "2266689517596663": {
-   "lastClientAt": 1790382341603,
+   "lastClientAt": 1790382452268,
    "followedUp": false
   },
   "2316460989171355": {
