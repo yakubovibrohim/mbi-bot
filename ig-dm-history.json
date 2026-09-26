@@ -1328,6 +1328,10 @@
    {
     "role": "assistant",
     "content": "Assalomu Aleykum 👍🏻 Qaysi videoni ko'rdingiz? Undagi kuxnyani aniqlab beray.\n\nUmuman olganda 4 metrli kuxnya materialga qarab: LMDF+GTV bilan taxminan 1500-1550$, akril+Hettich bilan 1800-2200$ atrofida chiqadi. Bu taxminiy narx."
+   },
+   {
+    "role": "assistant",
+    "content": "4 metrli kuxnya bo'yicha o'ylashga ulgurdingizmi? Xohlasangiz razmer olib, aniq narxini chiqarib beraman."
    }
   ],
   "1635095371580510": [
@@ -1338,6 +1342,10 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Кухни выходят примерно от $1000. Что планируете?"
+   },
+   {
+    "role": "assistant",
+    "content": "Как насчёт кухни? Может, подъедем размеры снять?"
    }
   ],
   "1461625905783045": [
@@ -1766,11 +1774,11 @@
   },
   "1616912043512105": {
    "lastClientAt": 1790326600027,
-   "followedUp": false
+   "followedUp": true
   },
   "1635095371580510": {
    "lastClientAt": 1790328272096,
-   "followedUp": false
+   "followedUp": true
   },
   "1461625905783045": {
    "lastClientAt": 1790353809275,
