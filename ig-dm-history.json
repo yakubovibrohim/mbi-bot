@@ -1040,28 +1040,6 @@
     "content": "Ассалому Алейкум 👍🏻 Бу премиум крашенный ошхона — корпус ЛМДФ, фасадлар Италия SIRCA краскаси билан 4 этапли бўялган, фурнитура Blum. Погонаж метри тахминан 800$ атрофида.\n\nБуджетга қараб арзонроқ ҳам қиламиз — 650-700$ атрофида, ёки фасадни акрилга алмаштирсак сезиларли арзонлашади. Ошхонангиз неча метр?"
    }
   ],
-  "1492543486004153": [
-   {
-    "role": "user",
-    "content": "Assalomu alekum oshxona mebeli Akril MDF dan pogonniy metri qancha"
-   },
-   {
-    "role": "assistant",
-    "content": "Va Aleykum Assalom, yaxshimisiz 👍🏻\n\nAkril fasad, korpus LMDF bo'lsa — GTV furnitura bilan pogonaj metri 380$ dan boshlanadi. Furniturani Hettich yoki Blum qilsak, biroz oshadi.\n\nOshxonangiz necha metr, 2 etajmi 3 etajmi?"
-   },
-   {
-    "role": "user",
-    "content": "3x3  ikki etaj mebel qilinsa"
-   },
-   {
-    "role": "assistant",
-    "content": "3 metr, 2 etaj, akril fasad bo'lsa:\n\n- GTV furnitura bilan — taxminan 1150$ atrofida\n- Hettich bilan — taxminan 1350$ atrofida\n\nBu taxminiy narx. Aniq nархни Ibrohim aka aytadi — +998 91 135 44 66 ga aloqaga chiqing yoki raqamingizni qoldiring 👍🏻"
-   },
-   {
-    "role": "assistant",
-    "content": "Nima bo'ldi, oshxonaga qaror qildingizmi? 3x3 ikki etaj o'lchashga borib kelaylikmi?"
-   }
-  ],
   "2048670692480962": [
    {
     "role": "user",
@@ -1869,10 +1847,6 @@
   "1067666082771512": {
    "lastClientAt": 1790266171374,
    "followedUp": false
-  },
-  "1492543486004153": {
-   "lastClientAt": 1790299331822,
-   "followedUp": true
   },
   "2048670692480962": {
    "lastClientAt": 1790308185820,
