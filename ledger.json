@@ -1,20 +1,20 @@
 {
-  "updated": "2026-09-26T04:07:09.046Z",
+  "updated": "2026-09-26T06:01:46.843Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 20676770,
+  "balance_uzs": 19166770,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 208270488,
+    "chiqim": 209780488,
     "by_category": {
       "office": 23918683,
       "personal": 65033118,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
-      "deal_expense": 95858767,
+      "deal_expense": 97368767,
       "debt_in": 26400000,
       "card_income": 3380000,
       "debt_paid": 4732000
@@ -3430,6 +3430,17 @@
       "name": "💳 MCHJ DARVOZA SAVDO M116 FAMILY,  , XAMIDXONOBOD 38",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "26.09.2026",
+      "time": "11:01",
+      "dir": "out",
+      "category": "deal_expense",
+      "category_uz": "Buyurtma xarajati",
+      "amount_uzs": 1510000,
+      "name": "Nodira opa olmazor: xarajat",
+      "pay": "naqd",
+      "src": "deals"
     }
   ]
 }
