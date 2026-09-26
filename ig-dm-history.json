@@ -1454,6 +1454,22 @@
    {
     "role": "assistant",
     "content": "Nima bo'ldi, ishlaymizmi? Qanaqa mebel kerakligini aytsangiz, o'lchamlarni ko'rib chiqamiz."
+   },
+   {
+    "role": "user",
+    "content": "Yuq hali ozim etaman"
+   },
+   {
+    "role": "assistant",
+    "content": "Xop, bemalol. Kerak bo'lganda yozing, yordam beramiz 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Prosta narxiga qiziqdim"
+   },
+   {
+    "role": "assistant",
+    "content": "Tushunarli. Oshxona pogonaj metri 350$ dan boshlanadi, materialga qarab. Shkaf/prixojka — m² 110$ dan, yotoqxona komplekt — 1300$ dan.\n\nQaysi biriga qiziqyapsiz — oshxonami, shkafmi?"
    }
   ],
   "1743450896707885": [
@@ -1880,8 +1896,8 @@
    "followedUp": false
   },
   "1827500491929722": {
-   "lastClientAt": 1790359382070,
-   "followedUp": true
+   "lastClientAt": 1790439720062,
+   "followedUp": false
   },
   "1743450896707885": {
    "lastClientAt": 1790363332682,
