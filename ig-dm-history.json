@@ -803,18 +803,6 @@
   "2266689517596663": [
    {
     "role": "assistant",
-    "content": "Ассалому Алейкум 👍🏻 Қайси видеони кўрдингиз, ошхонами ёки шкаф?"
-   },
-   {
-    "role": "assistant",
-    "content": "Танлаган вариантингиз бўйича давом этамизми?"
-   },
-   {
-    "role": "user",
-    "content": "Xudoxolasa"
-   },
-   {
-    "role": "assistant",
     "content": "Худо хохласа 😀 Исмингиз нима?\n\nОшхона керакми ёки бошқа мебел, ўлчами борми?"
    },
    {
@@ -924,6 +912,14 @@
    {
     "role": "assistant",
     "content": "Мохигул, уй қуриш ишлари қандай кетяпти? Битай деб қолдими?"
+   },
+   {
+    "role": "user",
+    "content": "Xa xudoxolasa oz qoldi\nAssalomu alaykum yaxshimisiz\nXayrli tong\nYaxshi dam oldizmi"
+   },
+   {
+    "role": "assistant",
+    "content": "Ваалейкум ассалом, Мохигул 👍🏻 Хайрли тонг, раҳмат яхши. Ўзингиз яхшимисиз?\n\nУй иши битай деб қолибди — хайрли бўлсин иншааллох 😀"
    }
   ],
   "2316460989171355": [
@@ -1647,8 +1643,8 @@
    "followedUp": false
   },
   "2266689517596663": {
-   "lastClientAt": 1790302844343,
-   "followedUp": true
+   "lastClientAt": 1790381907907,
+   "followedUp": false
   },
   "2316460989171355": {
    "lastClientAt": 1790227585575,
