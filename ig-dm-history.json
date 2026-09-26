@@ -1340,6 +1340,14 @@
    {
     "role": "assistant",
     "content": "Ўша иккита шкаф бўйича давом этамизми? Дизайнер чизган расмни юборсангиз, аниқ нархни ҳисоблаб берамиз 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Манимча хужайиним уже сизлар билан алркага чикдила, телеграм оркали ташлаб берганлар"
+   },
+   {
+    "role": "assistant",
+    "content": "Тушунарли 👍🏻 Унда Иброхим ака Телеграмда кўриб чиқиб, аниқ нархни айтиб беради.\n\nАгар алоқа секинлашса, +998 91 135 44 66 га эслатма ёзиб қўйсангиз бўлади. Ёрдам керак бўлса, шу ерда ҳам ёзаверинг 👍🏻"
    }
   ],
   "1121163893901597": [
@@ -1470,6 +1478,14 @@
    {
     "role": "assistant",
     "content": "Tushunarli. Oshxona pogonaj metri 350$ dan boshlanadi, materialga qarab. Shkaf/prixojka — m² 110$ dan, yotoqxona komplekt — 1300$ dan.\n\nQaysi biriga qiziqyapsiz — oshxonami, shkafmi?"
+   },
+   {
+    "role": "user",
+    "content": "Kuxuni nabor"
+   },
+   {
+    "role": "assistant",
+    "content": "Oshxona pogonaj metri 350$ dan boshlanadi, materialga qarab (LMDF, akril yoki krashenniy).\n\nOshxonangiz necha metr va 2 etajmi, 3 etajmi?"
    }
   ],
   "1743450896707885": [
@@ -1875,8 +1891,8 @@
    "followedUp": true
   },
   "1461625905783045": {
-   "lastClientAt": 1790353809275,
-   "followedUp": true
+   "lastClientAt": 1790439846464,
+   "followedUp": false
   },
   "1121163893901597": {
    "lastClientAt": 1790335765299,
@@ -1896,7 +1912,7 @@
    "followedUp": false
   },
   "1827500491929722": {
-   "lastClientAt": 1790439720062,
+   "lastClientAt": 1790439830994,
    "followedUp": false
   },
   "1743450896707885": {
