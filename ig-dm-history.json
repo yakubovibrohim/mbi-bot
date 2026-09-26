@@ -802,18 +802,6 @@
   ],
   "2266689517596663": [
    {
-    "role": "assistant",
-    "content": "Расмларни кўрдим. Бу ошхонами, ўлчами борми — неча метр?"
-   },
-   {
-    "role": "user",
-    "content": "Oshxonaga shunaqa"
-   },
-   {
-    "role": "assistant",
-    "content": "Тушунарли, Мохигул. Ошхона неча метр ва 2 этажми, 3 этажми?"
-   },
-   {
     "role": "user",
     "content": "Xa bardoviy boladi rangi"
    },
@@ -920,6 +908,18 @@
    {
     "role": "assistant",
     "content": "Хоп, Мохигул 👍🏻 Уй битиб, ошхона ўлчами тайёр бўлганда ёзинг — ўлчаб бориб аниқ лойиҳа чизиб берамиз. Кутиб қоламиз 😀"
+   },
+   {
+    "role": "user",
+    "content": "Boldi insho ollox xa ozlariz qiberasilar"
+   },
+   {
+    "role": "assistant",
+    "content": "Иншааллох 👍🏻 Худо хохласа ўзимиз энг чиройлисини қилиб берамиз, Мохигул 😀"
+   },
+   {
+    "role": "user",
+    "content": "Xop"
    }
   ],
   "2316460989171355": [
@@ -1643,7 +1643,7 @@
    "followedUp": false
   },
   "2266689517596663": {
-   "lastClientAt": 1790382009802,
+   "lastClientAt": 1790382070833,
    "followedUp": false
   },
   "2316460989171355": {
