@@ -803,14 +803,6 @@
   "2266689517596663": [
    {
     "role": "user",
-    "content": "Xa xudoxolasa oz qoldi\nAssalomu alaykum yaxshimisiz\nXayrli tong\nYaxshi dam oldizmi"
-   },
-   {
-    "role": "assistant",
-    "content": "Ваалейкум ассалом, Мохигул 👍🏻 Хайрли тонг, раҳмат яхши. Ўзингиз яхшимисиз?\n\nУй иши битай деб қолибди — хайрли бўлсин иншааллох 😀"
-   },
-   {
-    "role": "user",
     "content": "Xa raxmat"
    },
    {
@@ -920,6 +912,14 @@
    {
     "role": "assistant",
     "content": "😊"
+   },
+   {
+    "role": "user",
+    "content": "Qaytligsiz\nUzir\nSoragandi ayib yoq\n🤭"
+   },
+   {
+    "role": "assistant",
+    "content": "Йўғ-е, айб эмас 😊 Бемалол сўраяверинг, Мохигул. Ўлчами тайёр бўлганда ёзинг, кутамиз 👍🏻"
    }
   ],
   "1802125877484992": [
@@ -1683,7 +1683,7 @@
    "followedUp": false
   },
   "2266689517596663": {
-   "lastClientAt": 1790382496367,
+   "lastClientAt": 1790398558743,
    "followedUp": false
   },
   "1802125877484992": {
