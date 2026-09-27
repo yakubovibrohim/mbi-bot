@@ -536,5 +536,15 @@
     "rate": 12000,
     "note": "IP OOO ANGLESEY FOOD, GUL, Olmos MFY Yakkatol pr 3 kuchasi",
     "pay_method": "card"
+  },
+  {
+    "id": "muk7kgr9l4r",
+    "date": "27.09.2026",
+    "ts": "2026-09-27T19:25:15.861Z",
+    "name": "💳 Абет",
+    "amount_uzs": 66900,
+    "rate": 12000,
+    "note": "OOO UZUM, UZ",
+    "pay_method": "card"
   }
 ]
