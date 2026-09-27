@@ -1032,6 +1032,10 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Мы изготавливаем мебель на заказ — кухни, шкафы, спальни. По вашей кухне 4 метра примерная цена $1500–3000, зависит от материала и фурнитуры.\n\nТочную цену скажет Иброхим — свяжитесь с ним в Telegram: +998 91 135 44 66 или оставьте свой номер 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Как решили по кухне, работаем? На замер подъедем?"
    }
   ],
   "1067666082771512": [
@@ -1164,6 +1168,10 @@
    {
     "role": "assistant",
     "content": "Тушунарли 👍🏻 Унда Иброхим ака Телеграмда кўриб чиқиб, аниқ нархни айтиб беради.\n\nАгар алоқа секинлашса, +998 91 135 44 66 га эслатма ёзиб қўйсангиз бўлади. Ёрдам керак бўлса, шу ерда ҳам ёзаверинг 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Ўша иккита шкаф бўйича хужайинингизнинг расмларини кўриб чиқдикми, давом этамизми?"
    }
   ],
   "1121163893901597": [
@@ -1306,6 +1314,10 @@
    {
     "role": "assistant",
     "content": "Oshxona pogonaj metri 350$ dan boshlanadi, materialga qarab (LMDF, akril yoki krashenniy).\n\nOshxonangiz necha metr va 2 etajmi, 3 etajmi?"
+   },
+   {
+    "role": "assistant",
+    "content": "Nima bo'ldi, ishlaymizmi? Oshxona necha metrligini ayting, hisob-kitob qilib beraman."
    }
   ],
   "1743450896707885": [
@@ -1910,7 +1922,7 @@
   },
   "949588774289825": {
    "lastClientAt": 1790441358561,
-   "followedUp": false
+   "followedUp": true
   },
   "1067666082771512": {
    "lastClientAt": 1790266171374,
@@ -1926,7 +1938,7 @@
   },
   "1461625905783045": {
    "lastClientAt": 1790439846464,
-   "followedUp": false
+   "followedUp": true
   },
   "1121163893901597": {
    "lastClientAt": 1790335765299,
@@ -1947,7 +1959,7 @@
   },
   "1827500491929722": {
    "lastClientAt": 1790439830994,
-   "followedUp": false
+   "followedUp": true
   },
   "1743450896707885": {
    "lastClientAt": 1790363332682,
