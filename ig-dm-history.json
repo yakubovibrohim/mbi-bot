@@ -1619,6 +1619,16 @@
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Кухни выходят примерно от $1000. Что планируете?"
    }
+  ],
+  "1024723793270011": [
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"Kashtan mebellar fabrikasi Mebel va eshiklaringizni dizayn asosisda 100% bir xilda premium sifatda ishlab chiqarib beradi! Malumot uchun tel: +998977087777 +998981235959\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум, яхшимисиз 👍🏻 Исмингиз нима?\n\nБу бизнинг иш эмас экан — MBI Mebel'миз, 2014 йилдан премиум мебел ясаймиз. Сизга нима керак эди — ошхона, шкаф ёки ётоқхонами?"
+   }
   ]
  },
  "activity": {
@@ -1901,6 +1911,10 @@
   },
   "1408536241472140": {
    "lastClientAt": 1790472821418,
+   "followedUp": false
+  },
+  "1024723793270011": {
+   "lastClientAt": 1790475473820,
    "followedUp": false
   }
  }
