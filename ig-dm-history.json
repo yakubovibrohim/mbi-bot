@@ -1607,6 +1607,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкум, яхшимисиз 👍🏻 Қайси видеони кўрдингиз?\n\nБитта эслатма: биз фақат мебел қисмини қиламиз, техника (духовка, плита, вытяжка) мижознинг ҳисобидан бўлади. Ошхона неча метр эди?"
    }
+  ],
+  "1629317572152851": [
+   {
+    "role": "user",
+    "content": "[SHAXSIY XABAR (Direct). Mijoz \"Нечпул бўлди\" deb postga komment yozdi. Post tavsifi: \"[REEL:C-X7PDfoAQJ] hammaga omad #mebel #reels\". Sen unga Direct'da BIRINCHI bo'lib yozyapsan — u allaqachon shu yerda, shuning uchun «DM/Директ/шахсийга ёзинг» деб ЁЗМА, савол-жавобни шу ерда давом эттир.]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум 🙌 Бу ошхона обкладной услубда крашенный МДФ, фурнитура Blum — 20 йил гарантия. Тахминан 1700$ атрофида бўлган.\n\nСизга ошхона керакми, ўлчами борми?"
+   }
   ]
  },
  "activity": {
@@ -1881,6 +1891,10 @@
   },
   "2335078627268815": {
    "lastClientAt": 1790487746627,
+   "followedUp": false
+  },
+  "1629317572152851": {
+   "lastClientAt": 1790493512522,
    "followedUp": false
   }
  }
