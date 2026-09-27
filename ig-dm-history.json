@@ -1664,6 +1664,10 @@
    {
     "role": "user",
     "content": "Ок спасибо"
+   },
+   {
+    "role": "assistant",
+    "content": "Всегда рады 🙌 Будут вопросы — пишите."
    }
   ],
   "1408536241472140": [
@@ -2098,7 +2102,7 @@
    "followedUp": true
   },
   "1054652594054403": {
-   "lastClientAt": 1790532806924,
+   "lastClientAt": 1790532837346,
    "followedUp": false,
    "photoSent": true
   },
