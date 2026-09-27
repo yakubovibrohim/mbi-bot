@@ -1,20 +1,6 @@
 {
   "lastMsgId": 104457,
-  "pending": {
-    "mui4covp2xl": {
-      "dir": "out",
-      "amtUzs": 115570,
-      "place": "IP OOO ANGLESEY FOOD, GUL, Olmos MFY Yakkatol pr 3 kuchasi",
-      "rawBalance": 152507,
-      "date": "26.09.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1790410781941,
-      "remindedAt": 1790482812033,
-      "kind": "office"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -1265,6 +1251,11 @@
       "date": "25.09.2026",
       "dir": "out",
       "amt": 52550
+    },
+    {
+      "date": "26.09.2026",
+      "dir": "out",
+      "amt": 115570
     }
   ],
   "lastBalances": {
