@@ -418,5 +418,17 @@
   ],
   "msg": "Адрес?",
   "status": "new"
+ },
+ {
+  "ts": "2026-09-27T02:18:00.046Z",
+  "uid": "1024723793270011",
+  "username": "@abdujabborabdurahmonov",
+  "need": "Kashtan mebellar fabrikasi - premium mebel va eshiklar",
+  "phone": "+998977087777",
+  "signals": [
+   "телефон қолдирди"
+  ],
+  "msg": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"Kashtan mebellar fabrikasi Mebel va eshiklaringizni dizayn asosisda 100% bir xilda premium sifatda ishlab chiqarib beradi! Malumot uchun tel: +99",
+  "status": "new"
  }
 ]
