@@ -1,6 +1,18 @@
 {
   "lastMsgId": 104502,
-  "pending": {},
+  "pending": {
+    "mujzmxfv292": {
+      "dir": "out",
+      "amtUzs": 66900,
+      "place": "OOO UZUM, UZ",
+      "rawBalance": 57607,
+      "date": "27.09.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1790523793867
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
