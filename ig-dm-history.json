@@ -1744,6 +1744,14 @@
    {
     "role": "assistant",
     "content": "Арзимайди 👍🏻 Савол бўлса ёзаверинг, тайёр видео ишларимизни ҳам кўрсатаман."
+   },
+   {
+    "role": "user",
+    "content": "Хуп"
+   },
+   {
+    "role": "assistant",
+    "content": "[[FOTO:oshxona]]"
    }
   ]
  },
@@ -2038,8 +2046,9 @@
    "followedUp": false
   },
   "1636723354737390": {
-   "lastClientAt": 1790511122290,
-   "followedUp": false
+   "lastClientAt": 1790511275597,
+   "followedUp": false,
+   "photoSent": true
   }
  }
 }
