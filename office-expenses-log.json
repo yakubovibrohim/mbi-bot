@@ -526,5 +526,15 @@
     "rate": 12000,
     "note": "OOO MAKHAMAT KARVON, Tashkent, ESKI ShAKHAR MFY  LANGAR  KOK T",
     "pay_method": "card"
+  },
+  {
+    "id": "mujegbfnoed",
+    "date": "26.09.2026",
+    "ts": "2026-09-27T05:50:13.475Z",
+    "name": "💳 Abet",
+    "amount_uzs": 115570,
+    "rate": 12000,
+    "note": "IP OOO ANGLESEY FOOD, GUL, Olmos MFY Yakkatol pr 3 kuchasi",
+    "pay_method": "card"
   }
 ]
