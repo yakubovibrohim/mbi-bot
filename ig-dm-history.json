@@ -800,132 +800,6 @@
     "content": "Assalomu alaykum. Nima kerak edi — oshxonami, shkaf, yoki yotoqxona? \n\nOshxona bo'lsa pogonaj metri 380$ dan boshlanadi, material va etajga qarab. Qaysi mebel kerak, o'lchami bormi?"
    }
   ],
-  "2266689517596663": [
-   {
-    "role": "user",
-    "content": "Xa aytkaniz kesin"
-   },
-   {
-    "role": "assistant",
-    "content": "Хоп, Мохигул 👍🏻 Уй битиб, ошхона ўлчами тайёр бўлганда ёзинг — ўлчаб бориб аниқ лойиҳа чизиб берамиз. Кутиб қоламиз 😀"
-   },
-   {
-    "role": "user",
-    "content": "Boldi insho ollox xa ozlariz qiberasilar"
-   },
-   {
-    "role": "assistant",
-    "content": "Иншааллох 👍🏻 Худо хохласа ўзимиз энг чиройлисини қилиб берамиз, Мохигул 😀"
-   },
-   {
-    "role": "user",
-    "content": "Xop"
-   },
-   {
-    "role": "assistant",
-    "content": "👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Xop boladi"
-   },
-   {
-    "role": "assistant",
-    "content": "👍🏻 Уй хайрли битсин, Мохигул 😀"
-   },
-   {
-    "role": "user",
-    "content": "Raxmat borizga shukur ☺️"
-   },
-   {
-    "role": "assistant",
-    "content": "Раҳмат, Мохигул ☺️ Худога шукур. Соғ-омон бўлинг, уй битганда кутамиз 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Raxmat"
-   },
-   {
-    "role": "assistant",
-    "content": "👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Xop boladi\n🤝"
-   },
-   {
-    "role": "assistant",
-    "content": "🤝"
-   },
-   {
-    "role": "user",
-    "content": "Arzonroq qiberasiz oma"
-   },
-   {
-    "role": "assistant",
-    "content": "Албатта, Мохигул 👍🏻 Материални танлаб, энг оптимал нархда ҳисоблаб берамиз. Арзонроқ вариант ҳам бор — ЛМДФ фасад, GTV фурнитура билан.\n\nОшхона неча метр бўлади, аниқ бўлдими?"
-   },
-   {
-    "role": "user",
-    "content": "Xop"
-   },
-   {
-    "role": "assistant",
-    "content": "Хоп 👍🏻 Ошхона ўлчами аниқ бўлганда ёзинг, Мохигул — арзонроқ вариантда ҳисоблаб берамиз 😀"
-   },
-   {
-    "role": "user",
-    "content": "Sorab aytvoraman"
-   },
-   {
-    "role": "assistant",
-    "content": "Хоп, Мохигул 👍🏻 Сўраб, ўлчами билан ёзинг — кутиб қоламиз 😀"
-   },
-   {
-    "role": "user",
-    "content": "Xop boladi"
-   },
-   {
-    "role": "assistant",
-    "content": "👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Boloradi"
-   },
-   {
-    "role": "assistant",
-    "content": "👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "😊"
-   },
-   {
-    "role": "assistant",
-    "content": "😊"
-   },
-   {
-    "role": "user",
-    "content": "Qaytligsiz\nUzir\nSoragandi ayib yoq\n🤭"
-   },
-   {
-    "role": "assistant",
-    "content": "Йўғ-е, айб эмас 😊 Бемалол сўраяверинг, Мохигул. Ўлчами тайёр бўлганда ёзинг, кутамиз 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Ok\nQaytligsiz"
-   },
-   {
-    "role": "assistant",
-    "content": "👍🏻 Уй хайрли битсин, Мохигул 😊"
-   },
-   {
-    "role": "assistant",
-    "content": "Мохигул, уй-жой қандай кетяпти? Ўлчам олишга борсак бўладими? 😊"
-   }
-  ],
   "1802125877484992": [
    {
     "role": "user",
@@ -1342,20 +1216,6 @@
    {
     "role": "assistant",
     "content": "Nima bo'ldi, ishlaymizmi? Oshxona necha metrligini ayting, hisob-kitob qilib beraman."
-   }
-  ],
-  "1555633662916177": [
-   {
-    "role": "user",
-    "content": "Какой срок выполнения проекта?"
-   },
-   {
-    "role": "assistant",
-    "content": "Здравствуйте! Срок зависит от фасада: ЛМДФ и акрил — до 14 рабочих дней, крашеный и шпон — до 30 дней. Стараемся закончить раньше, а за каждый день опоздания платим штраф.\n\nЧто планируете — кухню, шкаф или спальню?"
-   },
-   {
-    "role": "assistant",
-    "content": "Кухней займёмся? Могу подъехать замерить, чтобы точнее сказать по срокам."
    }
   ],
   "1248413944116911": [
@@ -1946,10 +1806,6 @@
    "lastClientAt": 1789800916820,
    "followedUp": false
   },
-  "2266689517596663": {
-   "lastClientAt": 1790398616047,
-   "followedUp": true
-  },
   "1802125877484992": {
    "lastClientAt": 1790229430728,
    "followedUp": false
@@ -1993,10 +1849,6 @@
   },
   "1827500491929722": {
    "lastClientAt": 1790439830994,
-   "followedUp": true
-  },
-  "1555633662916177": {
-   "lastClientAt": 1790398713908,
    "followedUp": true
   },
   "1248413944116911": {
