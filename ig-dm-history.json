@@ -930,6 +930,14 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкум 👍🏻 Қайси видеони кўрдингиз, нима қизиқтирди — ошхонами, шкафми?"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"INFERNO CMBK 💀 #pubgmobile #pubg #rek\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум! Бизга мебел бўйича ёзаётган бўлсангиз, ёрдам берамиз 👍🏻 Нима керак — ошхона, шкаф ёки ётоқхонами?"
    }
   ],
   "27164963133203098": [
@@ -1823,7 +1831,7 @@
    "followedUp": false
   },
   "1660596615206219": {
-   "lastClientAt": 1790302768036,
+   "lastClientAt": 1790562899750,
    "followedUp": false
   },
   "27164963133203098": {
