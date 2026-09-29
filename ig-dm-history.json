@@ -1539,7 +1539,9 @@
   },
   "1024723793270011": {
    "lastClientAt": 1790574149039,
-   "followedUp": true
+   "followedUp": true,
+   "manual": true,
+   "manualAt": 1790651788046
   },
   "1629317572152851": {
    "lastClientAt": 1790495031004,
