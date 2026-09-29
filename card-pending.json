@@ -1,18 +1,6 @@
 {
   "lastMsgId": 104589,
-  "pending": {
-    "mum8tgc42g6": {
-      "dir": "in",
-      "amtUzs": 500000,
-      "place": "IPOTEKA MOBILE UZCARD UZCARD P2P2, UZ",
-      "rawBalance": 557607,
-      "date": "29.09.2026",
-      "title": "Perevod na kartu",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1790660147188
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -1278,6 +1266,11 @@
       "date": "27.09.2026",
       "dir": "out",
       "amt": 66900
+    },
+    {
+      "date": "29.09.2026",
+      "dir": "in",
+      "amt": 500000
     }
   ],
   "lastBalances": {
