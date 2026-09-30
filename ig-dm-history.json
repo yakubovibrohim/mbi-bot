@@ -1163,6 +1163,16 @@
     "role": "assistant",
     "content": "Assalomu Aleykum 👍🏻 Bu premium krashenniy oshxona — korpus LMDF, fasadlar Italiya «SIRCA» krasi bilan 4 etapli bo'yalgan, furnitura Blum (20 yil kafolat). Narxi taxminan pogonaj metri 800$ atrofida.\n\nByudjetga qarab arzonroq ham qilamiz — fasadni akril yoki EGGER'ga o'zgartirsak, 650$ atrofidan bo'ladi. Oshxonangiz necha metr?"
    }
+  ],
+  "2075860640470796": [
+   {
+    "role": "user",
+    "content": "Сколько стоит дизайн интерьера?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Кухни выходят примерно от $1000. Что планируете?"
+   }
   ]
  },
  "activity": {
@@ -1374,6 +1384,10 @@
   },
   "1101262445629090": {
    "lastClientAt": 1790771017515,
+   "followedUp": false
+  },
+  "2075860640470796": {
+   "lastClientAt": 1790773482513,
    "followedUp": false
   }
  }
