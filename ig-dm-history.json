@@ -1268,6 +1268,24 @@
    {
     "role": "assistant",
     "content": "Йўқ, фақат Тошкентда ишлаймиз. Фарғонага ўлчов ва ўрнатишга бориш мумкинми — буни Иброхим ака аниқ айтади, +998 91 135 44 66 га алоқага чиқинг 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Рахмат информация учун"
+   },
+   {
+    "role": "assistant",
+    "content": "Арзимайди 👍🏻 Савол бўлса ёзинг."
+   }
+  ],
+  "1080807094938714": [
+   {
+    "role": "user",
+    "content": "[SHAXSIY XABAR (Direct). Mijoz \"Juda chiroyli manzili qayerga\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\". Sen unga Direct'da BIRINCHI bo'lib yozyapsan — u allaqachon shu yerda, shuning uchun «DM/Директ/шахсийга ёзинг» деб ЁЗМА, савол-жавобни шу ерда давом эттир.]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум, раҳмат 🙌 Биз Тошкент, Яккасарой, Қушбеги 6 да жойлашганмиз.\n\nБу видеодаги ошхона — крашенный фасад, Италия «SIRCA» краскаси, фурнитура Blum. Ошхона ясатмоқчимисиз?"
    }
   ]
  },
@@ -1499,7 +1517,11 @@
    "followedUp": false
   },
   "1632140078297904": {
-   "lastClientAt": 1790781726814,
+   "lastClientAt": 1790781783316,
+   "followedUp": false
+  },
+  "1080807094938714": {
+   "lastClientAt": 1790781800872,
    "followedUp": false
   }
  }
