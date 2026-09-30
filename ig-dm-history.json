@@ -1276,6 +1276,14 @@
    {
     "role": "assistant",
     "content": "Арзимайди 👍🏻 Савол бўлса ёзинг."
+   },
+   {
+    "role": "user",
+    "content": "Албатта"
+   },
+   {
+    "role": "assistant",
+    "content": "👍🏻"
    }
   ],
   "1080807094938714": [
@@ -1517,7 +1525,7 @@
    "followedUp": false
   },
   "1632140078297904": {
-   "lastClientAt": 1790781783316,
+   "lastClientAt": 1790781847496,
    "followedUp": false
   },
   "1080807094938714": {
