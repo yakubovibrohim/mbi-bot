@@ -1235,6 +1235,16 @@
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Кухни выходят примерно от $1000. Что планируете?"
    }
+  ],
+  "1632140078297904": [
+   {
+    "role": "user",
+    "content": "[SHAXSIY XABAR (Direct). Mijoz \"🔥🔥🔥 Ассалому алейкум .Неч пулга тушти шу туриши, нархини айтворинг .\" deb postga komment yozdi. Post tavsifi: \"[REEL:DGs6njXoUB8]\". Sen unga Direct'da BIRINCHI bo'lib yozyapsan — u allaqachon shu yerda, shuning uchun «DM/Директ/шахсийга ёзинг» деб ЁЗМА, савол-жавобни шу ерда давом эттир.]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ва Алейкум Ассалом, яхшимисиз 👍🏻 Бу лойиҳа бўйича Иброхим ака аниқ маълумот беради. Ошхона неча метр эди, ўлчами борми?"
+   }
   ]
  },
  "activity": {
@@ -1462,6 +1472,10 @@
   },
   "2141095223463249": {
    "lastClientAt": 1790779223301,
+   "followedUp": false
+  },
+  "1632140078297904": {
+   "lastClientAt": 1790781418093,
    "followedUp": false
   }
  }
