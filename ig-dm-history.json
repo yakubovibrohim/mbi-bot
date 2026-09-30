@@ -1153,6 +1153,16 @@
     "role": "assistant",
     "content": "Здравствуйте! Мы занимаемся мебелью на заказ, не дизайном интерьера. Кухни, шкафы, спальни — всё по вашим размерам. Кухни от 350$ за погонный метр. Что нужно?"
    }
+  ],
+  "1101262445629090": [
+   {
+    "role": "user",
+    "content": "[SHAXSIY XABAR (Direct). Mijoz \"Qanchaga tushadi shu mebel\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\". Sen unga Direct'da BIRINCHI bo'lib yozyapsan — u allaqachon shu yerda, shuning uchun «DM/Директ/шахсийга ёзинг» деб ЁЗМА, савол-жавобни шу ерда давом эттир.]"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu Aleykum 👍🏻 Bu premium krashenniy oshxona — korpus LMDF, fasadlar Italiya «SIRCA» krasi bilan 4 etapli bo'yalgan, furnitura Blum (20 yil kafolat). Narxi taxminan pogonaj metri 800$ atrofida.\n\nByudjetga qarab arzonroq ham qilamiz — fasadni akril yoki EGGER'ga o'zgartirsak, 650$ atrofidan bo'ladi. Oshxonangiz necha metr?"
+   }
   ]
  },
  "activity": {
@@ -1360,6 +1370,10 @@
   },
   "2499847763827517": {
    "lastClientAt": 1790763002432,
+   "followedUp": false
+  },
+  "1101262445629090": {
+   "lastClientAt": 1790771017515,
    "followedUp": false
   }
  }
