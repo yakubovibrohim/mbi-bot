@@ -1315,6 +1315,16 @@
     "role": "assistant",
     "content": "Assalomu Aleykum 👍🏻 Nima qildirmoqchisiz — oshxonami, shkafmi?\n\nOshxona pogonaj metri 350$ dan boshlanadi, materialga qarab. O'lchamini aytsangiz, taxminiy narxni hisoblab beraman."
    }
+  ],
+  "1902913531086828": [
+   {
+    "role": "user",
+    "content": "Сколько стоит дизайн интерьера?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Кухни выходят примерно от $1000. Что планируете?"
+   }
   ]
  },
  "activity": {
@@ -1558,6 +1568,10 @@
   },
   "2311876576332730": {
    "lastClientAt": 1790782620936,
+   "followedUp": false
+  },
+  "1902913531086828": {
+   "lastClientAt": 1790784270299,
    "followedUp": false
   }
  }
