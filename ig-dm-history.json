@@ -1305,6 +1305,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкум! Бу видеодаги ошхона — премиум крашенный, корпус ЛМДФ, фасад Италия «SIRCA» краскаси билан 4 этапли бўялган, фурнитура Blum (20 йил кафолат). Тахминий нархи — погонаж метри 800$ атрофида 👍🏻\n\nОшхонангиз неча метр?"
    }
+  ],
+  "2311876576332730": [
+   {
+    "role": "user",
+    "content": "Km qanchadan"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu Aleykum 👍🏻 Nima qildirmoqchisiz — oshxonami, shkafmi?\n\nOshxona pogonaj metri 350$ dan boshlanadi, materialga qarab. O'lchamini aytsangiz, taxminiy narxni hisoblab beraman."
+   }
   ]
  },
  "activity": {
@@ -1544,6 +1554,10 @@
   },
   "1394344488992572": {
    "lastClientAt": 1790782436174,
+   "followedUp": false
+  },
+  "2311876576332730": {
+   "lastClientAt": 1790782620936,
    "followedUp": false
   }
  }
