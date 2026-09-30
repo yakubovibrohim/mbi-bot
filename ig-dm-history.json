@@ -1295,6 +1295,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкум, раҳмат 🙌 Биз Тошкент, Яккасарой, Қушбеги 6 да жойлашганмиз.\n\nБу видеодаги ошхона — крашенный фасад, Италия «SIRCA» краскаси, фурнитура Blum. Ошхона ясатмоқчимисиз?"
    }
+  ],
+  "1394344488992572": [
+   {
+    "role": "user",
+    "content": "[SHAXSIY XABAR (Direct). Mijoz \"Нархи канчага айланди шуни\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\". Sen unga Direct'da BIRINCHI bo'lib yozyapsan — u allaqachon shu yerda, shuning uchun «DM/Директ/шахсийга ёзинг» деб ЁЗМА, савол-жавобни шу ерда давом эттир.]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум! Бу видеодаги ошхона — премиум крашенный, корпус ЛМДФ, фасад Италия «SIRCA» краскаси билан 4 этапли бўялган, фурнитура Blum (20 йил кафолат). Тахминий нархи — погонаж метри 800$ атрофида 👍🏻\n\nОшхонангиз неча метр?"
+   }
   ]
  },
  "activity": {
@@ -1530,6 +1540,10 @@
   },
   "1080807094938714": {
    "lastClientAt": 1790781800872,
+   "followedUp": false
+  },
+  "1394344488992572": {
+   "lastClientAt": 1790782436174,
    "followedUp": false
   }
  }
