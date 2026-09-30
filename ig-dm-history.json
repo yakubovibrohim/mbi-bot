@@ -1173,6 +1173,16 @@
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Кухни выходят примерно от $1000. Что планируете?"
    }
+  ],
+  "1627961662335454": [
+   {
+    "role": "user",
+    "content": "[SHAXSIY XABAR (Direct). Mijoz \"Assalomu alaykum narxi\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\". Sen unga Direct'da BIRINCHI bo'lib yozyapsan — u allaqachon shu yerda, shuning uchun «DM/Директ/шахсийга ёзинг» деб ЁЗМА, савол-жавобни шу ерда давом эттир.]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ва Алейкум Ассалом, яхшимисиз 👍🏻 Бу видеодаги ошхона премиум крашенный — фасадлар Италия «SIRCA» краскаси билан 4 этапда бўялган, фурнитура Blum, 20 йил кафолат.\n\nПогонаж метри тахминан 800$ атрофида. Бюджетга қараб арзонроқ ҳам қиламиз — фасадни акрилга ёки EGGER'га ўзгартирсак сезиларли арзонлашади.\n\nОшхонангиз неча метр?"
+   }
   ]
  },
  "activity": {
@@ -1388,6 +1398,10 @@
   },
   "2075860640470796": {
    "lastClientAt": 1790773482513,
+   "followedUp": false
+  },
+  "1627961662335454": {
+   "lastClientAt": 1790775770941,
    "followedUp": false
   }
  }
