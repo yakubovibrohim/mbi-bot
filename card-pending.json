@@ -1,6 +1,18 @@
 {
   "lastMsgId": 104819,
-  "pending": {},
+  "pending": {
+    "mupfugoyqbz": {
+      "dir": "out",
+      "amtUzs": 20000,
+      "place": "HGT DOMO, UZ",
+      "rawBalance": 182257,
+      "date": "01.10.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1790853350146
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
