@@ -1684,6 +1684,14 @@
    {
     "role": "assistant",
     "content": "Aniq hisob kerak bo'lsa, uyingizga borib o'lchaymiz va Bazis dasturida mebel loyihasini chizib beramiz — 500 ming so'm. Buyurtma bersangiz, bu pul umumiy summadan chegiriladi.\n\nO'lchovga borish uchun telefon raqamingizni qoldirsangiz, vaqtni kelishib olamiz 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Ok"
+   },
+   {
+    "role": "assistant",
+    "content": "Raqamingizni shu yerga yozib qoldiring, Ibrohim aka bog'lanib, o'lchov vaqtini kelishib oladi 👍🏻"
    }
   ]
  },
@@ -2047,7 +2055,7 @@
    "followedUp": false
   },
   "2864784717226789": {
-   "lastClientAt": 1790853516664,
+   "lastClientAt": 1790853584772,
    "followedUp": false
   }
  }
