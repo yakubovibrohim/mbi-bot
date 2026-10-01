@@ -1524,6 +1524,14 @@
    {
     "role": "assistant",
     "content": "Va Aleykum Assalom, yaxshimisiz 👍🏻 Ismingiz nima?\n\nAvval ayting-chi, nima kerak — oshxona, shkaf yoki yotoqxonami?"
+   },
+   {
+    "role": "user",
+    "content": "Oshxona"
+   },
+   {
+    "role": "assistant",
+    "content": "Oshxona pogonaj metri 350$ dan boshlanadi, materialga qarab o'zgaradi.\n\nOshxonangiz necha metr va 2 etajmi, 3 etajmi?"
    }
   ]
  },
@@ -1855,7 +1863,7 @@
    "followedUp": false
   },
   "992266443887492": {
-   "lastClientAt": 1790845126830,
+   "lastClientAt": 1790845161239,
    "followedUp": false
   }
  }
