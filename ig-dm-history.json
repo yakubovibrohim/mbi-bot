@@ -1533,6 +1533,16 @@
     "role": "assistant",
     "content": "Oshxona pogonaj metri 350$ dan boshlanadi, materialga qarab o'zgaradi.\n\nOshxonangiz necha metr va 2 etajmi, 3 etajmi?"
    }
+  ],
+  "2947904058905339": [
+   {
+    "role": "user",
+    "content": "Какой срок выполнения проекта?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Срок зависит от фасада: ЛМДФ и акрил — до 14 рабочих дней, крашеный и шпон — до 30 дней, стараемся закончить раньше. За каждый день опоздания платим штраф.\n\nА что планируете — кухню, шкаф или спальню?"
+   }
   ]
  },
  "activity": {
@@ -1864,6 +1874,10 @@
   },
   "992266443887492": {
    "lastClientAt": 1790845161239,
+   "followedUp": false
+  },
+  "2947904058905339": {
+   "lastClientAt": 1790846203618,
    "followedUp": false
   }
  }
