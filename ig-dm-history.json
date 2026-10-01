@@ -1604,6 +1604,14 @@
    {
     "role": "assistant",
     "content": "Oshxona necha metr, 2 etajmi yoki 3 etaj?"
+   },
+   {
+    "role": "user",
+    "content": "3,5 metr"
+   },
+   {
+    "role": "assistant",
+    "content": "3,5 metr uchun taxminiy:\nLMDF fasad + GTV furnitura — taxminan 1150–1300$ atrofida\nAkril fasad + Hettich — taxminan 1600–1900$ atrofida\n\nBu taxminiy narx. Aniq narxni Ibrohim aka aytadi — +998 91 135 44 66 ga aloqaga chiqing yoki raqamingizni qoldiring. Qanaqa material yoqadi?"
    }
   ]
  },
@@ -1951,7 +1959,7 @@
    "followedUp": false
   },
   "1647319813637029": {
-   "lastClientAt": 1790849690394,
+   "lastClientAt": 1790849742162,
    "followedUp": false
   }
  }
