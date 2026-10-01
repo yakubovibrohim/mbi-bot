@@ -1693,6 +1693,16 @@
     "role": "assistant",
     "content": "Raqamingizni shu yerga yozib qoldiring, Ibrohim aka bog'lanib, o'lchov vaqtini kelishib oladi 👍🏻"
    }
+  ],
+  "1695675118328518": [
+   {
+    "role": "user",
+    "content": "Сколько стоит дизайн интерьера?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Кухни выходят примерно от 350$ за погонный метр. Что планируете?"
+   }
   ]
  },
  "activity": {
@@ -2056,6 +2066,10 @@
   },
   "2864784717226789": {
    "lastClientAt": 1790853584772,
+   "followedUp": false
+  },
+  "1695675118328518": {
+   "lastClientAt": 1790854635601,
    "followedUp": false
   }
  }
