@@ -1515,6 +1515,16 @@
     "role": "assistant",
     "content": "Salom! Qaysi loyiha haqida so'rayapsiz — videoda ko'rganмидингиз?\n\nAniq narx uchun ўлчамни билишим керак: нима керак эди — ошхона, шкаф ёки ётоқхонами?"
    }
+  ],
+  "992266443887492": [
+   {
+    "role": "user",
+    "content": "Assalom aleykum narxi qancha"
+   },
+   {
+    "role": "assistant",
+    "content": "Va Aleykum Assalom, yaxshimisiz 👍🏻 Ismingiz nima?\n\nAvval ayting-chi, nima kerak — oshxona, shkaf yoki yotoqxonami?"
+   }
   ]
  },
  "activity": {
@@ -1842,6 +1852,10 @@
   },
   "1103270759069644": {
    "lastClientAt": 1790841494763,
+   "followedUp": false
+  },
+  "992266443887492": {
+   "lastClientAt": 1790845126830,
    "followedUp": false
   }
  }
