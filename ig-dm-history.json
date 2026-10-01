@@ -1588,6 +1588,14 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Заказ оформляем здесь или по телефону, на сайте оформления нет. Проект показываем заранее в программе Bazis — точность 100%. Что планируете — кухню или шкаф?"
+   },
+   {
+    "role": "user",
+    "content": "Assalomu aleykum\nNarxi qancha"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu Aleykum, yaxshimisiz 👍🏻 Nima rejalashtiryapsiz — oshxona, shkaf yoki yotoqxona?"
    }
   ]
  },
@@ -1935,7 +1943,7 @@
    "followedUp": false
   },
   "1647319813637029": {
-   "lastClientAt": 1790849575814,
+   "lastClientAt": 1790849647441,
    "followedUp": false
   }
  }
