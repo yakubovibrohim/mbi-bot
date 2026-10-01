@@ -1497,6 +1497,16 @@
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%. Кухни выходят примерно от $1000. Что планируете?"
    }
+  ],
+  "1103270759069644": [
+   {
+    "role": "user",
+    "content": "shu xammasi nechpul ga tushdi"
+   },
+   {
+    "role": "assistant",
+    "content": "Salom! Qaysi loyiha haqida so'rayapsiz — videoda ko'rganмидингиз?\n\nAniq narx uchun ўлчамни билишим керак: нима керак эди — ошхона, шкаф ёки ётоқхонами?"
+   }
   ]
  },
  "activity": {
@@ -1819,6 +1829,10 @@
   },
   "1687270989575870": {
    "lastClientAt": 1790840930807,
+   "followedUp": false
+  },
+  "1103270759069644": {
+   "lastClientAt": 1790841494763,
    "followedUp": false
   }
  }
