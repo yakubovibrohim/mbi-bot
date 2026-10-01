@@ -12,6 +12,17 @@
       "step": "type",
       "askedAt": 1790853350146,
       "remindedAt": 1790882178962
+    },
+    "mupzx7i06as": {
+      "dir": "out",
+      "amtUzs": 154800,
+      "place": "UB AVTOSPISANIE APT, UZ",
+      "rawBalance": 27457,
+      "date": "02.10.2026",
+      "title": "Platezh",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1790887070520
     }
   },
   "resolved": [
