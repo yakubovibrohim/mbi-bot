@@ -1596,6 +1596,14 @@
    {
     "role": "assistant",
     "content": "Assalomu Aleykum, yaxshimisiz 👍🏻 Nima rejalashtiryapsiz — oshxona, shkaf yoki yotoqxona?"
+   },
+   {
+    "role": "user",
+    "content": "Owxona"
+   },
+   {
+    "role": "assistant",
+    "content": "Oshxona necha metr, 2 etajmi yoki 3 etaj?"
    }
   ]
  },
@@ -1943,7 +1951,7 @@
    "followedUp": false
   },
   "1647319813637029": {
-   "lastClientAt": 1790849647441,
+   "lastClientAt": 1790849690394,
    "followedUp": false
   }
  }
