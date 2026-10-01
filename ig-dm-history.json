@@ -1708,6 +1708,14 @@
    {
     "role": "assistant",
     "content": "Raqamingizni shu yerga yozib qoldiring, Ibrohim aka bog'lanib, o'lchov vaqtini kelishib oladi 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "97 737 17 44"
+   },
+   {
+    "role": "assistant",
+    "content": "Rahmat! Raqamingizni oldim 👍🏻 Qachon qo'ng'iroq qilaylik — ertalabmi, tushdan keyinmi? Qulay vaqtni yozing."
    }
   ],
   "1695675118328518": [
@@ -2129,7 +2137,7 @@
    "followedUp": false
   },
   "2864784717226789": {
-   "lastClientAt": 1790853584772,
+   "lastClientAt": 1790863392366,
    "followedUp": false
   },
   "1695675118328518": {
