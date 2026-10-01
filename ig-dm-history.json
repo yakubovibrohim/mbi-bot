@@ -1676,6 +1676,14 @@
    {
     "role": "assistant",
     "content": "Tushundim. Boyi 2.95 metr — korpus LMDF, akril fasad, furnitura bilan taxminan hisoblaymiz.\n\nAkril + GTV bilan — taxminan 1150–1350$ atrofida.\nAkril + Hettich bilan — taxminan 1350–1600$ atrofida.\n\nBu taxminiy narx. Aniq narx uchun Ibrohim akaga +998 91 135 44 66 ga aloqaga chiqing yoki raqamingizni qoldiring 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Ok"
+   },
+   {
+    "role": "assistant",
+    "content": "Aniq hisob kerak bo'lsa, uyingizga borib o'lchaymiz va Bazis dasturida mebel loyihasini chizib beramiz — 500 ming so'm. Buyurtma bersangiz, bu pul umumiy summadan chegiriladi.\n\nO'lchovga borish uchun telefon raqamingizni qoldirsangiz, vaqtni kelishib olamiz 👍🏻"
    }
   ]
  },
@@ -2039,7 +2047,7 @@
    "followedUp": false
   },
   "2864784717226789": {
-   "lastClientAt": 1790853415426,
+   "lastClientAt": 1790853516664,
    "followedUp": false
   }
  }
