@@ -1964,7 +1964,9 @@
   },
   "1902913531086828": {
    "lastClientAt": 1790784270299,
-   "followedUp": true
+   "followedUp": true,
+   "manual": true,
+   "manualAt": 1790857454821
   },
   "843080315525654": {
    "lastClientAt": 1790786534168,
