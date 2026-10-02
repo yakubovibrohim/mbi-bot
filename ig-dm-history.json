@@ -1752,6 +1752,14 @@
    {
     "role": "assistant",
     "content": "Oshxonangiz necha metr ekan? O'lchamini aytsangiz, eng arzon variantda taxminan qancha chiqishini hisoblab beraman 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Qachon vaqtila bor oshxonamga kelib olchamlarini olib ketsrla ozila korib ketsela sizlaga qiyinchilik bolmiydimi"
+   },
+   {
+    "role": "assistant",
+    "content": "O'lchovga uyingizga boramiz, lekin bir narsani aytib qo'yay: o'lchov pullik — 500 ming so'm. Shu pulga borib o'lchaymiz va Bazis dasturida oshxonangizning aniq loyihasini chizib beramiz. Agar kelishsak, ya'ni buyurtma bersangiz — bu 500 ming umumiy summadan chegirib tashlanadi.\n\nQiyinchilik bo'lmaydi, shu ish bilan shug'ullanamiz 👍🏻\n\nO'lchovga borish uchun telefon raqamingizni qoldirsangiz, vaqtni kelishib olamiz."
    }
   ],
   "28860909456929141": [
@@ -2441,7 +2449,7 @@
    "followedUp": true
   },
   "2947904058905339": {
-   "lastClientAt": 1790920136720,
+   "lastClientAt": 1790920586038,
    "followedUp": false
   },
   "28860909456929141": {
