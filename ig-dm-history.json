@@ -1416,6 +1416,22 @@
    {
     "role": "assistant",
     "content": "Қандай, қарорга келдингизми? Қайси мебелни ўйлаб турибсиз?"
+   },
+   {
+    "role": "user",
+    "content": "Mana shunaqa korinishda kere rangi hama\n[Mijoz rasm yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Zўr tanlov 👍🏻 Qaysi mebel kerak — oshxonami, shkafmi? O'lchami bormi?"
+   },
+   {
+    "role": "user",
+    "content": "Oshxonami olchovi ham kerakmi"
+   },
+   {
+    "role": "assistant",
+    "content": "Ha, aniq narx va loyiha uchun o'lchov kerak. Uyingizga borib o'lchaymiz va Bazis dasturida mebel loyihasini chizib beramiz — 500 ming so'm. Buyurtma bersangiz, bu pul umumiy summa ichidan ayiriladi.\n\nAvval taxminan bilib qo'yish uchun — oshxonangiz necha metr, 2 etajmi, 3 etajmi?"
    }
   ],
   "2149739559273992": [
@@ -2195,8 +2211,8 @@
    "followedUp": true
   },
   "1866324024535044": {
-   "lastClientAt": 1790827479202,
-   "followedUp": true
+   "lastClientAt": 1790903711820,
+   "followedUp": false
   },
   "2149739559273992": {
    "lastClientAt": 1790834147891,
