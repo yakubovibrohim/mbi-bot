@@ -2006,6 +2006,22 @@
    {
     "role": "assistant",
     "content": "Qaysi mebel kerak — oshxona, shkaf yoki yotoqxonami? Oshxona bo'lsa — pogonaj metri 350$ dan boshlanadi, materialga qarab. O'lchamini aytsangiz, taxminiy narxini hisoblab beraman 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "5метр кухня"
+   },
+   {
+    "role": "assistant",
+    "content": "5 metr oshxona uchun taxminiy narx:\n\nLMDF fasad + GTV furnitura — taxminan 1700–1900$ atrofida\nAkril fasad + Hettich — taxminan 2250–2750$ atrofida\n\nBu taxminiy narx. Aniq narx uchun Ibrohim akaga +998 91 135 44 66 ga aloqaga chiqing yoki raqamingizni qoldiring. 2 etajmi, 3 etajmi?"
+   },
+   {
+    "role": "user",
+    "content": "Арзонро вариант ни этин"
+   },
+   {
+    "role": "assistant",
+    "content": "5 metr oshxona, eng arzon variant — LMDF fasad + GTV furnitura, 2 etaj:\n\n5 × 350 = taxminan 1750$ atrofida\n\nBu taxminiy narx. Aniq hisob uchun Ibrohim akaga qo'ng'iroq qiling (+998 91 135 44 66) yoki raqamingizni tashlab qo'ying 👍🏻"
    }
   ]
  },
@@ -2431,7 +2447,7 @@
    "followedUp": false
   },
   "2165393741019030": {
-   "lastClientAt": 1790911721605,
+   "lastClientAt": 1790911785945,
    "followedUp": false
   }
  }
