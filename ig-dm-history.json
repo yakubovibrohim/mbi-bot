@@ -1014,36 +1014,6 @@
     "content": "Assalomu Aleykum 👍🏻 Bu premium krashenniy oshxona — korpus LMDF, fasadlar Italiya «SIRCA» krasi bilan 4 etapli bo'yalgan, furnitura Blum (20 yil kafolat). Narxi taxminan pogonaj metri 800$ atrofida.\n\nByudjetga qarab arzonroq ham qilamiz — fasadni akril yoki EGGER'ga o'zgartirsak, 650$ atrofidan bo'ladi. Oshxonangiz necha metr?"
    }
   ],
-  "1627961662335454": [
-   {
-    "role": "user",
-    "content": "[SHAXSIY XABAR (Direct). Mijoz \"Assalomu alaykum narxi\" deb postga komment yozdi. Post tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\". Sen unga Direct'da BIRINCHI bo'lib yozyapsan — u allaqachon shu yerda, shuning uchun «DM/Директ/шахсийга ёзинг» деб ЁЗМА, савол-жавобни шу ерда давом эттир.]"
-   },
-   {
-    "role": "assistant",
-    "content": "Ва Алейкум Ассалом, яхшимисиз 👍🏻 Бу видеодаги ошхона премиум крашенный — фасадлар Италия «SIRCA» краскаси билан 4 этапда бўялган, фурнитура Blum, 20 йил кафолат.\n\nПогонаж метри тахминан 800$ атрофида. Бюджетга қараб арзонроқ ҳам қиламиз — фасадни акрилга ёки EGGER'га ўзгартирсак сезиларли арзонлашади.\n\nОшхонангиз неча метр?"
-   },
-   {
-    "role": "user",
-    "content": "3,5"
-   },
-   {
-    "role": "assistant",
-    "content": "3,5 метр крашенный (шу видеодагидек) — тахминан 2800$ атрофида. Акрил ёки EGGER қилсак, тахминан 1600–1900$ га тушади.\n\nБулар тахминий нарх. Аниғини Иброхим ака айтади — +998 91 135 44 66 га алоқага чиқинг ёки рақамингизни қолдиринг 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "O'zim chiqaman"
-   },
-   {
-    "role": "assistant",
-    "content": "Хоп, майли 👍🏻 Иброхим ака +998 91 135 44 66 — қулай вақтда алоқага чиқаверинг, ҳамма саволга жавоб беради."
-   },
-   {
-    "role": "assistant",
-    "content": "3,5 метрли ошхона бўйича ўйлаб кўрдингизми? Крашенный ёки акрил вариантдан қайси бири кўпроқ маъқул бўлди?"
-   }
-  ],
   "1657898956011713": [
    {
     "role": "user",
@@ -2006,6 +1976,10 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Кухни выходят примерно от $1000. Что планируете?"
+   },
+   {
+    "role": "assistant",
+    "content": "Нима бўлди, ишлаймизми? Какую зону хотите обставить — кухню или шкаф?"
    }
   ],
   "2087617565220832": [
@@ -2466,10 +2440,6 @@
    "lastClientAt": 1790771017515,
    "followedUp": false
   },
-  "1627961662335454": {
-   "lastClientAt": 1790775861640,
-   "followedUp": true
-  },
   "1657898956011713": {
    "lastClientAt": 1790779092646,
    "followedUp": true
@@ -2634,7 +2604,7 @@
   },
   "1392151549792499": {
    "lastClientAt": 1790863025791,
-   "followedUp": false
+   "followedUp": true
   },
   "2087617565220832": {
    "lastClientAt": 1790866135597,
