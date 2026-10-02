@@ -1736,6 +1736,22 @@
    {
     "role": "assistant",
     "content": "Va Alekum Assalom, yaxshimisiz 👍🏻\n\nTo'g'ri aytasiz, bizning yo'nalish premium, shuning uchun eng arzoni 350$ dan boshlanadi (pogonaj metriga). Kichik oshxona bo'lsa ham, 300-500$ ga to'liq komplekt chiqishi qiyin.\n\nOshxonangiz necha metr ekan? O'lchamini aytsangiz, eng arzon variantda taxminan qancha chiqishini hisoblab beraman."
+   },
+   {
+    "role": "user",
+    "content": "Shu vido boshida oshxonaa"
+   },
+   {
+    "role": "assistant",
+    "content": "Bu — premium krashenniy oshxona. Korpus LMDF, fasadlar to'liq bo'yalган (Italiya «SIRCA» kraskasi, 4 etapli), furnitura Blum — 20 yil kafolat. Stoleshnitsa koreys akril toshidan, choksiz.\n\nBu loyihada pogonaj metri taxminan 800$ atrofida chiqqan, ya'ni byudjetingizdan ancha yuqori.\n\nLekin arzonroq ham qilsa bo'ladi — fasadni akril yoki hozir trendда bo'lgan EGGER mahsulotiga o'zgartirsak, sezilarli arzonlashadi. Oshxonangiz necha metr ekan?"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz video yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Oshxonangiz necha metr ekan? O'lchamini aytsangiz, eng arzon variantda taxminan qancha chiqishini hisoblab beraman 👍🏻"
    }
   ],
   "28860909456929141": [
@@ -2425,7 +2441,7 @@
    "followedUp": true
   },
   "2947904058905339": {
-   "lastClientAt": 1790919962306,
+   "lastClientAt": 1790920136720,
    "followedUp": false
   },
   "28860909456929141": {
