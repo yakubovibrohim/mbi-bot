@@ -1997,6 +1997,16 @@
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Кухни выходят примерно от $350 за погонный метр. Что планируете?"
    }
+  ],
+  "2165393741019030": [
+   {
+    "role": "user",
+    "content": "КВ нечи пул"
+   },
+   {
+    "role": "assistant",
+    "content": "Qaysi mebel kerak — oshxona, shkaf yoki yotoqxonami? Oshxona bo'lsa — pogonaj metri 350$ dan boshlanadi, materialga qarab. O'lchamini aytsangiz, taxminiy narxini hisoblab beraman 👍🏻"
+   }
   ]
  },
  "activity": {
@@ -2418,6 +2428,10 @@
   },
   "1621843306017869": {
    "lastClientAt": 1790909873106,
+   "followedUp": false
+  },
+  "2165393741019030": {
+   "lastClientAt": 1790911721605,
    "followedUp": false
   }
  }
