@@ -1302,6 +1302,10 @@
    {
     "role": "assistant",
     "content": "Yaxshi tanlov, LMDF optimal narx bilan sifatli chiqadi. 3.5 metr, 3 etajli LMDF + GTV — taxminan 1150–1300$ atrofida.\n\nAniq narxni va loyihani ko'rish uchun o'lchovga boramiz — 500 ming so'm, buyurtma bersangiz summadan ayiriladi. Telefon raqamingizni qoldirsangiz, vaqtni kelishib olamiz 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "LMDF oshxona bo'yicha nima qaror qildingiz? O'lchovga borish uchun kun belgilaymizmi?"
    }
   ],
   "2149739559273992": [
@@ -2676,7 +2680,7 @@
   },
   "1866324024535044": {
    "lastClientAt": 1790903895899,
-   "followedUp": false
+   "followedUp": true
   },
   "2149739559273992": {
    "lastClientAt": 1790834147891,
