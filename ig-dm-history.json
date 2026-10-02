@@ -1728,6 +1728,14 @@
    {
     "role": "assistant",
     "content": "Нима бўлди, ишлаймизми? Какой проект планируете — кухню или шкаф?"
+   },
+   {
+    "role": "user",
+    "content": "Assalomu alekumm yaxshimisilaa \nMan ishilani korib chiqtim zor gap yo ammo men uchun juda qimat \nMani ozi kuxniyam kichina man 300 yoki uzogi bn 500 dollargacha kuxiniy mebel qildirmoqchiydim \nSila bunday narxga qilmasela kk"
+   },
+   {
+    "role": "assistant",
+    "content": "Va Alekum Assalom, yaxshimisiz 👍🏻\n\nTo'g'ri aytasiz, bizning yo'nalish premium, shuning uchun eng arzoni 350$ dan boshlanadi (pogonaj metriga). Kichik oshxona bo'lsa ham, 300-500$ ga to'liq komplekt chiqishi qiyin.\n\nOshxonangiz necha metr ekan? O'lchamini aytsangiz, eng arzon variantda taxminan qancha chiqishini hisoblab beraman."
    }
   ],
   "28860909456929141": [
@@ -2417,8 +2425,8 @@
    "followedUp": true
   },
   "2947904058905339": {
-   "lastClientAt": 1790846203618,
-   "followedUp": true
+   "lastClientAt": 1790919962306,
+   "followedUp": false
   },
   "28860909456929141": {
    "lastClientAt": 1790846525452,
