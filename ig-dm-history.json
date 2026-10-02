@@ -1844,6 +1844,14 @@
    {
     "role": "assistant",
     "content": "Ассалому алайкум! Ертага десангиз, бугун обед пайти бемалолми? Ўлчашга қачон борсак қулай бўлади?"
+   },
+   {
+    "role": "user",
+    "content": "Ertaga abetan kegin telgmdan yozin lakatsa tashiman"
+   },
+   {
+    "role": "assistant",
+    "content": "Хоп, ertaga tushdan keyin Telegram'dan yozamiz, lokatsiyangizni o'shanda tashlaysiz 👍🏻 Rahmat!"
    }
   ],
   "1695675118328518": [
@@ -2637,8 +2645,8 @@
    "followedUp": false
   },
   "2864784717226789": {
-   "lastClientAt": 1790869008658,
-   "followedUp": true
+   "lastClientAt": 1790949930876,
+   "followedUp": false
   },
   "1695675118328518": {
    "lastClientAt": 1790854635601,
