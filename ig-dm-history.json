@@ -2022,6 +2022,14 @@
    {
     "role": "assistant",
     "content": "5 metr oshxona, eng arzon variant — LMDF fasad + GTV furnitura, 2 etaj:\n\n5 × 350 = taxminan 1750$ atrofida\n\nBu taxminiy narx. Aniq hisob uchun Ibrohim akaga qo'ng'iroq qiling (+998 91 135 44 66) yoki raqamingizni tashlab qo'ying 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Рахмат"
+   },
+   {
+    "role": "assistant",
+    "content": "Arzimaydi 🙌 Savol bo'lsa yozing."
    }
   ]
  },
@@ -2447,7 +2455,7 @@
    "followedUp": false
   },
   "2165393741019030": {
-   "lastClientAt": 1790911785945,
+   "lastClientAt": 1790911829242,
    "followedUp": false
   }
  }
