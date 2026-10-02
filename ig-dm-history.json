@@ -1760,6 +1760,14 @@
    {
     "role": "assistant",
     "content": "O'lchovga uyingizga boramiz, lekin bir narsani aytib qo'yay: o'lchov pullik — 500 ming so'm. Shu pulga borib o'lchaymiz va Bazis dasturida oshxonangizning aniq loyihasini chizib beramiz. Agar kelishsak, ya'ni buyurtma bersangiz — bu 500 ming umumiy summadan chegirib tashlanadi.\n\nQiyinchilik bo'lmaydi, shu ish bilan shug'ullanamiz 👍🏻\n\nO'lchovga borish uchun telefon raqamingizni qoldirsangiz, vaqtni kelishib olamiz."
+   },
+   {
+    "role": "user",
+    "content": "Lakatsiya tashimiz kelib olcovlani va xisob kitobini qilib berela sizlari ovora qilub qoymimizmi"
+   },
+   {
+    "role": "assistant",
+    "content": "Yo'q, ovora qilmaysiz — bu bizning ishimiz 👍🏻\n\nLokatsiyani tashlang, kelib o'lchab, Bazis dasturida aniq loyiha va hisob-kitobini qilib beramiz. O'lchov 500 ming so'm, buyurtma bersangiz summadan chegiriladi.\n\nTelefon raqamingizni ham qoldirsangiz — vaqtni kelishib olamiz."
    }
   ],
   "28860909456929141": [
@@ -2449,7 +2457,7 @@
    "followedUp": true
   },
   "2947904058905339": {
-   "lastClientAt": 1790920586038,
+   "lastClientAt": 1790920635160,
    "followedUp": false
   },
   "28860909456929141": {
