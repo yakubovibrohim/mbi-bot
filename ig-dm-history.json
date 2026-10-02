@@ -2035,6 +2035,16 @@
     "role": "assistant",
     "content": "Arzimaydi 🙌 Savol bo'lsa yozing."
    }
+  ],
+  "1094194996324258": [
+   {
+    "role": "user",
+    "content": "Машаллах.Менга хам насиб кыл Оллохим"
+   },
+   {
+    "role": "assistant",
+    "content": "Омин, иншааллох, насиб қилади 🤲🏻\n\nЎзингизга мебел ясатмоқчимисиз? Исмингиз нима?"
+   }
   ]
  },
  "activity": {
@@ -2460,6 +2470,10 @@
   },
   "2165393741019030": {
    "lastClientAt": 1790911829242,
+   "followedUp": false
+  },
+  "1094194996324258": {
+   "lastClientAt": 1790914258613,
    "followedUp": false
   }
  }
