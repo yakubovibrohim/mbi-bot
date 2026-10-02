@@ -1792,6 +1792,14 @@
    {
     "role": "assistant",
     "content": "Raqamni oldik, rahmat 👍🏻 Ibrohim aka tez orada bog'lanib, o'lchov vaqtini kelishib oladi."
+   },
+   {
+    "role": "user",
+    "content": "Raxmat Ollox rozi bosinn"
+   },
+   {
+    "role": "assistant",
+    "content": "Omin, sizdan ham Olloh rozi bo'lsin 🙏🏻 Tez orada bog'lanamiz, xayrli ish bo'lsin."
    }
   ],
   "28860909456929141": [
@@ -2481,7 +2489,7 @@
    "followedUp": true
   },
   "2947904058905339": {
-   "lastClientAt": 1790921032925,
+   "lastClientAt": 1790921071988,
    "followedUp": false
   },
   "28860909456929141": {
