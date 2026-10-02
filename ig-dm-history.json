@@ -2383,6 +2383,16 @@
     "role": "assistant",
     "content": "Tushundim, lekin bu bizning yo'nalish emas. Biz pnevmatik silindr yoki fiting sotmaymiz.\n\nMBI Mebel — Toshkentda buyurtma mebel ishlaymiz: oshxona, shkaf, yotoqxona. Agar mebel kerak bo'lsa — yordam beraman 👍🏻"
    }
+  ],
+  "1109549235310000": [
+   {
+    "role": "user",
+    "content": "Сколько стоит дизайн интерьера?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%. Кухни выходят примерно от 350$ за погонный метр. Что планируете?"
+   }
   ]
  },
  "activity": {
@@ -2860,6 +2870,10 @@
   },
   "1541679007646686": {
    "lastClientAt": 1790962868204,
+   "followedUp": false
+  },
+  "1109549235310000": {
+   "lastClientAt": 1790962986086,
    "followedUp": false
   }
  }
