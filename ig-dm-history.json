@@ -1784,6 +1784,14 @@
    {
     "role": "assistant",
     "content": "Bo'ladi, raqamni oling 👍🏻\n\nQaysi kun qulay bo'lsa, shuni ayting — o'lchovga o'sha kuni kelamiz. Ibrohim aka o'g'lingiz raqamiga bog'lanib, vaqtni aniqlab oladi."
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz rasm yubordi]\nNomega qililaa"
+   },
+   {
+    "role": "assistant",
+    "content": "Raqamni oldik, rahmat 👍🏻 Ibrohim aka tez orada bog'lanib, o'lchov vaqtini kelishib oladi."
    }
   ],
   "28860909456929141": [
@@ -2473,7 +2481,7 @@
    "followedUp": true
   },
   "2947904058905339": {
-   "lastClientAt": 1790920959344,
+   "lastClientAt": 1790921032925,
    "followedUp": false
   },
   "28860909456929141": {
