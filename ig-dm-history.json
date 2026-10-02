@@ -1778,6 +1778,14 @@
    {
     "role": "assistant",
     "content": "Нима бўлди, ишлаймизми? Кухнянгизни ўлчаб кўрайликми?"
+   },
+   {
+    "role": "user",
+    "content": "Maslahatlashib korichi"
+   },
+   {
+    "role": "assistant",
+    "content": "Albatta, bemalol maslahatlashing 👍🏻 Savol bo'lsa shu yerga yozing, yordam beraman."
    }
   ],
   "1104308409208500": [
@@ -2577,8 +2585,8 @@
    "followedUp": false
   },
   "28860909456929141": {
-   "lastClientAt": 1790846525452,
-   "followedUp": true
+   "lastClientAt": 1790934794543,
+   "followedUp": false
   },
   "1104308409208500": {
    "lastClientAt": 1790847940796,
