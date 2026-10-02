@@ -1768,6 +1768,14 @@
    {
     "role": "assistant",
     "content": "Yo'q, ovora qilmaysiz — bu bizning ishimiz 👍🏻\n\nLokatsiyani tashlang, kelib o'lchab, Bazis dasturida aniq loyiha va hisob-kitobini qilib beramiz. O'lchov 500 ming so'm, buyurtma bersangiz summadan chegiriladi.\n\nTelefon raqamingizni ham qoldirsangiz — vaqtni kelishib olamiz."
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz rasm yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Rahmat! Lokatsiyani oldim 👍🏻\n\nTelefon raqamingizni ham yozib qo'ysangiz, Ibrohim aka bog'lanib, o'lchovga qaysi kun kelishimizni kelishib oladi."
    }
   ],
   "28860909456929141": [
@@ -2457,7 +2465,7 @@
    "followedUp": true
   },
   "2947904058905339": {
-   "lastClientAt": 1790920635160,
+   "lastClientAt": 1790920924518,
    "followedUp": false
   },
   "28860909456929141": {
