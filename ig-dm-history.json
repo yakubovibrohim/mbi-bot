@@ -2365,6 +2365,24 @@
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Кухни выходят примерно от $1000. Что планируете?"
    }
+  ],
+  "1541679007646686": [
+   {
+    "role": "user",
+    "content": "Assalomu alaykum 👋\n\nPnevmatik silindrlar (fitinglar  va boshqa pnevmatik mahsulotlar ) bo‘yicha yozganingiz uchun rahmat.\n\nSizga to‘g‘ri modelni tavsiya qilishimiz uchun iltimos bir nechta savolga javob bering.\nTelefon raqamingizni yozib qoldiring 📞\nMutaxassisimiz siz bilan bog‘lanadi."
+   },
+   {
+    "role": "assistant",
+    "content": "Va Alaykum Assalom 👋\n\nKechirasiz, siz noto'g'ri sahifaga yozdingiz shekilli. Biz MBI Mebel — buyurtma mebel ishlaymiz (oshxona, shkaf, yotoqxona). Pnevmatik mahsulotlar bilan shug'ullanmaymiz."
+   },
+   {
+    "role": "user",
+    "content": "Qaysi o‘lchamdagi pnevmatik silindr kerak?\n(masalan: 32x100, 40x100, 63x100, Fiting 8\nСпасибо, что ответили на все вопросы! Мы как можно скорее соединим вас с оператором."
+   },
+   {
+    "role": "assistant",
+    "content": "Tushundim, lekin bu bizning yo'nalish emas. Biz pnevmatik silindr yoki fiting sotmaymiz.\n\nMBI Mebel — Toshkentda buyurtma mebel ishlaymiz: oshxona, shkaf, yotoqxona. Agar mebel kerak bo'lsa — yordam beraman 👍🏻"
+   }
   ]
  },
  "activity": {
@@ -2838,6 +2856,10 @@
   },
   "1102399568951469": {
    "lastClientAt": 1790961729769,
+   "followedUp": false
+  },
+  "1541679007646686": {
+   "lastClientAt": 1790962868204,
    "followedUp": false
   }
  }
