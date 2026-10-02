@@ -1448,6 +1448,14 @@
    {
     "role": "assistant",
     "content": "Rasmdagi ko'rinish uchun qaysi material yoqadi — akrilmi yoki krashenniy? Shunga qarab aniqroq aytamiz.\n\nAgar o'lchovga rozi bo'lsangiz, telefon raqamingizni qoldiring — vaqtni kelishib olamiz."
+   },
+   {
+    "role": "user",
+    "content": "LMDF qildirmoqchidi"
+   },
+   {
+    "role": "assistant",
+    "content": "Yaxshi tanlov, LMDF optimal narx bilan sifatli chiqadi. 3.5 metr, 3 etajli LMDF + GTV — taxminan 1150–1300$ atrofida.\n\nAniq narxni va loyihani ko'rish uchun o'lchovga boramiz — 500 ming so'm, buyurtma bersangiz summadan ayiriladi. Telefon raqamingizni qoldirsangiz, vaqtni kelishib olamiz 👍🏻"
    }
   ],
   "2149739559273992": [
@@ -2227,7 +2235,7 @@
    "followedUp": true
   },
   "1866324024535044": {
-   "lastClientAt": 1790903804357,
+   "lastClientAt": 1790903895899,
    "followedUp": false
   },
   "2149739559273992": {
