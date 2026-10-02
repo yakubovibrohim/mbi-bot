@@ -1440,6 +1440,14 @@
    {
     "role": "assistant",
     "content": "Tushundim. 3 metr asosiy + burchak qism, 3 etaj deylik:\n\n— LMDF fasad + GTV: taxminan 1150–1300$ atrofida\n— Akril yoki krashenniy fasad: taxminan 1500–1800$ atrofida\n\nBu taxminiy narx. Aniq hisob uchun Ibrohim akaga +998 91 135 44 66 ga aloqaga chiqing yoki raqamingizni qoldiring 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Ok"
+   },
+   {
+    "role": "assistant",
+    "content": "Rasmdagi ko'rinish uchun qaysi material yoqadi — akrilmi yoki krashenniy? Shunga qarab aniqroq aytamiz.\n\nAgar o'lchovga rozi bo'lsangiz, telefon raqamingizni qoldiring — vaqtni kelishib olamiz."
    }
   ],
   "2149739559273992": [
@@ -2219,7 +2227,7 @@
    "followedUp": true
   },
   "1866324024535044": {
-   "lastClientAt": 1790903760543,
+   "lastClientAt": 1790903804357,
    "followedUp": false
   },
   "2149739559273992": {
