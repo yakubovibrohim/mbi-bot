@@ -1264,6 +1264,14 @@
    {
     "role": "assistant",
     "content": "LMDF oshxona bo'yicha nima qaror qildingiz? O'lchovga borish uchun kun belgilaymizmi?"
+   },
+   {
+    "role": "user",
+    "content": "Maslaxatlashi yozvoraman\nXojayinim endi keladila"
+   },
+   {
+    "role": "assistant",
+    "content": "Xop, bemalol maslahatlashing 👍🏻 Savol bo'lsa yozing, biz shu yerdamiz."
    }
   ],
   "1428980959187747": [
@@ -2645,8 +2653,8 @@
    "followedUp": false
   },
   "1866324024535044": {
-   "lastClientAt": 1790903895899,
-   "followedUp": true
+   "lastClientAt": 1790997532187,
+   "followedUp": false
   },
   "1428980959187747": {
    "lastClientAt": 1790830037083,
