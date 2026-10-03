@@ -1632,6 +1632,10 @@
    {
     "role": "assistant",
     "content": "Хоп, ertaga tushdan keyin Telegram'dan yozamiz, lokatsiyangizni o'shanda tashlaysiz 👍🏻 Rahmat!"
+   },
+   {
+    "role": "assistant",
+    "content": "Assalomu alaykum! Kelishganimizdek, tushlikdan keyin yozmoqchiman — lokatsiyangizni tashlasangiz, o'lchashga chiqamiz. Bugun qulaymi?"
    }
   ],
   "1769852537401718": [
@@ -1674,20 +1678,6 @@
    {
     "role": "assistant",
     "content": "5 метрли ошхона бўйича нима қарорга келдик, ишлаймизми? Размер ўлчашга бориб келайликми?"
-   }
-  ],
-  "1392151549792499": [
-   {
-    "role": "user",
-    "content": "Сколько стоит дизайн интерьера?"
-   },
-   {
-    "role": "assistant",
-    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Кухни выходят примерно от $1000. Что планируете?"
-   },
-   {
-    "role": "assistant",
-    "content": "Нима бўлди, ишлаймизми? Какую зону хотите обставить — кухню или шкаф?"
    }
   ],
   "2087617565220832": [
@@ -2176,6 +2166,10 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Кухни выходят примерно от $1000. Что планируете?"
+   },
+   {
+    "role": "assistant",
+    "content": "Что решили по кухне, работаем? Могу организовать замер, чтобы точнее посчитать."
    }
   ],
   "4349925521987372": [
@@ -2608,14 +2602,10 @@
   },
   "2864784717226789": {
    "lastClientAt": 1790949930876,
-   "followedUp": false
+   "followedUp": true
   },
   "1769852537401718": {
    "lastClientAt": 1790934912407,
-   "followedUp": true
-  },
-  "1392151549792499": {
-   "lastClientAt": 1790863025791,
    "followedUp": true
   },
   "2087617565220832": {
@@ -2724,7 +2714,7 @@
   },
   "963584363473546": {
    "lastClientAt": 1790947892755,
-   "followedUp": false
+   "followedUp": true
   },
   "4349925521987372": {
    "lastClientAt": 1790950060738,
