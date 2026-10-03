@@ -2050,6 +2050,14 @@
    {
     "role": "assistant",
     "content": "Акам, 5 метрлик кухнянинг арзон варианти бўйича ишлаймизми? Хоҳласангиз ўлчам олишга бориб келамиз."
+   },
+   {
+    "role": "user",
+    "content": "Бизага кимматли килади"
+   },
+   {
+    "role": "assistant",
+    "content": "Tushundim. Narxni optimal qilish uchun fasadni EGGER LDSP ga o'zgartirsak sezilarli arzonlashadi, ko'rinish baribir zamonaviy chiqadi. Furnitura ham GTV — oddiy va sifatli.\n\nYana shuni aytay: texnika (plita, dukhovka, vityajka) bizning hisobda emas, siznikidan — faqat mebel narxini aytyapman. Qanaqa byudjetni mo'ljallayapsiz? Shunga qarab eng mos variantni hisoblab beraman."
    }
   ],
   "1094194996324258": [
@@ -2789,8 +2797,8 @@
    "followedUp": true
   },
   "2165393741019030": {
-   "lastClientAt": 1790911829242,
-   "followedUp": true
+   "lastClientAt": 1790993449639,
+   "followedUp": false
   },
   "1094194996324258": {
    "lastClientAt": 1790914258613,
