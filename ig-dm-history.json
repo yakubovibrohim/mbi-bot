@@ -1644,6 +1644,14 @@
    {
     "role": "assistant",
     "content": "Qibrayga ham boramiz 👍🏻 Toshkent va atrofiga chiqamiz. Lokatsiyangizni tashlab qo'ysangiz, o'lchov vaqtini aniqlashtiramiz."
+   },
+   {
+    "role": "user",
+    "content": "Tashab boydiku"
+   },
+   {
+    "role": "assistant",
+    "content": "Ha, rahmat 👍🏻 Qabul qildik. Ertaga tushdan keyin bog'lanib, o'lchovga chiqamiz, иншааллох."
    }
   ],
   "1769852537401718": [
@@ -2625,7 +2633,7 @@
    "followedUp": false
   },
   "2864784717226789": {
-   "lastClientAt": 1791024422943,
+   "lastClientAt": 1791024473776,
    "followedUp": false
   },
   "1769852537401718": {
