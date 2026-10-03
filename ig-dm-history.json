@@ -1636,6 +1636,14 @@
    {
     "role": "assistant",
     "content": "Assalomu alaykum! Kelishganimizdek, tushlikdan keyin yozmoqchiman — lokatsiyangizni tashlasangiz, o'lchashga chiqamiz. Bugun qulaymi?"
+   },
+   {
+    "role": "user",
+    "content": "Qibreyga kelasmi"
+   },
+   {
+    "role": "assistant",
+    "content": "Qibrayga ham boramiz 👍🏻 Toshkent va atrofiga chiqamiz. Lokatsiyangizni tashlab qo'ysangiz, o'lchov vaqtini aniqlashtiramiz."
    }
   ],
   "1769852537401718": [
@@ -2617,8 +2625,8 @@
    "followedUp": false
   },
   "2864784717226789": {
-   "lastClientAt": 1790949930876,
-   "followedUp": true
+   "lastClientAt": 1791024422943,
+   "followedUp": false
   },
   "1769852537401718": {
    "lastClientAt": 1790934912407,
