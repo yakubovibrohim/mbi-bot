@@ -1803,5 +1803,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-09-27T07:08:29.379Z"
+  },
+  {
+    "date": "02.10.2026",
+    "note": "💳 Ucell wifi",
+    "amount_uzs": 154800,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "UB AVTOSPISANIE APT, UZ",
+    "ts": "2026-10-03T08:57:24.736Z"
   }
 ]
