@@ -1322,36 +1322,6 @@
     "content": "Хорошо, обращайтесь, если что 👍🏻"
    }
   ],
-  "1733569382109517": [
-   {
-    "role": "user",
-    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"[REEL:DHGbB-eohGs] #interiordesigner#disign#кухнядизайн#mebel#мебельназаказ#мебель#интериордизайн#дизайн#хайтэк#hitech\"]\nNechi pul shu"
-   },
-   {
-    "role": "assistant",
-    "content": "Ассалому Алейкум 👍🏻 Бу премиум крашенный ошхона — фасадлари Италия SIRCA краскаси билан 4 этапда бўялган, фурнитураси Blum, столешница корейс сунъий тоши.\n\nБу лойиҳа тахминан 1 метри 800$ атрофида. Бюджетга қараб арзонроғини ҳам қиламиз — 650-700$ атрофида, ёки фасадни акрилга ўзгартирсак анча арзонлашади.\n\nОшхонангиз неча метр?"
-   },
-   {
-    "role": "user",
-    "content": "5 metr kvadrat"
-   },
-   {
-    "role": "assistant",
-    "content": "Ошхона одатда узунлик (метр) бўйича ҳисобланади, квадрат эмас. Деворингиз бўйлаб ошхона неча метр келади — масалан 3 метрми, 4 метрми?"
-   },
-   {
-    "role": "user",
-    "content": "2.7 ga 2.3 mi shunday"
-   },
-   {
-    "role": "assistant",
-    "content": "Тушунарли, Г-симон (бурчак) ошхона экан — тахминан 5 метр погонаж чиқади.\n\nКрашенный премиум бўлса тахминан 4000$ атрофида, акрил фасад + Hettich фурнитура билан олсангиз тахминан 2250–2750$ атрофида чиқади. Бу тахминий нарх.\n\nАниқ нарх учун Иброхим ака +998 91 135 44 66 га алоқага чиқинг ёки рақамингизни қолдиринг 👍🏻"
-   },
-   {
-    "role": "assistant",
-    "content": "Нима бўлди, ошхона бўйича ишлаймизми? Размер ўлчашга устани юборайликми?"
-   }
-  ],
   "1424662979616001": [
    {
     "role": "user",
@@ -1428,28 +1398,6 @@
    {
     "role": "assistant",
     "content": "Salom! Qaysi loyiha haqida so'rayapsiz — videoda ko'rganмидингиз?\n\nAniq narx uchun ўлчамни билишим керак: нима керак эди — ошхона, шкаф ёки ётоқхонами?"
-   }
-  ],
-  "992266443887492": [
-   {
-    "role": "user",
-    "content": "Assalom aleykum narxi qancha"
-   },
-   {
-    "role": "assistant",
-    "content": "Va Aleykum Assalom, yaxshimisiz 👍🏻 Ismingiz nima?\n\nAvval ayting-chi, nima kerak — oshxona, shkaf yoki yotoqxonami?"
-   },
-   {
-    "role": "user",
-    "content": "Oshxona"
-   },
-   {
-    "role": "assistant",
-    "content": "Oshxona pogonaj metri 350$ dan boshlanadi, materialga qarab o'zgaradi.\n\nOshxonangiz necha metr va 2 etajmi, 3 etajmi?"
-   },
-   {
-    "role": "assistant",
-    "content": "Oshxона бўйича нима қарорга келдик, ишлаймизми? Ўлчамини аниқлаб берсангиз, ҳисобини чиқариб берардим 👍🏻"
    }
   ],
   "2947904058905339": [
@@ -2164,6 +2112,10 @@
    {
     "role": "assistant",
     "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Кухни выходят примерно от 350$ за погонный метр. Что планируете — кухню или шкаф?"
+   },
+   {
+    "role": "assistant",
+    "content": "Нима бўлди, кухня бўйича ишлаймизми?"
    }
   ],
   "1390006759963645": [
@@ -2654,10 +2606,6 @@
    "lastClientAt": 1790909250095,
    "followedUp": false
   },
-  "1733569382109517": {
-   "lastClientAt": 1790846729038,
-   "followedUp": true
-  },
   "1424662979616001": {
    "lastClientAt": 1790914733493,
    "followedUp": true
@@ -2671,10 +2619,6 @@
   "1103270759069644": {
    "lastClientAt": 1790841494763,
    "followedUp": false
-  },
-  "992266443887492": {
-   "lastClientAt": 1790845161239,
-   "followedUp": true
   },
   "2947904058905339": {
    "lastClientAt": 1790995326526,
@@ -2794,7 +2738,7 @@
   },
   "1701504780947352": {
    "lastClientAt": 1790930524086,
-   "followedUp": false
+   "followedUp": true
   },
   "1390006759963645": {
    "lastClientAt": 1790936694065,
