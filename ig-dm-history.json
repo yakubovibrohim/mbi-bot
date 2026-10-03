@@ -1526,58 +1526,10 @@
    {
     "role": "assistant",
     "content": "Albatta, bemalol maslahatlashing 👍🏻 Savol bo'lsa shu yerga yozing, yordam beraman."
-   }
-  ],
-  "1104308409208500": [
-   {
-    "role": "user",
-    "content": "Сколько стоит дизайн интерьера?"
    },
    {
     "role": "assistant",
-    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Кухни выходят примерно от $1000, зависит от размера и материала. Что планируете?"
-   },
-   {
-    "role": "assistant",
-    "content": "Напомните, какой проект вас интересовал — кухня или шкаф? Подберём вариант под ваш размер."
-   }
-  ],
-  "1647319813637029": [
-   {
-    "role": "user",
-    "content": "Сколько стоит дизайн интерьера?\nМожно ли заказать мебель на сайте?"
-   },
-   {
-    "role": "assistant",
-    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Заказ оформляем здесь или по телефону, на сайте оформления нет. Проект показываем заранее в программе Bazis — точность 100%. Что планируете — кухню или шкаф?"
-   },
-   {
-    "role": "user",
-    "content": "Assalomu aleykum\nNarxi qancha"
-   },
-   {
-    "role": "assistant",
-    "content": "Assalomu Aleykum, yaxshimisiz 👍🏻 Nima rejalashtiryapsiz — oshxona, shkaf yoki yotoqxona?"
-   },
-   {
-    "role": "user",
-    "content": "Owxona"
-   },
-   {
-    "role": "assistant",
-    "content": "Oshxona necha metr, 2 etajmi yoki 3 etaj?"
-   },
-   {
-    "role": "user",
-    "content": "3,5 metr"
-   },
-   {
-    "role": "assistant",
-    "content": "3,5 metr uchun taxminiy:\nLMDF fasad + GTV furnitura — taxminan 1150–1300$ atrofida\nAkril fasad + Hettich — taxminan 1600–1900$ atrofida\n\nBu taxminiy narx. Aniq narxni Ibrohim aka aytadi — +998 91 135 44 66 ga aloqaga chiqing yoki raqamingizni qoldiring. Qanaqa material yoqadi?"
-   },
-   {
-    "role": "assistant",
-    "content": "Nima bo'ldi, oshxonani 3,5 metrga ishlaymizmi? Qanaqa fasad yoqadi — LMDF yoki akril?"
+    "content": "Qalaysiz? Kuxnya masalasida qanday qaror qildingiz?"
    }
   ],
   "1857579322260297": [
@@ -1748,6 +1700,10 @@
    {
     "role": "assistant",
     "content": "5 метр ошхона, худди шу материалларда (крашенный SIRCA, Blum, корейс тоши) — тахминан 4000$ атрофида чиқади. Бу тахминий нарх.\n\nАгар бюджетга қараб фасадни акрил ёки EGGER'га ўзгартирсак, сезиларли тушади.\n\nАниқ нархни Иброхим ака айтади — +998 91 135 44 66 га алоқага чиқинг ёки рақамингизни қолдиринг 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "5 метрли ошхона бўйича нима қарорга келдик, ишлаймизми? Размер ўлчашга бориб келайликми?"
    }
   ],
   "1392151549792499": [
@@ -2626,14 +2582,6 @@
   },
   "28860909456929141": {
    "lastClientAt": 1790934794543,
-   "followedUp": false
-  },
-  "1104308409208500": {
-   "lastClientAt": 1790847940796,
-   "followedUp": true
-  },
-  "1647319813637029": {
-   "lastClientAt": 1790849742162,
    "followedUp": true
   },
   "1857579322260297": {
@@ -2662,7 +2610,7 @@
   },
   "1769852537401718": {
    "lastClientAt": 1790934912407,
-   "followedUp": false
+   "followedUp": true
   },
   "1392151549792499": {
    "lastClientAt": 1790863025791,
