@@ -1813,5 +1813,15 @@
     "pay_method": "card",
     "place": "UB AVTOSPISANIE APT, UZ",
     "ts": "2026-10-03T08:57:24.736Z"
+  },
+  {
+    "date": "01.10.2026",
+    "note": "💳 Domo",
+    "amount_uzs": 20000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "HGT DOMO, UZ",
+    "ts": "2026-10-03T08:57:56.325Z"
   }
 ]
