@@ -2066,6 +2066,14 @@
    {
     "role": "assistant",
     "content": "1000$ byudjet uchun 5 metr biroz og'irlik qiladi, lekin iloji bor. Buni ikki yo'l bilan yechamiz:\n\n— oshxona uzunligini biroz qisqartirsak (masalan 3,5–4 metr)\n— yoki konfiguratsiyani soddalashtirib, eng optimal material bilan hisoblасak\n\nAniq nimani qisqartirsa bo'lishini loyihada ko'rsatamiz. Buni Ibrohim aka siz bilan birga ko'rib, 1000$ ichiga sig'diradigan variantni aniq hisoblab beradi — +998 91 135 44 66 ga aloqaga chiqing yoki raqamingizni qoldiring 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Газхонам битвосин тел киламан"
+   },
+   {
+    "role": "assistant",
+    "content": "Xop, bemalol 👍🏻 Tayyor bo'lganda qo'ng'iroq qiling, yoki shu yerga yozing — Ibrohim aka bilan bog'lab qo'yaman."
    }
   ],
   "1094194996324258": [
@@ -2805,7 +2813,7 @@
    "followedUp": true
   },
   "2165393741019030": {
-   "lastClientAt": 1790993524546,
+   "lastClientAt": 1790993593648,
    "followedUp": false
   },
   "1094194996324258": {
