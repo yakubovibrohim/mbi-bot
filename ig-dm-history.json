@@ -1554,6 +1554,14 @@
    {
     "role": "assistant",
     "content": "Assalomu alaykum! O'g'lingiz raqamiga bog'landikmi, o'lchovga qaysi kun kelaylik?"
+   },
+   {
+    "role": "user",
+    "content": "Yokde tel qilishmabdiku\nAssalomu alekumm"
+   },
+   {
+    "role": "assistant",
+    "content": "Va Alekum Assalom 🙏🏻\n\nUzr so'rayman, kechikdi. Hozir Ibrohim akaga eslatib qo'yaman, bugun- erta ichida o'g'lingiz raqamiga albatta bog'lanishadi.\n\nQaysi kun o'lchovga kelishimiz qulay bo'lardi — shuni ham ayting, shu kunga rejalashtiramiz 👍🏻"
    }
   ],
   "28860909456929141": [
@@ -2294,6 +2302,14 @@
    {
     "role": "assistant",
     "content": "Понял. А сколько ярусов — 2 или 3?"
+   },
+   {
+    "role": "user",
+    "content": "Сколько можна на такую высоту"
+   },
+   {
+    "role": "assistant",
+    "content": "При высоте 2.20 обычно делаем 3 яруса — верхний ряд до потолка, это удобно и смотрится цельно.\n\nНа 6 метров примерно:\n- ЛМДФ + GTV — от $2300\n- акрил + Hettich — около $2700–3000\n\nЭто ориентировочные цены. Точную цену скажет Иброхим — позвоните ему +998 91 135 44 66 или оставьте свой номер 👍🏻"
    }
   ],
   "4559361647641867": [
@@ -2660,8 +2676,8 @@
    "followedUp": true
   },
   "2947904058905339": {
-   "lastClientAt": 1790921071988,
-   "followedUp": true
+   "lastClientAt": 1790995167176,
+   "followedUp": false
   },
   "28860909456929141": {
    "lastClientAt": 1790934794543,
@@ -2824,7 +2840,7 @@
    "followedUp": false
   },
   "2023273901708619": {
-   "lastClientAt": 1790995116769,
+   "lastClientAt": 1790995177525,
    "followedUp": false
   },
   "4559361647641867": {
