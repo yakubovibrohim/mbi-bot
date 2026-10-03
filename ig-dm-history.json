@@ -1562,6 +1562,14 @@
    {
     "role": "assistant",
     "content": "Va Alekum Assalom 🙏🏻\n\nUzr so'rayman, kechikdi. Hozir Ibrohim akaga eslatib qo'yaman, bugun- erta ichida o'g'lingiz raqamiga albatta bog'lanishadi.\n\nQaysi kun o'lchovga kelishimiz qulay bo'lardi — shuni ham ayting, shu kunga rejalashtiramiz 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Oglimga tel qilsela etidi lakatsa tashidi korishib gaplashvolam8zz"
+   },
+   {
+    "role": "assistant",
+    "content": "Bo'ladi, hozir Ibrohim akaga aytaman — o'g'lingiz raqamiga bog'lanib, lokatsiya bo'yicha o'lchovni kelishib oladi 👍🏻"
    }
   ],
   "28860909456929141": [
@@ -2676,7 +2684,7 @@
    "followedUp": true
   },
   "2947904058905339": {
-   "lastClientAt": 1790995167176,
+   "lastClientAt": 1790995326526,
    "followedUp": false
   },
   "28860909456929141": {
