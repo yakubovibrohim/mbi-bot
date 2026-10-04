@@ -1206,6 +1206,14 @@
    {
     "role": "assistant",
     "content": "LMDF oshxona bo'yicha xojayiningiz bilan maslahatlashib oldingizmi? O'lchovga borish uchun kun belgilaymizmi?"
+   },
+   {
+    "role": "user",
+    "content": "Dushanba aniq malumot etaman"
+   },
+   {
+    "role": "assistant",
+    "content": "Xop, Dushanba kutamiz 👍🏻 Shu paytgacha xojayiningiz bilan yaxshilab maslahatlashib oling, savol bo'lsa shu yerga yozavering."
    }
   ],
   "1428980959187747": [
@@ -2433,8 +2441,8 @@
    "followedUp": false
   },
   "1866324024535044": {
-   "lastClientAt": 1790997532187,
-   "followedUp": true
+   "lastClientAt": 1791092250224,
+   "followedUp": false
   },
   "1428980959187747": {
    "lastClientAt": 1790830037083,
