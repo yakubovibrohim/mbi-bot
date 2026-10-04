@@ -2054,6 +2054,14 @@
    {
     "role": "assistant",
     "content": "Нима бўлди, кухняни 6 метрга чизиб кўрамизми? Размер олишга борайликми?"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz ovozli xabar yubordi]"
+   },
+   {
+    "role": "assistant",
+    "content": "Извините, голосовое не могу прослушать. Напишите, пожалуйста, текстом — отвечу 👍🏻"
    }
   ],
   "4559361647641867": [
@@ -2528,8 +2536,8 @@
    "followedUp": true
   },
   "2023273901708619": {
-   "lastClientAt": 1790995177525,
-   "followedUp": true
+   "lastClientAt": 1791078588309,
+   "followedUp": false
   },
   "4559361647641867": {
    "lastClientAt": 1790960137826,
