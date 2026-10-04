@@ -1912,20 +1912,6 @@
     "content": "👍🏻"
    }
   ],
-  "1102399568951469": [
-   {
-    "role": "user",
-    "content": "Сколько стоит дизайн интерьера?"
-   },
-   {
-    "role": "assistant",
-    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Кухни выходят примерно от $1000. Что планируете?"
-   },
-   {
-    "role": "assistant",
-    "content": "Напишите, какую комнату планируем обставить — кухню или шкаф? Подберём вариант под ваш размер."
-   }
-  ],
   "1541679007646686": [
    {
     "role": "user",
@@ -1942,20 +1928,6 @@
    {
     "role": "assistant",
     "content": "Tushundim, lekin bu bizning yo'nalish emas. Biz pnevmatik silindr yoki fiting sotmaymiz.\n\nMBI Mebel — Toshkentda buyurtma mebel ishlaymiz: oshxona, shkaf, yotoqxona. Agar mebel kerak bo'lsa — yordam beraman 👍🏻"
-   }
-  ],
-  "1109549235310000": [
-   {
-    "role": "user",
-    "content": "Сколько стоит дизайн интерьера?"
-   },
-   {
-    "role": "assistant",
-    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%. Кухни выходят примерно от 350$ за погонный метр. Что планируете?"
-   },
-   {
-    "role": "assistant",
-    "content": "Что надумали, делаем кухню? Могу размеры подъехать замерить."
    }
   ],
   "928995816656220": [
@@ -2317,17 +2289,9 @@
    "lastClientAt": 1791108356458,
    "followedUp": false
   },
-  "1102399568951469": {
-   "lastClientAt": 1790961729769,
-   "followedUp": true
-  },
   "1541679007646686": {
    "lastClientAt": 1790962868204,
    "followedUp": false
-  },
-  "1109549235310000": {
-   "lastClientAt": 1790962986086,
-   "followedUp": true
   },
   "928995816656220": {
    "lastClientAt": 1790964275523,
