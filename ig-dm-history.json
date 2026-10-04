@@ -1288,116 +1288,6 @@
     "content": "Salom! Qaysi loyiha haqida so'rayapsiz — videoda ko'rganмидингиз?\n\nAniq narx uchun ўлчамни билишим керак: нима керак эди — ошхона, шкаф ёки ётоқхонами?"
    }
   ],
-  "2947904058905339": [
-   {
-    "role": "user",
-    "content": "Какой срок выполнения проекта?"
-   },
-   {
-    "role": "assistant",
-    "content": "Здравствуйте! Срок зависит от фасада: ЛМДФ и акрил — до 14 рабочих дней, крашеный и шпон — до 30 дней, стараемся закончить раньше. За каждый день опоздания платим штраф.\n\nА что планируете — кухню, шкаф или спальню?"
-   },
-   {
-    "role": "assistant",
-    "content": "Нима бўлди, ишлаймизми? Какой проект планируете — кухню или шкаф?"
-   },
-   {
-    "role": "user",
-    "content": "Assalomu alekumm yaxshimisilaa \nMan ishilani korib chiqtim zor gap yo ammo men uchun juda qimat \nMani ozi kuxniyam kichina man 300 yoki uzogi bn 500 dollargacha kuxiniy mebel qildirmoqchiydim \nSila bunday narxga qilmasela kk"
-   },
-   {
-    "role": "assistant",
-    "content": "Va Alekum Assalom, yaxshimisiz 👍🏻\n\nTo'g'ri aytasiz, bizning yo'nalish premium, shuning uchun eng arzoni 350$ dan boshlanadi (pogonaj metriga). Kichik oshxona bo'lsa ham, 300-500$ ga to'liq komplekt chiqishi qiyin.\n\nOshxonangiz necha metr ekan? O'lchamini aytsangiz, eng arzon variantda taxminan qancha chiqishini hisoblab beraman."
-   },
-   {
-    "role": "user",
-    "content": "Shu vido boshida oshxonaa"
-   },
-   {
-    "role": "assistant",
-    "content": "Bu — premium krashenniy oshxona. Korpus LMDF, fasadlar to'liq bo'yalган (Italiya «SIRCA» kraskasi, 4 etapli), furnitura Blum — 20 yil kafolat. Stoleshnitsa koreys akril toshidan, choksiz.\n\nBu loyihada pogonaj metri taxminan 800$ atrofida chiqqan, ya'ni byudjetingizdan ancha yuqori.\n\nLekin arzonroq ham qilsa bo'ladi — fasadni akril yoki hozir trendда bo'lgan EGGER mahsulotiga o'zgartirsak, sezilarli arzonlashadi. Oshxonangiz necha metr ekan?"
-   },
-   {
-    "role": "user",
-    "content": "[Mijoz video yubordi]"
-   },
-   {
-    "role": "assistant",
-    "content": "Oshxonangiz necha metr ekan? O'lchamini aytsangiz, eng arzon variantda taxminan qancha chiqishini hisoblab beraman 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Qachon vaqtila bor oshxonamga kelib olchamlarini olib ketsrla ozila korib ketsela sizlaga qiyinchilik bolmiydimi"
-   },
-   {
-    "role": "assistant",
-    "content": "O'lchovga uyingizga boramiz, lekin bir narsani aytib qo'yay: o'lchov pullik — 500 ming so'm. Shu pulga borib o'lchaymiz va Bazis dasturida oshxonangizning aniq loyihasini chizib beramiz. Agar kelishsak, ya'ni buyurtma bersangiz — bu 500 ming umumiy summadan chegirib tashlanadi.\n\nQiyinchilik bo'lmaydi, shu ish bilan shug'ullanamiz 👍🏻\n\nO'lchovga borish uchun telefon raqamingizni qoldirsangiz, vaqtni kelishib olamiz."
-   },
-   {
-    "role": "user",
-    "content": "Lakatsiya tashimiz kelib olcovlani va xisob kitobini qilib berela sizlari ovora qilub qoymimizmi"
-   },
-   {
-    "role": "assistant",
-    "content": "Yo'q, ovora qilmaysiz — bu bizning ishimiz 👍🏻\n\nLokatsiyani tashlang, kelib o'lchab, Bazis dasturida aniq loyiha va hisob-kitobini qilib beramiz. O'lchov 500 ming so'm, buyurtma bersangiz summadan chegiriladi.\n\nTelefon raqamingizni ham qoldirsangiz — vaqtni kelishib olamiz."
-   },
-   {
-    "role": "user",
-    "content": "[Mijoz rasm yubordi]"
-   },
-   {
-    "role": "assistant",
-    "content": "Rahmat! Lokatsiyani oldim 👍🏻\n\nTelefon raqamingizni ham yozib qo'ysangiz, Ibrohim aka bog'lanib, o'lchovga qaysi kun kelishimizni kelishib oladi."
-   },
-   {
-    "role": "user",
-    "content": "Oglimi nomeri shunga wilib gaplashvolila keyin xamnamuz korishamuz vaqtilaga qarabb"
-   },
-   {
-    "role": "assistant",
-    "content": "Bo'ladi, raqamni oling 👍🏻\n\nQaysi kun qulay bo'lsa, shuni ayting — o'lchovga o'sha kuni kelamiz. Ibrohim aka o'g'lingiz raqamiga bog'lanib, vaqtni aniqlab oladi."
-   },
-   {
-    "role": "user",
-    "content": "[Mijoz rasm yubordi]\nNomega qililaa"
-   },
-   {
-    "role": "assistant",
-    "content": "Raqamni oldik, rahmat 👍🏻 Ibrohim aka tez orada bog'lanib, o'lchov vaqtini kelishib oladi."
-   },
-   {
-    "role": "user",
-    "content": "Raxmat Ollox rozi bosinn"
-   },
-   {
-    "role": "assistant",
-    "content": "Omin, sizdan ham Olloh rozi bo'lsin 🙏🏻 Tez orada bog'lanamiz, xayrli ish bo'lsin."
-   },
-   {
-    "role": "assistant",
-    "content": "Assalomu alaykum! O'g'lingiz raqamiga bog'landikmi, o'lchovga qaysi kun kelaylik?"
-   },
-   {
-    "role": "user",
-    "content": "Yokde tel qilishmabdiku\nAssalomu alekumm"
-   },
-   {
-    "role": "assistant",
-    "content": "Va Alekum Assalom 🙏🏻\n\nUzr so'rayman, kechikdi. Hozir Ibrohim akaga eslatib qo'yaman, bugun- erta ichida o'g'lingiz raqamiga albatta bog'lanishadi.\n\nQaysi kun o'lchovga kelishimiz qulay bo'lardi — shuni ham ayting, shu kunga rejalashtiramiz 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Oglimga tel qilsela etidi lakatsa tashidi korishib gaplashvolam8zz"
-   },
-   {
-    "role": "assistant",
-    "content": "Bo'ladi, hozir Ibrohim akaga aytaman — o'g'lingiz raqamiga bog'lanib, lokatsiya bo'yicha o'lchovni kelishib oladi 👍🏻"
-   },
-   {
-    "role": "assistant",
-    "content": "O'g'lingiz raqamiga bog'landikmi, o'lchovga qaysi kun qulay bo'lardi?"
-   }
-  ],
   "1861754234985949": [
    {
     "role": "user",
@@ -1540,72 +1430,6 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкум! Бу видеодаги ошхона премиум крашенний — корпус ЛМДФ, фасад Италия «SIRCA» краскаси, фурнитура Blum. 1 погонаж метри тахминан 800$ атрофида, 3 метр бўлса ~2400$ чиқади 👍🏻\n\nБу тахминий нарх. Бюджетга қараб арзонроғини ҳам қиламиз — фасадни акрил ёки EGGER'га ўзгартирсак, погонаж метри 650–700$ атрофига тушади. Қайси материал ёқади?"
-   }
-  ],
-  "2165393741019030": [
-   {
-    "role": "user",
-    "content": "КВ нечи пул"
-   },
-   {
-    "role": "assistant",
-    "content": "Qaysi mebel kerak — oshxona, shkaf yoki yotoqxonami? Oshxona bo'lsa — pogonaj metri 350$ dan boshlanadi, materialga qarab. O'lchamini aytsangiz, taxminiy narxini hisoblab beraman 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "5метр кухня"
-   },
-   {
-    "role": "assistant",
-    "content": "5 metr oshxona uchun taxminiy narx:\n\nLMDF fasad + GTV furnitura — taxminan 1700–1900$ atrofida\nAkril fasad + Hettich — taxminan 2250–2750$ atrofida\n\nBu taxminiy narx. Aniq narx uchun Ibrohim akaga +998 91 135 44 66 ga aloqaga chiqing yoki raqamingizni qoldiring. 2 etajmi, 3 etajmi?"
-   },
-   {
-    "role": "user",
-    "content": "Арзонро вариант ни этин"
-   },
-   {
-    "role": "assistant",
-    "content": "5 metr oshxona, eng arzon variant — LMDF fasad + GTV furnitura, 2 etaj:\n\n5 × 350 = taxminan 1750$ atrofida\n\nBu taxminiy narx. Aniq hisob uchun Ibrohim akaga qo'ng'iroq qiling (+998 91 135 44 66) yoki raqamingizni tashlab qo'ying 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Рахмат"
-   },
-   {
-    "role": "assistant",
-    "content": "Arzimaydi 🙌 Savol bo'lsa yozing."
-   },
-   {
-    "role": "assistant",
-    "content": "Акам, 5 метрлик кухнянинг арзон варианти бўйича ишлаймизми? Хоҳласангиз ўлчам олишга бориб келамиз."
-   },
-   {
-    "role": "user",
-    "content": "Бизага кимматли килади"
-   },
-   {
-    "role": "assistant",
-    "content": "Tushundim. Narxni optimal qilish uchun fasadni EGGER LDSP ga o'zgartirsak sezilarli arzonlashadi, ko'rinish baribir zamonaviy chiqadi. Furnitura ham GTV — oddiy va sifatli.\n\nYana shuni aytay: texnika (plita, dukhovka, vityajka) bizning hisobda emas, siznikidan — faqat mebel narxini aytyapman. Qanaqa byudjetni mo'ljallayapsiz? Shunga qarab eng mos variantni hisoblab beraman."
-   },
-   {
-    "role": "user",
-    "content": "1000доллар мулжалимиз"
-   },
-   {
-    "role": "assistant",
-    "content": "1000$ byudjet uchun 5 metr biroz og'irlik qiladi, lekin iloji bor. Buni ikki yo'l bilan yechamiz:\n\n— oshxona uzunligini biroz qisqartirsak (masalan 3,5–4 metr)\n— yoki konfiguratsiyani soddalashtirib, eng optimal material bilan hisoblасak\n\nAniq nimani qisqartirsa bo'lishini loyihada ko'rsatamiz. Buni Ibrohim aka siz bilan birga ko'rib, 1000$ ichiga sig'diradigan variantni aniq hisoblab beradi — +998 91 135 44 66 ga aloqaga chiqing yoki raqamingizni qoldiring 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Газхонам битвосин тел киламан"
-   },
-   {
-    "role": "assistant",
-    "content": "Xop, bemalol 👍🏻 Tayyor bo'lganda qo'ng'iroq qiling, yoki shu yerga yozing — Ibrohim aka bilan bog'lab qo'yaman."
-   },
-   {
-    "role": "assistant",
-    "content": "Акам, газхона битдими? Кухня бўйича ишлаймизми?"
    }
   ],
   "1400148495026835": [
@@ -2194,10 +2018,6 @@
    "lastClientAt": 1790841494763,
    "followedUp": false
   },
-  "2947904058905339": {
-   "lastClientAt": 1790995326526,
-   "followedUp": true
-  },
   "1861754234985949": {
    "lastClientAt": 1790852575300,
    "followedUp": false
@@ -2221,10 +2041,6 @@
   "1408705034119755": {
    "lastClientAt": 1790871495562,
    "followedUp": false
-  },
-  "2165393741019030": {
-   "lastClientAt": 1790993593648,
-   "followedUp": true
   },
   "1876686323744906": {
    "manual": true,
