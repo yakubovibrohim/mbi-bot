@@ -1218,6 +1218,10 @@
    {
     "role": "assistant",
     "content": "Xop, Dushanba kutamiz 👍🏻 Shu paytgacha xojayiningiz bilan yaxshilab maslahatlashib oling, savol bo'lsa shu yerga yozavering."
+   },
+   {
+    "role": "assistant",
+    "content": "Nima bo'ldi, LMDF oshxona bo'yicha qaror qildingizmi? O'lchovga borib, aniq narxni chiqaraylikmi?"
    }
   ],
   "1428980959187747": [
@@ -1956,7 +1960,7 @@
   },
   "1866324024535044": {
    "lastClientAt": 1791092250224,
-   "followedUp": false
+   "followedUp": true
   },
   "1428980959187747": {
    "lastClientAt": 1790830037083,
