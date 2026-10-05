@@ -1521,6 +1521,16 @@
     "role": "assistant",
     "content": "Tushundim, lekin bu bizning yo'nalish emas. Biz pnevmatik silindr yoki fiting sotmaymiz.\n\nMBI Mebel — Toshkentda buyurtma mebel ishlaymiz: oshxona, shkaf, yotoqxona. Agar mebel kerak bo'lsa — yordam beraman 👍🏻"
    }
+  ],
+  "1856003292036283": [
+   {
+    "role": "user",
+    "content": "Можно ли заказать мебель на сайте?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Заказ оформляем не через сайт, а напрямую — мы делаем мебель на заказ по вашим размерам. Что планируете — кухню, шкаф или спальню?"
+   }
   ]
  },
  "activity": {
@@ -1817,6 +1827,10 @@
   },
   "1541679007646686": {
    "lastClientAt": 1790962868204,
+   "followedUp": false
+  },
+  "1856003292036283": {
+   "lastClientAt": 1791216934149,
    "followedUp": false
   }
  }
