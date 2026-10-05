@@ -1258,100 +1258,6 @@
     "content": "Ассалому Алейкум! Бу видеодаги ошхона — премиум крашенний, корпус ЛМДФ, фасадлар Италия «SIRCA» краскаси билан 4 этапда бўялган, фурнитура Blum (20 йил гарантия) 👍🏻\n\nТахминий нарх — 1 погонаж метри 800$ атрофида. Бюджетга қараб арзонроғини ҳам қиламиз — фасадни акрил ёки EGGER'га ўзгартирсак, сезиларли тушади.\n\nОшхонангиз неча метр, 2 этажми 3 этажми?"
    }
   ],
-  "2864784717226789": [
-   {
-    "role": "user",
-    "content": "Сколько стоит дизайн интерьера?"
-   },
-   {
-    "role": "assistant",
-    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее, точность 100%. Кухни выходят примерно от $1000. Что планируете?"
-   },
-   {
-    "role": "user",
-    "content": "Asallom alekum aka  oshhona mebil yasatmoqchidim"
-   },
-   {
-    "role": "assistant",
-    "content": "Ва Алейкум Ассалом, яхшимисиз 👍🏻 Ошхона неча метр, 2 этажми 3 этажми?"
-   },
-   {
-    "role": "user",
-    "content": "Boyi 295 eni 350 gazpilita bilan akarildan nechpula boladi"
-   },
-   {
-    "role": "assistant",
-    "content": "Tushundim. Boyi 2.95 metr — korpus LMDF, akril fasad, furnitura bilan taxminan hisoblaymiz.\n\nAkril + GTV bilan — taxminan 1150–1350$ atrofida.\nAkril + Hettich bilan — taxminan 1350–1600$ atrofida.\n\nBu taxminiy narx. Aniq narx uchun Ibrohim akaga +998 91 135 44 66 ga aloqaga chiqing yoki raqamingizni qoldiring 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Ok"
-   },
-   {
-    "role": "assistant",
-    "content": "Aniq hisob kerak bo'lsa, uyingizga borib o'lchaymiz va Bazis dasturida mebel loyihasini chizib beramiz — 500 ming so'm. Buyurtma bersangiz, bu pul umumiy summadan chegiriladi.\n\nO'lchovga borish uchun telefon raqamingizni qoldirsangiz, vaqtni kelishib olamiz 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Ok"
-   },
-   {
-    "role": "assistant",
-    "content": "Raqamingizni shu yerga yozib qoldiring, Ibrohim aka bog'lanib, o'lchov vaqtini kelishib oladi 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "97 737 17 44"
-   },
-   {
-    "role": "assistant",
-    "content": "Rahmat! Raqamingizni oldim 👍🏻 Qachon qo'ng'iroq qilaylik — ertalabmi, tushdan keyinmi? Qulay vaqtni yozing."
-   },
-   {
-    "role": "user",
-    "content": "Abetlada ertaga"
-   },
-   {
-    "role": "assistant",
-    "content": "Хоп, ertaga tushlikdan keyin bog'lanamiz 👍🏻"
-   },
-   {
-    "role": "assistant",
-    "content": "Ассалому алайкум! Ертага десангиз, бугун обед пайти бемалолми? Ўлчашга қачон борсак қулай бўлади?"
-   },
-   {
-    "role": "user",
-    "content": "Ertaga abetan kegin telgmdan yozin lakatsa tashiman"
-   },
-   {
-    "role": "assistant",
-    "content": "Хоп, ertaga tushdan keyin Telegram'dan yozamiz, lokatsiyangizni o'shanda tashlaysiz 👍🏻 Rahmat!"
-   },
-   {
-    "role": "assistant",
-    "content": "Assalomu alaykum! Kelishganimizdek, tushlikdan keyin yozmoqchiman — lokatsiyangizni tashlasangiz, o'lchashga chiqamiz. Bugun qulaymi?"
-   },
-   {
-    "role": "user",
-    "content": "Qibreyga kelasmi"
-   },
-   {
-    "role": "assistant",
-    "content": "Qibrayga ham boramiz 👍🏻 Toshkent va atrofiga chiqamiz. Lokatsiyangizni tashlab qo'ysangiz, o'lchov vaqtini aniqlashtiramiz."
-   },
-   {
-    "role": "user",
-    "content": "Tashab boydiku"
-   },
-   {
-    "role": "assistant",
-    "content": "Ha, rahmat 👍🏻 Qabul qildik. Ertaga tushdan keyin bog'lanib, o'lchovga chiqamiz, иншааллох."
-   },
-   {
-    "role": "assistant",
-    "content": "Ассалому алайкум! Қибрайдаги ўлчов ишимиз бўйича ертага десак бўладими? Қайси вақт сизга қулай?"
-   }
-  ],
   "2286605608572941": [
    {
     "role": "user",
@@ -1929,10 +1835,6 @@
   "1073992459017985": {
    "lastClientAt": 1790852890310,
    "followedUp": false
-  },
-  "2864784717226789": {
-   "lastClientAt": 1791024473776,
-   "followedUp": true
   },
   "2286605608572941": {
    "lastClientAt": 1790869773841,
