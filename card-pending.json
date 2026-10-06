@@ -1,6 +1,18 @@
 {
   "lastMsgId": 105022,
-  "pending": {},
+  "pending": {
+    "muw19es6z8i": {
+      "dir": "out",
+      "amtUzs": 5000,
+      "place": "PLUM OPLATA, UZ",
+      "rawBalance": 22457,
+      "date": "06.10.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1791252116502
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
