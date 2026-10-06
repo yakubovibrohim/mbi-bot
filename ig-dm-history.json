@@ -1088,88 +1088,6 @@
     "content": "Ассалому Алейкум 😊 Раҳмат, хурсанд бўлдик! Шу ошхона кўзингизга иссиқ кўринибди-да 👍🏻\n\nБу премиум лойиҳа — фасади тўлиқ крашенный, Италия «SIRCA» краскаси билан 4 босқичда бўялган, фурнитураси Blum (20 йил кафолат). Столешницаси корейс сунъий тоши — чоксиз, сувдан қўрқмайди.\n\nЎзингизга ошхона режалаштиряпсизми? Неча метр хонангиз?"
    }
   ],
-  "1866324024535044": [
-   {
-    "role": "user",
-    "content": "Сколько стоит дизайн интерьера?"
-   },
-   {
-    "role": "assistant",
-    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Кухни выходят примерно от $350 за погонный метр. Что планируете?"
-   },
-   {
-    "role": "assistant",
-    "content": "Қандай, қарорга келдингизми? Қайси мебелни ўйлаб турибсиз?"
-   },
-   {
-    "role": "user",
-    "content": "Mana shunaqa korinishda kere rangi hama\n[Mijoz rasm yubordi]"
-   },
-   {
-    "role": "assistant",
-    "content": "Zўr tanlov 👍🏻 Qaysi mebel kerak — oshxonami, shkafmi? O'lchami bormi?"
-   },
-   {
-    "role": "user",
-    "content": "Oshxonami olchovi ham kerakmi"
-   },
-   {
-    "role": "assistant",
-    "content": "Ha, aniq narx va loyiha uchun o'lchov kerak. Uyingizga borib o'lchaymiz va Bazis dasturida mebel loyihasini chizib beramiz — 500 ming so'm. Buyurtma bersangiz, bu pul umumiy summa ichidan ayiriladi.\n\nAvval taxminan bilib qo'yish uchun — oshxonangiz necha metr, 2 etajmi, 3 etajmi?"
-   },
-   {
-    "role": "user",
-    "content": "3.5 metrga 2 metr 3 etajli"
-   },
-   {
-    "role": "assistant",
-    "content": "Tushundim. 3 metr asosiy + burchak qism, 3 etaj deylik:\n\n— LMDF fasad + GTV: taxminan 1150–1300$ atrofida\n— Akril yoki krashenniy fasad: taxminan 1500–1800$ atrofida\n\nBu taxminiy narx. Aniq hisob uchun Ibrohim akaga +998 91 135 44 66 ga aloqaga chiqing yoki raqamingizni qoldiring 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Ok"
-   },
-   {
-    "role": "assistant",
-    "content": "Rasmdagi ko'rinish uchun qaysi material yoqadi — akrilmi yoki krashenniy? Shunga qarab aniqroq aytamiz.\n\nAgar o'lchovga rozi bo'lsangiz, telefon raqamingizni qoldiring — vaqtni kelishib olamiz."
-   },
-   {
-    "role": "user",
-    "content": "LMDF qildirmoqchidi"
-   },
-   {
-    "role": "assistant",
-    "content": "Yaxshi tanlov, LMDF optimal narx bilan sifatli chiqadi. 3.5 metr, 3 etajli LMDF + GTV — taxminan 1150–1300$ atrofida.\n\nAniq narxni va loyihani ko'rish uchun o'lchovga boramiz — 500 ming so'm, buyurtma bersangiz summadan ayiriladi. Telefon raqamingizni qoldirsangiz, vaqtni kelishib olamiz 👍🏻"
-   },
-   {
-    "role": "assistant",
-    "content": "LMDF oshxona bo'yicha nima qaror qildingiz? O'lchovga borish uchun kun belgilaymizmi?"
-   },
-   {
-    "role": "user",
-    "content": "Maslaxatlashi yozvoraman\nXojayinim endi keladila"
-   },
-   {
-    "role": "assistant",
-    "content": "Xop, bemalol maslahatlashing 👍🏻 Savol bo'lsa yozing, biz shu yerdamiz."
-   },
-   {
-    "role": "assistant",
-    "content": "LMDF oshxona bo'yicha xojayiningiz bilan maslahatlashib oldingizmi? O'lchovga borish uchun kun belgilaymizmi?"
-   },
-   {
-    "role": "user",
-    "content": "Dushanba aniq malumot etaman"
-   },
-   {
-    "role": "assistant",
-    "content": "Xop, Dushanba kutamiz 👍🏻 Shu paytgacha xojayiningiz bilan yaxshilab maslahatlashib oling, savol bo'lsa shu yerga yozavering."
-   },
-   {
-    "role": "assistant",
-    "content": "Nima bo'ldi, LMDF oshxona bo'yicha qaror qildingizmi? O'lchovga borib, aniq narxni chiqaraylikmi?"
-   }
-  ],
   "1428980959187747": [
    {
     "role": "user",
@@ -1761,10 +1679,6 @@
   "1811000626844801": {
    "lastClientAt": 1790823822880,
    "followedUp": false
-  },
-  "1866324024535044": {
-   "lastClientAt": 1791092250224,
-   "followedUp": true
   },
   "1428980959187747": {
    "lastClientAt": 1790830037083,
