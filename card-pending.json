@@ -1,5 +1,5 @@
 {
-  "lastMsgId": 105022,
+  "lastMsgId": 105042,
   "pending": {
     "muw19es6z8i": {
       "dir": "out",
@@ -11,7 +11,7 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1791252116502,
-      "remindedAt": 1791288145808
+      "remindedAt": 1791295345939
     }
   },
   "resolved": [
