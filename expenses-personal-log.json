@@ -1833,5 +1833,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-10-07T05:54:14.079Z"
+  },
+  {
+    "date": "06.10.2026",
+    "note": "💳 PLUM OPLATA, UZ",
+    "amount_uzs": 5000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PLUM OPLATA, UZ",
+    "ts": "2026-10-07T08:35:44.916Z"
   }
 ]
