@@ -1823,5 +1823,15 @@
     "pay_method": "card",
     "place": "HGT DOMO, UZ",
     "ts": "2026-10-03T08:57:56.325Z"
+  },
+  {
+    "date": "07.10.2026",
+    "note": "💳 PAYME OPLATA, UZ",
+    "amount_uzs": 5075,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-10-07T05:54:14.079Z"
   }
 ]
