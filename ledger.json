@@ -1,22 +1,23 @@
 {
-  "updated": "2026-10-07T21:36:00.016Z",
+  "updated": "2026-10-07T22:11:56.382Z",
   "rate_usd_uzs": 12000,
   "opening": {
-    "amount_uzs": 0,
-    "date": null
+    "amount_uzs": 175167258,
+    "date": "24.06.2026"
   },
-  "balance_uzs": -132406793,
+  "balance_uzs": 18771425,
   "totals_after_opening": {
-    "kirim": 120000000,
-    "chiqim": 252406793,
+    "kirim": 53780000,
+    "chiqim": 210175833,
     "by_category": {
-      "staff_advance": 44027880,
-      "deal_payment": 93600000,
-      "deal_expense": 101646817,
-      "personal": 72136993,
-      "debt_paid": 9943950,
-      "office": 24651153,
-      "debt_in": 26400000
+      "office": 24101153,
+      "personal": 65245993,
+      "staff_advance": 18727920,
+      "deal_payment": 24000000,
+      "deal_expense": 97368767,
+      "debt_in": 26400000,
+      "card_income": 3380000,
+      "debt_paid": 4732000
     }
   },
   "movements": [
@@ -813,6 +814,17 @@
       "src": "debts"
     },
     {
+      "date": "08.07.2026",
+      "time": "12:03",
+      "dir": "in",
+      "category": "card_income",
+      "category_uz": "Boshqa kirim (karta)",
+      "amount_uzs": 300000,
+      "name": "💳 PAYME P2P, UZ",
+      "pay": "karta",
+      "src": "card"
+    },
+    {
       "date": "09.07.2026",
       "time": "13:15",
       "dir": "out",
@@ -1275,6 +1287,17 @@
       "src": "personal"
     },
     {
+      "date": "27.07.2026",
+      "time": "13:16",
+      "dir": "in",
+      "category": "card_income",
+      "category_uz": "Boshqa kirim (karta)",
+      "amount_uzs": 500000,
+      "name": "💳 OPERU  ASIA ALLIANCE BANK AT BANKI, UZ",
+      "pay": "karta",
+      "src": "card"
+    },
+    {
       "date": "28.07.2026",
       "time": "11:29",
       "dir": "out",
@@ -1724,6 +1747,28 @@
       "name": "💳 Shirinli",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "07.08.2026",
+      "time": "11:38",
+      "dir": "in",
+      "category": "card_income",
+      "category_uz": "Boshqa kirim (karta)",
+      "amount_uzs": 1140000,
+      "name": "💳 TBC EDIN EPOS H2U, UZ",
+      "pay": "karta",
+      "src": "card"
+    },
+    {
+      "date": "07.08.2026",
+      "time": "14:30",
+      "dir": "in",
+      "category": "card_income",
+      "category_uz": "Boshqa kirim (karta)",
+      "amount_uzs": 240000,
+      "name": "💳 PAYME P2P, UZ",
+      "pay": "karta",
+      "src": "card"
     },
     {
       "date": "08.08.2026",
@@ -2791,6 +2836,17 @@
       "name": "💳 Интернет уй",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "09.09.2026",
+      "time": "00:04",
+      "dir": "in",
+      "category": "card_income",
+      "category_uz": "Boshqa kirim (karta)",
+      "amount_uzs": 1200000,
+      "name": "💳 TBC EDIN EPOS H2U, UZ",
+      "pay": "karta",
+      "src": "card"
     },
     {
       "date": "10.09.2026",
