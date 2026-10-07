@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-07T04:34:42.938Z",
+  "updated": "2026-10-07T05:54:24.650Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 18781500,
+  "balance_uzs": 18776425,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 210165758,
+    "chiqim": 210170833,
     "by_category": {
       "office": 24101153,
-      "personal": 65235918,
+      "personal": 65240993,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
       "deal_expense": 97368767,
@@ -3494,6 +3494,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 154800,
       "name": "💳 Ucell wifi",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "07.10.2026",
+      "time": "10:54",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 5075,
+      "name": "💳 PAYME OPLATA, UZ",
       "pay": "karta",
       "src": "personal"
     }
