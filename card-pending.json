@@ -21,9 +21,10 @@
       "date": "07.10.2026",
       "title": "E-Com oplata",
       "card4": "5893",
-      "step": "type",
+      "step": "note",
       "askedAt": 1791318358105,
-      "remindedAt": 1791347186843
+      "remindedAt": 1791347186843,
+      "kind": "personal"
     }
   },
   "resolved": [
