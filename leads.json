@@ -531,5 +531,17 @@
   ],
   "msg": "Можно адрес.",
   "status": "new"
+ },
+ {
+  "ts": "2026-10-09T10:55:34.101Z",
+  "uid": "1468818768483837",
+  "username": "@a7i7bek_",
+  "need": "Assalom alaykum! Kechirasiz, men Instagram videosiga to'g'ridan-to'g'ri kirish imkoniyatiga",
+  "phone": "+998 91 135 44 66",
+  "signals": [
+   "телефон қолдирди"
+  ],
+  "msg": "Assalom alaykum\nhttps://www.instagram.com/reel/DZkxBJ6oYo0/\n[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"[REEL:DZkxBJ6oYo0] +998 91 135 44 66 +998 95 190 44 66\"]",
+  "status": "new"
  }
 ]
