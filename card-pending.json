@@ -1,6 +1,18 @@
 {
   "lastMsgId": 105253,
-  "pending": {},
+  "pending": {
+    "mv17su4lsr8": {
+      "dir": "out",
+      "amtUzs": 500000,
+      "place": "IYB P2P, UZ",
+      "rawBalance": 3805382,
+      "date": "09.10.2026",
+      "title": "Spisanie c karty",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1791565431429
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
