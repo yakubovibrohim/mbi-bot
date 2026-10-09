@@ -1354,6 +1354,22 @@
    {
     "role": "assistant",
     "content": "Мы в Ташкенте, Яккасарай, ул. Кушбеги 6. Приезжайте, покажем материалы и наши работы."
+   },
+   {
+    "role": "user",
+    "content": "Окей спасибо большое."
+   },
+   {
+    "role": "assistant",
+    "content": "Пожалуйста! Будут вопросы — пишите 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Спасибо."
+   },
+   {
+    "role": "assistant",
+    "content": "На здоровье!"
    }
   ]
  },
@@ -1645,7 +1661,7 @@
    "followedUp": false
   },
   "2489030281600058": {
-   "lastClientAt": 1791535573198,
+   "lastClientAt": 1791535616454,
    "followedUp": false
   }
  }
