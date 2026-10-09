@@ -1392,6 +1392,18 @@
    {
     "role": "user",
     "content": "Mana shu kuxonniy mebel texnikalarisiz nechpulga tushdi?"
+   },
+   {
+    "role": "assistant",
+    "content": "Бу ошхонанинг погонаж метри тахминан 650–750$ атрофида (техникасиз, фақат мебел). Узунлигини айтсангиз, умумий суммани ҳисоблаб бераман.\n\nАгар бюджетга қараб оддий акрил + GTV/Hettich қилсак, анча арзонлашади — кўриниш барибир замонавий бўлади 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Ismim Azizbek. Kuxonniy mebellarga qiziayotgan edim"
+   },
+   {
+    "role": "assistant",
+    "content": "Хуш келибсиз, Азизбек 👍🏻 Ошхона неча метр бўлади, 2 этажми 3 этажми?"
    }
   ]
  },
@@ -1687,7 +1699,7 @@
    "followedUp": false
   },
   "1468818768483837": {
-   "lastClientAt": 1791543324936,
+   "lastClientAt": 1791543384426,
    "followedUp": false
   }
  }
