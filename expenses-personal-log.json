@@ -1843,5 +1843,15 @@
     "pay_method": "card",
     "place": "PLUM OPLATA, UZ",
     "ts": "2026-10-07T08:35:44.916Z"
+  },
+  {
+    "date": "09.10.2026",
+    "note": "💳 Хотин гапига",
+    "amount_uzs": 500000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IYB P2P, UZ",
+    "ts": "2026-10-09T17:04:07.843Z"
   }
 ]
