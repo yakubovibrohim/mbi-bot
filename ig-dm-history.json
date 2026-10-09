@@ -1370,6 +1370,14 @@
    {
     "role": "assistant",
     "content": "На здоровье!"
+   },
+   {
+    "role": "user",
+    "content": "🙏"
+   },
+   {
+    "role": "assistant",
+    "content": "😊"
    }
   ]
  },
@@ -1661,7 +1669,7 @@
    "followedUp": false
   },
   "2489030281600058": {
-   "lastClientAt": 1791535616454,
+   "lastClientAt": 1791535653540,
    "followedUp": false
   }
  }
