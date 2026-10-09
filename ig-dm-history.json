@@ -1379,6 +1379,20 @@
     "role": "assistant",
     "content": "😊"
    }
+  ],
+  "1468818768483837": [
+   {
+    "role": "user",
+    "content": "Assalom alaykum\nhttps://www.instagram.com/reel/DZkxBJ6oYo0/\n[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"[REEL:DZkxBJ6oYo0] +998 91 135 44 66 +998 95 190 44 66\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ва Алейкум Ассалом, яхшимисиз 👍🏻 Бу премиум ошхона — фасадлар AGT акрил, қўл изи умуман қолмайди. Фурнитура Blum, ҳар тортмада сенсорли ёритиш, 20 йил гарантия. Столешница ва фартуги қуйма тошдан.\n\nИсмингиз нима, қайси хона учун ошхона режалаштиряпсиз?"
+   },
+   {
+    "role": "user",
+    "content": "Mana shu kuxonniy mebel texnikalarisiz nechpulga tushdi?"
+   }
   ]
  },
  "activity": {
@@ -1670,6 +1684,10 @@
   },
   "2489030281600058": {
    "lastClientAt": 1791535653540,
+   "followedUp": false
+  },
+  "1468818768483837": {
+   "lastClientAt": 1791543324936,
    "followedUp": false
   }
  }
