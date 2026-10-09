@@ -1,6 +1,18 @@
 {
   "lastMsgId": 105226,
-  "pending": {},
+  "pending": {
+    "mv11kfsa42t": {
+      "dir": "in",
+      "amtUzs": 3540000,
+      "place": "OPENBANK P2P O2O UZCARD, UZ",
+      "rawBalance": 5917382,
+      "date": "09.10.2026",
+      "title": "Perevod na kartu",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1791554961898
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
