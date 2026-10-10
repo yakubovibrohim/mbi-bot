@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-10T04:17:11.867Z",
+  "updated": "2026-10-10T11:45:36.740Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 18271425,
+  "balance_uzs": 18003425,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 210675833,
+    "chiqim": 210943833,
     "by_category": {
       "office": 24101153,
-      "personal": 65745993,
+      "personal": 66013993,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
       "deal_expense": 97368767,
@@ -3527,6 +3527,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 500000,
       "name": "💳 Хотин гапига",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "10.10.2026",
+      "time": "16:45",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 268000,
+      "name": "💳 Sigaret",
       "pay": "karta",
       "src": "personal"
     }
