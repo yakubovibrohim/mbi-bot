@@ -1853,5 +1853,15 @@
     "pay_method": "card",
     "place": "IYB P2P, UZ",
     "ts": "2026-10-09T17:04:07.843Z"
+  },
+  {
+    "date": "10.10.2026",
+    "note": "💳 Sigaret",
+    "amount_uzs": 268000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO KOURI, TOSHKENT, DOSTOBOD MFY KORASUV BOYI KOChA",
+    "ts": "2026-10-10T11:45:26.734Z"
   }
 ]
