@@ -1330,60 +1330,6 @@
     "content": "Tushundim, lekin bu bizning yo'nalish emas. Biz pnevmatik silindr yoki fiting sotmaymiz.\n\nMBI Mebel — Toshkentda buyurtma mebel ishlaymiz: oshxona, shkaf, yotoqxona. Agar mebel kerak bo'lsa — yordam beraman 👍🏻"
    }
   ],
-  "2489030281600058": [
-   {
-    "role": "user",
-    "content": "Сколько стоит дизайн интерьера?"
-   },
-   {
-    "role": "assistant",
-    "content": "Здравствуйте! Мы делаем мебель на заказ — кухни, шкафы, спальни. Проект показываем заранее в программе Bazis, точность 100%. Кухни выходят примерно от $1000. Что планируете?"
-   },
-   {
-    "role": "user",
-    "content": "Диван нужен."
-   },
-   {
-    "role": "assistant",
-    "content": "К сожалению, диваны мы не делаем — наша специализация корпусная мебель: кухни, шкафы, спальни, прихожие. Если что-то из этого планируете, с радостью помогу 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Можно адрес."
-   },
-   {
-    "role": "assistant",
-    "content": "Мы в Ташкенте, Яккасарай, ул. Кушбеги 6. Приезжайте, покажем материалы и наши работы."
-   },
-   {
-    "role": "user",
-    "content": "Окей спасибо большое."
-   },
-   {
-    "role": "assistant",
-    "content": "Пожалуйста! Будут вопросы — пишите 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Спасибо."
-   },
-   {
-    "role": "assistant",
-    "content": "На здоровье!"
-   },
-   {
-    "role": "user",
-    "content": "🙏"
-   },
-   {
-    "role": "assistant",
-    "content": "😊"
-   },
-   {
-    "role": "assistant",
-    "content": "Как настроение? Что-то из мебели ещё присматриваете — кухню или шкаф?"
-   }
-  ],
   "1468818768483837": [
    {
     "role": "user",
@@ -1731,10 +1677,6 @@
   "1541679007646686": {
    "lastClientAt": 1790962868204,
    "followedUp": false
-  },
-  "2489030281600058": {
-   "lastClientAt": 1791535653540,
-   "followedUp": true
   },
   "1468818768483837": {
    "lastClientAt": 1791543558703,
