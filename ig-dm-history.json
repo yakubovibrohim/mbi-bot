@@ -1329,20 +1329,6 @@
     "role": "assistant",
     "content": "Tushundim, lekin bu bizning yo'nalish emas. Biz pnevmatik silindr yoki fiting sotmaymiz.\n\nMBI Mebel — Toshkentda buyurtma mebel ishlaymiz: oshxona, shkaf, yotoqxona. Agar mebel kerak bo'lsa — yordam beraman 👍🏻"
    }
-  ],
-  "1400148495026835": [
-   {
-    "role": "user",
-    "content": "Крашенни 3 минг долларга килсангз бу юртма бор"
-   },
-   {
-    "role": "assistant",
-    "content": "Ассалому Алейкум 👍🏻 Крашенный ошхона экан. Неча метр ва 2 этажми 3 этажми? Шуни билсам, 3 минг долларга нима чиқишини аниқроқ айтаман."
-   },
-   {
-    "role": "assistant",
-    "content": "Нима бўлди, ишлаймизми? Ошхонангизни размерини ўлчаб, 3 минг долларга нима чиқишини аниқлаб берайликми?"
-   }
   ]
  },
  "activity": {
@@ -1631,10 +1617,6 @@
   "1541679007646686": {
    "lastClientAt": 1790962868204,
    "followedUp": false
-  },
-  "1400148495026835": {
-   "lastClientAt": 1791570729968,
-   "followedUp": true
   }
  }
 }
