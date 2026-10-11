@@ -1330,52 +1330,6 @@
     "content": "Tushundim, lekin bu bizning yo'nalish emas. Biz pnevmatik silindr yoki fiting sotmaymiz.\n\nMBI Mebel — Toshkentda buyurtma mebel ishlaymiz: oshxona, shkaf, yotoqxona. Agar mebel kerak bo'lsa — yordam beraman 👍🏻"
    }
   ],
-  "1468818768483837": [
-   {
-    "role": "user",
-    "content": "Assalom alaykum\nhttps://www.instagram.com/reel/DZkxBJ6oYo0/\n[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"[REEL:DZkxBJ6oYo0] +998 91 135 44 66 +998 95 190 44 66\"]"
-   },
-   {
-    "role": "assistant",
-    "content": "Ва Алейкум Ассалом, яхшимисиз 👍🏻 Бу премиум ошхона — фасадлар AGT акрил, қўл изи умуман қолмайди. Фурнитура Blum, ҳар тортмада сенсорли ёритиш, 20 йил гарантия. Столешница ва фартуги қуйма тошдан.\n\nИсмингиз нима, қайси хона учун ошхона режалаштиряпсиз?"
-   },
-   {
-    "role": "user",
-    "content": "Mana shu kuxonniy mebel texnikalarisiz nechpulga tushdi?"
-   },
-   {
-    "role": "assistant",
-    "content": "Бу ошхонанинг погонаж метри тахминан 650–750$ атрофида (техникасиз, фақат мебел). Узунлигини айтсангиз, умумий суммани ҳисоблаб бераман.\n\nАгар бюджетга қараб оддий акрил + GTV/Hettich қилсак, анча арзонлашади — кўриниш барибир замонавий бўлади 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Ismim Azizbek. Kuxonniy mebellarga qiziayotgan edim"
-   },
-   {
-    "role": "assistant",
-    "content": "Хуш келибсиз, Азизбек 👍🏻 Ошхона неча метр бўлади, 2 этажми 3 этажми?"
-   },
-   {
-    "role": "user",
-    "content": "Taxminan 4 metr, 2 etaj"
-   },
-   {
-    "role": "assistant",
-    "content": "Тушунарли. 4 метр, 2 этаж учун тахминий нарх:\n\n— Оддий вариант (ЛМДФ/акрил + GTV): тахминан 1500–1800$\n— Ўрта вариант (акрил + Hettich): тахминан 1800–2200$\n\nБу тахминий нарх — техникасиз, фақат мебел. Аниқ нархни Иброхим ака айтади, +998 91 135 44 66 га алоқага чиқинг ёки рақамингизни қолдиринг 👍🏻"
-   },
-   {
-    "role": "user",
-    "content": "Sizlarda dizayn qilish ham bormi? Bir boʻlsa qanaqa dizayn 3D yoki sxemali dizayn? Dizayn narxlarni ichiga kiradimi yoki alohida hisoblanadimi?"
-   },
-   {
-    "role": "assistant",
-    "content": "Ҳа, ўлчовга бориб Bazis дастурида 3D лойиҳа чизиб берамиз — ҳаммаси аниқ, хато 0 га тенг, роботлар ишлайди.\n\nЎлчов пуллик — 500 минг сўм. Шу пулга уйингизга бориб ўлчаймиз ва Bazis'да мебел лойиҳасини чизиб берамиз, лойиҳа шу пулнинг ичида. Келишсак, яъни буюртма берсангиз, бу 500 минг сўм умумий сумма ичига кириб кетади 👍🏻"
-   },
-   {
-    "role": "assistant",
-    "content": "Азизбек, 4 метрли ошхона бўйича ўйлаб кўрдингизми? Ўлчовга бориб 3D лойиҳа чизиб берайликми?"
-   }
-  ],
   "1400148495026835": [
    {
     "role": "user",
@@ -1677,10 +1631,6 @@
   "1541679007646686": {
    "lastClientAt": 1790962868204,
    "followedUp": false
-  },
-  "1468818768483837": {
-   "lastClientAt": 1791543558703,
-   "followedUp": true
   },
   "1400148495026835": {
    "lastClientAt": 1791570729968,
