@@ -1354,6 +1354,14 @@
    {
     "role": "assistant",
     "content": "Yaxshi. Yotoqxona komplekt — shkaf, tumba, kravat, matras bilan.\n\nQanaqa material o'ylagansiz — oddiyroq (LMDF) yoki zamonaviyroq (akril/krashenniy)?"
+   },
+   {
+    "role": "user",
+    "content": "2 ga 1 kravat \n5 metr shkaf \n2 ta tumba \n200 dollar beraman\nQiberasami?"
+   },
+   {
+    "role": "assistant",
+    "content": "Diyor aka, bu narxda chiqmaydi — faqat 5 metr shkafning o'zi materialga qarab ancha turadi.\n\nMasalan LMDF shkaf (eng arzon) m² hisobida 110$ dan, GTV furnitura bilan. Kravat va tumbalar alohida qo'shiladi.\n\nShkafning balandligi qancha? Shunga qarab taxminiy hisoblab beraman."
    }
   ]
  },
@@ -1645,7 +1653,7 @@
    "followedUp": false
   },
   "2510326132796193": {
-   "lastClientAt": 1791731449436,
+   "lastClientAt": 1791731568886,
    "followedUp": false
   }
  }
