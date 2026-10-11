@@ -1386,6 +1386,14 @@
    {
     "role": "assistant",
     "content": "Diyor aka, rasmdan uyingizning taxminiy ko'rinishini (3D) faqat o'lchovga borib, Bazis dasturida chizganimizda beramiz. Rasmning o'zidan aniq ko'rinish chiqmaydi.\n\nO'lchov — 500 ming so'm. Shu pulga borib o'lchaymiz va yotoqxonangizning aniq 3D loyihasini chizib beramiz. Kelishsak, bu pul umumiy summa ichiga kirib ketadi 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Hop, rahmat"
+   },
+   {
+    "role": "assistant",
+    "content": "Arzimaydi, Diyor aka. Savol bo'lsa yoki o'lchovga tayyor bo'lsangiz — yozing 👍🏻"
    }
   ]
  },
@@ -1677,7 +1685,7 @@
    "followedUp": false
   },
   "2510326132796193": {
-   "lastClientAt": 1791731818852,
+   "lastClientAt": 1791731868544,
    "followedUp": false,
    "photoSent": true
   }
