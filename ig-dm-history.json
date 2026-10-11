@@ -1378,6 +1378,14 @@
    {
     "role": "assistant",
     "content": "[[FOTO:yotoqxona]]"
+   },
+   {
+    "role": "user",
+    "content": "Mani honamni tahmin korinishi bomi"
+   },
+   {
+    "role": "assistant",
+    "content": "Diyor aka, rasmdan uyingizning taxminiy ko'rinishini (3D) faqat o'lchovga borib, Bazis dasturida chizganimizda beramiz. Rasmning o'zidan aniq ko'rinish chiqmaydi.\n\nO'lchov — 500 ming so'm. Shu pulga borib o'lchaymiz va yotoqxonangizning aniq 3D loyihasini chizib beramiz. Kelishsak, bu pul umumiy summa ichiga kirib ketadi 👍🏻"
    }
   ]
  },
@@ -1669,7 +1677,7 @@
    "followedUp": false
   },
   "2510326132796193": {
-   "lastClientAt": 1791731758231,
+   "lastClientAt": 1791731818852,
    "followedUp": false,
    "photoSent": true
   }
