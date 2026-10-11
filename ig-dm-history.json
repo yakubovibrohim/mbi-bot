@@ -1395,6 +1395,16 @@
     "role": "assistant",
     "content": "Arzimaydi, Diyor aka. Savol bo'lsa yoki o'lchovga tayyor bo'lsangiz — yozing 👍🏻"
    }
+  ],
+  "1878515756852116": [
+   {
+    "role": "user",
+    "content": "Какой срок выполнения проекта?"
+   },
+   {
+    "role": "assistant",
+    "content": "Здравствуйте! Срок зависит от фасада: ЛМДФ и акрил — до 14 рабочих дней, крашеный и шпон — до 30 дней. Стараемся закончить раньше, а за каждый день опоздания платим штраф.\n\nА что планируете — кухню, шкаф?"
+   }
   ]
  },
  "activity": {
@@ -1688,6 +1698,10 @@
    "lastClientAt": 1791731868544,
    "followedUp": false,
    "photoSent": true
+  },
+  "1878515756852116": {
+   "lastClientAt": 1791761219648,
+   "followedUp": false
   }
  }
 }
