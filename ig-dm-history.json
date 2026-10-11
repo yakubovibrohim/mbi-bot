@@ -1370,6 +1370,14 @@
    {
     "role": "assistant",
     "content": "Diyor aka, rasmdan taxminiy loyiha chizib bera olmaymiz — buning uchun aniq o'lchov kerak bo'ladi.\n\nLekin rasmlardan va o'lchamlaringizdan taxminiy narx aytib beraman. Shkaf 5m × 2.30 = ~11.5 m², LMDF+GTV bilan taxminan 1250$ atrofida. Kravat va tumbalar bilan komplekt taxminan 1600–1800$ oralig'ida.\n\nBu taxminiy narx. Aniq loyiha va narx uchun uyingizga borib o'lchaymiz, Bazis'da chizamiz — 500 ming so'm, buyurtma bersangiz summadan ayiriladi 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "Man boshliqizi yaniman"
+   },
+   {
+    "role": "assistant",
+    "content": "[[FOTO:yotoqxona]]"
    }
   ]
  },
@@ -1661,8 +1669,9 @@
    "followedUp": false
   },
   "2510326132796193": {
-   "lastClientAt": 1791731672969,
-   "followedUp": false
+   "lastClientAt": 1791731758231,
+   "followedUp": false,
+   "photoSent": true
   }
  }
 }
