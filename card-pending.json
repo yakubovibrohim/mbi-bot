@@ -24,19 +24,6 @@
       "step": "type",
       "askedAt": 1791815729499,
       "remindedAt": 1791822954726
-    },
-    "mv5epoew4sd": {
-      "dir": "out",
-      "amtUzs": 142530,
-      "place": "IP OOO ANGLESEY FOOD, UZ",
-      "rawBalance": 1068087,
-      "date": "12.10.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1791818906072,
-      "remindedAt": 1791826134763,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -1379,6 +1366,11 @@
       "date": "11.10.2026",
       "dir": "out",
       "amt": 12490
+    },
+    {
+      "date": "12.10.2026",
+      "dir": "out",
+      "amt": 142530
     }
   ],
   "lastBalances": {
