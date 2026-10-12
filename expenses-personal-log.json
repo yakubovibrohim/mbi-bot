@@ -1873,5 +1873,15 @@
     "pay_method": "card",
     "place": "IYM UZCARD2VISA S KOMISS, UZ",
     "ts": "2026-10-12T16:55:05.391Z"
+  },
+  {
+    "date": "12.10.2026",
+    "note": "💳 Gaz",
+    "amount_uzs": 91000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "RAMIRUS GAS SERVICE OOO, TOSHKENT, Uchtepinskiy rayon, ul Yakdil",
+    "ts": "2026-10-12T16:55:40.895Z"
   }
 ]
