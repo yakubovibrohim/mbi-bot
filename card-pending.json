@@ -1,19 +1,6 @@
 {
   "lastMsgId": 105354,
-  "pending": {
-    "mv5ctlcrjy1": {
-      "dir": "in",
-      "amtUzs": 1000,
-      "place": "OOO YANDEXGO UB, UZ",
-      "rawBalance": 1247617,
-      "date": "12.10.2026",
-      "title": "OTMENA E-Com oplata",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1791815729499,
-      "remindedAt": 1791830154850
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -1363,6 +1350,11 @@
     {
       "date": "12.10.2026",
       "dir": "out",
+      "amt": 1000
+    },
+    {
+      "date": "12.10.2026",
+      "dir": "in",
       "amt": 1000
     }
   ],
