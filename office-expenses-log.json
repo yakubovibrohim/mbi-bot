@@ -546,5 +546,15 @@
     "rate": 12000,
     "note": "OOO UZUM, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mv5htd4p7tj",
+    "date": "12.10.2026",
+    "ts": "2026-10-12T16:55:16.921Z",
+    "name": "💳 Taxi",
+    "amount_uzs": 37000,
+    "rate": 12000,
+    "note": "OOO YANDEXGO UB, UZ",
+    "pay_method": "card"
   }
 ]
