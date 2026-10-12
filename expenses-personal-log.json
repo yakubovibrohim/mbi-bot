@@ -1893,5 +1893,15 @@
     "pay_method": "card",
     "place": "IVI UZBEKISTAN, UZ",
     "ts": "2026-10-12T17:15:54.949Z"
+  },
+  {
+    "date": "12.10.2026",
+    "note": "💳 Kasha",
+    "amount_uzs": 142530,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IP OOO ANGLESEY FOOD, UZ",
+    "ts": "2026-10-12T17:37:20.181Z"
   }
 ]
