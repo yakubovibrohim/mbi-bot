@@ -58,7 +58,8 @@
       "title": "OTMENA E-Com oplata",
       "card4": "5893",
       "step": "type",
-      "askedAt": 1791815729499
+      "askedAt": 1791815729499,
+      "remindedAt": 1791822954726
     },
     "mv5cvg3kbac": {
       "dir": "out",
