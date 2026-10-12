@@ -1883,5 +1883,15 @@
     "pay_method": "card",
     "place": "RAMIRUS GAS SERVICE OOO, TOSHKENT, Uchtepinskiy rayon, ul Yakdil",
     "ts": "2026-10-12T16:55:40.895Z"
+  },
+  {
+    "date": "11.10.2026",
+    "note": "💳 Ivi",
+    "amount_uzs": 12490,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IVI UZBEKISTAN, UZ",
+    "ts": "2026-10-12T17:15:54.949Z"
   }
 ]
