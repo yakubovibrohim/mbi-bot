@@ -13,19 +13,6 @@
       "askedAt": 1791731574257,
       "remindedAt": 1791818034636
     },
-    "mv4rbbonixi": {
-      "dir": "out",
-      "amtUzs": 91000,
-      "place": "RAMIRUS GAS SERVICE OOO, TOSHKENT, Uchtepinskiy rayon, ul Yakdil",
-      "rawBalance": 1247617,
-      "date": "12.10.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1791779605223,
-      "remindedAt": 1791822864717,
-      "kind": "personal"
-    },
     "mv5ctiwf3oz": {
       "dir": "out",
       "amtUzs": 1000,
@@ -1392,6 +1379,11 @@
       "date": "12.10.2026",
       "dir": "out",
       "amt": 37000
+    },
+    {
+      "date": "12.10.2026",
+      "dir": "out",
+      "amt": 91000
     }
   ],
   "lastBalances": {
