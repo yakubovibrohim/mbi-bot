@@ -1394,6 +1394,10 @@
    {
     "role": "assistant",
     "content": "Arzimaydi, Diyor aka. Savol bo'lsa yoki o'lchovga tayyor bo'lsangiz — yozing 👍🏻"
+   },
+   {
+    "role": "assistant",
+    "content": "Diyor aka, yotoqxona bo'yicha nima qaribsiz? O'lchovga borib, 3D loyihasini chizib beraylikmi?"
    }
   ],
   "1878515756852116": [
@@ -1696,7 +1700,7 @@
   },
   "2510326132796193": {
    "lastClientAt": 1791731868544,
-   "followedUp": false,
+   "followedUp": true,
    "photoSent": true
   },
   "1878515756852116": {
