@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-12T16:55:28.052Z",
+  "updated": "2026-10-12T16:55:50.884Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 15780150,
+  "balance_uzs": 15689150,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 213167108,
+    "chiqim": 213258108,
     "by_category": {
       "office": 24138153,
-      "personal": 68200268,
+      "personal": 68291268,
       "staff_advance": 18727920,
       "deal_payment": 24000000,
       "deal_expense": 97368767,
@@ -3560,6 +3560,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 2186275,
       "name": "💳 Bogcha",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "12.10.2026",
+      "time": "21:55",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 91000,
+      "name": "💳 Gaz",
       "pay": "karta",
       "src": "personal"
     }
