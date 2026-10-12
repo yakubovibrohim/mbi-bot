@@ -1398,6 +1398,14 @@
    {
     "role": "assistant",
     "content": "Diyor aka, yotoqxona bo'yicha nima qaribsiz? O'lchovga borib, 3D loyihasini chizib beraylikmi?"
+   },
+   {
+    "role": "user",
+    "content": "Yoq raxmat"
+   },
+   {
+    "role": "assistant",
+    "content": "Mayli, Diyor aka. Keyinchalik kerak bo'lsa — bemalol yozing 👍🏻"
    }
   ],
   "1878515756852116": [
@@ -1699,8 +1707,8 @@
    "followedUp": false
   },
   "2510326132796193": {
-   "lastClientAt": 1791731868544,
-   "followedUp": true,
+   "lastClientAt": 1791809054790,
+   "followedUp": false,
    "photoSent": true
   },
   "1878515756852116": {
