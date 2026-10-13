@@ -103,6 +103,14 @@
         "amount_usd": 16.67,
         "entered_by": "admin",
         "pending": true
+      },
+      {
+        "id": "mv6sz4xzx76t",
+        "date": "13.10.2026",
+        "ts": "2026-10-13T14:55:28.199Z",
+        "amount_usd": 200,
+        "entered_by": "admin",
+        "pending": true
       }
     ],
     "attendance": [
