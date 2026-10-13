@@ -1913,5 +1913,15 @@
     "pay_method": "card",
     "place": "OOO YANDEXGO UB, UZ",
     "ts": "2026-10-13T11:42:46.625Z"
+  },
+  {
+    "date": "13.10.2026",
+    "note": "💳 Kalbasa",
+    "amount_uzs": 375900,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO FAYZ KOLBASA, UZ",
+    "ts": "2026-10-13T14:53:58.524Z"
   }
 ]
