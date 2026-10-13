@@ -1310,6 +1310,14 @@
    {
     "role": "assistant",
     "content": "👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi (tavsifi topilmadi — qaysi mebel qiziqtirganini so'ra)]"
+   },
+   {
+    "role": "assistant",
+    "content": "Қайси видеони кўрдингиз, нима қизиқтирди — ошхона, шкаф ёки ётоқхонами?"
    }
   ],
   "1541679007646686": [
@@ -1703,7 +1711,7 @@
    "followedUp": false
   },
   "2023273901708619": {
-   "lastClientAt": 1791108356458,
+   "lastClientAt": 1791894655765,
    "followedUp": false
   },
   "1541679007646686": {
