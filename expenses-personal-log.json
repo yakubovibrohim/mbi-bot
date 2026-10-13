@@ -1903,5 +1903,15 @@
     "pay_method": "card",
     "place": "IP OOO ANGLESEY FOOD, UZ",
     "ts": "2026-10-12T17:37:20.181Z"
+  },
+  {
+    "date": "13.10.2026",
+    "note": "💳 Taxi",
+    "amount_uzs": 20500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-10-13T11:42:46.625Z"
   }
 ]
