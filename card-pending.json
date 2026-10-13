@@ -12,19 +12,6 @@
       "step": "type",
       "askedAt": 1791892827969,
       "remindedAt": 1791900056061
-    },
-    "mv6nbagfab2": {
-      "dir": "out",
-      "amtUzs": 375900,
-      "place": "OOO FAYZ KOLBASA, UZ",
-      "rawBalance": 638687,
-      "date": "13.10.2026",
-      "title": "Platezh",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1791893817520,
-      "remindedAt": 1791901046051,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -1387,6 +1374,11 @@
       "date": "13.10.2026",
       "dir": "out",
       "amt": 20500
+    },
+    {
+      "date": "13.10.2026",
+      "dir": "out",
+      "amt": 375900
     }
   ],
   "lastBalances": {
