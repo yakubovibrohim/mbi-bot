@@ -939,6 +939,14 @@
         "date": "06.07.2026",
         "amount_usd": 306.16,
         "entered_by": "admin"
+      },
+      {
+        "id": "mv6t0oq070go",
+        "date": "13.10.2026",
+        "ts": "2026-10-13T14:56:40.488Z",
+        "amount_usd": 100,
+        "entered_by": "admin",
+        "pending": true
       }
     ],
     "attendance": [
