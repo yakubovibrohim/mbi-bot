@@ -1,18 +1,18 @@
 {
-  "updated": "2026-10-13T14:56:50.625Z",
+  "updated": "2026-10-14T02:34:20.915Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 15137730,
+  "balance_uzs": 12517770,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 213809528,
+    "chiqim": 216429488,
     "by_category": {
       "office": 24138153,
       "personal": 68842688,
-      "staff_advance": 18727920,
+      "staff_advance": 21347880,
       "deal_payment": 24000000,
       "deal_expense": 97368767,
       "debt_in": 26400000,
@@ -3617,6 +3617,28 @@
       "name": "💳 Kalbasa",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "13.10.2026",
+      "time": "19:55",
+      "dir": "out",
+      "category": "staff_advance",
+      "category_uz": "Xodim avansi",
+      "amount_uzs": 2400000,
+      "name": "Diyor",
+      "pay": "naqd",
+      "src": "staff"
+    },
+    {
+      "date": "13.10.2026",
+      "time": "19:55",
+      "dir": "out",
+      "category": "staff_advance",
+      "category_uz": "Xodim avansi",
+      "amount_uzs": 219960,
+      "name": "Diyor",
+      "pay": "naqd",
+      "src": "staff"
     }
   ]
 }
