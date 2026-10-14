@@ -36,6 +36,17 @@
       "step": "type",
       "askedAt": 1791992579249,
       "remindedAt": 1791999807764
+    },
+    "mv8gvt6a85y": {
+      "dir": "in",
+      "amtUzs": 228053,
+      "place": "GNK CASHBACK, UZ",
+      "rawBalance": 264660,
+      "date": "14.10.2026",
+      "title": "Perevod na kartu",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1792003949938
     }
   },
   "resolved": [
