@@ -13,19 +13,6 @@
       "askedAt": 1791966628917,
       "remindedAt": 1791995457685
     },
-    "mv7we98l4av": {
-      "dir": "out",
-      "amtUzs": 149700,
-      "place": "MEGACAPITAL, TOSHKENT, ESHONGUZAR MFY QORATOSH KOCHASI",
-      "rawBalance": 408107,
-      "date": "14.10.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1791969538629,
-      "remindedAt": 1791998367739,
-      "kind": "office"
-    },
     "mv81nb591md": {
       "dir": "out",
       "amtUzs": 43500,
@@ -1444,6 +1431,11 @@
       "date": "13.10.2026",
       "dir": "out",
       "amt": 33000
+    },
+    {
+      "date": "14.10.2026",
+      "dir": "out",
+      "amt": 149700
     }
   ],
   "lastBalances": {
