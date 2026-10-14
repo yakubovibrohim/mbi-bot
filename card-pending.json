@@ -1,5 +1,5 @@
 {
-  "lastMsgId": 105442,
+  "lastMsgId": 105448,
   "pending": {
     "mv7unw39wv3": {
       "dir": "out",
@@ -23,7 +23,7 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1791969538629,
-      "remindedAt": 1791983967509
+      "remindedAt": 1791991167611
     },
     "mv81nb591md": {
       "dir": "out",
@@ -1435,7 +1435,7 @@
     }
   ],
   "lastBalances": {
-    "5893": 309607
+    "5893": 267607
   },
   "lastReconcileDate": "13.10.2026"
 }
