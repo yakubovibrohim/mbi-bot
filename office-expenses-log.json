@@ -576,5 +576,15 @@
     "rate": 12000,
     "note": "YATT RAXMATOV ASRORXON ABRALXA,  , LICHIK BESHYOGOCH-1 TOR-22",
     "pay_method": "card"
+  },
+  {
+    "id": "mv8dxwa2rn0",
+    "date": "14.10.2026",
+    "ts": "2026-10-14T17:30:08.426Z",
+    "name": "💳 Samarezlar",
+    "amount_uzs": 80880,
+    "rate": 12000,
+    "note": "PAYME P2P, UZ",
+    "pay_method": "card"
   }
 ]
