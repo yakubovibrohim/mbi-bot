@@ -566,5 +566,15 @@
     "rate": 12000,
     "note": "MEGACAPITAL, TOSHKENT, ESHONGUZAR MFY QORATOSH KOCHASI",
     "pay_method": "card"
+  },
+  {
+    "id": "mv8dwgl4ljl",
+    "date": "14.10.2026",
+    "ts": "2026-10-14T17:29:01.432Z",
+    "name": "💳 Instrument",
+    "amount_uzs": 53000,
+    "rate": 12000,
+    "note": "YATT RAXMATOV ASRORXON ABRALXA,  , LICHIK BESHYOGOCH-1 TOR-22",
+    "pay_method": "card"
   }
 ]
