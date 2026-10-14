@@ -556,5 +556,15 @@
     "rate": 12000,
     "note": "OOO YANDEXGO UB, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mv8dvzp3c9a",
+    "date": "14.10.2026",
+    "ts": "2026-10-14T17:28:39.543Z",
+    "name": "💳 Abet",
+    "amount_uzs": 149700,
+    "rate": 12000,
+    "note": "MEGACAPITAL, TOSHKENT, ESHONGUZAR MFY QORATOSH KOCHASI",
+    "pay_method": "card"
   }
 ]
