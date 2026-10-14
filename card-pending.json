@@ -21,9 +21,10 @@
       "date": "14.10.2026",
       "title": "Pokupka",
       "card4": "5893",
-      "step": "type",
+      "step": "note",
       "askedAt": 1791969538629,
-      "remindedAt": 1791998367739
+      "remindedAt": 1791998367739,
+      "kind": "personal"
     },
     "mv81nb591md": {
       "dir": "out",
