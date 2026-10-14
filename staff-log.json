@@ -109,8 +109,7 @@
         "date": "13.10.2026",
         "ts": "2026-10-13T14:55:28.199Z",
         "amount_usd": 200,
-        "entered_by": "admin",
-        "pending": true
+        "entered_by": "admin"
       },
       {
         "id": "mv6szmcxpwlr",
