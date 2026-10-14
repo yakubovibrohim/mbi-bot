@@ -1,5 +1,5 @@
 {
-  "lastMsgId": 105460,
+  "lastMsgId": 105461,
   "pending": {
     "mv81nb591md": {
       "dir": "out",
@@ -45,8 +45,9 @@
       "date": "14.10.2026",
       "title": "E-Com oplata",
       "card4": "5893",
-      "step": "type",
-      "askedAt": 1792002119231
+      "step": "note",
+      "askedAt": 1792002119231,
+      "kind": "office"
     }
   },
   "resolved": [
