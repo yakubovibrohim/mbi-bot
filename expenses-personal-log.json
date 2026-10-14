@@ -1923,5 +1923,15 @@
     "pay_method": "card",
     "place": "OOO FAYZ KOLBASA, UZ",
     "ts": "2026-10-13T14:53:58.524Z"
+  },
+  {
+    "date": "13.10.2026",
+    "note": "💳 Taxi",
+    "amount_uzs": 33000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-10-14T06:36:55.217Z"
   }
 ]
