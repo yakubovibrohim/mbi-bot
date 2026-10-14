@@ -586,5 +586,15 @@
     "rate": 12000,
     "note": "PAYME P2P, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mv8fumwlxot",
+    "date": "14.10.2026",
+    "ts": "2026-10-14T18:23:35.541Z",
+    "name": "💳 Ujin",
+    "amount_uzs": 231000,
+    "rate": 12000,
+    "note": "PAYME OPLATA, UZ",
+    "pay_method": "card"
   }
 ]
