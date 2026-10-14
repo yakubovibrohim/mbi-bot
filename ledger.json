@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-14T06:37:05.706Z",
+  "updated": "2026-10-14T17:28:49.878Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 12484770,
+  "balance_uzs": 12335070,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 216462488,
+    "chiqim": 216612188,
     "by_category": {
-      "office": 24138153,
+      "office": 24287853,
       "personal": 68875688,
       "staff_advance": 21347880,
       "deal_payment": 24000000,
@@ -3650,6 +3650,17 @@
       "name": "Diyor",
       "pay": "naqd",
       "src": "staff"
+    },
+    {
+      "date": "14.10.2026",
+      "time": "22:28",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 149700,
+      "name": "💳 Abet",
+      "pay": "karta",
+      "src": "office"
     }
   ]
 }
