@@ -1415,6 +1415,16 @@
     "role": "assistant",
     "content": "Mayli, Diyor aka. Keyinchalik kerak bo'lsa — bemalol yozing 👍🏻"
    }
+  ],
+  "979980394442182": [
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"‼️PUL KERAKMI‼️\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум, яхшимисиз 👍🏻 Исмингиз нима?\n\nМебел бўйича саволингиз бормиди — ошхона, шкаф ёки ётоқхона керакми?"
+   }
   ]
  },
  "activity": {
@@ -1708,6 +1718,10 @@
    "lastClientAt": 1791809054790,
    "followedUp": false,
    "photoSent": true
+  },
+  "979980394442182": {
+   "lastClientAt": 1791943452369,
+   "followedUp": false
   }
  }
 }
