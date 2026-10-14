@@ -60,6 +60,17 @@
       "step": "type",
       "askedAt": 1791983339306,
       "remindedAt": 1791990567594
+    },
+    "mv8a43ht9ui": {
+      "dir": "out",
+      "amtUzs": 42000,
+      "place": "OOO KITCHEN STORE, TASHKENT, G. TASHKENT UL. FURQAT DOM 1A",
+      "rawBalance": 267607,
+      "date": "14.10.2026",
+      "title": "Pokupka",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1791992579249
     }
   },
   "resolved": [
