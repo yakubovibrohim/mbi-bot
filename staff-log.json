@@ -116,8 +116,7 @@
         "date": "13.10.2026",
         "ts": "2026-10-13T14:55:50.770Z",
         "amount_usd": 18.33,
-        "entered_by": "admin",
-        "pending": true
+        "entered_by": "admin"
       }
     ],
     "attendance": [
