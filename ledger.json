@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-14T17:57:56.832Z",
+  "updated": "2026-10-14T18:23:45.761Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 12201190,
+  "balance_uzs": 11970190,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 216746068,
+    "chiqim": 216977068,
     "by_category": {
-      "office": 24421733,
+      "office": 24652733,
       "personal": 68875688,
       "staff_advance": 21347880,
       "deal_payment": 24000000,
@@ -3681,6 +3681,17 @@
       "category_uz": "Ishxona",
       "amount_uzs": 80880,
       "name": "💳 Samarezlar",
+      "pay": "karta",
+      "src": "office"
+    },
+    {
+      "date": "14.10.2026",
+      "time": "23:23",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 231000,
+      "name": "💳 Ujin",
       "pay": "karta",
       "src": "office"
     }
