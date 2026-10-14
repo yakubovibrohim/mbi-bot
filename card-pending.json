@@ -58,6 +58,17 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1792004099428
+    },
+    "mv8h7dn5j7l": {
+      "dir": "out",
+      "amtUzs": 20220,
+      "place": "PAYME P2P, UZ",
+      "rawBalance": 199440,
+      "date": "15.10.2026",
+      "title": "Spisanie c karty",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1792004489681
     }
   },
   "resolved": [
