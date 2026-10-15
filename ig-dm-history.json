@@ -1457,6 +1457,16 @@
     "role": "assistant",
     "content": "Бу гул эмас, биз мебел ясаймиз 😀 Ошхона, шкаф, ётоқхона — буюртма бўйича.\n\nСизга мебел керакмиди?"
    }
+  ],
+  "1858083935354274": [
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"장난감 내놔!! !카트를 타고 추격하세요! 🛻💨 follow @banggri.official for more happy! #banggri #빵그리 #happy #healing #animation #love #meme #iloveyou #cartoon #funny #comedy #유머 #힐링 #공감 #게임 #밈\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум! 👍🏻 Бизда буюртма мебел ясаймиз — ошхона, шкаф, ётоқхона. Нима режалаштиряпсиз?"
+   }
   ]
  },
  "activity": {
@@ -1753,6 +1763,10 @@
   },
   "979980394442182": {
    "lastClientAt": 1792038688264,
+   "followedUp": false
+  },
+  "1858083935354274": {
+   "lastClientAt": 1792079047783,
    "followedUp": false
   }
  }
