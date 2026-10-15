@@ -1436,6 +1436,14 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкум, яхшимисиз 👍🏻 Исмингиз нима?\n\nМебел бўйича саволингиз бормиди — ошхона, шкаф ёки ётоқхона керакми?"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"Dollar guli ( Zamiaculkas) korkam barglari yashil rangi va jozibador korinishi bilan boshqa gulladan farq qiladi. Bu gulni erkagu ayol birdek yoqtiradi ayniqsa ofislarda oq tuvaklarda hona dizayniga judamos keladigan gul hisoblanadi. Sotuvda bor 500 ming bu eng kottasi.\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Бу гул эмас, биз мебел ясаймиз 😀 Ошхона, шкаф, ётоқхона — буюртма бўйича.\n\nСизга мебел керакмиди?"
    }
   ]
  },
@@ -1732,7 +1740,7 @@
    "photoSent": true
   },
   "979980394442182": {
-   "lastClientAt": 1791943452369,
+   "lastClientAt": 1792038688264,
    "followedUp": false
   }
  }
