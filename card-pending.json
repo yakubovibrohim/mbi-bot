@@ -72,6 +72,17 @@
       "step": "type",
       "askedAt": 1792004669321,
       "remindedAt": 1792119899852
+    },
+    "mvagfpukvjb": {
+      "dir": "out",
+      "amtUzs": 26000,
+      "place": "OOO YANDEXGO UB, UZ",
+      "rawBalance": 127940,
+      "date": "16.10.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1792124131484
     }
   },
   "resolved": [
