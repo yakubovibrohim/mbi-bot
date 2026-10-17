@@ -13,19 +13,6 @@
       "askedAt": 1791978359085,
       "remindedAt": 1792223221714
     },
-    "mv824o3mxpd": {
-      "dir": "out",
-      "amtUzs": 2000,
-      "place": "OOO YANDEXGO UB, UZ",
-      "rawBalance": 362607,
-      "date": "14.10.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1791979169026,
-      "remindedAt": 1792224001737,
-      "kind": "personal"
-    },
     "mv8gz0is9o4": {
       "dir": "out",
       "amtUzs": 45000,
@@ -1504,6 +1491,11 @@
       "date": "16.10.2026",
       "dir": "out",
       "amt": 59999
+    },
+    {
+      "date": "14.10.2026",
+      "dir": "out",
+      "amt": 2000
     }
   ],
   "lastBalances": {
