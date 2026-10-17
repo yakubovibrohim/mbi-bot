@@ -13,18 +13,6 @@
       "askedAt": 1792004489681,
       "remindedAt": 1792256522303,
       "kind": "personal"
-    },
-    "mvck5gr70qo": {
-      "dir": "in",
-      "amtUzs": 3600000,
-      "place": "OPERU  ASIA ALLIANCE BANK AT BANKI, UZ",
-      "rawBalance": 3635441,
-      "date": "17.10.2026",
-      "title": "Perevod na kartu",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1792251303955,
-      "remindedAt": 1792258532346
     }
   },
   "resolved": [
@@ -1467,6 +1455,11 @@
       "date": "14.10.2026",
       "dir": "out",
       "amt": 45000
+    },
+    {
+      "date": "17.10.2026",
+      "dir": "in",
+      "amt": 3600000
     }
   ],
   "lastBalances": {
