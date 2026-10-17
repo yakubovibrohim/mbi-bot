@@ -596,5 +596,15 @@
     "rate": 12000,
     "note": "PAYME OPLATA, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mvc48yf8hcl",
+    "date": "14.10.2026",
+    "ts": "2026-10-17T08:09:52.964Z",
+    "name": "💳 Ishxona",
+    "amount_uzs": 42000,
+    "rate": 12000,
+    "note": "OOO KITCHEN STORE, TASHKENT, G. TASHKENT UL. FURQAT DOM 1A",
+    "pay_method": "card"
   }
 ]
