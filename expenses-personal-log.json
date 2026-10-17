@@ -1993,5 +1993,15 @@
     "pay_method": "card",
     "place": "OOO YANDEXGO UB, UZ",
     "ts": "2026-10-17T10:44:22.289Z"
+  },
+  {
+    "date": "14.10.2026",
+    "note": "💳 asdasdaadsa",
+    "amount_uzs": 45000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-10-17T10:44:37.578Z"
   }
 ]
