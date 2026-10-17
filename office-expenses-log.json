@@ -606,5 +606,15 @@
     "rate": 12000,
     "note": "OOO KITCHEN STORE, TASHKENT, G. TASHKENT UL. FURQAT DOM 1A",
     "pay_method": "card"
+  },
+  {
+    "id": "mvc49b53o6f",
+    "date": "16.10.2026",
+    "ts": "2026-10-17T08:10:09.447Z",
+    "name": "💳 Taxi",
+    "amount_uzs": 59999,
+    "rate": 12000,
+    "note": "OCTOBANK YANDEXPLUS OPLATA, UZ",
+    "pay_method": "card"
   }
 ]
