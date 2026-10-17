@@ -1,17 +1,17 @@
 {
-  "updated": "2026-10-17T10:44:32.371Z",
+  "updated": "2026-10-17T10:44:47.818Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 11718691,
+  "balance_uzs": 11673691,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 217228567,
+    "chiqim": 217273567,
     "by_category": {
       "office": 24754732,
-      "personal": 69025188,
+      "personal": 69070188,
       "staff_advance": 21347880,
       "deal_payment": 24000000,
       "deal_expense": 97368767,
@@ -3725,6 +3725,17 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 43500,
       "name": "💳 Nxnx",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "14.10.2026",
+      "time": "15:44",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 45000,
+      "name": "💳 asdasdaadsa",
       "pay": "karta",
       "src": "personal"
     },
