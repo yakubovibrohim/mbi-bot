@@ -22,8 +22,9 @@
       "date": "18.10.2026",
       "title": "Pokupka",
       "card4": "5893",
-      "step": "type",
-      "askedAt": 1792309474846
+      "step": "note",
+      "askedAt": 1792309474846,
+      "kind": "personal"
     }
   },
   "resolved": [
