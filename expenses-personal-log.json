@@ -2013,5 +2013,15 @@
     "pay_method": "card",
     "place": "FERSA TRADE, 860, KHSHEROZIY 10",
     "ts": "2026-10-18T07:56:52.041Z"
+  },
+  {
+    "date": "15.10.2026",
+    "note": "💳 PAYME P2P, UZ",
+    "amount_uzs": 20220,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-10-18T11:06:54.446Z"
   }
 ]
