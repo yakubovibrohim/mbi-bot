@@ -2003,5 +2003,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-10-17T10:44:37.578Z"
+  },
+  {
+    "date": "18.10.2026",
+    "note": "💳 Sigaret",
+    "amount_uzs": 250000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "FERSA TRADE, 860, KHSHEROZIY 10",
+    "ts": "2026-10-18T07:56:52.041Z"
   }
 ]
