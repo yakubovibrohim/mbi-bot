@@ -1,20 +1,6 @@
 {
   "lastMsgId": 105621,
-  "pending": {
-    "mv8h7dn5j7l": {
-      "dir": "out",
-      "amtUzs": 20220,
-      "place": "PAYME P2P, UZ",
-      "rawBalance": 199440,
-      "date": "15.10.2026",
-      "title": "Spisanie c karty",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1792004489681,
-      "remindedAt": 1792321323531,
-      "kind": "personal"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -1465,6 +1451,11 @@
       "date": "18.10.2026",
       "dir": "out",
       "amt": 250000
+    },
+    {
+      "date": "15.10.2026",
+      "dir": "out",
+      "amt": 20220
     }
   ],
   "lastBalances": {
