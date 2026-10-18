@@ -13,6 +13,17 @@
       "askedAt": 1792004489681,
       "remindedAt": 1792306923225,
       "kind": "personal"
+    },
+    "mvdis9paztp": {
+      "dir": "out",
+      "amtUzs": 250000,
+      "place": "FERSA TRADE, 860, KHSHEROZIY 10",
+      "rawBalance": 3385441,
+      "date": "18.10.2026",
+      "title": "Pokupka",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1792309474846
     }
   },
   "resolved": [
