@@ -616,5 +616,15 @@
     "rate": 12000,
     "note": "OCTOBANK YANDEXPLUS OPLATA, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mveqrmj1av0",
+    "date": "18.10.2026",
+    "ts": "2026-10-19T04:15:47.917Z",
+    "name": "💳 Payme",
+    "amount_uzs": 9990,
+    "rate": 12000,
+    "note": "PAYME OPLATA, UZ",
+    "pay_method": "card"
   }
 ]
