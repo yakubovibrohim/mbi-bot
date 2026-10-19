@@ -2023,5 +2023,15 @@
     "pay_method": "card",
     "place": "PAYME P2P, UZ",
     "ts": "2026-10-18T11:06:54.446Z"
+  },
+  {
+    "date": "19.10.2026",
+    "note": "💳 Zakaz",
+    "amount_uzs": 147700,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "IP OOO YANDEX EATS, UZ",
+    "ts": "2026-10-19T08:17:23.668Z"
   }
 ]
