@@ -1,6 +1,18 @@
 {
   "lastMsgId": 105631,
-  "pending": {},
+  "pending": {
+    "mverkyfgn65": {
+      "dir": "out",
+      "amtUzs": 54000,
+      "place": "GOFUR OTA SAVDO MCHZH, toshkent, Yakkasaroy tumani massiv Qushbe",
+      "rawBalance": 3321451,
+      "date": "19.10.2026",
+      "title": "Pokupka",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1792384716364
+    }
+  },
   "resolved": [
     {
       "date": "08.07.2026",
