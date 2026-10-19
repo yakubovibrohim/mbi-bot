@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-19T04:15:57.862Z",
+  "updated": "2026-10-19T04:39:28.316Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 11393481,
+  "balance_uzs": 11339481,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 217553777,
+    "chiqim": 217607777,
     "by_category": {
-      "office": 24764722,
+      "office": 24818722,
       "personal": 69340408,
       "staff_advance": 21347880,
       "deal_payment": 24000000,
@@ -3826,6 +3826,17 @@
       "name": "💳 Sigaret",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "19.10.2026",
+      "time": "09:39",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 54000,
+      "name": "💳 Suv",
+      "pay": "karta",
+      "src": "office"
     }
   ]
 }
