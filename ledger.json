@@ -1,16 +1,16 @@
 {
-  "updated": "2026-10-20T04:16:55.541Z",
+  "updated": "2026-10-20T08:21:15.966Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 11191781,
+  "balance_uzs": 11111781,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 217755477,
+    "chiqim": 217835477,
     "by_category": {
-      "office": 24818722,
+      "office": 24898722,
       "personal": 69488108,
       "staff_advance": 21347880,
       "deal_payment": 24000000,
@@ -3848,6 +3848,17 @@
       "name": "💳 Zakaz",
       "pay": "karta",
       "src": "personal"
+    },
+    {
+      "date": "20.10.2026",
+      "time": "13:21",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 80000,
+      "name": "💳 Rr",
+      "pay": "karta",
+      "src": "office"
     }
   ]
 }
