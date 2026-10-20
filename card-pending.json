@@ -48,19 +48,6 @@
       "step": "type",
       "askedAt": 1792431096988,
       "remindedAt": 1792495926711
-    },
-    "mvgjuiswogo": {
-      "dir": "out",
-      "amtUzs": 60000,
-      "place": "PAYME OPLATA, UZ",
-      "rawBalance": 2950251,
-      "date": "20.10.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1792492658096,
-      "remindedAt": 1792499886778,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -1543,6 +1530,11 @@
       "date": "20.10.2026",
       "dir": "out",
       "amt": 119300
+    },
+    {
+      "date": "20.10.2026",
+      "dir": "out",
+      "amt": 60000
     }
   ],
   "lastBalances": {
