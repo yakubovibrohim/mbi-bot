@@ -636,5 +636,15 @@
     "rate": 12000,
     "note": "GOFUR OTA SAVDO MCHZH, toshkent, Yakkasaroy tumani massiv Qushbe",
     "pay_method": "card"
+  },
+  {
+    "id": "mvgeyxmjtig",
+    "date": "20.10.2026",
+    "ts": "2026-10-20T08:21:05.851Z",
+    "name": "💳 Rr",
+    "amount_uzs": 80000,
+    "rate": 12000,
+    "note": "PAYME OPLATA, UZ",
+    "pay_method": "card"
   }
 ]
