@@ -2033,5 +2033,15 @@
     "pay_method": "card",
     "place": "IP OOO YANDEX EATS, UZ",
     "ts": "2026-10-19T08:17:23.668Z"
+  },
+  {
+    "date": "20.10.2026",
+    "note": "💳 abet",
+    "amount_uzs": 119300,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "MCHJ MIKA PLUS TRADE, tashkent, MUQIMIY KOCHASI 3 A UY",
+    "ts": "2026-10-20T12:46:22.623Z"
   }
 ]
