@@ -2043,5 +2043,15 @@
     "pay_method": "card",
     "place": "MCHJ MIKA PLUS TRADE, tashkent, MUQIMIY KOCHASI 3 A UY",
     "ts": "2026-10-20T12:46:22.623Z"
+  },
+  {
+    "date": "20.10.2026",
+    "note": "💳 paynet",
+    "amount_uzs": 60000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-10-20T12:46:31.207Z"
   }
 ]
