@@ -82,7 +82,8 @@
       "title": "Spisanie c karty",
       "card4": "5893",
       "step": "type",
-      "askedAt": 1792565889350
+      "askedAt": 1792565889350,
+      "remindedAt": 1792573118171
     },
     "mvhsdk731rt": {
       "dir": "out",
