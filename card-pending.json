@@ -180,6 +180,17 @@
       "step": "type",
       "askedAt": 1792656130802,
       "remindedAt": 1792670559803
+    },
+    "mvjlw5q5hi2": {
+      "dir": "in",
+      "amtUzs": 1200000,
+      "place": "OPERU  ASIA ALLIANCE BANK AT BANKI, UZ",
+      "rawBalance": 2823598,
+      "date": "22.10.2026",
+      "title": "Perevod na kartu",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1792677492221
     }
   },
   "resolved": [
