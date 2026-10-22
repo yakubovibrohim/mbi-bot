@@ -836,6 +836,14 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкум! Бизга мебел бўйича ёзаётган бўлсангиз, ёрдам берамиз 👍🏻 Нима керак — ошхона, шкаф ёки ётоқхонами?"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"Telefon sindi 😱\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум! Нима режалаштиряпсиз — ошхона, шкаф ёки ётоқхонами? Ёрдам берамиз 👍🏻"
    }
   ],
   "27164963133203098": [
@@ -1623,7 +1631,7 @@
    "followedUp": false
   },
   "1660596615206219": {
-   "lastClientAt": 1790562899750,
+   "lastClientAt": 1792639553091,
    "followedUp": false
   },
   "27164963133203098": {
