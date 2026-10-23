@@ -1475,6 +1475,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкум! 👍🏻 Бизда буюртма мебел ясаймиз — ошхона, шкаф, ётоқхона. Нима режалаштиряпсиз?"
    }
+  ],
+  "1136229472083855": [
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"@yunusov_facade_art Qilamiza InShaaAlloh shundan ham✊ #mebel #rec #uzb #uzbekistan #pokraska\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Ассалому Алейкум! 👍🏻 Бу қандай иш — ошхона бўладими, ё шкаф? Ўлчамини ва қайси хона эканини айтсангиз, ёрдам бераман."
+   }
   ]
  },
  "activity": {
@@ -1780,6 +1790,10 @@
   "1536822627857850": {
    "manual": true,
    "manualAt": 1792150105258
+  },
+  "1136229472083855": {
+   "lastClientAt": 1792735553806,
+   "followedUp": false
   }
  }
 }
