@@ -1,5 +1,5 @@
 {
-  "lastMsgId": 105919,
+  "lastMsgId": 105929,
   "pending": {
     "mvf5w04fgb1": {
       "dir": "out",
@@ -1694,7 +1694,7 @@
     }
   ],
   "lastBalances": {
-    "5893": 1623098
+    "5893": 1603098
   },
   "lastReconcileDate": "22.10.2026"
 }
