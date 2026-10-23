@@ -274,7 +274,8 @@
       "title": "Platezh",
       "card4": "5893",
       "step": "type",
-      "askedAt": 1792771332947
+      "askedAt": 1792771332947,
+      "remindedAt": 1792778561725
     }
   },
   "resolved": [
