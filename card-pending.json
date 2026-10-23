@@ -215,18 +215,6 @@
       "card4": "5893",
       "step": "type",
       "askedAt": 1792736142311
-    },
-    "mvkl6qogi2t": {
-      "dir": "out",
-      "amtUzs": 26000,
-      "place": "OOO YANDEXGO UB, UZ",
-      "rawBalance": 1577098,
-      "date": "23.10.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1792736772496,
-      "kind": "personal"
     }
   },
   "resolved": [
@@ -1714,6 +1702,11 @@
       "date": "20.10.2026",
       "dir": "out",
       "amt": 60000
+    },
+    {
+      "date": "23.10.2026",
+      "dir": "out",
+      "amt": 26000
     }
   ],
   "lastBalances": {
