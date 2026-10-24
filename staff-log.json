@@ -117,6 +117,14 @@
         "ts": "2026-10-13T14:55:50.770Z",
         "amount_usd": 18.33,
         "entered_by": "admin"
+      },
+      {
+        "id": "mvmj7zvkxjpq",
+        "date": "24.10.2026",
+        "ts": "2026-10-24T15:06:44.193Z",
+        "amount_usd": 100,
+        "entered_by": "admin",
+        "pending": true
       }
     ],
     "attendance": [
