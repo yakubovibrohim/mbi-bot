@@ -844,6 +844,14 @@
    {
     "role": "assistant",
     "content": "Ассалому Алейкум! Нима режалаштиряпсиз — ошхона, шкаф ёки ётоқхонами? Ёрдам берамиз 👍🏻"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"Yaqinlarizga ilashib qoying✈️❤️‍🔥 #rek #top #rekkachiq #kelin #ona\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
    }
   ],
   "27164963133203098": [
@@ -1641,8 +1649,9 @@
    "followedUp": false
   },
   "1660596615206219": {
-   "lastClientAt": 1792639553091,
-   "followedUp": false
+   "lastClientAt": 1792812662334,
+   "followedUp": false,
+   "lastTechFail": 1792812661985
   },
   "27164963133203098": {
    "lastClientAt": 1790322152820,
