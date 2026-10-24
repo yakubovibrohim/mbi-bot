@@ -123,8 +123,7 @@
         "date": "24.10.2026",
         "ts": "2026-10-24T15:06:44.193Z",
         "amount_usd": 100,
-        "entered_by": "admin",
-        "pending": true
+        "entered_by": "admin"
       }
     ],
     "attendance": [
