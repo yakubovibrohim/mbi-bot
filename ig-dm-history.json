@@ -1501,6 +1501,16 @@
     "role": "assistant",
     "content": "Ассалому Алейкум! 👍🏻 Бу қандай иш — ошхона бўладими, ё шкаф? Ўлчамини ва қайси хона эканини айтсангиз, ёрдам бераман."
    }
+  ],
+  "2239297523502158": [
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"Haqiqiy ustaga ikki og‘iz gap kifoya — mijozning istagini orzusidagi mebelga aylantiradi! 🔥 〰️〰️〰️ Настоящему мастеру достаточно пары слов, чтобы превратить желание клиента в мебель его мечты! 🔥\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
+   }
   ]
  },
  "activity": {
@@ -1811,6 +1821,11 @@
   },
   "1136229472083855": {
    "lastClientAt": 1792735553806,
+   "followedUp": false
+  },
+  "2239297523502158": {
+   "lastTechFail": 1792939901585,
+   "lastClientAt": 1792939901701,
    "followedUp": false
   }
  }
