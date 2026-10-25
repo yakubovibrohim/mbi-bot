@@ -1472,6 +1472,14 @@
    {
     "role": "assistant",
     "content": "Бу гул эмас, биз мебел ясаймиз 😀 Ошхона, шкаф, ётоқхона — буюртма бўйича.\n\nСизга мебел керакмиди?"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi (tavsifi topilmadi — qaysi mebel qiziqtirganini so'ra)]"
+   },
+   {
+    "role": "assistant",
+    "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
    }
   ],
   "1858083935354274": [
@@ -1789,8 +1797,9 @@
    "photoSent": true
   },
   "979980394442182": {
-   "lastClientAt": 1792038688264,
-   "followedUp": false
+   "lastClientAt": 1792922033226,
+   "followedUp": false,
+   "lastTechFail": 1792922033124
   },
   "1858083935354274": {
    "lastClientAt": 1792079047783,
