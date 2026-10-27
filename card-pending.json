@@ -372,6 +372,17 @@
       "step": "type",
       "askedAt": 1793090329141,
       "remindedAt": 1793104757848
+    },
+    "mvqpnhl92f4": {
+      "dir": "out",
+      "amtUzs": 30330,
+      "place": "PAYME P2P, UZ",
+      "rawBalance": 694283,
+      "date": "27.10.2026",
+      "title": "Spisanie c karty",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1793107069389
     }
   },
   "resolved": [
