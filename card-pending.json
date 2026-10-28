@@ -241,18 +241,6 @@
       "askedAt": 1792746042638,
       "remindedAt": 1793163708831
     },
-    "mvl5l2qtdaf": {
-      "dir": "in",
-      "amtUzs": 1800000,
-      "place": "AO PAYNET, UZ",
-      "rawBalance": 3181503,
-      "date": "23.10.2026",
-      "title": "Perevod na kartu",
-      "card4": "5893",
-      "step": "type",
-      "askedAt": 1792771033637,
-      "remindedAt": 1793167128901
-    },
     "mvl5mcybexx": {
       "dir": "in",
       "amtUzs": 20000,
@@ -1876,6 +1864,11 @@
       "date": "23.10.2026",
       "dir": "out",
       "amt": 26000
+    },
+    {
+      "date": "23.10.2026",
+      "dir": "in",
+      "amt": 1800000
     }
   ],
   "lastBalances": {
