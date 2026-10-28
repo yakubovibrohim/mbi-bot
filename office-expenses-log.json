@@ -646,5 +646,15 @@
     "rate": 12000,
     "note": "PAYME OPLATA, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mvs442hi26k",
+    "date": "21.10.2026",
+    "ts": "2026-10-28T12:50:23.766Z",
+    "name": "💳 Abet",
+    "amount_uzs": 300500,
+    "rate": 12000,
+    "note": "OOO ZIGIR OSH PAYSHANBA, OLTI, OLTI UGIL KFY, OLTI UGIL MFY",
+    "pay_method": "card"
   }
 ]
