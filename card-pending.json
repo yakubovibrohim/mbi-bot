@@ -105,9 +105,10 @@
       "date": "21.10.2026",
       "title": "Pokupka",
       "card4": "5893",
-      "step": "type",
+      "step": "note",
       "askedAt": 1792569429407,
-      "remindedAt": 1793188790227
+      "remindedAt": 1793188790227,
+      "kind": "personal"
     },
     "mvhtp57z48x": {
       "dir": "out",
