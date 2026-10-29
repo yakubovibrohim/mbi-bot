@@ -322,7 +322,8 @@
       "title": "E-Com oplata",
       "card4": "5893",
       "step": "type",
-      "askedAt": 1793253713143
+      "askedAt": 1793253713143,
+      "remindedAt": 1793260941602
     }
   },
   "resolved": [
