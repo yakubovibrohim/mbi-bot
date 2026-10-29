@@ -324,6 +324,17 @@
       "step": "type",
       "askedAt": 1793253713143,
       "remindedAt": 1793268141673
+    },
+    "mvth368i92i": {
+      "dir": "out",
+      "amtUzs": 512810,
+      "place": "HGT PAYNET, UZ",
+      "rawBalance": 154973,
+      "date": "29.10.2026",
+      "title": "E-Com oplata",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1793274083154
     }
   },
   "resolved": [
