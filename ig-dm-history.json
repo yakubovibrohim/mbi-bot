@@ -1543,6 +1543,16 @@
     "role": "assistant",
     "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
    }
+  ],
+  "1603567680874752": [
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"🎬 Ko'z ojiz muallif hayoti. 🤝 Qo'llab-quvvatlash uchun: 💳 4073 4200 1387 3967 📞 Tel: +998 91 767 22 12 Rahmat!\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
+   }
   ]
  },
  "activity": {
@@ -1869,6 +1879,11 @@
   "1870731780476935": {
    "lastTechFail": 1793160707654,
    "lastClientAt": 1793160707781,
+   "followedUp": false
+  },
+  "1603567680874752": {
+   "lastTechFail": 1793350293016,
+   "lastClientAt": 1793350293126,
    "followedUp": false
   }
  }
