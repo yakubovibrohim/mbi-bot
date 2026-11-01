@@ -119,5 +119,14 @@
     "paid_uzs": 0,
     "date": "08.07.2026",
     "note": "Perechestleniyadan ostatka"
+  },
+  {
+    "id": "mvxxg8afa1kc",
+    "dir": "out",
+    "name": "Dilmurod aka",
+    "amount_uzs": 25800000,
+    "paid_uzs": 0,
+    "date": "01.11.2026",
+    "note": "Sharm el sheikh"
   }
 ]
