@@ -125,8 +125,16 @@
     "dir": "out",
     "name": "Dilmurod aka",
     "amount_uzs": 25800000,
-    "paid_uzs": 0,
+    "paid_uzs": 4800000,
     "date": "01.11.2026",
-    "note": "Sharm el sheikh"
+    "note": "Sharm el sheikh",
+    "payments": [
+      {
+        "date": "01.11.2026",
+        "ts": "2026-11-01T14:30:48.842Z",
+        "amount_uzs": 4800000
+      }
+    ],
+    "pay_date": "01.11.2026"
   }
 ]
