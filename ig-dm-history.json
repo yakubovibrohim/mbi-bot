@@ -1553,6 +1553,20 @@
     "role": "assistant",
     "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
    }
+  ],
+  "2132001694081803": [
+   {
+    "role": "user",
+    "content": "Assalom alekom"
+   },
+   {
+    "role": "assistant",
+    "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
+   },
+   {
+    "role": "user",
+    "content": "Silada 100%mdf dan boladimi"
+   }
   ]
  },
  "activity": {
@@ -1884,6 +1898,11 @@
   "1603567680874752": {
    "lastTechFail": 1793350293016,
    "lastClientAt": 1793350293126,
+   "followedUp": false
+  },
+  "2132001694081803": {
+   "lastTechFail": 1793512953726,
+   "lastClientAt": 1793512954127,
    "followedUp": false
   }
  }
