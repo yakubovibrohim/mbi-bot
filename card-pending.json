@@ -384,6 +384,17 @@
       "step": "type",
       "askedAt": 1793378815168,
       "remindedAt": 1793558847063
+    },
+    "mvy9hkbt7na": {
+      "dir": "out",
+      "amtUzs": 15473,
+      "place": "UB SPISANIE NASIYA, UZ",
+      "rawBalance": 0,
+      "date": "02.11.2026",
+      "title": "Platezh",
+      "card4": "5893",
+      "step": "type",
+      "askedAt": 1793563648553
     }
   },
   "resolved": [
