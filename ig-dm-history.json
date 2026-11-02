@@ -864,6 +864,14 @@
    {
     "role": "assistant",
     "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"Jannatni ulashing 🙌🏻 #рекомендации ❗️\"]\nV"
+   },
+   {
+    "role": "assistant",
+    "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
    }
   ],
   "27164963133203098": [
@@ -1566,6 +1574,14 @@
    {
     "role": "user",
     "content": "Silada 100%mdf dan boladimi"
+   },
+   {
+    "role": "user",
+    "content": "Kuhnya shkaflari ichlari bn"
+   },
+   {
+    "role": "user",
+    "content": "Kopla ichiga dsp urvorarkande"
    }
   ]
  },
@@ -1724,9 +1740,9 @@
    "followedUp": false
   },
   "1660596615206219": {
-   "lastClientAt": 1792812662334,
+   "lastClientAt": 1793611115491,
    "followedUp": false,
-   "lastTechFail": 1792812661985
+   "lastTechFail": 1793611115381
   },
   "27164963133203098": {
    "lastClientAt": 1790322152820,
