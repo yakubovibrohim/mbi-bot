@@ -1583,6 +1583,16 @@
     "role": "user",
     "content": "Kopla ichiga dsp urvorarkande"
    }
+  ],
+  "1333690772120447": [
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"Mironshoh_ai\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
+   }
   ]
  },
  "activity": {
@@ -1919,6 +1929,11 @@
   "2132001694081803": {
    "lastTechFail": 1793512953726,
    "lastClientAt": 1793512954127,
+   "followedUp": false
+  },
+  "1333690772120447": {
+   "lastTechFail": 1794042997112,
+   "lastClientAt": 1794042997290,
    "followedUp": false
   }
  }
