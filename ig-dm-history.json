@@ -1593,6 +1593,16 @@
     "role": "assistant",
     "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
    }
+  ],
+  "2461249757714465": [
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"#rek 😂😂🤣🤣🤣🤣\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
+   }
   ]
  },
  "activity": {
@@ -1934,6 +1944,11 @@
   "1333690772120447": {
    "lastTechFail": 1794042997112,
    "lastClientAt": 1794042997290,
+   "followedUp": false
+  },
+  "2461249757714465": {
+   "lastTechFail": 1794058313097,
+   "lastClientAt": 1794058313224,
    "followedUp": false
   }
  }
