@@ -1603,6 +1603,16 @@
     "role": "assistant",
     "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
    }
+  ],
+  "1799210311045766": [
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"❤️ni bosib Imron isimli farzandi bor tanishizga joʻnarib qoying✈️\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
+   }
   ]
  },
  "activity": {
@@ -1949,6 +1959,11 @@
   "2461249757714465": {
    "lastTechFail": 1794058313097,
    "lastClientAt": 1794058313224,
+   "followedUp": false
+  },
+  "1799210311045766": {
+   "lastTechFail": 1794213935296,
+   "lastClientAt": 1794213935450,
    "followedUp": false
   }
  }
