@@ -1602,6 +1602,14 @@
    {
     "role": "assistant",
     "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"Like bosing istoriyangizga joylang Do’stlarizga tarqating SAHOVATPESHA insonlarga tarqating Iltimos sizdan, Alloh rozi bo’lsin! ✅️BARCHA KARTALAR NISHONOV MAKKAMJON chiqadi 🟢HUMO: 9860 1701 1245 5739 🟢HUMO: 9860 0609 3271 4219 🟢HUMO: 9860 0803 7907 7391 🟢HUMO: 9860 1001 2768 5467 🟢HUMO: 9860 2601 1080 3723 💁‍♂️ ADMIN bilan boglanish +998 94 090 8000 🙏🙏Qo’lingizdan kelgancha yordam qiling, \"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
    }
   ],
   "1799210311045766": [
@@ -1957,8 +1965,8 @@
    "followedUp": false
   },
   "2461249757714465": {
-   "lastTechFail": 1794058313097,
-   "lastClientAt": 1794058313224,
+   "lastTechFail": 1794219560541,
+   "lastClientAt": 1794219560576,
    "followedUp": false
   },
   "1799210311045766": {
