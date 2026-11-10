@@ -1620,6 +1620,14 @@
    {
     "role": "assistant",
     "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
+   },
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi (tavsifi topilmadi — qaysi mebel qiziqtirganini so'ra)]"
+   },
+   {
+    "role": "assistant",
+    "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
    }
   ],
   "866396519895379": [
@@ -1980,8 +1988,8 @@
    "followedUp": false
   },
   "1799210311045766": {
-   "lastTechFail": 1794213935296,
-   "lastClientAt": 1794213935450,
+   "lastTechFail": 1794328112477,
+   "lastClientAt": 1794328112578,
    "followedUp": false
   },
   "866396519895379": {
