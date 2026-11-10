@@ -1621,6 +1621,16 @@
     "role": "assistant",
     "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
    }
+  ],
+  "866396519895379": [
+   {
+    "role": "user",
+    "content": "[Mijoz bizning postni/videoni ulashdi. Video tavsifi: \"21:00 da I phone 18 g’olibini aniqliman 😍 Hamma homiylaga obuna boʻling Primoy efir @chechenka_konkurs profilida boʻlib o’tadi\"]"
+   },
+   {
+    "role": "assistant",
+    "content": "Кечирасиз, кичик техник узилиш бўлди. Хабарингизни кўрдим — тез орада аниқ жавоб берамиз 🙏🏻"
+   }
   ]
  },
  "activity": {
@@ -1972,6 +1982,11 @@
   "1799210311045766": {
    "lastTechFail": 1794213935296,
    "lastClientAt": 1794213935450,
+   "followedUp": false
+  },
+  "866396519895379": {
+   "lastTechFail": 1794325325817,
+   "lastClientAt": 1794325325938,
    "followedUp": false
   }
  }
