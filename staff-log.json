@@ -1008,8 +1008,8 @@
       {
         "date": "10.11.2026",
         "in": "09:01",
-        "out": "09:01",
-        "early": true,
+        "out": "18:03",
+        "early": false,
         "late": false
       }
     ],
