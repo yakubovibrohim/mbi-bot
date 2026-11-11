@@ -20,6 +20,7 @@ let lastMsgId = 0;
 let resolved = [];        // yakunlangan tranzaksiyalar: {date, dir, amt} — kunlik solishtiruv uchun
 let lastBalances = {};    // karta oxirgi 4 raqami -> CardXabar'dagi oxirgi balans
 let lastReconcileDate = ''; // kunlik solishtiruv qaysi kunda bajarilgani
+let lastRemindDate = '';    // tasniflanmaganlar eslatmasi qaysi kunda yuborilgani (kuniga 1 marta)
 let tgUser = null;
 let lastPollOk = 0;      // oxirgi muvaffaqiyatli poll vaqti (ms) — Botir kuzatadi
 let lastMsgTs = 0;       // CardXabarBot'dan oxirgi xabar vaqti (ms) — Botir kuzatadi
@@ -42,7 +43,7 @@ function markResolved(p) {
 async function persist() {
   try {
     const { sha } = await deps.ghRead('card-pending.json');
-    await deps.ghPut('card-pending.json', JSON.stringify({ lastMsgId, pending: cardPending, resolved, lastBalances, lastReconcileDate }, null, 2), sha, 'card pending');
+    await deps.ghPut('card-pending.json', JSON.stringify({ lastMsgId, pending: cardPending, resolved, lastBalances, lastReconcileDate, lastRemindDate }, null, 2), sha, 'card pending');
   } catch (e) { console.error('card persist:', e.message); }
 }
 async function restorePending() {
@@ -54,14 +55,13 @@ async function restorePending() {
       if (Array.isArray(data.resolved)) resolved = data.resolved;
       if (data.lastBalances) lastBalances = data.lastBalances;
       if (data.lastReconcileDate) lastReconcileDate = data.lastReconcileDate;
+      if (data.lastRemindDate) lastRemindDate = data.lastRemindDate;
     }
   } catch (e) {}
-  // javobsiz qolgan so'rovlarni qayta yuborish (avval avto-bog'lashga urinamiz)
+  // restartda qayta YUBORILMAYDI (eski tugmalar ishlayveradi) — faqat jim avto-bog'lash; eslatma kuniga 1 marta 21:00 da
   for (const [id, p] of Object.entries(cardPending)) {
     try {
-      if (p.step === 'note') { await askNote(id, p.kind, target()); }
-      else if (p.dir === 'in' && await tryAutoLink(p)) { delete cardPending[id]; await persist(); }
-      else { await reAsk(id); }
+      if (p.step !== 'note' && p.dir === 'in' && await tryAutoLink(p)) { delete cardPending[id]; await persist(); }
     } catch (e) {}
   }
 }
@@ -415,24 +415,32 @@ async function checkBalanceJump(tx) {
 // eski nom bilan chaqiruvlar uchun (save* ichida) — endi hech narsa qilmaydi
 async function checkBalance(p) {}
 
-// ── Javobsiz so'rovlarni har 2 soatda eslatish ──
+// ── Javobsiz so'rovlar: kirimlarni har 2 soatda jim avto-bog'lash, eslatma esa
+//    kuniga FAQAT 1 marta — kun oxirida (21:00 Toshkent), bitta ro'yxat bilan ──
 async function remindStalePending() {
   const now = Date.now();
   const TWO_H = 2 * 60 * 60 * 1000;
   for (const [id, p] of Object.entries(cardPending)) {
-    const base = p.remindedAt || p.askedAt || 0;
+    if (p.step === 'note' || p.dir !== 'in') continue;
+    const base = p.linkTriedAt || p.askedAt || 0;
     if (!base || now - base < TWO_H) continue;
-    p.remindedAt = now;
-    if (p.step !== 'note' && p.dir === 'in') {
-      try { if (await tryAutoLink(p)) { delete cardPending[id]; await persist(); continue; } } catch (e) {}
-    }
-    try {
-      await deps.msg(target(), `⏰ *Eslatma:* quyidagi karta tranzaksiyasi hali tasniflanmagan:`);
+    p.linkTriedAt = now;
+    try { if (await tryAutoLink(p)) { delete cardPending[id]; await persist(); } } catch (e) {}
+  }
+  const today = deps.todayStr();
+  if (lastRemindDate === today || tashkentHHMM() < '21:00') return;
+  lastRemindDate = today;
+  await persist();
+  const ids = Object.keys(cardPending);
+  if (!ids.length) return;
+  try {
+    await deps.msg(target(), `⏰ *Kunlik eslatma:* ${ids.length} ta karta tranzaksiyasi hali tasniflanmagan:`);
+    for (const id of ids) {
+      const p = cardPending[id]; if (!p) continue;
       if (p.step === 'note') await askNote(id, p.kind, target());
       else await sendClassify(id, p);
-    } catch (e) {}
-    await persist();
-  }
+    }
+  } catch (e) {}
 }
 
 // ── Kunlik solishtiruv (21:00 Toshkent): CardXabar vs loglar ──
