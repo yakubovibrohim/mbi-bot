@@ -61,9 +61,10 @@
       "date": "20.10.2026",
       "title": "Spisanie c karty",
       "card4": "5893",
-      "step": "type",
+      "step": "note",
       "askedAt": 1792501088583,
-      "remindedAt": 1794387860483
+      "remindedAt": 1794387860483,
+      "kind": "office"
     },
     "mvh21402gpt": {
       "dir": "out",
