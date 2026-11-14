@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-14T13:04:22.282Z",
+  "updated": "2026-11-14T16:10:40.189Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 5805981,
+  "balance_uzs": 5259231,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 223141277,
+    "chiqim": 223688027,
     "by_category": {
-      "office": 25199222,
-      "personal": 69693408,
+      "office": 25702972,
+      "personal": 69736408,
       "staff_advance": 21347880,
       "deal_payment": 24000000,
       "deal_expense": 97368767,
@@ -3850,6 +3850,17 @@
       "src": "personal"
     },
     {
+      "date": "19.10.2026",
+      "time": "21:10",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 43000,
+      "name": "💳 SOLIHABONU OMAD TRADE XK, TOSHKENT, QOYLIQ 5-MAVZESI 52-UY",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
       "date": "20.10.2026",
       "time": "13:21",
       "dir": "out",
@@ -3857,6 +3868,17 @@
       "category_uz": "Ishxona",
       "amount_uzs": 80000,
       "name": "💳 Rr",
+      "pay": "karta",
+      "src": "office"
+    },
+    {
+      "date": "20.10.2026",
+      "time": "21:10",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 503750,
+      "name": "💳 IYM UZCARD2VISA S KOMISS, UZ",
       "pay": "karta",
       "src": "office"
     },
