@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-14T16:10:40.189Z",
+  "updated": "2026-11-14T16:11:07.597Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 5259231,
+  "balance_uzs": 5244231,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 223688027,
+    "chiqim": 223703027,
     "by_category": {
       "office": 25702972,
-      "personal": 69736408,
+      "personal": 69751408,
       "staff_advance": 21347880,
       "deal_payment": 24000000,
       "deal_expense": 97368767,
@@ -3914,6 +3914,17 @@
       "name": "💳 Abet",
       "pay": "karta",
       "src": "office"
+    },
+    {
+      "date": "21.10.2026",
+      "time": "21:10",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 15000,
+      "name": "💳 PAYME OPLATA, UZ",
+      "pay": "karta",
+      "src": "personal"
     },
     {
       "date": "23.10.2026",
