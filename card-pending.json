@@ -40,19 +40,6 @@
       "remindedAt": 1794383660259,
       "kind": "personal"
     },
-    "mvh21402gpt": {
-      "dir": "out",
-      "amtUzs": 15000,
-      "place": "PAYME OPLATA, UZ",
-      "rawBalance": 2312201,
-      "date": "21.10.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1792523198595,
-      "remindedAt": 1794388160359,
-      "kind": "personal"
-    },
     "mvhrg4eeqqe": {
       "dir": "out",
       "amtUzs": 45338,
@@ -1908,6 +1895,11 @@
       "date": "20.10.2026",
       "dir": "out",
       "amt": 503750
+    },
+    {
+      "date": "21.10.2026",
+      "dir": "out",
+      "amt": 15000
     }
   ],
   "lastBalances": {
