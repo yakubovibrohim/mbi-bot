@@ -40,19 +40,6 @@
       "remindedAt": 1794383660259,
       "kind": "personal"
     },
-    "mvgov7t3q84": {
-      "dir": "out",
-      "amtUzs": 503750,
-      "place": "IYM UZCARD2VISA S KOMISS, UZ",
-      "rawBalance": 2327201,
-      "date": "20.10.2026",
-      "title": "Spisanie c karty",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1792501088583,
-      "remindedAt": 1794387860483,
-      "kind": "office"
-    },
     "mvh21402gpt": {
       "dir": "out",
       "amtUzs": 15000,
@@ -1915,6 +1902,11 @@
       "date": "19.10.2026",
       "dir": "out",
       "amt": 43000
+    },
+    {
+      "date": "20.10.2026",
+      "dir": "out",
+      "amt": 503750
     }
   ],
   "lastBalances": {
