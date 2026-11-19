@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-19T17:52:47.144Z",
+  "updated": "2026-11-19T17:54:32.594Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 5203731,
+  "balance_uzs": 4336243,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 223743527,
+    "chiqim": 224611015,
     "by_category": {
-      "office": 25702972,
-      "personal": 69791908,
+      "office": 26504060,
+      "personal": 69858308,
       "staff_advance": 21347880,
       "deal_payment": 24000000,
       "deal_expense": 97368767,
@@ -3950,6 +3950,61 @@
     },
     {
       "date": "21.10.2026",
+      "time": "22:53",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 45338,
+      "name": "💳 IYM UZCARD2VISA S KOMISS, UZ",
+      "pay": "karta",
+      "src": "office"
+    },
+    {
+      "date": "21.10.2026",
+      "time": "22:53",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 74865,
+      "name": "💳 MCHJ GENIAL INVEST, Tashkent, KICHIK HALQA YOLI KOCHASI , 24-",
+      "pay": "karta",
+      "src": "office"
+    },
+    {
+      "date": "21.10.2026",
+      "time": "22:53",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 32000,
+      "name": "💳 MCHJ WILLBUY, Toshkent, Bektemir tumani",
+      "pay": "karta",
+      "src": "office"
+    },
+    {
+      "date": "21.10.2026",
+      "time": "22:53",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 24000,
+      "name": "💳 YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
+      "pay": "karta",
+      "src": "office"
+    },
+    {
+      "date": "21.10.2026",
+      "time": "22:53",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 145900,
+      "name": "💳 IP OOO YANDEX EATS, UZ",
+      "pay": "karta",
+      "src": "office"
+    },
+    {
+      "date": "21.10.2026",
       "time": "21:10",
       "dir": "out",
       "category": "personal",
@@ -3960,6 +4015,61 @@
       "src": "personal"
     },
     {
+      "date": "21.10.2026",
+      "time": "22:53",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 15000,
+      "name": "💳 MCHJ WILLBUY, Toshkent, Bektemir tumani",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "22.10.2026",
+      "time": "22:53",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 39000,
+      "name": "💳 YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
+      "pay": "karta",
+      "src": "office"
+    },
+    {
+      "date": "22.10.2026",
+      "time": "22:53",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 12000,
+      "name": "💳 YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
+      "pay": "karta",
+      "src": "office"
+    },
+    {
+      "date": "23.10.2026",
+      "time": "22:54",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 49000,
+      "name": "💳 YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
+      "pay": "karta",
+      "src": "office"
+    },
+    {
+      "date": "23.10.2026",
+      "time": "22:54",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 146595,
+      "name": "💳 PAYME P2P, UZ",
+      "pay": "karta",
+      "src": "office"
+    },
+    {
       "date": "23.10.2026",
       "time": "11:31",
       "dir": "out",
@@ -3967,6 +4077,72 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 26000,
       "name": "💳 Taxi",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "23.10.2026",
+      "time": "22:54",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 20000,
+      "name": "💳 PAYME OPLATA, UZ",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "24.10.2026",
+      "time": "22:54",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 115890,
+      "name": "💳 IP OOO ANGLESEY FOOD, GUL, Olmos MFY Yakkatol pr 3 kuchasi",
+      "pay": "karta",
+      "src": "office"
+    },
+    {
+      "date": "26.10.2026",
+      "time": "22:54",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 39000,
+      "name": "💳 YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
+      "pay": "karta",
+      "src": "office"
+    },
+    {
+      "date": "26.10.2026",
+      "time": "22:54",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 77500,
+      "name": "💳 MCHJ GENIAL INVEST, Tashkent, KICHIK HALQA YOLI KOCHASI , 24-",
+      "pay": "karta",
+      "src": "office"
+    },
+    {
+      "date": "26.10.2026",
+      "time": "22:54",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 28000,
+      "name": "💳 OOO YANDEXGO UB, UZ",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "26.10.2026",
+      "time": "22:54",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 3400,
+      "name": "💳 OOO YANDEXGO UB, UZ",
       "pay": "karta",
       "src": "personal"
     },
