@@ -686,5 +686,15 @@
     "rate": 12000,
     "note": "MCHJ GENIAL INVEST, Tashkent, KICHIK HALQA YOLI KOCHASI , 24-",
     "pay_method": "card"
+  },
+  {
+    "id": "mwnumwh6uyg",
+    "date": "21.10.2026",
+    "ts": "2026-11-19T17:53:43.914Z",
+    "name": "💳 MCHJ WILLBUY, Toshkent, Bektemir tumani",
+    "amount_uzs": 32000,
+    "rate": 12000,
+    "note": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
+    "pay_method": "card"
   }
 ]
