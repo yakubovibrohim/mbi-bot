@@ -1,19 +1,6 @@
 {
   "lastMsgId": 106923,
   "pending": {
-    "mvhsdk731rt": {
-      "dir": "out",
-      "amtUzs": 74865,
-      "place": "MCHJ GENIAL INVEST, Tashkent, KICHIK HALQA YOLI KOCHASI , 24-",
-      "rawBalance": 2191998,
-      "date": "21.10.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1792567449471,
-      "remindedAt": 1794382100227,
-      "kind": "office"
-    },
     "mvhtp57z48x": {
       "dir": "out",
       "amtUzs": 32000,
@@ -1884,6 +1871,11 @@
       "date": "21.10.2026",
       "dir": "out",
       "amt": 45338
+    },
+    {
+      "date": "21.10.2026",
+      "dir": "out",
+      "amt": 74865
     }
   ],
   "lastBalances": {
