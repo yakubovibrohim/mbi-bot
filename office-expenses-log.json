@@ -676,5 +676,15 @@
     "rate": 12000,
     "note": "IYM UZCARD2VISA S KOMISS, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mwnumty30y0",
+    "date": "21.10.2026",
+    "ts": "2026-11-19T17:53:40.635Z",
+    "name": "💳 MCHJ GENIAL INVEST, Tashkent, KICHIK HALQA YOLI KOCHASI , 24-",
+    "amount_uzs": 74865,
+    "rate": 12000,
+    "note": "MCHJ GENIAL INVEST, Tashkent, KICHIK HALQA YOLI KOCHASI , 24-",
+    "pay_method": "card"
   }
 ]
