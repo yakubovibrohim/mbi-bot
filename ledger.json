@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-19T12:53:31.799Z",
+  "updated": "2026-11-19T17:52:47.144Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 5244231,
+  "balance_uzs": 5203731,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 223703027,
+    "chiqim": 223743527,
     "by_category": {
       "office": 25702972,
-      "personal": 69751408,
+      "personal": 69791908,
       "staff_advance": 21347880,
       "deal_payment": 24000000,
       "deal_expense": 97368767,
@@ -3857,6 +3857,39 @@
       "category_uz": "Shaxsiy",
       "amount_uzs": 43000,
       "name": "💳 SOLIHABONU OMAD TRADE XK, TOSHKENT, QOYLIQ 5-MAVZESI 52-UY",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "19.10.2026",
+      "time": "22:52",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 16000,
+      "name": "💳 OOO YANDEXGO UB, UZ",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "19.10.2026",
+      "time": "22:52",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 21500,
+      "name": "💳 OOO YANDEXGO UB, UZ",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "19.10.2026",
+      "time": "22:52",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 3000,
+      "name": "💳 OOO YANDEXGO UB, UZ",
       "pay": "karta",
       "src": "personal"
     },
