@@ -1,19 +1,6 @@
 {
   "lastMsgId": 106923,
   "pending": {
-    "mvhrg4eeqqe": {
-      "dir": "out",
-      "amtUzs": 45338,
-      "place": "IYM UZCARD2VISA S KOMISS, UZ",
-      "rawBalance": 2266863,
-      "date": "21.10.2026",
-      "title": "Spisanie c karty",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1792565889350,
-      "remindedAt": 1794387860483,
-      "kind": "office"
-    },
     "mvhsdk731rt": {
       "dir": "out",
       "amtUzs": 74865,
@@ -1892,6 +1879,11 @@
       "date": "19.10.2026",
       "dir": "out",
       "amt": 3000
+    },
+    {
+      "date": "21.10.2026",
+      "dir": "out",
+      "amt": 45338
     }
   ],
   "lastBalances": {
