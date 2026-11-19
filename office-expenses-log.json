@@ -666,5 +666,15 @@
     "rate": 12000,
     "note": "IYM UZCARD2VISA S KOMISS, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mwnumrlxqvm",
+    "date": "21.10.2026",
+    "ts": "2026-11-19T17:53:37.605Z",
+    "name": "💳 IYM UZCARD2VISA S KOMISS, UZ",
+    "amount_uzs": 45338,
+    "rate": 12000,
+    "note": "IYM UZCARD2VISA S KOMISS, UZ",
+    "pay_method": "card"
   }
 ]
