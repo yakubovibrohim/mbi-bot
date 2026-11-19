@@ -2123,5 +2123,15 @@
     "pay_method": "card",
     "place": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
     "ts": "2026-11-19T17:53:46.861Z"
+  },
+  {
+    "date": "23.10.2026",
+    "note": "💳 PAYME OPLATA, UZ",
+    "amount_uzs": 20000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME OPLATA, UZ",
+    "ts": "2026-11-19T17:54:01.480Z"
   }
 ]
