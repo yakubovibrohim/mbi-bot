@@ -746,5 +746,15 @@
     "rate": 12000,
     "note": "YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
     "pay_method": "card"
+  },
+  {
+    "id": "mwnuneyz7xu",
+    "date": "23.10.2026",
+    "ts": "2026-11-19T17:54:07.883Z",
+    "name": "💳 PAYME P2P, UZ",
+    "amount_uzs": 146595,
+    "rate": 12000,
+    "note": "PAYME P2P, UZ",
+    "pay_method": "card"
   }
 ]
