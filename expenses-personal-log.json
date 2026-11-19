@@ -2113,5 +2113,15 @@
     "pay_method": "card",
     "place": "OOO YANDEXGO UB, UZ",
     "ts": "2026-11-19T17:52:36.819Z"
+  },
+  {
+    "date": "21.10.2026",
+    "note": "💳 MCHJ WILLBUY, Toshkent, Bektemir tumani",
+    "amount_uzs": 15000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
+    "ts": "2026-11-19T17:53:46.861Z"
   }
 ]
