@@ -756,5 +756,15 @@
     "rate": 12000,
     "note": "PAYME P2P, UZ",
     "pay_method": "card"
+  },
+  {
+    "id": "mwnunh7u1l0",
+    "date": "24.10.2026",
+    "ts": "2026-11-19T17:54:10.794Z",
+    "name": "💳 IP OOO ANGLESEY FOOD, GUL, Olmos MFY Yakkatol pr 3 kuchasi",
+    "amount_uzs": 115890,
+    "rate": 12000,
+    "note": "IP OOO ANGLESEY FOOD, GUL, Olmos MFY Yakkatol pr 3 kuchasi",
+    "pay_method": "card"
   }
 ]
