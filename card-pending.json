@@ -1,19 +1,6 @@
 {
   "lastMsgId": 106923,
   "pending": {
-    "mvhtp57z48x": {
-      "dir": "out",
-      "amtUzs": 32000,
-      "place": "MCHJ WILLBUY, Toshkent, Bektemir tumani",
-      "rawBalance": 1859498,
-      "date": "21.10.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1792569669551,
-      "remindedAt": 1794384260275,
-      "kind": "office"
-    },
     "mvhtscxzzpt": {
       "dir": "out",
       "amtUzs": 15000,
@@ -1876,6 +1863,11 @@
       "date": "21.10.2026",
       "dir": "out",
       "amt": 74865
+    },
+    {
+      "date": "21.10.2026",
+      "dir": "out",
+      "amt": 32000
     }
   ],
   "lastBalances": {
