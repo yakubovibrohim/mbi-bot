@@ -726,5 +726,15 @@
     "rate": 12000,
     "note": "YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
     "pay_method": "card"
+  },
+  {
+    "id": "mwnun7ryn6n",
+    "date": "22.10.2026",
+    "ts": "2026-11-19T17:53:58.558Z",
+    "name": "💳 YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
+    "amount_uzs": 12000,
+    "rate": 12000,
+    "note": "YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
+    "pay_method": "card"
   }
 ]
