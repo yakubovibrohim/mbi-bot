@@ -1,19 +1,6 @@
 {
   "lastMsgId": 106923,
   "pending": {
-    "mvidx1j14ra": {
-      "dir": "out",
-      "amtUzs": 145900,
-      "place": "IP OOO YANDEX EATS, UZ",
-      "rawBalance": 1674598,
-      "date": "21.10.2026",
-      "title": "E-Com oplata",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1792603630333,
-      "remindedAt": 1794382160251,
-      "kind": "office"
-    },
     "mvj9512wyz2": {
       "dir": "out",
       "amtUzs": 39000,
@@ -1852,6 +1839,11 @@
       "date": "21.10.2026",
       "dir": "out",
       "amt": 24000
+    },
+    {
+      "date": "21.10.2026",
+      "dir": "out",
+      "amt": 145900
     }
   ],
   "lastBalances": {
