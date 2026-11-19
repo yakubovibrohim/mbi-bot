@@ -766,5 +766,15 @@
     "rate": 12000,
     "note": "IP OOO ANGLESEY FOOD, GUL, Olmos MFY Yakkatol pr 3 kuchasi",
     "pay_method": "card"
+  },
+  {
+    "id": "mwnunjo2px8",
+    "date": "26.10.2026",
+    "ts": "2026-11-19T17:54:13.970Z",
+    "name": "💳 YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
+    "amount_uzs": 39000,
+    "rate": 12000,
+    "note": "YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
+    "pay_method": "card"
   }
 ]
