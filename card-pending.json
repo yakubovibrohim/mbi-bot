@@ -1,19 +1,6 @@
 {
   "lastMsgId": 106923,
   "pending": {
-    "mvj96b5e8a2": {
-      "dir": "out",
-      "amtUzs": 12000,
-      "place": "YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
-      "rawBalance": 1623598,
-      "date": "22.10.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1792656130802,
-      "remindedAt": 1794384350280,
-      "kind": "office"
-    },
     "mvkkt8fb6q4": {
       "dir": "out",
       "amtUzs": 20000,
@@ -1836,6 +1823,11 @@
       "date": "22.10.2026",
       "dir": "out",
       "amt": 39000
+    },
+    {
+      "date": "22.10.2026",
+      "dir": "out",
+      "amt": 12000
     }
   ],
   "lastBalances": {
