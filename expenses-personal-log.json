@@ -2183,5 +2183,15 @@
     "pay_method": "card",
     "place": "PAYME P2P, UZ",
     "ts": "2026-11-20T16:18:12.680Z"
+  },
+  {
+    "date": "27.10.2026",
+    "note": "💳 PAYME P2P, UZ",
+    "amount_uzs": 30330,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-11-20T16:18:15.478Z"
   }
 ]
