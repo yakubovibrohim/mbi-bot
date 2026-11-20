@@ -61,9 +61,10 @@
       "date": "29.10.2026",
       "title": "E-Com oplata",
       "card4": "5893",
-      "step": "type",
+      "step": "note",
       "askedAt": 1793253713143,
-      "remindedAt": 1794384230283
+      "remindedAt": 1794384230283,
+      "kind": "personal"
     },
     "mvth368i92i": {
       "dir": "out",
