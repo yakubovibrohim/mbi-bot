@@ -2233,5 +2233,15 @@
     "pay_method": "card",
     "place": "PAYME OPLATA, UZ",
     "ts": "2026-11-20T16:18:30.741Z"
+  },
+  {
+    "date": "30.10.2026",
+    "note": "💳 PAYME UZCARD NA VISA, UZ",
+    "amount_uzs": 22500,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME UZCARD NA VISA, UZ",
+    "ts": "2026-11-20T16:18:33.667Z"
   }
 ]
