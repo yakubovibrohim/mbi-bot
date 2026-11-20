@@ -786,5 +786,15 @@
     "rate": 12000,
     "note": "MCHJ GENIAL INVEST, Tashkent, KICHIK HALQA YOLI KOCHASI , 24-",
     "pay_method": "card"
+  },
+  {
+    "id": "mwp6o5xcst9",
+    "date": "29.10.2026",
+    "ts": "2026-11-20T16:18:24.384Z",
+    "name": "💳 YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
+    "amount_uzs": 62000,
+    "rate": 12000,
+    "note": "YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
+    "pay_method": "card"
   }
 ]
