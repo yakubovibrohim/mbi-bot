@@ -2213,5 +2213,15 @@
     "pay_method": "card",
     "place": "HGT PAYNET, UZ",
     "ts": "2026-11-20T16:18:21.539Z"
+  },
+  {
+    "date": "30.10.2026",
+    "note": "💳 OOO YANDEXGO UB, UZ",
+    "amount_uzs": 25000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "OOO YANDEXGO UB, UZ",
+    "ts": "2026-11-20T16:18:27.602Z"
   }
 ]
