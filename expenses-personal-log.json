@@ -2163,5 +2163,15 @@
     "pay_method": "card",
     "place": "MCHJ OXYMED SERVICE, Toshkent, PARVOZ AVIASOZLAR",
     "ts": "2026-11-20T16:18:06.474Z"
+  },
+  {
+    "date": "27.10.2026",
+    "note": "💳 MCHJ EZOZAXON OMINAXON FARM, Tashkent, ul Ukituvchilar  Kush kurgon MS",
+    "amount_uzs": 30000,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "MCHJ EZOZAXON OMINAXON FARM, Tashkent, ul Ukituvchilar  Kush kurgon MS",
+    "ts": "2026-11-20T16:18:09.488Z"
   }
 ]
