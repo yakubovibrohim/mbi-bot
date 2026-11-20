@@ -1,19 +1,6 @@
 {
   "lastMsgId": 106923,
   "pending": {
-    "mvv7fxz4v9s": {
-      "dir": "out",
-      "amtUzs": 22500,
-      "place": "PAYME UZCARD NA VISA, UZ",
-      "rawBalance": 15473,
-      "date": "30.10.2026",
-      "title": "Platezh",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1793378815168,
-      "remindedAt": 1794386930381,
-      "kind": "personal"
-    },
     "mvy9hkbt7na": {
       "dir": "out",
       "amtUzs": 15473,
@@ -1703,6 +1690,11 @@
       "date": "30.10.2026",
       "dir": "out",
       "amt": 30000
+    },
+    {
+      "date": "30.10.2026",
+      "dir": "out",
+      "amt": 22500
     }
   ],
   "lastBalances": {
