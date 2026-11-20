@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-20T13:08:10.701Z",
+  "updated": "2026-11-20T16:18:46.721Z",
   "rate_usd_uzs": 12000,
   "opening": {
     "amount_uzs": 175167258,
     "date": "24.06.2026"
   },
-  "balance_uzs": 4336243,
+  "balance_uzs": 3212030,
   "totals_after_opening": {
     "kirim": 53780000,
-    "chiqim": 224611015,
+    "chiqim": 225735228,
     "by_category": {
-      "office": 26504060,
-      "personal": 69858308,
+      "office": 26581533,
+      "personal": 70905048,
       "staff_advance": 21347880,
       "deal_payment": 24000000,
       "deal_expense": 97368767,
@@ -4147,6 +4147,116 @@
       "src": "personal"
     },
     {
+      "date": "27.10.2026",
+      "time": "21:18",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 167400,
+      "name": "💳 MCHJ OXYMED SERVICE, Toshkent, PARVOZ AVIASOZLAR",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "27.10.2026",
+      "time": "21:18",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 30000,
+      "name": "💳 MCHJ EZOZAXON OMINAXON FARM, Tashkent, ul Ukituvchilar  Kush kurgon MS",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "27.10.2026",
+      "time": "21:18",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 202200,
+      "name": "💳 PAYME P2P, UZ",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "27.10.2026",
+      "time": "21:18",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 30330,
+      "name": "💳 PAYME P2P, UZ",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "29.10.2026",
+      "time": "21:18",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 62000,
+      "name": "💳 YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
+      "pay": "karta",
+      "src": "office"
+    },
+    {
+      "date": "29.10.2026",
+      "time": "21:18",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 26500,
+      "name": "💳 OOO YANDEXGO UB, UZ",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "29.10.2026",
+      "time": "21:18",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 512810,
+      "name": "💳 HGT PAYNET, UZ",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "30.10.2026",
+      "time": "21:18",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 25000,
+      "name": "💳 OOO YANDEXGO UB, UZ",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "30.10.2026",
+      "time": "21:18",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 30000,
+      "name": "💳 PAYME OPLATA, UZ",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
+      "date": "30.10.2026",
+      "time": "21:18",
+      "dir": "out",
+      "category": "personal",
+      "category_uz": "Shaxsiy",
+      "amount_uzs": 22500,
+      "name": "💳 PAYME UZCARD NA VISA, UZ",
+      "pay": "karta",
+      "src": "personal"
+    },
+    {
       "date": "01.11.2026",
       "time": "19:30",
       "dir": "out",
@@ -4156,6 +4266,17 @@
       "name": "Dilmurod aka",
       "pay": "naqd",
       "src": "debts"
+    },
+    {
+      "date": "02.11.2026",
+      "time": "21:18",
+      "dir": "out",
+      "category": "office",
+      "category_uz": "Ishxona",
+      "amount_uzs": 15473,
+      "name": "💳 UB SPISANIE NASIYA, UZ",
+      "pay": "karta",
+      "src": "office"
     }
   ]
 }
