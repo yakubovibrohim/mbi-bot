@@ -1,19 +1,6 @@
 {
   "lastMsgId": 106923,
   "pending": {
-    "mvq55awfq1i": {
-      "dir": "out",
-      "amtUzs": 167400,
-      "place": "MCHJ OXYMED SERVICE, Toshkent, PARVOZ AVIASOZLAR",
-      "rawBalance": 956813,
-      "date": "27.10.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1793072628591,
-      "remindedAt": 1794383240249,
-      "kind": "personal"
-    },
     "mvq5cdi2cbe": {
       "dir": "out",
       "amtUzs": 30000,
@@ -1775,6 +1762,11 @@
       "date": "26.10.2026",
       "dir": "out",
       "amt": 77500
+    },
+    {
+      "date": "27.10.2026",
+      "dir": "out",
+      "amt": 167400
     }
   ],
   "lastBalances": {
