@@ -1,20 +1,6 @@
 {
   "lastMsgId": 106923,
-  "pending": {
-    "mvy9hkbt7na": {
-      "dir": "out",
-      "amtUzs": 15473,
-      "place": "UB SPISANIE NASIYA, UZ",
-      "rawBalance": 0,
-      "date": "02.11.2026",
-      "title": "Platezh",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1793563648553,
-      "remindedAt": 1794384590290,
-      "kind": "office"
-    }
-  },
+  "pending": {},
   "resolved": [
     {
       "date": "08.07.2026",
@@ -1695,6 +1681,11 @@
       "date": "30.10.2026",
       "dir": "out",
       "amt": 22500
+    },
+    {
+      "date": "02.11.2026",
+      "dir": "out",
+      "amt": 15473
     }
   ],
   "lastBalances": {
