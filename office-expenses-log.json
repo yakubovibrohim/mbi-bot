@@ -796,5 +796,15 @@
     "rate": 12000,
     "note": "YATT SULEYMANOVA DILOROM TAVAK, TASHKENT, QUSHBEGI 8-BLOK 6-DOM",
     "pay_method": "card"
+  },
+  {
+    "id": "mwp6ofbn3yu",
+    "date": "02.11.2026",
+    "ts": "2026-11-20T16:18:36.563Z",
+    "name": "💳 UB SPISANIE NASIYA, UZ",
+    "amount_uzs": 15473,
+    "rate": 12000,
+    "note": "UB SPISANIE NASIYA, UZ",
+    "pay_method": "card"
   }
 ]
