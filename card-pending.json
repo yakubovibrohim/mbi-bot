@@ -1,19 +1,6 @@
 {
   "lastMsgId": 106923,
   "pending": {
-    "mvq5cdi2cbe": {
-      "dir": "out",
-      "amtUzs": 30000,
-      "place": "MCHJ EZOZAXON OMINAXON FARM, Tashkent, ul Ukituvchilar  Kush kurgon MS",
-      "rawBalance": 926813,
-      "date": "27.10.2026",
-      "title": "Pokupka",
-      "card4": "5893",
-      "step": "note",
-      "askedAt": 1793072958554,
-      "remindedAt": 1794383570310,
-      "kind": "personal"
-    },
     "mvqfooqdlfo": {
       "dir": "out",
       "amtUzs": 202200,
@@ -1767,6 +1754,11 @@
       "date": "27.10.2026",
       "dir": "out",
       "amt": 167400
+    },
+    {
+      "date": "27.10.2026",
+      "dir": "out",
+      "amt": 30000
     }
   ],
   "lastBalances": {
