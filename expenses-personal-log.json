@@ -2173,5 +2173,15 @@
     "pay_method": "card",
     "place": "MCHJ EZOZAXON OMINAXON FARM, Tashkent, ul Ukituvchilar  Kush kurgon MS",
     "ts": "2026-11-20T16:18:09.488Z"
+  },
+  {
+    "date": "27.10.2026",
+    "note": "💳 PAYME P2P, UZ",
+    "amount_uzs": 202200,
+    "rate": 12000,
+    "type": "personal",
+    "pay_method": "card",
+    "place": "PAYME P2P, UZ",
+    "ts": "2026-11-20T16:18:12.680Z"
   }
 ]
